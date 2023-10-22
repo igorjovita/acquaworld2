@@ -1,4 +1,4 @@
 mysql-connector-python
 pkgconfig==1.5.5
-mysqlclient==2.1.1
+mysqlclient==2.2.0
 SQLAlchemy
