@@ -3,3 +3,4 @@ pkgconfig==1.5.5
 SQLAlchemy
 pykg-config
 mysqlclient
+pymysql
