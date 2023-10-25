@@ -14,6 +14,6 @@ mydb = mysql.connector.connect(
     db=os.getenv("DB_NAME"),
     autocommit=True,
     ssl_verify_identity=True,
-    ssl_ca=r"C:\Users\acqua\Downloads\cacert-2023-08-22.pem")
+    ssl_ca=r"C:\users\acqua\downloads\cacert-2023-08-22.pem")
 
 cursor = mydb.cursor()
