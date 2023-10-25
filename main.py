@@ -1,11 +1,18 @@
 import streamlit as st
+from dotenv import load_dotenv
+import os
+import MySQLdb
 
-# Initialize connection.
-conn = st.experimental_connection('mysql', type='sql')
+load_dotenv()
+connection = MySQLdb.connect(
+    host=os.getenv("DB_HOST"),
+    user=os.getenv("DB_USERNAME"),
+    passwd=os.getenv("DB_PASSWORD"),
+    db=os.getenv("DB_NAME"),
+    autocommit=True,
+    ssl_mode="VERIFY_IDENTITY",
+    ssl={
+        "ca": "C:\ssl\certs\cacert.pem"
+    }
+)
 
-# Perform query.
-df = conn.query('SELECT * from lancamento_bat;', ttl=600)
-
-# Print results.
-for row in df.itertuples():
-    st.write(f"{row.name} has a :{row.pet}:")
