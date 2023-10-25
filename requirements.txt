@@ -2,6 +2,8 @@ mysql-connector-python
 pkgconfig==1.5.5
 SQLAlchemy
 pykg-config
-mysqlclient
+mysqlclient~=2.2.0
 pymysql==1.1.0
 python-dotenv==1.0.0
+streamlit~=1.27.2
+pandas~=2.1.1
