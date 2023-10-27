@@ -104,8 +104,7 @@ if st.button('Lançar no Sistema'):
             (data, id_staff, divisao, situacao))
         mydb.commit()
         lista.append('Glauber')
-    else:
-        lista.remove('Glauber')
+
 
     if staff2:
         nome = 'Roberta'
@@ -120,8 +119,7 @@ if st.button('Lançar no Sistema'):
         mydb.commit()
         lista.append('Roberta')
 
-    else:
-        lista.remove('Roberta')
+    
 
     if staff3:
         nome = 'Martin'
