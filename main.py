@@ -17,7 +17,7 @@ mydb = mysql.connector.connect(
     ssl_ca=r"C:\users\acqua\downloads\cacert-2023-08-22.pem")
 
 
-cursor = mydb.cursor()
+cursor = mydb.cursor(buffered=True)
 
 st.subheader('Teste Divisao staffs')
 
@@ -98,7 +98,6 @@ if st.button('Lançar no Sistema'):
         id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
         cursor.execute(f"SELECT comissao FROM staffs WHERE nome = '{nome}'")
         situacao = 'PENDENTE'
-
         cursor.execute(
             'INSERT INTO lancamento_bat (data, id_staff, divisao,situacao) VALUES (%s, %s, %s, %s)',
             (data, id_staff, divisao, situacao))
