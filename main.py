@@ -111,6 +111,7 @@ if st.button('Lançar no Sistema'):
             'INSERT INTO lancamento_bat (data, id_staff, divisao, situacao) VALUES (%s, %s, %s, %s)',
             (data, id_staff, divisao, situacao))
         mydb.commit()
+        lista.append('Roberta')
 
     if staff3:
         nome = 'Martin'
@@ -123,7 +124,7 @@ if st.button('Lançar no Sistema'):
             'INSERT INTO lancamento_bat (data, id_staff, divisao, situacao) VALUES (%s, %s, %s, %s)',
             (data, id_staff, divisao, situacao))
         mydb.commit()
-
+        lista.append('Martin')
     if staff4:
         nome = 'Veridiana'
         cursor.execute(f"SELECT id FROM staffs WHERE nome = '{nome}'")
@@ -135,7 +136,7 @@ if st.button('Lançar no Sistema'):
             'INSERT INTO lancamento_bat (data, id_staff, divisao, situacao) VALUES (%s, %s, %s, %s)',
             (data, id_staff, divisao, situacao))
         mydb.commit()
-
+        lista.append('Veridiana')
     if staff5:
         nome = 'Cauã'
         cursor.execute(f"SELECT id FROM staffs WHERE nome = '{nome}'")
@@ -147,6 +148,7 @@ if st.button('Lançar no Sistema'):
             'INSERT INTO lancamento_bat (data, id_staff, divisao, situacao) VALUES (%s, %s, %s, %s)',
             (data, id_staff, divisao, situacao))
         mydb.commit()
+        lista.append('Cauã')
 
     if staff6:
         nome = 'Thiago'
@@ -160,11 +162,12 @@ if st.button('Lançar no Sistema'):
             (data, id_staff, divisao, situacao))
         mydb.commit()
     st.success('Divisão Lançada no Sistema')
+    lista.append('Thiago')
 
     st.write('---')
-
+    lista_final = str(lista).translate(str.maketrans('', '', chars))
     st.subheader(f'Divisão dia {data}')
-    st.subheader(f'Staffs - {lista}')
+    st.subheader(f'Staffs - {lista_final}')
     st.subheader(f'Divisão - {divisao}')
 
 # cursor.execute("SELECT * FROM lancamento_bat")
