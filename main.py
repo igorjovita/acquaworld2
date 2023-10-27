@@ -106,7 +106,6 @@ if st.button('Lançar no Sistema'):
         id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
         cursor.execute(f"SELECT comissao FROM staffs WHERE nome = '{nome}'")
         situacao = 'PENDENTE'
-        st.write(id_staff)
         cursor.execute(
             'INSERT INTO lancamento_bat (data, id_staff, divisao, situacao) VALUES (%s, %s, %s, %s)',
             (data, id_staff, divisao, situacao))
@@ -119,7 +118,6 @@ if st.button('Lançar no Sistema'):
         id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
         cursor.execute(f"SELECT comissao FROM staffs WHERE nome = '{nome}'")
         situacao = 'PENDENTE'
-        st.write(id_staff)
         cursor.execute(
             'INSERT INTO lancamento_bat (data, id_staff, divisao, situacao) VALUES (%s, %s, %s, %s)',
             (data, id_staff, divisao, situacao))
@@ -131,7 +129,6 @@ if st.button('Lançar no Sistema'):
         id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
         cursor.execute(f"SELECT comissao FROM staffs WHERE nome = '{nome}'")
         situacao = 'PENDENTE'
-        st.write(id_staff)
         cursor.execute(
             'INSERT INTO lancamento_bat (data, id_staff, divisao, situacao) VALUES (%s, %s, %s, %s)',
             (data, id_staff, divisao, situacao))
@@ -143,7 +140,6 @@ if st.button('Lançar no Sistema'):
         id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
         cursor.execute(f"SELECT comissao FROM staffs WHERE nome = '{nome}'")
         situacao = 'PENDENTE'
-        st.write(id_staff)
         cursor.execute(
             'INSERT INTO lancamento_bat (data, id_staff, divisao, situacao) VALUES (%s, %s, %s, %s)',
             (data, id_staff, divisao, situacao))
@@ -156,18 +152,17 @@ if st.button('Lançar no Sistema'):
         id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
         cursor.execute(f"SELECT comissao FROM staffs WHERE nome = '{nome}'")
         situacao = 'PENDENTE'
-        st.write(id_staff)
         cursor.execute(
             'INSERT INTO lancamento_bat (data, id_staff, divisao, situacao) VALUES (%s, %s, %s, %s)',
             (data, id_staff, divisao, situacao))
         mydb.commit()
     st.success('Divisão Lançada no Sistema')
     lista.append('Thiago')
-    data_formatada = str(data).split('-')
+    data_formatada = str(data).translate(str.maketrans('', '', chars)).split('-')
     st.write('---')
-    lista_final = str(lista).translate(str.maketrans('', '', chars2))
+    lista_final = str(lista)
     st.header('Divisão')
-    st.subheader(f'Data :  {data_formatada[2], data_formatada[1], data_formatada[0]}')
+    st.subheader(f'Data :  {data_formatada[2]}"/"{data_formatada[1]}"/"{data_formatada[0]}}')
     st.subheader(f'Staffs : {lista_final}')
     st.subheader(f'Divisão : {divisao}')
     st.subheader(f'Apoio de Superficie : {apoio_superficie}')
@@ -177,20 +172,22 @@ if st.button('Lançar no Sistema'):
 
     st.write('---')
 
-    col1, col2 = st.columns(2)
     st.header('Cursos')
 
+    colu1, colu2 = st.columns(2)
     if instrutor != '':
-        st.subheader(f'Instrutor1: {instrutor}')
-        st.subheader(f'Curso1: {curso}')
-        st.subheader(f'Quantida: {quantidade}')
-        st.subheader(f'Prática: {pratica}')
+        with colu1:
+            st.subheader(f'Instrutor: {instrutor}')
+            st.subheader(f'Curso: {curso}')
+            st.subheader(f'Quantidade: {quantidade}')
+            st.subheader(f'Prática: {pratica}')
 
     if instrutor2 != '':
-        st.subheader(f'Instrutor1: {instrutor2}')
-        st.subheader(f'Curso1: {curso2}')
-        st.subheader(f'Quantida: {quantidade2}')
-        st.subheader(f'Prática: {pratica2}')
+        with colu2:
+            st.subheader(f'Instrutor: {instrutor2}')
+            st.subheader(f'Curso: {curso2}')
+            st.subheader(f'Quantidade: {quantidade2}')
+            st.subheader(f'Prática: {pratica2}')
 # cursor.execute("SELECT * FROM lancamento_bat")
 # df = pd.DataFrame(cursor.fetchall(), columns=['ID', 'Data', 'Id_staff', 'Divisao', 'Situação'])
 # st.dataframe(df)
