@@ -60,7 +60,6 @@ if st.button('Lançar no Sistema'):
         situacao = 'PENDENTE'
         cursor.execute("INSERT INTO lancamento_as(data, id_staff, equipagens, situacao) VALUES (%s, %s, %s, %s)",
                        (data, id_as, equipagens, situacao))
-        st.write(id_as)
         mydb.commit()
     if mestre != '':
         cursor.execute(f"SELECT id FROM staffs WHERE nome = '{mestre}'")
@@ -160,9 +159,9 @@ if st.button('Lançar no Sistema'):
     lista.append('Thiago')
     data_formatada = str(data).translate(str.maketrans('', '', chars)).split('-')
     st.write('---')
-    lista_final = str(lista)
+    lista_final = str(lista).translate(str.maketrans('', '', chars2))
     st.header('Divisão')
-    st.subheader(f'Data :  {data_formatada[2]}"/"{data_formatada[1]}"/"{data_formatada[0]}')
+    st.subheader(f'Data :  {data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}')
     st.subheader(f'Staffs : {lista_final}')
     st.subheader(f'Divisão : {divisao}')
     st.subheader(f'Apoio de Superficie : {apoio_superficie}')
