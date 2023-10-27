@@ -171,22 +171,20 @@ if st.button('Lançar no Sistema'):
 
     st.write('---')
 
-    st.header('Cursos')
-
-    colu1, colu2 = st.columns(2)
     if instrutor != '':
-        with colu1:
-            st.subheader(f'Instrutor: {instrutor}')
-            st.subheader(f'Curso: {curso}')
-            st.subheader(f'Quantidade: {quantidade}')
-            st.subheader(f'Prática: {pratica}')
+        st.header('Curso')
+        st.subheader(f'Instrutor: {instrutor}')
+        st.subheader(f'Curso: {curso}')
+        st.subheader(f'Quantidade: {quantidade}')
+        st.subheader(f'Prática: {pratica}')
 
     if instrutor2 != '':
-        with colu2:
-            st.subheader(f'Instrutor: {instrutor2}')
-            st.subheader(f'Curso: {curso2}')
-            st.subheader(f'Quantidade: {quantidade2}')
-            st.subheader(f'Prática: {pratica2}')
+        st.write('---')
+        st.header('Curso 2')
+        st.subheader(f'Instrutor: {instrutor2}')
+        st.subheader(f'Curso: {curso2}')
+        st.subheader(f'Quantidade: {quantidade2}')
+        st.subheader(f'Prática: {pratica2}')
 # cursor.execute("SELECT * FROM lancamento_bat")
 # df = pd.DataFrame(cursor.fetchall(), columns=['ID', 'Data', 'Id_staff', 'Divisao', 'Situação'])
 # st.dataframe(df)
