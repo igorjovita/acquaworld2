@@ -34,7 +34,7 @@ with col4:
     staff4 = st.checkbox('Veridiana')
 divisao = st.text_input('Divisão')
 chars = "'),([]"
-
+chars2 = "'),([]"
 apoio_superficie = st.text_input('Apoio de Superficie').capitalize()
 equipagens = st.text_input('Equipagens')
 mestre = st.text_input('Mestre').capitalize()
@@ -165,11 +165,14 @@ if st.button('Lançar no Sistema'):
     lista.append('Thiago')
 
     st.write('---')
-    lista_final = str(lista).translate(str.maketrans('', '', chars))
-    st.subheader(f'Divisão dia {data}')
+    lista_final = str(lista).translate(str.maketrans('', '', chars2))
+    st.subheader(f'Data -  {data}')
     st.subheader(f'Staffs - {lista_final}')
     st.subheader(f'Divisão - {divisao}')
-
+    st.subheader(f'Apoio de Superficie - {apoio_superficie}')
+    st.subheader(f'Equipagens - {equipagens}')
+    st.subheader(f'Capitão - {mestre}')
+    st.subheader(f'Embarques - {embarques}')
 # cursor.execute("SELECT * FROM lancamento_bat")
 # df = pd.DataFrame(cursor.fetchall(), columns=['ID', 'Data', 'Id_staff', 'Divisao', 'Situação'])
 # st.dataframe(df)
