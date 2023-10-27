@@ -162,7 +162,7 @@ if st.button('Lançar no Sistema'):
     st.write('---')
     lista_final = str(lista)
     st.header('Divisão')
-    st.subheader(f'Data :  {data_formatada[2]}"/"{data_formatada[1]}"/"{data_formatada[0]}}')
+    st.subheader(f'Data :  {data_formatada[2]}"/"{data_formatada[1]}"/"{data_formatada[0]}')
     st.subheader(f'Staffs : {lista_final}')
     st.subheader(f'Divisão : {divisao}')
     st.subheader(f'Apoio de Superficie : {apoio_superficie}')
