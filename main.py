@@ -12,7 +12,10 @@ mydb = mysql.connector.connect(
     user=os.getenv("DB_USERNAME"),
     passwd=os.getenv("DB_PASSWORD"),
     db=os.getenv("DB_NAME"),
-    autocommit=True)
+    autocommit=True,
+    ssl_verify_identity=False,
+    ssl_ca=r"C:\users\acqua\downloads\cacert-2023-08-22.pem")
+
 
 cursor = mydb.cursor()
 
