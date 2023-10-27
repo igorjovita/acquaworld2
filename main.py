@@ -3,6 +3,9 @@ import pandas as pd
 import os
 import mysql.connector
 import MySQLdb
+from dotenv import load_dotenv
+
+load_dotenv()
 
 mydb = mysql.connector.connect(
     host=os.getenv("DB_HOST"),
