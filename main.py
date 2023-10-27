@@ -13,26 +13,6 @@ mydb = mysql.connector.connect(
 
 cursor = mydb.cursor()
 
-st.subheader('Cadastro de Staff')
-
-nome = st.text_input('Nome:')
-telefone = st.text_input('Telefone')
-ocupação = st.text_input('Ocupação')
-tipo = st.selectbox('Tipo', ['', 'FREELANCER', 'FIXO'])
-if tipo == 'FIXO':
-    salario = st.text_input('Valor do Salario')
-else:
-    salario = 0
-comissão = st.text_input('Valor da comissão')
-
-if st.button('Cadastrar Staff'):
-    cursor.execute("""
-        INSERT INTO staffs (nome, telefone, ocupacao, tipo, salario, comissao) VALUES (%s, %s, %s, %s, %s, %s)
-    """, (nome, telefone, ocupação, tipo, salario, comissão))
-    mydb.commit()
-    st.success('Staff Cadastrado com Sucesso!')
-st.write('---')
-
 st.subheader('Teste Divisao staffs')
 
 data = st.date_input('Data:', format='DD/MM/YYYY')
@@ -52,7 +32,6 @@ with col4:
     staff4 = st.checkbox('Veridiana')
 divisao = st.text_input('Divisão')
 chars = "'),([]"
-chars2 = "')([]"
 
 apoio_superficie = st.text_input('Apoio de Superficie').capitalize()
 equipagens = st.text_input('Equipagens')
@@ -72,6 +51,7 @@ with st.expander('Segundo Curso'):
 cursor.execute(f"SELECT id FROM staffs WHERE nome = '{apoio_superficie}'")
 id_as = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
 
+lista = []
 if st.button('Lançar no Sistema'):
 
     if apoio_superficie != '':
@@ -117,6 +97,9 @@ if st.button('Lançar no Sistema'):
             'INSERT INTO lancamento_bat (data, id_staff, divisao,situacao) VALUES (%s, %s, %s, %s)',
             (data, id_staff, divisao, situacao))
         mydb.commit()
+        lista.append('Glauber')
+    else:
+        lista.remove('Glauber')
 
     if staff2:
         nome = 'Roberta'
@@ -129,6 +112,10 @@ if st.button('Lançar no Sistema'):
             'INSERT INTO lancamento_bat (data, id_staff, divisao, situacao) VALUES (%s, %s, %s, %s)',
             (data, id_staff, divisao, situacao))
         mydb.commit()
+        lista.append('Roberta')
+
+    else:
+        lista.remove('Roberta')
 
     if staff3:
         nome = 'Martin'
@@ -179,22 +166,28 @@ if st.button('Lançar no Sistema'):
         mydb.commit()
     st.success('Divisão Lançada no Sistema')
 
-cursor.execute("SELECT * FROM lancamento_bat")
-df = pd.DataFrame(cursor.fetchall(), columns=['ID', 'Data', 'Id_staff', 'Divisao', 'Situação'])
-st.dataframe(df)
+    st.write('---')
 
-cursor.execute("SELECT * FROM lancamento_as")
-df2 = pd.DataFrame(cursor.fetchall())
-st.dataframe(df2)
+    st.subheader(f'Divisão dia {data}')
+    st.subheader(f'Staffs - {lista}')
+    st.subheader(f'Divisão - {divisao}')
 
-cursor.execute("SELECT * FROM lancamento_mestre")
-df3 = pd.DataFrame(cursor.fetchall())
-st.dataframe(df3)
-
-cursor.execute("SELECT * FROM lancamento_curso")
-df4 = pd.DataFrame(cursor.fetchall())
-st.dataframe(df4)
-
-cursor.execute("SELECT * FROM staffs")
-df5 = pd.DataFrame(cursor.fetchall())
-st.dataframe(df5)
+# cursor.execute("SELECT * FROM lancamento_bat")
+# df = pd.DataFrame(cursor.fetchall(), columns=['ID', 'Data', 'Id_staff', 'Divisao', 'Situação'])
+# st.dataframe(df)
+#
+# cursor.execute("SELECT * FROM lancamento_as")
+# df2 = pd.DataFrame(cursor.fetchall())
+# st.dataframe(df2)
+#
+# cursor.execute("SELECT * FROM lancamento_mestre")
+# df3 = pd.DataFrame(cursor.fetchall())
+# st.dataframe(df3)
+#
+# cursor.execute("SELECT * FROM lancamento_curso")
+# df4 = pd.DataFrame(cursor.fetchall())
+# st.dataframe(df4)
+#
+# cursor.execute("SELECT * FROM staffs")
+# df5 = pd.DataFrame(cursor.fetchall())
+# st.dataframe(df5)
