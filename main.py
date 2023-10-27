@@ -34,7 +34,7 @@ with col4:
     staff4 = st.checkbox('Veridiana')
 divisao = st.text_input('Divisão')
 chars = "'),([]"
-chars2 = "'),([]"
+chars2 = "')([]"
 apoio_superficie = st.text_input('Apoio de Superficie').capitalize()
 equipagens = st.text_input('Equipagens')
 mestre = st.text_input('Mestre').capitalize()
@@ -176,16 +176,21 @@ if st.button('Lançar no Sistema'):
     st.subheader(f'Embarques : {embarques}')
 
     st.write('---')
-    st.header('Cursos')
-    st.subheader(instrutor)
-    st.subheader(curso)
-    st.subheader(quantidade)
-    st.subheader(pratica)
 
-    st.subheader(instrutor2)
-    st.subheader(curso2)
-    st.subheader(quantidade2)
-    st.subheader(pratica2)
+    col1, col2 = st.columns(2)
+    st.header('Cursos')
+
+    if instrutor != '':
+        st.subheader(f'Instrutor1: {instrutor}')
+        st.subheader(f'Curso1: {curso}')
+        st.subheader(f'Quantida: {quantidade}')
+        st.subheader(f'Prática: {pratica}')
+
+    if instrutor2 != '':
+        st.subheader(f'Instrutor1: {instrutor2}')
+        st.subheader(f'Curso1: {curso2}')
+        st.subheader(f'Quantida: {quantidade2}')
+        st.subheader(f'Prática: {pratica2}')
 # cursor.execute("SELECT * FROM lancamento_bat")
 # df = pd.DataFrame(cursor.fetchall(), columns=['ID', 'Data', 'Id_staff', 'Divisao', 'Situação'])
 # st.dataframe(df)
