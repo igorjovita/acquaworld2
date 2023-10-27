@@ -102,7 +102,7 @@ if st.button('Lançar no Sistema'):
             'INSERT INTO lancamento_bat (data, id_staff, divisao,situacao) VALUES (%s, %s, %s, %s)',
             (data, id_staff, divisao, situacao))
         mydb.commit()
-
+        lista.append('Glauber')
 
     if staff2:
         nome = 'Roberta'
