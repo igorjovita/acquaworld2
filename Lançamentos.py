@@ -199,10 +199,10 @@ if st.button('Lançar no Sistema'):
         texto_staff = f"{staffd1[1]} - {staffd1[0]}"
         st.code(texto_p1 + texto_staff + texto_p2)
 
-    if staffd2 != '':
-        texto_staff = f"{staffd1[1]} - {staffd1[0]}"
-        texto_staff2 = f"{staffd2[1]} - {staffd2[0]}"
-        st.code(texto_p1 + texto_staff2 + texto_staff + texto_p2)
+    # if staffd2 != '':
+    #     texto_staff = f"{staffd1[1]} - {staffd1[0]}"
+    #     texto_staff2 = f"{staffd2[1]} - {staffd2[0]}"
+    #     st.code(texto_p1 + texto_staff2 + texto_staff + texto_p2)
 
     if staffd1 != '' and instrutor != '':
         texto_staff = f"{staffd1[1]} - {staffd1[0]}"
