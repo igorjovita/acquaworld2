@@ -190,10 +190,10 @@ if st.button('Lançar no Sistema'):
 
     if instrutor != '' and staffd1 == '' and instrutor2 == '':
         texto_curso = f"""
-        {instrutor} - {quantidade} {curso} {pratica}
-        {divisao} - {lista_final}
-        {apoio_superficie} - {equipagens} equipagens
-        {mestre} - {embarques} embarques"""
+            {instrutor} - {quantidade} {curso} {pratica}
+            {divisao} - {lista_final}
+            {apoio_superficie} - {equipagens} equipagens
+            {mestre} - {embarques} embarques"""
         st.code(texto_p1 + texto_curso)
 
     if instrutor2 != '' and staffd1 == '':
