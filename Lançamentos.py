@@ -179,7 +179,7 @@ if st.button('Lançar no Sistema'):
         *Divisão:*
         
         *{data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}*
-        {staffd1[1]} - {staffd1[1]}
+        {staffd1[1]} - {staffd1[0]}
         {divisao} - {lista_final}
         {apoio_superficie} - {equipagens} equipagens
         {mestre} - {embarques} embarques
