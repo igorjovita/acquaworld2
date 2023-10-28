@@ -39,7 +39,6 @@ with st.expander('Divisão diferente'):
     staffd1 = st.text_input('Staff1 - Lance o staff , quantidade').split(',')
     staffd2 = st.text_input('Staff2 - Lance o staff , quantidade').split(',')
 
-
 apoio_superficie = st.text_input('Apoio de Superficie').capitalize()
 
 equipagens = st.text_input('Equipagens')
@@ -184,26 +183,37 @@ if st.button('Lançar no Sistema'):
             {apoio_superficie} - {equipagens} equipagens
             {mestre} - {embarques} embarques
             """
-    if instrutor == '':
+    texto_curso = f"{instrutor} - {quantidade} {curso} {pratica}"
+    texto_curso2 = f"{instrutor2} - {quantidade2} {curso2} {pratica2}"
+    texto_staff = f"{staffd1[1]} - {staffd1[0]}"
+    texto_staff2 = f"{staffd2[1]} - {staffd2[0]}"
+
+    if instrutor == '' and texto_staff == '':
         st.code(texto_p1 + texto_p2)
 
     if instrutor != '':
-        texto_curso = f"{instrutor} - {quantidade} {curso} {pratica}"
         st.code(texto_p1 + texto_curso + texto_p2)
 
     if instrutor2 != '':
-        texto_curso = f"{instrutor} - {quantidade} {curso} {pratica}"
-        texto_curso2 = f"{instrutor2} - {quantidade2} {curso2} {pratica2}"
         st.code(texto_p1 + texto_curso + texto_curso2 + texto_p2)
 
     if staffd1 != '':
-        texto_staff = f"{staffd1[1]} - {staffd1[1]}"
         st.code(texto_p1 + texto_staff + texto_p2)
-        
 
+    if staffd2 != '':
+        st.code(texto_p1 + texto_staff + texto_staff2 + texto_p2)
 
+    if staffd1 != '' and instrutor != '':
+        st.code(texto_p1 + texto_staff + texto_curso + texto_p2)
 
+    if staffd1 != '' and instrutor != '' and instrutor2 != '':
+        st.code(texto_p1 + texto_staff + texto_curso + texto_curso2 + texto_p2)
 
+    if staffd1 != '' and staffd2 != '' and instrutor != '' and instrutor2 != '':
+        st.code(texto_p1 + texto_staff + texto_staff2 + texto_curso + texto_curso2 + texto_p2)
+
+    if staffd1 != '' and staffd2 != '' and instrutor != '':
+        st.code(texto_p1 + texto_staff + texto_staff2 + texto_curso + texto_p2)
 
 # cursor.execute("SELECT * FROM lancamento_bat")
 # df = pd.DataFrame(cursor.fetchall(), columns=['ID', 'Data', 'Id_staff', 'Divisao', 'Situação'])
