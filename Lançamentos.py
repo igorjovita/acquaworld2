@@ -36,16 +36,9 @@ with col4:
 divisao = st.text_input('Divisão')
 
 with st.expander('Divisão diferente'):
-    colu1, colu2 = st.columns(2)
+    staffd1 = st.text_input('Staff1 - Lance o staff , quantidade').split(',')
+    staffd2 = st.text_input('Staff2 - Lance o staff , quantidade').split(',')
 
-    with colu1:
-        staffd1 = st.text_input('Staff1').capitalize()
-        staffd2 = st.text_input('Staff2').capitalize()
-        staffd1 = st.text_input('Staff3').capitalize()
-    with colu2:
-        divisaod1 = st.text_input('Divisão Staff1')
-        divisaod2 = st.text_input('Divisão Staff2')
-        divisaod3 = st.text_input('Divisão Staff3')
 
 apoio_superficie = st.text_input('Apoio de Superficie').capitalize()
 
@@ -181,12 +174,12 @@ if st.button('Lançar no Sistema'):
     st.write('---')
     lista_final = str(lista).translate(str.maketrans('', '', chars2))
 
-    if lista_final != '':
-
+    if instrutor == '':
         texto = f"""
         *Divisão:*
         
         *{data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}*
+        {staffd1[1]} - {staffd1[1]}
         {divisao} - {lista_final}
         {apoio_superficie} - {equipagens} equipagens
         {mestre} - {embarques} embarques
@@ -218,31 +211,9 @@ if st.button('Lançar no Sistema'):
         st.code(texto_curso2)
 
 
-    st.header('Divisão')
-    st.subheader(f'Data :  {data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}')
-    st.subheader(f'Staffs : {lista_final}')
-    st.subheader(f'Divisão : {divisao}')
-    st.subheader(f'Apoio de Superficie : {apoio_superficie}')
-    st.subheader(f'Equipagens : {equipagens}')
-    st.subheader(f'Capitão : {mestre}')
-    st.subheader(f'Embarques : {embarques}')
 
-    st.write('---')
 
-    if instrutor != '':
-        st.header('Curso')
-        st.subheader(f'Instrutor: {instrutor}')
-        st.subheader(f'Curso: {curso}')
-        st.subheader(f'Quantidade: {quantidade}')
-        st.subheader(f'Prática: {pratica}')
 
-    if instrutor2 != '':
-        st.write('---')
-        st.header('Curso 2')
-        st.subheader(f'Instrutor: {instrutor2}')
-        st.subheader(f'Curso: {curso2}')
-        st.subheader(f'Quantidade: {quantidade2}')
-        st.subheader(f'Prática: {pratica2}')
 # cursor.execute("SELECT * FROM lancamento_bat")
 # df = pd.DataFrame(cursor.fetchall(), columns=['ID', 'Data', 'Id_staff', 'Divisao', 'Situação'])
 # st.dataframe(df)
