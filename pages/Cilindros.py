@@ -19,10 +19,10 @@ data = st.date_input
 staff = st.selectbox('Staff', ['', 'Juarez', 'Glauber', 'Roberta'])
 bt_inicio = st.button('Horario de Inicio')
 if bt_inicio:
-    inicio = st.write(now.strftime("%d/%m/%Y %H:%M:%S"))
-bt_final = st.time_input('Horario de Termino')
+    inicio = st.write(now.strftime("%H:%M:%S"))
+bt_final = st.button('Horario de Termino')
 if bt_final:
-    final = st.write(now.strftime("%d/%m/%Y %H:%M:%S"))
+    final = st.write(now.strftime("%H:%M:%S"))
 quantidade_acqua = st.text_input('Cilindros Acqua')
 quantidade_pl = st.text_input('Cilindros PL')
 quentinha = st.selectbox('Almoço', ['', 'Sim', 'Não'])
