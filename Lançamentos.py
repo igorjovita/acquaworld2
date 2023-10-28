@@ -186,9 +186,7 @@ if st.button('Lançar no Sistema'):
     texto_curso = f"{instrutor} - {quantidade} {curso} {pratica}"
     texto_curso2 = f"{instrutor2} - {quantidade2} {curso2} {pratica2}"
     texto_staff = f"{staffd1[1]} - {staffd1[0]}"
-    texto_staff2 = f"""
-    
-                {staffd2[1]} - {staffd2[0]}"""
+    texto_staff2 = f"{staffd2[1]} - {staffd2[0]}"
 
     if instrutor == '' and texto_staff == '':
         st.code(texto_p1 + texto_p2)
@@ -203,7 +201,7 @@ if st.button('Lançar no Sistema'):
         st.code(texto_p1 + texto_staff + texto_p2)
 
     if staffd2 != '':
-        st.code(texto_p1 + texto_staff + texto_staff2 + texto_p2)
+        st.code(texto_p1 + texto_staff2 + texto_staff1 + texto_p2)
 
     if staffd1 != '' and instrutor != '':
         st.code(texto_p1 + texto_staff + texto_curso + texto_p2)
