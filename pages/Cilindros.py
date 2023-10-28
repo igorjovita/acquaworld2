@@ -1,6 +1,7 @@
 import streamlit as st
 import mysql.connector
 import os
+from datetime import datetime
 
 
 mydb = mysql.connector.connect(
@@ -13,11 +14,15 @@ mydb = mysql.connector.connect(
     ssl_ca=r"C:\users\acqua\downloads\cacert-2023-08-22.pem")
 
 cursor = mydb.cursor()
-
+now = datetime.now()
 data = st.date_input
 staff = st.selectbox('Staff', ['', 'Juarez', 'Glauber', 'Roberta'])
-inicio = st.time_input('Horário de Inicio')
-final = st.time_input('Horário Término')
+bt_inicio = st.button('Horario de Inicio')
+if bt_inicio:
+    inicio = st.write(now.strftime("%d/%m/%Y %H:%M:%S"))
+bt_final = st.time_input('Horario de Termino')
+if bt_final:
+    final = st.write(now.strftime("%d/%m/%Y %H:%M:%S"))
 quantidade_acqua = st.text_input('Cilindros Acqua')
 quantidade_pl = st.text_input('Cilindros PL')
 quentinha = st.selectbox('Almoço', ['', 'Sim', 'Não'])
