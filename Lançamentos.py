@@ -197,7 +197,7 @@ if st.button('Lançar no Sistema'):
         st.code(texto_p1 + texto_curso + texto_curso2 + texto_p2)
 
     if staffd1 != '':
-        texto_staff = f"{staffd1[1] - staffd1[1]}"
+        texto_staff = f"{staffd1[1]} - {staffd1[1]}"
         st.code(texto_p1 + texto_staff + texto_p2)
         
 
