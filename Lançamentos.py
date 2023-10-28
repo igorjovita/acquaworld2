@@ -174,35 +174,32 @@ if st.button('Lançar no Sistema'):
     st.write('---')
     lista_final = str(lista).translate(str.maketrans('', '', chars2))
 
-    texto = f"""
+    texto_p1 = f"""
             *Divisão:*
 
             *{data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}*
+            """
+    texto_p2 = f""" 
             {divisao} - {lista_final}
             {apoio_superficie} - {equipagens} equipagens
             {mestre} - {embarques} embarques
             """
-
     if instrutor == '':
-        st.code(texto)
+        st.code(texto_p1 + texto_p2)
 
     if instrutor != '':
         texto_curso = f"{instrutor} - {quantidade} {curso} {pratica}"
-        texto_formatado = texto + texto_curso
-        st.code(texto_formatado)
+        st.code(texto_p1 + texto_curso + texto_p2)
 
     if instrutor2 != '':
-        texto_curso2 = f"""
-            *Divisão:*
-    
-            *{data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}*
-            {instrutor} - {quantidade} {curso} {pratica}
-            {instrutor2} - {quantidade2} {curso2} {pratica2}
-            {divisao} - {lista_final}
-            {apoio_superficie} - {equipagens} equipagens
-            {mestre} - {embarques} embarques
-            """
-        st.code(texto_curso2)
+        texto_curso = f"{instrutor} - {quantidade} {curso} {pratica}"
+        texto_curso2 = f"{instrutor2} - {quantidade2} {curso2} {pratica2}"
+        st.code(texto_p1 + texto_curso + texto_curso2 + texto_p2)
+
+    if staffd1 != '':
+        texto_staff = f"{staffd1[1] - staffd1[1]}"
+        st.code(texto_p1 + texto_staff + texto_p2)
+        
 
 
 
