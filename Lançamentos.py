@@ -204,7 +204,7 @@ if st.button('Lançar no Sistema'):
         staffd1_formatado = staffd1.split(',')
         staffd2_formatado = staffd2.split(',')
         texto_staff2 = f"""
-                    {staffd1_formatado[1]} - {staffd1_formatado[0]}\n
+                    {staffd1_formatado[1]} - {staffd1_formatado[0]}
                     {staffd2_formatado[1]} - {staffd2_formatado[0]}"""
         st.code(texto_p1 + texto_staff2 + texto_p2)
 
