@@ -186,8 +186,10 @@ if st.button('Lançar no Sistema'):
     texto_curso = f"{instrutor} - {quantidade} {curso} {pratica}"
     texto_curso2 = f"{instrutor2} - {quantidade2} {curso2} {pratica2}"
     texto_staff = f"{staffd1[1]} - {staffd1[0]}"
-    texto_staff2 = f"{staffd2[1]} - {staffd2[0]}"
-    espaço = '\n'
+    texto_staff2 = f"""
+    
+                {staffd2[1]} - {staffd2[0]}"""
+
     if instrutor == '' and texto_staff == '':
         st.code(texto_p1 + texto_p2)
 
