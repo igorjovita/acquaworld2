@@ -16,7 +16,7 @@ cursor = mydb.cursor()
 
 st.subheader('Cadastro de Staff')
 
-nome = st.text_input('Nome:')
+nome = st.text_input('Nome:').capitalize().strip()
 telefone = st.text_input('Telefone')
 ocupação = st.text_input('Ocupação')
 tipo = st.selectbox('Tipo', ['', 'FREELANCER', 'FIXO'])
