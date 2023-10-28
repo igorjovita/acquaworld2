@@ -178,8 +178,7 @@ if st.button('Lançar no Sistema'):
 
             *{data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}*
             """
-    texto_p2 = f""" 
-            {divisao} - {lista_final}
+    texto_p2 = f""" {divisao} - {lista_final}
             {apoio_superficie} - {equipagens} equipagens
             {mestre} - {embarques} embarques
             """
@@ -226,6 +225,7 @@ if st.button('Lançar no Sistema'):
         texto_staff_curso2 = f"""
             {instrutor} - {quantidade} {curso} {pratica}
             {instrutor2} - {quantidade2} {curso2} {pratica2}
+            
             {staffd1_formatado[1]} - {staffd1_formatado[0]}
             {staffd2_formatado[1]} - {staffd2_formatado[0]}
             """
@@ -236,6 +236,7 @@ if st.button('Lançar no Sistema'):
         staffd2_formatado = staffd2.split(',')
         texto_staff_curso = f"""
             {instrutor} - {quantidade} {curso} {pratica}
+            
             {staffd1_formatado[1]} - {staffd1_formatado[0]}
             {staffd2_formatado[1]} - {staffd2_formatado[0]}
             """
