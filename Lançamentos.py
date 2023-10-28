@@ -176,7 +176,7 @@ if st.button('Lançar no Sistema'):
                                    f'Staffs: {lista_final}\n'
                                    f'Divisão: {divisao}\n'
                                    f'AS: {apoio_superficie} - {equipagens} equipagens\n'
-                                   f'Capitão: {mestre} - {embarques} embarques')
+                                   f'Capitão: {mestre} - {embarques} embarques', height=100)
 
 
     st.header('Divisão')
