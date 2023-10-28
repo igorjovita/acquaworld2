@@ -179,7 +179,6 @@ if st.button('Lançar no Sistema'):
         *Divisão:*
         
         *{data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}*
-        {staffd1[1]} - {staffd1[0]}
         {divisao} - {lista_final}
         {apoio_superficie} - {equipagens} equipagens
         {mestre} - {embarques} embarques
@@ -187,16 +186,9 @@ if st.button('Lançar no Sistema'):
         st.code(texto)
 
     if instrutor != '':
-        texto_curso = f"""
-        *Divisão:*
-        
-        *{data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}*
-        {instrutor} - {quantidade} {curso} {pratica}
-        {divisao} - {lista_final}
-        {apoio_superficie} - {equipagens} equipagens
-        {mestre} - {embarques} embarques
-        """
-        st.code(texto_curso)
+        texto_curso = f"{instrutor} - {quantidade} {curso} {pratica}"
+        st.code(texto + texto_curso)
+
     if instrutor2 != '':
         texto_curso2 = f"""
             *Divisão:*
