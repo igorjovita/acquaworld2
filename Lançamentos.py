@@ -189,35 +189,35 @@ if st.button('Lançar no Sistema'):
     if instrutor == '' and staffd1 == '':
         st.code(texto_p1 + texto_p2)
 
-    if instrutor != '':
+    elif instrutor != '':
         st.code(texto_p1 + texto_curso + texto_p2)
 
-    if instrutor2 != '':
+    elif instrutor2 != '':
         st.code(texto_p1 + texto_curso + texto_curso2 + texto_p2)
 
-    if staffd1 != '' and staffd2 == '':
+    elif staffd1 != '' and staffd2 == '':
         texto_staff = f"{staffd1[1]} - {staffd1[0]}"
         st.code(texto_p1 + texto_staff + texto_p2)
 
-    if staffd1 != '' and staffd2 != '':
+    elif staffd1 != '' and staffd2 != '':
         texto_staff = f"{staffd1[1]} - {staffd1[0]}"
         texto_staff2 = f"{staffd2[1]} - {staffd2[0]}"
         st.code(texto_p1 + texto_staff2 + texto_staff + texto_p2)
 
-    if staffd1 != '' and instrutor != '':
+    elif staffd1 != '' and instrutor != '':
         texto_staff = f"{staffd1[1]} - {staffd1[0]}"
         st.code(texto_p1 + texto_staff + texto_curso + texto_p2)
 
-    if staffd1 != '' and instrutor != '' and instrutor2 != '':
+    elif staffd1 != '' and instrutor != '' and instrutor2 != '':
         texto_staff = f"{staffd1[1]} - {staffd1[0]}"
         st.code(texto_p1 + texto_staff + texto_curso + texto_curso2 + texto_p2)
 
-    if staffd1 != '' and staffd2 != '' and instrutor != '' and instrutor2 != '':
+    elif staffd1 != '' and staffd2 != '' and instrutor != '' and instrutor2 != '':
         texto_staff = f"{staffd1[1]} - {staffd1[0]}"
         texto_staff2 = f"{staffd2[1]} - {staffd2[0]}"
         st.code(texto_p1 + texto_staff + texto_staff2 + texto_curso + texto_curso2 + texto_p2)
 
-    if staffd1 != '' and staffd2 != '' and instrutor != '':
+    elif staffd1 != '' and staffd2 != '' and instrutor != '':
         texto_staff = f"{staffd1[1]} - {staffd1[0]}"
         texto_staff2 = f"{staffd2[1]} - {staffd2[0]}"
         st.code(texto_p1 + texto_staff + texto_staff2 + texto_curso + texto_p2)
