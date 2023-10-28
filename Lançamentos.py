@@ -208,11 +208,11 @@ if st.button('Lançar no Sistema'):
             {staffd2_formatado[1]} - {staffd2_formatado[0]}"""
         st.code(texto_p1 + texto_staff2 + texto_p2)
 
-    if staffd1 != '' and instrutor != '':
+    if staffd1 != '' and instrutor != '' and staffd2 == '':
         texto_staff = f"{staffd1[1]} - {staffd1[0]}"
         st.code(texto_p1 + texto_staff + texto_curso + texto_p2)
 
-    if staffd1 != '' and instrutor != '' and instrutor2 != '':
+    if staffd1 != '' and instrutor != '' and instrutor2 != '' and staffd2 == '':
         texto_staff = f"{staffd1[1]} - {staffd1[0]}"
         st.code(texto_p1 + texto_staff + texto_curso + texto_curso2 + texto_p2)
 
@@ -220,17 +220,17 @@ if st.button('Lançar no Sistema'):
         staffd1_formatado = staffd1.split(',')
         staffd2_formatado = staffd2.split(',')
         texto_staff2 = f"""
-                    {staffd1_formatado[1]} - {staffd1_formatado[0]}
-                    {staffd2_formatado[1]} - {staffd2_formatado[0]}"""
+            {staffd1_formatado[1]} - {staffd1_formatado[0]}
+            {staffd2_formatado[1]} - {staffd2_formatado[0]}"""
         st.code(texto_p1 + texto_staff2 + texto_curso + texto_curso2 + texto_p2)
 
-    if staffd1 != '' and staffd2 != '' and instrutor != '':
+    if staffd1 != '' and staffd2 != '' and instrutor != '' and instrutor2 == '':
         staffd1_formatado = staffd1.split(',')
         staffd2_formatado = staffd2.split(',')
         texto_staff2 = f"""
-                    {staffd1_formatado[1]} - {staffd1_formatado[0]}
-                    {staffd2_formatado[1]} - {staffd2_formatado[0]}"""
-        st.code(texto_p1 +  texto_staff2 + texto_curso + texto_p2)
+            {staffd1_formatado[1]} - {staffd1_formatado[0]}
+            {staffd2_formatado[1]} - {staffd2_formatado[0]}"""
+        st.code(texto_p1 + texto_staff2 + texto_curso + texto_p2)
 
 # cursor.execute("SELECT * FROM lancamento_bat")
 # df = pd.DataFrame(cursor.fetchall(), columns=['ID', 'Data', 'Id_staff', 'Divisao', 'Situação'])
