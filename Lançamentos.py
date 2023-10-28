@@ -169,14 +169,14 @@ if st.button('Lançar no Sistema'):
     st.write('---')
     lista_final = str(lista).translate(str.maketrans('', '', chars2))
 
-    texto = f""" *Data*: {data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}\n'
-               *Staffs*: {lista_final}\n'
-               *Divisão*: {divisao}\n'\
-               *AS*: {apoio_superficie} - {equipagens} equipagens\n'
-               *Capitão*: {mestre} - {embarques} embarques'
+    texto = f"""
+    *Data*: {data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}\n'
+    *Staffs*: {lista_final}\n'
+    *Divisão*: {divisao}\n'\
+    *AS*: {apoio_superficie} - {equipagens} equipagens\n'
+    *Capitão*: {mestre} - {embarques} embarques'
     """
 
-    st.text_area('Whatsapp', value=texto, height=300)
     st.code(texto)
 
     st.header('Divisão')
