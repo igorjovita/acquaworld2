@@ -4,14 +4,12 @@ import os
 import mysql.connector
 import MySQLdb
 
-
 mydb = mysql.connector.connect(
     host=os.getenv("DB_HOST"),
     user=os.getenv("DB_USERNAME"),
     passwd=os.getenv("DB_PASSWORD"),
     db=os.getenv("DB_NAME"),
     autocommit=True)
-
 
 cursor = mydb.cursor(buffered=True)
 
@@ -44,7 +42,6 @@ equipagens = st.text_input('Equipagens')
 mestre = st.text_input('Mestre').capitalize()
 
 embarques = st.text_input('Embarques')
-
 
 instrutor = st.selectbox('Instrutor', ['', 'Glauber', 'Martin'])
 
@@ -172,12 +169,15 @@ if st.button('Lançar no Sistema'):
     st.write('---')
     lista_final = str(lista).translate(str.maketrans('', '', chars2))
 
-    st.text_area('Whatsapp', value=f'Data {data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}\n'
-                                   f'Staffs: {lista_final}\n'
-                                   f'Divisão: {divisao}\n'
-                                   f'AS: {apoio_superficie} - {equipagens} equipagens\n'
-                                   f'Capitão: {mestre} - {embarques} embarques', height=300)
+    texto = f""" *Data*: {data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}\n'
+               *Staffs*: {lista_final}\n'
+               *Divisão*: {divisao}\n'\
+               *AS*: {apoio_superficie} - {equipagens} equipagens\n'
+               *Capitão*: {mestre} - {embarques} embarques'
+    """
 
+    st.text_area('Whatsapp', value=texto, height=300)
+    st.code(texto)
 
     st.header('Divisão')
     st.subheader(f'Data :  {data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}')
