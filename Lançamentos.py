@@ -15,6 +15,9 @@ mydb = mysql.connector.connect(
 
 cursor = mydb.cursor(buffered=True)
 
+chars = "'),([]"
+chars2 = "')([]"
+
 st.subheader('Divisão Diaria')
 
 data = st.date_input('Data:', format='DD/MM/YYYY')
@@ -33,17 +36,24 @@ with col3:
 with col4:
     staff4 = st.checkbox('Veridiana')
 divisao = st.text_input('Divisão')
-chars = "'),([]"
-chars2 = "')([]"
+
 apoio_superficie = st.text_input('Apoio de Superficie').capitalize()
+
 equipagens = st.text_input('Equipagens')
+
 mestre = st.text_input('Mestre').capitalize()
+
 embarques = st.text_input('Embarques')
 
+
 instrutor = st.selectbox('Instrutor', ['', 'Glauber', 'Martin'])
+
 curso = st.selectbox('Curso', ['', 'OWD', 'ADV', 'REVIEW', 'RESCUE', 'PRIMEIROS SOCORROS', 'DIVEMASTER'])
+
 quantidade = st.text_input('Quantidade')
+
 pratica = st.selectbox('Pratica', ['', 'Pratica 1', 'Pratica 2'])
+
 with st.expander('Segundo Curso'):
     instrutor2 = st.selectbox('Instrutor2', ['', 'Glauber', 'Martin'])
     curso2 = st.selectbox('Curso2', ['', 'OWD', 'ADV', 'REVIEW', 'RESCUE', 'PRIMEIROS SOCORROS', 'DIVEMASTER'])
@@ -155,11 +165,20 @@ if st.button('Lançar no Sistema'):
             'INSERT INTO lancamento_bat (data, id_staff, divisao, situacao) VALUES (%s, %s, %s, %s)',
             (data, id_staff, divisao, situacao))
         mydb.commit()
+        lista.append('Thiago')
     st.success('Divisão Lançada no Sistema')
-    lista.append('Thiago')
+
     data_formatada = str(data).translate(str.maketrans('', '', chars)).split('-')
     st.write('---')
     lista_final = str(lista).translate(str.maketrans('', '', chars2))
+
+    st.text_area('Whatsapp', value=f'Data {data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}\n'
+                                   f'Staffs: {lista_final}\n'
+                                   f'Divisão: {divisao}\n'
+                                   f'AS: {apoio_superficie} - {equipagens} equipagens\n'
+                                   f'Capitão: {mestre} - {embarques} embarques')
+
+
     st.header('Divisão')
     st.subheader(f'Data :  {data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}')
     st.subheader(f'Staffs : {lista_final}')
