@@ -174,20 +174,22 @@ if st.button('Lançar no Sistema'):
     st.write('---')
     lista_final = str(lista).translate(str.maketrans('', '', chars2))
 
+    texto = f"""
+            *Divisão:*
+
+            *{data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}*
+            {divisao} - {lista_final}
+            {apoio_superficie} - {equipagens} equipagens
+            {mestre} - {embarques} embarques
+            """
+
     if instrutor == '':
-        texto = f"""
-        *Divisão:*
-        
-        *{data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}*
-        {divisao} - {lista_final}
-        {apoio_superficie} - {equipagens} equipagens
-        {mestre} - {embarques} embarques
-        """
         st.code(texto)
 
     if instrutor != '':
         texto_curso = f"{instrutor} - {quantidade} {curso} {pratica}"
-        st.code(texto + texto_curso)
+        texto_formatado = texto + texto_curso
+        st.code(texto_formatado)
 
     if instrutor2 != '':
         texto_curso2 = f"""
