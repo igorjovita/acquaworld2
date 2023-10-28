@@ -192,8 +192,12 @@ if st.button('Lançar no Sistema'):
     if instrutor != '' and staffd1 == '' and instrutor2 == '':
         st.code(texto_p1 + texto_curso + texto_p2)
 
-    if instrutor2 != '':
-        st.code(texto_p1 + texto_curso + texto_curso2 + texto_p2)
+    if instrutor2 != '' and staffd1 == '':
+        texto_curso_total = f"""
+            {instrutor} - {quantidade} {curso} {pratica}
+            {instrutor2} - {quantidade2} {curso2} {pratica2}
+            """
+        st.code(texto_p1 + texto_curso_total + texto_p2)
 
     if staffd1 != '' and staffd2 == '':
         staffd1_formatado = staffd1.split(',')
