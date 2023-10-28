@@ -200,19 +200,19 @@ if st.button('Lançar no Sistema'):
 
     if staffd1 != '' and staffd2 == '':
         staffd1_formatado = staffd1.split(',')
-        texto_staff = f"""{staffd1_formatado[1]} - {staffd1_formatado[0]}
-            {divisao} - {lista_final}
-            {apoio_superficie} - {equipagens} equipagens
-            {mestre} - {embarques} embarques"""
-        st.code(texto_p1 + texto_staff)
+        texto_staff = f"{staffd1_formatado[1]} - {staffd1_formatado[0]}"
+        st.code(texto_p1 + texto_staff + texto_p2)
 
     if staffd1 != '' and staffd2 != '' and instrutor == '':
         staffd1_formatado = staffd1.split(',')
         staffd2_formatado = staffd2.split(',')
         texto_staff2 = f"""
             {staffd1_formatado[1]} - {staffd1_formatado[0]}
-            {staffd2_formatado[1]} - {staffd2_formatado[0]}"""
-        st.code(texto_p1 + texto_staff2 + texto_p2)
+            {staffd2_formatado[1]} - {staffd2_formatado[0]}
+            {divisao} - {lista_final}
+            {apoio_superficie} - {equipagens} equipagens
+            {mestre} - {embarques} embarques"""
+        st.code(texto_p1 + texto_staff2)
 
     if staffd1 != '' and instrutor != '' and staffd2 == '':
         texto_staff = f"{staffd1[1]} - {staffd1[0]}"
