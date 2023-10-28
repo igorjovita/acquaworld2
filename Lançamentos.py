@@ -224,19 +224,21 @@ if st.button('Lançar no Sistema'):
         staffd1_formatado = staffd1.split(',')
         staffd2_formatado = staffd2.split(',')
         texto_staff_curso2 = f"""
+            {instrutor} - {quantidade} {curso} {pratica}
+            {instrutor2} - {quantidade2} {curso2} {pratica2}
             {staffd1_formatado[1]} - {staffd1_formatado[0]}
             {staffd2_formatado[1]} - {staffd2_formatado[0]}
-            {instrutor} - {quantidade} {curso} {pratica}
-            {instrutor2} - {quantidade2} {curso2} {pratica2}"""
+            """
         st.code(texto_p1 + texto_staff_curso2 + texto_p2)
 
     if staffd1 != '' and staffd2 != '' and instrutor != '' and instrutor2 == '':
         staffd1_formatado = staffd1.split(',')
         staffd2_formatado = staffd2.split(',')
         texto_staff_curso = f"""
+            {instrutor} - {quantidade} {curso} {pratica}
             {staffd1_formatado[1]} - {staffd1_formatado[0]}
             {staffd2_formatado[1]} - {staffd2_formatado[0]}
-            {instrutor} - {quantidade} {curso} {pratica}"""
+            """
         st.code(texto_p1 + texto_staff_curso + texto_p2)
 
 # cursor.execute("SELECT * FROM lancamento_bat")
