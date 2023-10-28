@@ -178,7 +178,7 @@ if st.button('Lançar no Sistema'):
 
             *{data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}*
             """
-    texto_p2 = f""" {divisao} - {lista_final}
+    texto_p2 = f"""{divisao} - {lista_final}
             {apoio_superficie} - {equipagens} equipagens
             {mestre} - {embarques} embarques
             """
