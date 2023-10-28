@@ -200,7 +200,8 @@ if st.button('Lançar no Sistema'):
 
     if staffd1 != '' and staffd2 == '':
         staffd1_formatado = staffd1.split(',')
-        texto_staff = f"""{staffd1_formatado[1]} - {staffd1_formatado[0]}
+        texto_staff = f"""
+        {staffd1_formatado[1]} - {staffd1_formatado[0]}
         {divisao} - {lista_final}
         {apoio_superficie} - {equipagens} equipagens
         {mestre} - {embarques} embarques"""
