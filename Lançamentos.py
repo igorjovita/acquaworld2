@@ -197,7 +197,7 @@ if st.button('Lançar no Sistema'):
     if instrutor2 != '':
         st.code(texto_p1 + texto_curso + texto_curso2 + texto_p2)
 
-    if staffd1 != '':
+    if staffd1 != '' and staffd2 == '':
         st.code(texto_p1 + texto_staff + texto_p2)
 
     if staffd2 != '':
