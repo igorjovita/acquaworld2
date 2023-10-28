@@ -36,14 +36,14 @@ with col4:
 divisao = st.text_input('Divisão')
 
 with st.expander('Divisão diferente'):
-    staffd1 = st.text_input('Staff1 - Lance o staff , quantidade')
-    staffd2 = st.text_input('Staff2 - Lance o staff , quantidade')
+    staffd1 = st.text_input('Staff1 - Lance o staff , quantidade').capitalize()
+    staffd2 = st.text_input('Staff2 - Lance o staff , quantidade').capitalize()
 
-apoio_superficie = st.text_input('Apoio de Superficie').capitalize()
+apoio_superficie = st.selectbox('Apoio de Superficie', ['', 'Juarez', 'Miranda', 'Glauber', 'Roberta'])
 
 equipagens = st.text_input('Equipagens')
 
-mestre = st.text_input('Mestre').capitalize()
+mestre = st.selectbox('Mestre', ['', 'Risadinha', 'Marquinhos', 'Freelancer'])
 
 embarques = st.text_input('Embarques')
 
