@@ -35,6 +35,18 @@ with col4:
     staff4 = st.checkbox('Veridiana')
 divisao = st.text_input('Divisão')
 
+with st.expander('Divisão diferente'):
+    colu1, colu2 = st.columns(2)
+
+    with colu1:
+        staffd1 = st.text_input('Staff1').capitalize()
+        staffd2 = st.text_input('Staff2').capitalize()
+        staffd1 = st.text_input('Staff3').capitalize()
+    with colu1:
+        divisaod1 = st.text_input('Divisão Staff1')
+        divisaod2 = st.text_input('Divisão Staff2')
+        divisaod3 = st.text_input('Divisão Staff3')
+
 apoio_superficie = st.text_input('Apoio de Superficie').capitalize()
 
 equipagens = st.text_input('Equipagens')
@@ -170,11 +182,33 @@ if st.button('Lançar no Sistema'):
     lista_final = str(lista).translate(str.maketrans('', '', chars2))
 
     texto = f"""
+    *Divisão:*
+    
     *{data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}*
     {divisao} - {lista_final}
     {apoio_superficie} - {equipagens} equipagens
     {mestre} - {embarques} embarques
     """
+    texto_curso = f"""
+    *Divisão:*
+    
+    *{data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}*
+    {instrutor} - {quantidade} {curso} {pratica}
+    {divisao} - {lista_final}
+    {apoio_superficie} - {equipagens} equipagens
+    {mestre} - {embarques} embarques
+    """
+
+    texto_curso2 = f"""
+        *Divisão:*
+
+        *{data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}*
+        {instrutor} - {quantidade} {curso} {pratica}
+        {instrutor2} - {quantidade2} {curso2} {pratica2}
+        {divisao} - {lista_final}
+        {apoio_superficie} - {equipagens} equipagens
+        {mestre} - {embarques} embarques
+        """
 
     st.code(texto)
 
