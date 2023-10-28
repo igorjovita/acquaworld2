@@ -36,8 +36,8 @@ with col4:
 divisao = st.text_input('Divisão')
 
 with st.expander('Divisão diferente'):
-    staffd1 = st.text_input('Staff1 - Lance o staff , quantidade').split(',')
-    staffd2 = st.text_input('Staff2 - Lance o staff , quantidade').split(',')
+    staffd1 = st.text_input('Staff1 - Lance o staff , quantidade')
+    staffd2 = st.text_input('Staff2 - Lance o staff , quantidade')
 
 apoio_superficie = st.text_input('Apoio de Superficie').capitalize()
 
@@ -189,38 +189,41 @@ if st.button('Lançar no Sistema'):
     if instrutor == '' and staffd1 == '':
         st.code(texto_p1 + texto_p2)
 
-        if instrutor != '':
-            st.code(texto_p1 + texto_curso + texto_p2)
+    if instrutor != '':
+        st.code(texto_p1 + texto_curso + texto_p2)
 
-        if instrutor2 != '':
-            st.code(texto_p1 + texto_curso + texto_curso2 + texto_p2)
+    if instrutor2 != '':
+        st.code(texto_p1 + texto_curso + texto_curso2 + texto_p2)
 
-        if staffd1 != '' and staffd2 == '':
-            texto_staff = f"{staffd1[1]} - {staffd1[0]}"
-            st.code(texto_p1 + texto_staff + texto_p2)
+    if staffd1 != '' and staffd2 == '':
+        staffd1.split(',')
+        texto_staff = f"{staffd1[1]} - {staffd1[0]}"
+        st.code(texto_p1 + texto_staff + texto_p2)
 
-        if staffd1 != '' and staffd2 != '':
-            texto_staff = f"{staffd1[1]} - {staffd1[0]}"
-            texto_staff2 = f"{staffd2[1]} - {staffd2[0]}"
-            st.code(texto_p1 + texto_staff2 + texto_staff + texto_p2)
+    if staffd1 != '' and staffd2 != '':
+        staffd1.split(',')
+        staffd2.split(',')
+        texto_staff = f"{staffd1[1]} - {staffd1[0]}"
+        texto_staff2 = f"{staffd2[1]} - {staffd2[0]}"
+        st.code(texto_p1 + texto_staff2 + texto_staff + texto_p2)
 
-        if staffd1 != '' and instrutor != '':
-            texto_staff = f"{staffd1[1]} - {staffd1[0]}"
-            st.code(texto_p1 + texto_staff + texto_curso + texto_p2)
+    if staffd1 != '' and instrutor != '':
+        texto_staff = f"{staffd1[1]} - {staffd1[0]}"
+        st.code(texto_p1 + texto_staff + texto_curso + texto_p2)
 
-        if staffd1 != '' and instrutor != '' and instrutor2 != '':
-            texto_staff = f"{staffd1[1]} - {staffd1[0]}"
-            st.code(texto_p1 + texto_staff + texto_curso + texto_curso2 + texto_p2)
+    if staffd1 != '' and instrutor != '' and instrutor2 != '':
+        texto_staff = f"{staffd1[1]} - {staffd1[0]}"
+        st.code(texto_p1 + texto_staff + texto_curso + texto_curso2 + texto_p2)
 
-        if staffd1 != '' and staffd2 != '' and instrutor != '' and instrutor2 != '':
-            texto_staff = f"{staffd1[1]} - {staffd1[0]}"
-            texto_staff2 = f"{staffd2[1]} - {staffd2[0]}"
-            st.code(texto_p1 + texto_staff + texto_staff2 + texto_curso + texto_curso2 + texto_p2)
+    if staffd1 != '' and staffd2 != '' and instrutor != '' and instrutor2 != '':
+        texto_staff = f"{staffd1[1]} - {staffd1[0]}"
+        texto_staff2 = f"{staffd2[1]} - {staffd2[0]}"
+        st.code(texto_p1 + texto_staff + texto_staff2 + texto_curso + texto_curso2 + texto_p2)
 
-        if staffd1 != '' and staffd2 != '' and instrutor != '':
-            texto_staff = f"{staffd1[1]} - {staffd1[0]}"
-            texto_staff2 = f"{staffd2[1]} - {staffd2[0]}"
-            st.code(texto_p1 + texto_staff + texto_staff2 + texto_curso + texto_p2)
+    if staffd1 != '' and staffd2 != '' and instrutor != '':
+        texto_staff = f"{staffd1[1]} - {staffd1[0]}"
+        texto_staff2 = f"{staffd2[1]} - {staffd2[0]}"
+        st.code(texto_p1 + texto_staff + texto_staff2 + texto_curso + texto_p2)
 
 # cursor.execute("SELECT * FROM lancamento_bat")
 # df = pd.DataFrame(cursor.fetchall(), columns=['ID', 'Data', 'Id_staff', 'Divisao', 'Situação'])
