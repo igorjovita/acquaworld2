@@ -196,15 +196,15 @@ if st.button('Lançar no Sistema'):
         st.code(texto_p1 + texto_curso + texto_curso2 + texto_p2)
 
     if staffd1 != '' and staffd2 == '':
-        staffd1.split(',')
-        texto_staff = f"{staffd1[1]} - {staffd1[0]}"
+        staffd1_formatado = staffd1.split(',')
+        texto_staff = f"{staffd1_formatado[1]} - {staffd1_formatado[0]}"
         st.code(texto_p1 + texto_staff + texto_p2)
 
     if staffd1 != '' and staffd2 != '':
-        staffd1.split(',')
-        staffd2.split(',')
-        texto_staff = f"{staffd1[1]} - {staffd1[0]}"
-        texto_staff2 = f"{staffd2[1]} - {staffd2[0]}"
+        staffd1_formatado = staffd1.split(',')
+        staffd2_formatado = staffd2.split(',')
+        texto_staff = f"{staffd1_formatado[1]} - {staffd1_formatado[0]}"
+        texto_staff2 = f"{staffd2_formatado[1]} - {staffd2_formatado[0]}"
         st.code(texto_p1 + texto_staff2 + texto_staff + texto_p2)
 
     if staffd1 != '' and instrutor != '':
