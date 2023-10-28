@@ -42,7 +42,7 @@ with st.expander('Divisão diferente'):
         staffd1 = st.text_input('Staff1').capitalize()
         staffd2 = st.text_input('Staff2').capitalize()
         staffd1 = st.text_input('Staff3').capitalize()
-    with colu1:
+    with colu2:
         divisaod1 = st.text_input('Divisão Staff1')
         divisaod2 = st.text_input('Divisão Staff2')
         divisaod3 = st.text_input('Divisão Staff3')
@@ -181,36 +181,42 @@ if st.button('Lançar no Sistema'):
     st.write('---')
     lista_final = str(lista).translate(str.maketrans('', '', chars2))
 
-    texto = f"""
-    *Divisão:*
-    
-    *{data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}*
-    {divisao} - {lista_final}
-    {apoio_superficie} - {equipagens} equipagens
-    {mestre} - {embarques} embarques
-    """
-    texto_curso = f"""
-    *Divisão:*
-    
-    *{data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}*
-    {instrutor} - {quantidade} {curso} {pratica}
-    {divisao} - {lista_final}
-    {apoio_superficie} - {equipagens} equipagens
-    {mestre} - {embarques} embarques
-    """
+    if lista_final != '':
 
-    texto_curso2 = f"""
+        texto = f"""
         *Divisão:*
-
+        
         *{data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}*
-        {instrutor} - {quantidade} {curso} {pratica}
-        {instrutor2} - {quantidade2} {curso2} {pratica2}
         {divisao} - {lista_final}
         {apoio_superficie} - {equipagens} equipagens
         {mestre} - {embarques} embarques
         """
+        st.code(texto)
 
-    st.code(texto)
+    if instrutor != '':
+        texto_curso = f"""
+        *Divisão:*
+        
+        *{data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}*
+        {instrutor} - {quantidade} {curso} {pratica}
+        {divisao} - {lista_final}
+        {apoio_superficie} - {equipagens} equipagens
+        {mestre} - {embarques} embarques
+        """
+        st.code(texto_curso)
+    if instrutor2 != '':
+        texto_curso2 = f"""
+            *Divisão:*
+    
+            *{data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}*
+            {instrutor} - {quantidade} {curso} {pratica}
+            {instrutor2} - {quantidade2} {curso2} {pratica2}
+            {divisao} - {lista_final}
+            {apoio_superficie} - {equipagens} equipagens
+            {mestre} - {embarques} embarques
+            """
+        st.code(texto_curso2)
+
 
     st.header('Divisão')
     st.subheader(f'Data :  {data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}')
