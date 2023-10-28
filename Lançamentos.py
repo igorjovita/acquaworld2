@@ -170,11 +170,10 @@ if st.button('Lançar no Sistema'):
     lista_final = str(lista).translate(str.maketrans('', '', chars2))
 
     texto = f"""
-    *Data*: {data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}\n
-    *Staffs*: {lista_final}\n
-    *Divisão*: {divisao}\n\
-    *AS*: {apoio_superficie} - {equipagens} equipagens\n
-    *Capitão*: {mestre} - {embarques} embarques
+    *{data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}*
+    {divisao} - {lista_final}
+    {apoio_superficie} - {equipagens} equipagens
+    {mestre} - {embarques} embarques
     """
 
     st.code(texto)
