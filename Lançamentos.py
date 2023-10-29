@@ -185,10 +185,10 @@ if st.button('Lançar no Sistema'):
     texto_curso = f"{instrutor} - {quantidade} {curso} {pratica}"
     texto_curso2 = f"{instrutor2} - {quantidade2} {curso2} {pratica2}"
 
-    if instrutor == '' and staffd1 == '':
+    if instrutor == '' and staffd1 == '': # Somente batismo sem staff extra
         st.code(texto_p1 + texto_p2)
 
-    if instrutor != '' and staffd1 == '' and instrutor2 == '':
+    if instrutor != '' and staffd1 == '' and instrutor2 == '' and staffd2 == '': # 1  curso
         texto_curso = f"""
             {instrutor} - {quantidade} {curso} {pratica}
             
@@ -197,7 +197,7 @@ if st.button('Lançar no Sistema'):
             {mestre} - {embarques} embarques"""
         st.code(texto_p1 + texto_curso)
 
-    if instrutor2 != '' and staffd1 == '':
+    if instrutor2 != '' and staffd1 == '' and staffd2 == '': # 2 cursos
         texto_curso_total = f"""
             {instrutor} - {quantidade} {curso} {pratica}
             {instrutor2} - {quantidade2} {curso2} {pratica2}
@@ -205,7 +205,7 @@ if st.button('Lançar no Sistema'):
             """
         st.code(texto_p1 + texto_curso_total + texto_p2)
 
-    if staffd1 != '' and staffd2 == '':
+    if staffd1 != '' and staffd2 == '' and instrutor != '' and instrutor2 == '': # 1 staff extra
         staffd1_formatado = staffd1.split(',')
         texto_staff = f"""
             {staffd1_formatado[1]} - {staffd1_formatado[0]}
@@ -214,7 +214,7 @@ if st.button('Lançar no Sistema'):
             {mestre} - {embarques} embarques"""
         st.code(texto_p1 + texto_staff)
 
-    if staffd1 != '' and staffd2 != '' and instrutor == '':
+    if staffd1 != '' and staffd2 != '' and instrutor == '' and instrutor2 == '': # 2 staffs extras e 1 curso
         staffd1_formatado = staffd1.split(',')
         staffd2_formatado = staffd2.split(',')
         texto_staff2 = f"""
@@ -225,15 +225,26 @@ if st.button('Lançar no Sistema'):
             {mestre} - {embarques} embarques"""
         st.code(texto_p1 + texto_staff2)
 
-    if staffd1 != '' and instrutor != '' and staffd2 == '':
-        texto_staff = f"{staffd1[1]} - {staffd1[0]}"
-        st.code(texto_p1 + texto_staff + texto_curso + texto_p2)
+    if staffd1 != '' and instrutor != '' and staffd2 == '' and instrutor2 == '':  # 1 staff extra e 1 curso
+        staffd1_formatado = staffd1.split(',')
+        texto_staff = f"""
+            {instrutor} - {quantidade} {curso} {pratica}
+            
+            {staffd1_formatado[1]} - {staffd1_formatado[0]}
+            """
+        st.code(texto_p1 + texto_staff + texto_p2)
 
-    if staffd1 != '' and instrutor != '' and instrutor2 != '' and staffd2 == '':
-        texto_staff = f"{staffd1[1]} - {staffd1[0]}"
-        st.code(texto_p1 + texto_staff + texto_curso + texto_curso2 + texto_p2)
+    if staffd1 != '' and instrutor != '' and instrutor2 != '' and staffd2 == '': # 1 staff extra e 2 cursos
+        staffd1_formatado = staffd1.split(',')
+        texto_staff = f"""
+            {instrutor} - {quantidade} {curso} {pratica}
+            {instrutor2} - {quantidade2} {curso2} {pratica2}
+            
+            {staffd1_formatado[1]} - {staffd1_formatado[0]}
+            """
+        st.code(texto_p1 + texto_staff + texto_p2)
 
-    if staffd1 != '' and staffd2 != '' and instrutor != '' and instrutor2 != '':
+    if staffd1 != '' and staffd2 != '' and instrutor != '' and instrutor2 != '': # 2 staffs extra e 2 cursos
         staffd1_formatado = staffd1.split(',')
         staffd2_formatado = staffd2.split(',')
         texto_staff_curso2 = f"""
@@ -245,16 +256,16 @@ if st.button('Lançar no Sistema'):
             """
         st.code(texto_p1 + texto_staff_curso2 + texto_p2)
 
-    if staffd1 != '' and staffd2 != '' and instrutor != '' and instrutor2 == '':
-        staffd1_formatado = staffd1.split(',')
-        staffd2_formatado = staffd2.split(',')
-        texto_staff_curso = f"""
-            {instrutor} - {quantidade} {curso} {pratica}
-            
-            {staffd1_formatado[1]} - {staffd1_formatado[0]}
-            {staffd2_formatado[1]} - {staffd2_formatado[0]}
-            """
-        st.code(texto_p1 + texto_staff_curso + texto_p2)
+    # if staffd1 != '' and staffd2 != '' and instrutor != '' and instrutor2 == '':
+    #     staffd1_formatado = staffd1.split(',')
+    #     staffd2_formatado = staffd2.split(',')
+    #     texto_staff_curso = f"""
+    #         {instrutor} - {quantidade} {curso} {pratica}
+    #
+    #         {staffd1_formatado[1]} - {staffd1_formatado[0]}
+    #         {staffd2_formatado[1]} - {staffd2_formatado[0]}
+    #         """
+    #     st.code(texto_p1 + texto_staff_curso + texto_p2)
 
 # cursor.execute("SELECT * FROM lancamento_bat")
 # df = pd.DataFrame(cursor.fetchall(), columns=['ID', 'Data', 'Id_staff', 'Divisao', 'Situação'])
