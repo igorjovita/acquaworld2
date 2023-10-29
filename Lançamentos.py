@@ -178,7 +178,8 @@ if st.button('Lançar no Sistema'):
 
             *{data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}*
             """
-    texto_p2 = f"""{divisao} - {lista_final}
+    texto_p2 = f"""
+            {divisao} - {lista_final}
             {apoio_superficie} - {equipagens} equipagens
             {mestre} - {embarques} embarques
             """
@@ -186,6 +187,7 @@ if st.button('Lançar no Sistema'):
     texto_curso2 = f"{instrutor2} - {quantidade2} {curso2} {pratica2}"
 
     if instrutor == '' and staffd1 == '': # Somente batismo sem staff extra
+
         st.code(texto_p1 + texto_p2)
 
     if instrutor != '' and staffd1 == '' and instrutor2 == '' and staffd2 == '': # 1  curso
