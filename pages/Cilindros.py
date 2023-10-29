@@ -28,13 +28,10 @@ inicio = str(st.text_input('Horario de Inicio'))
 final = str(st.text_input('Horario do Termino'))
 
 
-
-
 quantidade_acqua = st.text_input('Cilindros Acqua')
 quantidade_pl = st.text_input('Cilindros PL')
 quentinha = st.selectbox('Almoço', ['', 'Sim', 'Não'])
 situacao = 'Pendente'
-
 
 
 if st.button('Lançar no Sistema'):

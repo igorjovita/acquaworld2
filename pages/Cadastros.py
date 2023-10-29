@@ -32,3 +32,22 @@ if st.button('Cadastrar Staff'):
     """, (nome, telefone, ocupação, tipo, salario, comissão))
     mydb.commit()
     st.success('Staff Cadastrado com Sucesso!')
+
+st.write('---')
+
+st.subheader('Cadastro Cilindro')
+
+marca = st.text_input('Marca do Cilindro')
+
+modelo = st.selectbox('Modelo do Cilindro', ['', 'Luxfer', 'Catalina'])
+
+serie = st.text_input('Numero de Serie do Cilindro')
+
+teste = st.date_input('Data do ultimo teste hidrostático')
+
+situacao = st.selectbox('Situação do Cilindro', ['', 'Em uso', 'Parado'])
+
+if st.button('Cadastrar Cilindro'):
+    cursor.execute('INSERT INTO cadastro_cilindro( marca, modelo, num_serie, data_teste, situacao) VALUES (%s, %s, %s, %s, %s)',(marca, modelo, serie, teste, situacao))
+    st.success('Cilindro Cadastrado com sucesso!')
+    
