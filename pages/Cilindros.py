@@ -30,8 +30,8 @@ situacao = 'Pendente'
 
 
 if st.button('Lançar no Sistema'):
-    cursor.execute("INSERT INTO lancamento_cilindro (data, id_staff, horario_inicio, horario_final, cilindros_acqua, clindros_pl, almoço, situacao) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",(data, staff, inicio, final, quantidade_acqua, quantidade_pl, quentinha, situacao))
-    mydb.commit()
+    # cursor.execute("INSERT INTO lancamento_cilindro (data, id_staff, horario_inicio, horario_final, cilindros_acqua, clindros_pl, almoço, situacao) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",(data, staff, inicio, final, quantidade_acqua, quantidade_pl, quentinha, situacao))
+    # mydb.commit()
     st.success('Lançado no Sistema com Sucesso!')
     st.write(inicio)
     st.write(final)
