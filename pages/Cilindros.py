@@ -17,7 +17,7 @@ chars = "'),([]"
 cursor = mydb.cursor()
 
 st.header('Controle Cilindros')
-data = st.date_input('Data',format='DD/MM/YYYY')
+data = st.date_input('Data', format='DD/MM/YYYY')
 nome = st.selectbox('Staff', ['', 'Juarez', 'Glauber', 'Roberta'])
 
 cursor.execute(f"SELECT id FROM staffs WHERE nome = '{nome}'")
