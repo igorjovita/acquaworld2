@@ -1,7 +1,7 @@
 import streamlit as st
 import mysql.connector
 import os
-from datetime import datetime
+
 
 
 mydb = mysql.connector.connect(
@@ -15,16 +15,17 @@ mydb = mysql.connector.connect(
 
 chars = "'),([]"
 cursor = mydb.cursor()
-now = datetime.now()
+
+st.header('Controle Cilindros')
 data = st.date_input('Data',format='DD/MM/YYYY')
 nome = st.selectbox('Staff', ['', 'Juarez', 'Glauber', 'Roberta'])
 
 cursor.execute(f"SELECT id FROM staffs WHERE nome = '{nome}'")
 id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
 
-segundos = ':00'
-inicio = str(st.text_input('Horario de Inicio') + segundos)
-final = str(st.text_input('Horario do Termino') + segundos)
+
+inicio = str(st.text_input('Horario de Inicio'))
+final = str(st.text_input('Horario do Termino')3)
 
 
 
