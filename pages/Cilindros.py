@@ -23,8 +23,11 @@ cursor.execute(f"SELECT id FROM staffs WHERE nome = '{nome}'")
 id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
 
 segundos = ':00'
-inicio = str(st.text_input('Horario de Inicio') + segundos)
-final = str(st.text_input('Horario do Termino') + segundos)
+hora_inicio = str(st.text_input('Horario de Inicio') + segundos)
+hora_final = str(st.text_input('Horario do Termino') + segundos)
+
+inicio = f"'{hora_inicio}'"
+final = f"'{hora_final}'"
 
 
 quantidade_acqua = st.text_input('Cilindros Acqua')
