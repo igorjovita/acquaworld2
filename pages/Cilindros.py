@@ -16,7 +16,7 @@ mydb = mysql.connector.connect(
 chars = "'),([]"
 cursor = mydb.cursor()
 now = datetime.now()
-data = st.date_input
+data = st.date_input('Data')
 nome = st.selectbox('Staff', ['', 'Juarez', 'Glauber', 'Roberta'])
 
 cursor.execute(f"SELECT id FROM staffs WHERE nome = '{nome}'")
