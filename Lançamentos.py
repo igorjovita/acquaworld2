@@ -205,7 +205,7 @@ if st.button('Lançar no Sistema'):
             """
         st.code(texto_p1 + texto_curso_total + texto_p2)
 
-    if staffd1 != '' and staffd2 == '' and instrutor != '' and instrutor2 == '': # 1 staff extra
+    if staffd1 != '' and staffd2 == '' and instrutor == '' and instrutor2 == '': # 1 staff extra
         staffd1_formatado = staffd1.split(',')
         texto_staff = f"""
             {staffd1_formatado[1]} - {staffd1_formatado[0]}
