@@ -25,7 +25,7 @@ id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
 
 
 inicio = str(st.text_input('Horario de Inicio'))
-final = str(st.text_input('Horario do Termino')3)
+final = str(st.text_input('Horario do Termino'))
 
 
 
