@@ -256,16 +256,16 @@ if st.button('Lançar no Sistema'):
             """
         st.code(texto_p1 + texto_staff_curso2 + texto_p2)
 
-    # if staffd1 != '' and staffd2 != '' and instrutor != '' and instrutor2 == '':
-    #     staffd1_formatado = staffd1.split(',')
-    #     staffd2_formatado = staffd2.split(',')
-    #     texto_staff_curso = f"""
-    #         {instrutor} - {quantidade} {curso} {pratica}
-    #
-    #         {staffd1_formatado[1]} - {staffd1_formatado[0]}
-    #         {staffd2_formatado[1]} - {staffd2_formatado[0]}
-    #         """
-    #     st.code(texto_p1 + texto_staff_curso + texto_p2)
+    if staffd1 != '' and staffd2 != '' and instrutor != '' and instrutor2 == '': # 1 curso e 2 staffs extras
+        staffd1_formatado = staffd1.split(',')
+        staffd2_formatado = staffd2.split(',')
+        texto_staff_curso = f"""
+            {instrutor} - {quantidade} {curso} {pratica}
+
+            {staffd1_formatado[1]} - {staffd1_formatado[0]}
+            {staffd2_formatado[1]} - {staffd2_formatado[0]}
+            """
+        st.code(texto_p1 + texto_staff_curso + texto_p2)
 
 # cursor.execute("SELECT * FROM lancamento_bat")
 # df = pd.DataFrame(cursor.fetchall(), columns=['ID', 'Data', 'Id_staff', 'Divisao', 'Situação'])
