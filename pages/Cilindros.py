@@ -16,7 +16,7 @@ mydb = mysql.connector.connect(
 chars = "'),([]"
 cursor = mydb.cursor()
 now = datetime.now()
-data = st.date_input('Data')
+data = st.date_input('Data',format='DD/MM/YYYY')
 nome = st.selectbox('Staff', ['', 'Juarez', 'Glauber', 'Roberta'])
 
 cursor.execute(f"SELECT id FROM staffs WHERE nome = '{nome}'")
@@ -39,7 +39,7 @@ situacao = 'Pendente'
 
 if st.button('Lançar no Sistema'):
     cursor.execute("""
-        INSERT INTO lancamento_cilindro (data, id_staff, horario_inicio, horario_final, cilindros_acqua, clindros_pl, almoco, situacao) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""", (data, id_staff, inicio, final, quantidade_acqua, quantidade_pl, quentinha, situacao))
+        INSERT INTO lancamento_cilindro (data, id_staff, horario_inicio, horario_final, cilindros_acqua, cilindros_pl, almoco, situacao) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""", (data, id_staff, inicio, final, quantidade_acqua, quantidade_pl, quentinha, situacao))
     mydb.commit()
     st.success('Lançado no Sistema com Sucesso!')
     st.write(inicio)
