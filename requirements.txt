@@ -5,5 +5,5 @@ pykg-config
 mysqlclient~=2.2.0
 pymysql==1.1.0
 python-dotenv==1.0.0
-streamlit~=1.27.2
+streamlit~=1.28.0
 pandas~=2.1.1

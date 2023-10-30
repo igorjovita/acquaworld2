@@ -43,7 +43,7 @@ modelo_cilindro = st.text_input('Modelo do Cilindro')
 
 num_serie_cilindro = st.text_input('Numero de Serie do Cilindro')
 
-data_teste = st.date_input('Data do ultimo teste hidrostático')
+data_teste = st.date_input('Data do ultimo teste hidrostático', format='DD/MM/YYYY')
 
 situacao_cilindro = st.selectbox('Situação do Cilindro', ['', 'Em uso', 'Parado'])
 
