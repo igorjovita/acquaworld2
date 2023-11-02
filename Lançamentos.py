@@ -56,12 +56,12 @@ with colu2:
 
 
 with st.expander('Segundo Curso'):
-
-    with colu1:
+    colun1, colun2 = st.columns(2)
+    with colun1:
         instrutor2 = st.selectbox('Instrutor2', ['', 'Glauber', 'Martin'])
         quantidade2 = st.text_input('Quantidade2')
 
-    with colu2:
+    with colun2:
         curso2 = st.selectbox('Curso2', ['', 'OWD', 'ADV', 'REVIEW', 'RESCUE', 'PRIMEIROS SOCORROS', 'DIVEMASTER'])
         pratica2 = st.selectbox('Pratica2', ['', 'Pratica 1', 'Pratica 2'])
 
