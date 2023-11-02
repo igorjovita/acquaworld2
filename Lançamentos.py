@@ -39,27 +39,31 @@ with st.expander('Divisão diferente'):
     staffd1 = st.text_input('Staff1 - Lance o staff , quantidade').capitalize()
     staffd2 = st.text_input('Staff2 - Lance o staff , quantidade').capitalize()
 
-apoio_superficie = st.selectbox('Apoio de Superficie', ['', 'Juarez', 'Miranda', 'Glauber', 'Roberta'])
+colu1, colu2 = st.columns(2)
 
-equipagens = st.text_input('Equipagens')
+with colu1:
+    apoio_superficie = st.selectbox('Apoio de Superficie', ['', 'Juarez', 'Miranda', 'Glauber', 'Roberta'])
+    mestre = st.selectbox('Mestre', ['', 'Risadinha', 'Marquinhos', 'Freelancer'])
+    instrutor = st.selectbox('Instrutor', ['', 'Glauber', 'Martin'])
+    quantidade = st.text_input('Quantidade')
 
-mestre = st.selectbox('Mestre', ['', 'Risadinha', 'Marquinhos', 'Freelancer'])
 
-embarques = st.text_input('Embarques')
+with colu2:
+    equipagens = st.text_input('Equipagens')
+    embarques = st.text_input('Embarques')
+    curso = st.selectbox('Curso', ['', 'OWD', 'ADV', 'REVIEW', 'RESCUE', 'PRIMEIROS SOCORROS', 'DIVEMASTER'])
+    pratica = st.selectbox('Pratica', ['', 'Pratica 1', 'Pratica 2'])
 
-instrutor = st.selectbox('Instrutor', ['', 'Glauber', 'Martin'])
-
-curso = st.selectbox('Curso', ['', 'OWD', 'ADV', 'REVIEW', 'RESCUE', 'PRIMEIROS SOCORROS', 'DIVEMASTER'])
-
-quantidade = st.text_input('Quantidade')
-
-pratica = st.selectbox('Pratica', ['', 'Pratica 1', 'Pratica 2'])
 
 with st.expander('Segundo Curso'):
-    instrutor2 = st.selectbox('Instrutor2', ['', 'Glauber', 'Martin'])
-    curso2 = st.selectbox('Curso2', ['', 'OWD', 'ADV', 'REVIEW', 'RESCUE', 'PRIMEIROS SOCORROS', 'DIVEMASTER'])
-    quantidade2 = st.text_input('Quantidade2')
-    pratica2 = st.selectbox('Pratica2', ['', 'Pratica 1', 'Pratica 2'])
+
+    with colu1:
+        instrutor2 = st.selectbox('Instrutor2', ['', 'Glauber', 'Martin'])
+        quantidade2 = st.text_input('Quantidade2')
+
+    with colu2:
+        curso2 = st.selectbox('Curso2', ['', 'OWD', 'ADV', 'REVIEW', 'RESCUE', 'PRIMEIROS SOCORROS', 'DIVEMASTER'])
+        pratica2 = st.selectbox('Pratica2', ['', 'Pratica 1', 'Pratica 2'])
 
 cursor.execute(f"SELECT id FROM staffs WHERE nome = '{apoio_superficie}'")
 id_as = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
