@@ -91,9 +91,9 @@ botao = st.button('Atualizar Status')
 
 if botao:
     st.session_state.botao = not st.session_state.botao
-    "after pressing botao", st.session_state
+
     mydb.connect()
     cursor.execute(f"Update staffs set status = '{status}' where nome = '{nome}'")
     mydb.commit()
     mydb.close()
-    st.experimental_rerun()
+    
