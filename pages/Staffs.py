@@ -79,6 +79,7 @@ status = st.selectbox('Status', ['Ativo', 'Inativo'])
 if st.button('Atualizar Status'):
     cursor.execute(f"Update staffs set status = '{status}' where nome = '{nome}'")
     mydb.commit()
+    mydb.close()
     time.sleep(0.5)
     st.rerun()
 
