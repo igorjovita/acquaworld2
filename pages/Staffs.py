@@ -24,8 +24,7 @@ if "botao" not in st.session_state:
     st.session_state.botao = False
 
 
-def btn_click():
-    st.session_state.botao = True
+
 
 
 cursor.execute("Select nome, status FROM staffs")
@@ -85,9 +84,14 @@ nome = st.selectbox('Staff', cert_staffs)
 
 status = st.selectbox('Status', ['Ativo', 'Inativo'])
 
-st.button('Atualizar Status', on_click=btn_click)
+botao = st.button('Atualizar Status')
 
-if st.session_state.botao:
+"before pressing botao", st.session_state
+
+
+if botao:
+    st.session_state.botao = not st.session_state.botao
+    "after pressing botao", st.session_state
     mydb.connect()
     cursor.execute(f"Update staffs set status = '{status}' where nome = '{nome}'")
     mydb.commit()
