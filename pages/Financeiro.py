@@ -27,3 +27,5 @@ cursor.execute(f"select data, id_staff, divisao from lancamento_bat where data b
 lista = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
 
 df = pd.DataFrame(lista, columns=['Data', 'Staff', 'Divisão'])
+
+st.dataframe(df)
