@@ -35,7 +35,7 @@ st.write('''<style>
 </style>''', unsafe_allow_html=True)
 
 for i, item in enumerate(lista_staffs):
-    done = st.checkbox(str(item), key= str(i))
+    done = st.write(str(item), key=str(i))
     # col1, col2, _ = st.columns([0.05, 0.8, 0.15])
     # done = col1.checkbox("a", key=str(i), label_visibility="hidden")
     #
