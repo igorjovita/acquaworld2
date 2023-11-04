@@ -19,8 +19,35 @@ st.title('Sistema Acquaworld')
 st.header('Staffs')
 
 cursor.execute("Select nome, ocupacao, status FROM staffs")
-lista_staffs = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
+nome_staffs = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
 
-df = pd.DataFrame([lista_staffs], columns=['Nome', 'Certificação', 'Status'])
-st.dataframe(df)
+cursor.execute("SELECT ocupacao FROM staffs")
+cert_staffs = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
 
+cursor.execute("SELECT status FROM staffs")
+status_staffs = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
+
+colunas = st.columns((2, 2, 2, 1, 1))
+campos = ['Nome', 'Certificação', 'Status']
+for col, campo_nome in zip(colunas, campos):
+    col.write(campo_nome)
+
+for item in nome_staffs:
+    col1, col2, col3, col4, col5 = st.columns((2, 2, 2, 1, 1))
+    with col1:
+        st.write(item[0])
+
+    with col2:
+        st.write(item[1])
+
+    with col3:
+        st.write(item[2])
+
+    with col4:
+        excluir_botao = col4.empity()
+        on_click_excluir = excluir_botao.button('🗑️', 'btnExcluir' + item[0])
+
+    if on_click_excluir:
+        cursor.execute(f"DELETE FROM staffs WHERE nome = '{item[0]}'")
+        mydb.commit()
+        st.sucess('Staff Excluido com Sucesso')
