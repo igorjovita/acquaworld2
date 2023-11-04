@@ -39,7 +39,7 @@ def seleciona_status(nome):
     status_staffs = str(cursor.fetchone()).translate(str.maketrans('', '', chars)).split()
     if status_staffs == 'Ativo':
         mydb.connect()
-        cursor.execute(f"Update staffs set status = 'Inativo' where nome = '{nome}'")
+        cursor.execute(f"Update staffs set status = 'Inativo' where nome = {nome}")
         mydb.commit()
         mydb.close()
         st.rerun()
@@ -47,7 +47,7 @@ def seleciona_status(nome):
 
     if status_staff == 'Inativo':
         mydb.connect()
-        cursor.execute(f"Update staffs set status = 'Ativo' where nome = '{nome}'")
+        cursor.execute(f"Update staffs set status = 'Ativo' where nome = {nome}")
         mydb.commit()
         mydb.close()
         st.rerun()
