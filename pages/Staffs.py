@@ -19,7 +19,7 @@ st.header('Staffs')
 
 chars = "')([]"
 cursor.execute("SELECT nome FROM staffs")
-lista = (str(cursor.fetchall()).translate(str.maketrans('', '', chars))).split(',')
+lista = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split(',')
 staffs = []
 
 data = st.date_input('Data:', format='DD/MM/YYYY')
