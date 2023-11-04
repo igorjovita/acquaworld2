@@ -27,11 +27,11 @@ st.text('STAFFS:')
 st.write('''<style>
 
 [data-testid="column"] {
-    width: calc(25% - 1rem) !important;
-    flex: 1 1 calc(25% - 1rem) !important;
-    min-width: calc(25% - 1rem) !important;
+    width: calc(33.3333% - 1rem) !important;
+    flex: 1 1 calc(33.3333% - 1rem) !important;
+    min-width: calc(33% - 1rem) !important;
 }
-.css-1l269bu {max-width:20% !important;}
+.css-1l269bu {max-width:10% !important;}
 </style>''', unsafe_allow_html=True)
 
 for i, item in enumerate(lista_staffs):
