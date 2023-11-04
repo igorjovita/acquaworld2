@@ -30,8 +30,10 @@ cert_staffs = str(cursor.fetchall()).translate(str.maketrans('', '', chars2)).sp
 
 
 def seleciona_status(nome):
+    mydb.connect()
     cursor.execute(f"SELECT status FROM staffs where nome = {nome}")
     status_staffs = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
+    mydb.close()
     return status_staffs
 
 st.write('''<style>
@@ -64,8 +66,10 @@ for item in nome_staffs:
 
 
     if on_click_excluir:
+        mydb.connect()
         cursor.execute(f"DELETE FROM staffs WHERE nome = '{item[0]}'")
         mydb.commit()
+        mydb.close()
         st.success('Staff Excluido com Sucesso')
 
 st.write('---')
@@ -77,8 +81,9 @@ nome = st.selectbox('Staff', cert_staffs)
 status = st.selectbox('Status', ['Ativo', 'Inativo'])
 
 if st.button('Atualizar Status'):
+    mydb.connect()
     cursor.execute(f"Update staffs set status = '{status}' where nome = '{nome}'")
     mydb.commit()
     mydb.close()
-    st.experimental_rerun()
+
 
