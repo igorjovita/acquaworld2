@@ -15,24 +15,23 @@ cursor = mydb.cursor(buffered=True)
 
 chars = "'),([]"
 chars2 = "')([]"
+cursor.execute("SELECT nome FROM staffs")
+lista_staffs = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
+staffs_selecionados = []
 
 st.subheader('Divisão Diaria')
 
 data = st.date_input('Data:', format='DD/MM/YYYY')
 st.text('STAFFS:')
-col1, col2, col3, col4 = st.columns(4)
 
-with col1:
-    staff1 = st.checkbox('Glauber')
-    staff5 = st.checkbox('Cauã')
-with col2:
-    staff2 = st.checkbox('Roberta')
-    staff6 = st.checkbox('Thiago')
-with col3:
-    staff3 = st.checkbox('Martin')
+for i, item in enumerate(lista_staffs):
+    col1, col2, _ = st.columns([0.05, 0.8, 0.15])
+    done = col1.checkbox("a", key=str(i), label_visibility="hidden")
 
-with col4:
-    staff4 = st.checkbox('Veridiana')
+    col2.markdown(item, unsafe_allow_html=True)
+
+    if done:
+        staffs_selecionados.append(str(item))
 divisao = st.text_input('Divisão')
 
 with st.expander('Divisão diferente'):
@@ -104,8 +103,8 @@ if botao:
                        (data, id_staff, curso2, quantidade2, pratica2, situacao))
         mydb.commit()
 
-    if staff1:
-        nome = 'Glauber'
+    for i, nome_staff in enumerate(staffs_selecionados):
+        nome = str(nome_staff)
         cursor.execute(f"SELECT id FROM staffs WHERE nome = '{nome}'")
         id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
         cursor.execute(f"SELECT comissao FROM staffs WHERE nome = '{nome}'")
@@ -114,65 +113,6 @@ if botao:
             'INSERT INTO lancamento_bat (data, id_staff, divisao,situacao) VALUES (%s, %s, %s, %s)',
             (data, id_staff, divisao, situacao))
         mydb.commit()
-        lista.append('Glauber')
-
-    if staff2:
-        nome = 'Roberta'
-        cursor.execute(f"SELECT id FROM staffs WHERE nome = '{nome}'")
-        id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-        cursor.execute(f"SELECT comissao FROM staffs WHERE nome = '{nome}'")
-        situacao = 'PENDENTE'
-        cursor.execute(
-            'INSERT INTO lancamento_bat (data, id_staff, divisao, situacao) VALUES (%s, %s, %s, %s)',
-            (data, id_staff, divisao, situacao))
-        mydb.commit()
-        lista.append('Roberta')
-
-    if staff3:
-        nome = 'Martin'
-        cursor.execute(f"SELECT id FROM staffs WHERE nome = '{nome}'")
-        id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-        cursor.execute(f"SELECT comissao FROM staffs WHERE nome = '{nome}'")
-        situacao = 'PENDENTE'
-        cursor.execute(
-            'INSERT INTO lancamento_bat (data, id_staff, divisao, situacao) VALUES (%s, %s, %s, %s)',
-            (data, id_staff, divisao, situacao))
-        mydb.commit()
-        lista.append('Martin')
-    if staff4:
-        nome = 'Veridiana'
-        cursor.execute(f"SELECT id FROM staffs WHERE nome = '{nome}'")
-        id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-        cursor.execute(f"SELECT comissao FROM staffs WHERE nome = '{nome}'")
-        situacao = 'PENDENTE'
-        cursor.execute(
-            'INSERT INTO lancamento_bat (data, id_staff, divisao, situacao) VALUES (%s, %s, %s, %s)',
-            (data, id_staff, divisao, situacao))
-        mydb.commit()
-        lista.append('Veridiana')
-    if staff5:
-        nome = 'Cauã'
-        cursor.execute(f"SELECT id FROM staffs WHERE nome = '{nome}'")
-        id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-        cursor.execute(f"SELECT comissao FROM staffs WHERE nome = '{nome}'")
-        situacao = 'PENDENTE'
-        cursor.execute(
-            'INSERT INTO lancamento_bat (data, id_staff, divisao, situacao) VALUES (%s, %s, %s, %s)',
-            (data, id_staff, divisao, situacao))
-        mydb.commit()
-        lista.append('Cauã')
-
-    if staff6:
-        nome = 'Thiago'
-        cursor.execute(f"SELECT id FROM staffs WHERE nome = '{nome}'")
-        id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-        cursor.execute(f"SELECT comissao FROM staffs WHERE nome = '{nome}'")
-        situacao = 'PENDENTE'
-        cursor.execute(
-            'INSERT INTO lancamento_bat (data, id_staff, divisao, situacao) VALUES (%s, %s, %s, %s)',
-            (data, id_staff, divisao, situacao))
-        mydb.commit()
-        lista.append('Thiago')
     st.success('Divisão Lançada no Sistema')
 
     data_formatada = str(data).translate(str.maketrans('', '', chars)).split('-')
