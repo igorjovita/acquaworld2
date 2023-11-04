@@ -2,7 +2,6 @@ import streamlit as st
 import mysql.connector
 import os
 
-
 mydb = mysql.connector.connect(
     host=os.getenv("DB_HOST"),
     user=os.getenv("DB_USERNAME"),
@@ -13,8 +12,6 @@ mydb = mysql.connector.connect(
     ssl_ca=r"C:\users\acqua\downloads\cacert-2023-08-22.pem")
 
 cursor = mydb.cursor()
-
-
 
 st.subheader('Cadastro de Staff')
 
@@ -32,7 +29,6 @@ with col2:
         salario = st.text_input('Valor do Salario')
     else:
         salario = 0
-
 
 if st.button('Cadastrar Staff'):
     status = 'Ativo'
@@ -58,7 +54,9 @@ with col2:
     data_teste = st.date_input('Data do ultimo teste hidrostático', format='DD/MM/YYYY')
 
 if st.button('Cadastrar Cilindro'):
-    cursor.execute('INSERT INTO cadastro_cilindro( marca, modelo, num_serie, data_teste, situacao) VALUES (%s, %s, %s, %s, %s)',(marca_cilindro, modelo_cilindro, num_serie_cilindro, data_teste, situacao_cilindro))
+    cursor.execute(
+        'INSERT INTO cadastro_cilindro( marca, modelo, num_serie, data_teste, situacao) VALUES (%s, %s, %s, %s, %s)',
+        (marca_cilindro, modelo_cilindro, num_serie_cilindro, data_teste, situacao_cilindro))
     st.success('Cilindro Cadastrado com sucesso!')
 
 st.write('---')
@@ -75,7 +73,8 @@ with col2:
     estado_colete = st.selectbox('Estado do Colete', ['', 'Operacional', 'Furado', 'Em manutenção'])
 
 if st.button('Cadastrar Colete'):
-    cursor.execute("INSERT INTO cadastro_colete ( marca, modelo, tamanho, estado) VALUES (%s, %s, %s, %s)",(marca_colete, modelo_colete, tamanho_colete, estado_colete))
+    cursor.execute("INSERT INTO cadastro_colete ( marca, modelo, tamanho, estado) VALUES (%s, %s, %s, %s)",
+                   (marca_colete, modelo_colete, tamanho_colete, estado_colete))
     st.success('Colete Cadastrado com Sucesso!')
 
 st.write('---')
@@ -92,6 +91,6 @@ with col2:
     numercao_regulador = st.text_input('Numeração do Regulador')
 
 if st.button('Cadastrar Regulador'):
-    cursor.execute("INSERT INTO cadastro_regulador ( modelo, numeracao, estado) VALUES (%s, %s, %s)", (modelo_regulador, numercao_regulador, estado_regulador))
+    cursor.execute("INSERT INTO cadastro_regulador ( modelo, numeracao, estado) VALUES (%s, %s, %s)",
+                   (modelo_regulador, numercao_regulador, estado_regulador))
     st.success('Regulador Cadastrado com Sucesso!')
-

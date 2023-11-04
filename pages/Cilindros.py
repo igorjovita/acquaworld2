@@ -2,8 +2,6 @@ import streamlit as st
 import mysql.connector
 import os
 
-
-
 mydb = mysql.connector.connect(
     host=os.getenv("DB_HOST"),
     user=os.getenv("DB_USERNAME"),
@@ -34,30 +32,21 @@ with col1:
     inicio = str(st.text_input('Horario de Inicio'))
     quantidade_acqua = st.text_input('Cilindros Acqua')
     quentinha = st.selectbox('Almoço', ['', 'Sim', 'Não'])
-    
+
 with col2:
     nome = st.selectbox('Staff', ['', 'Juarez', 'Glauber', 'Roberta'])
     final = str(st.text_input('Horario do Termino'))
     quantidade_pl = st.text_input('Cilindros PL')
 
-
 cursor.execute(f"SELECT id FROM staffs WHERE nome = '{nome}'")
 id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
 
-
-
-
-
-
-
-
-
 situacao = 'Pendente'
-
 
 if st.button('Lançar no Sistema'):
     cursor.execute("""
-        INSERT INTO lancamento_cilindro (data, id_staff, horario_inicio, horario_final, cilindros_acqua, cilindros_pl, almoco, situacao) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""", (data, id_staff, inicio, final, quantidade_acqua, quantidade_pl, quentinha, situacao))
+        INSERT INTO lancamento_cilindro (data, id_staff, horario_inicio, horario_final, cilindros_acqua, cilindros_pl, almoco, situacao) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""",
+                   (data, id_staff, inicio, final, quantidade_acqua, quantidade_pl, quentinha, situacao))
     mydb.commit()
     st.success('Lançado no Sistema com Sucesso!')
     st.write(inicio)
