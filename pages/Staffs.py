@@ -24,7 +24,7 @@ cursor.execute("Select nome, ocupacao, status FROM staffs")
 nome_staffs = cursor.fetchall()
 
 cursor.execute("SELECT nome FROM staffs")
-cert_staffs = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
+cert_staffs = str(cursor.fetchall()).translate(str.maketrans('', '', chars2)).split()
 
 
 def seleciona_status(nome):
