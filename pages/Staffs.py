@@ -46,12 +46,12 @@ st.write('''<style>
 
 
 colunas = st.columns((2, 2, 2, 1))
-campos = ['Nome', 'Certificação', 'Status']
+campos = ['Nome', 'Status', 'Excluir']
 for col, campo_nome in zip(colunas, campos):
     col.write(campo_nome)
 
 for item in nome_staffs:
-    col1, col2, col3= st.columns((1, 1, 1))
+    col1, col2, col3 = st.columns((1, 1, 1))
     with col1:
         st.write(item[0])
 
