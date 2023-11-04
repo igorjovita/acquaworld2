@@ -81,5 +81,5 @@ if st.button('Atualizar Status'):
     mydb.commit()
     mydb.close()
     time.sleep(0.5)
-    st.rerun()
+    st.experimental_rerun()
 
