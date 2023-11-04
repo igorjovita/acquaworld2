@@ -20,8 +20,7 @@ st.title('Sistema Acquaworld')
 
 st.header('Staffs')
 
-if "botao" not in st.session_state:
-    st.session_state.botao = False
+
 
 
 
@@ -38,8 +37,20 @@ def seleciona_status(nome):
     mydb.connect()
     cursor.execute(f"SELECT status FROM staffs where nome = {nome}")
     status_staffs = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
-    mydb.close()
+    if status_staffs == 'Ativo':
+        mydb.connect()
+        cursor.execute(f"Update staffs set status = 'Inativo' where nome = '{nome}'")
+        mydb.commit()
+        mydb.close()
+        st.rerun()
     return status_staffs
+
+    else:
+    mydb.connect()
+    cursor.execute(f"Update staffs set status = 'Ativo' where nome = '{nome}'")
+    mydb.commit()
+    mydb.close()
+    st.rerun()
 
 
 st.write('''<style>
@@ -84,17 +95,7 @@ nome = st.selectbox('Staff', cert_staffs)
 
 status = st.selectbox('Status', ['Ativo', 'Inativo'])
 
-botao = st.button('Atualizar Status')
-
-"before pressing botao", st.session_state
+botao = st.button('Atualizar Status',seleciona_status(nome))
 
 
-if botao:
-    st.session_state.botao = not st.session_state.botao
 
-    mydb.connect()
-    cursor.execute(f"Update staffs set status = '{status}' where nome = '{nome}'")
-    mydb.commit()
-    mydb.close()
-    st.rerun()
-    st.stop()
