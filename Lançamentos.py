@@ -34,7 +34,7 @@ st.write('''<style>
 </style>''', unsafe_allow_html=True)
 
 for i, item in enumerate(lista_staffs):
-    col1, col2, _ = st.columns([0.05, 0.8, 0.15])
+    col1, col2, _ = st.columns([0.05, 0.1, 0.15])
     done = col1.checkbox("a", key=str(i), label_visibility="hidden")
 
     col2.markdown(item, unsafe_allow_html=True)
