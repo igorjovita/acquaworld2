@@ -47,7 +47,16 @@ for item in nome_staffs:
         excluir_botao = col4.empty()
         on_click_excluir = excluir_botao.button('🗑️', 'btnExcluir' + item[0])
 
+    with col5:
+        status_botao = col5.empty()
+        on_click_status = status_botao.button('✅', 'btnStatus' + item[0])
+
     if on_click_excluir:
         cursor.execute(f"DELETE FROM staffs WHERE nome = '{item[0]}'")
         mydb.commit()
         st.success('Staff Excluido com Sucesso')
+
+    if on_click_status:
+        cursor.execute(f"UPDATE staffs set status = 'Inativo' WHERE nome = '{item[0]}'")
+        mydb.commit()
+        st.success('Status Atualizado com Sucesso')
