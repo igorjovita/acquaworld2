@@ -19,7 +19,7 @@ st.title('Sistema Acquaworld')
 st.header('Staffs')
 
 cursor.execute("Select nome, ocupacao, status FROM staffs")
-nome_staffs = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split(',')
+nome_staffs = str(cursor.fetchall()).translate(str.maketrans('', '', chars))
 
 cursor.execute("SELECT ocupacao FROM staffs")
 cert_staffs = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
