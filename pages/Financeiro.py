@@ -24,6 +24,6 @@ data1 = st.date_input('Data Inicial', format='DD/MM/YYYY')
 data2 = st.date_input('Data Final', format='DD/MM/YYYY')
 
 cursor.execute(f"select data, id_staff, divisao from lancamento_bat where data between '{data1}' and '{data2}'")
-lista = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
+lista = str(cursor.fetchall()).translate(str.maketrans('', '', chars))
 
 st.table(lista)
