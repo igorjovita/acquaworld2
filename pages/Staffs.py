@@ -67,5 +67,5 @@ nome = st.selectbox('Staff', cert_staffs)
 status = st.selectbox('Status', ['Ativo', 'Inativo'])
 
 if st.button('Atualizar Status'):
-    cursor.execute(f"Update staffs set staus = '{status}'")
+    cursor.execute(f"Update staffs set status = '{status}'")
     mydb.commit()
