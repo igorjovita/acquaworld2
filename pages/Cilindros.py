@@ -17,20 +17,30 @@ chars = "'),([]"
 cursor = mydb.cursor()
 
 st.header('Controle Cilindros')
-data = st.date_input('Data', format='DD/MM/YYYY')
-nome = st.selectbox('Staff', ['', 'Juarez', 'Glauber', 'Roberta'])
 
+col1, col2 = st.columns(2)
+with col1:
+    data = st.date_input('Data', format='DD/MM/YYYY')
+    inicio = str(st.text_input('Horario de Inicio'))
+    quantidade_acqua = st.text_input('Cilindros Acqua')
+
+with col2:
+    nome = st.selectbox('Staff', ['', 'Juarez', 'Glauber', 'Roberta'])
+    final = str(st.text_input('Horario do Termino'))
+    quantidade_pl = st.text_input('Cilindros PL')
+    quentinha = st.selectbox('Almoço', ['', 'Sim', 'Não'])
+    
 cursor.execute(f"SELECT id FROM staffs WHERE nome = '{nome}'")
 id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
 
 
-inicio = str(st.text_input('Horario de Inicio'))
-final = str(st.text_input('Horario do Termino'))
 
 
-quantidade_acqua = st.text_input('Cilindros Acqua')
-quantidade_pl = st.text_input('Cilindros PL')
-quentinha = st.selectbox('Almoço', ['', 'Sim', 'Não'])
+
+
+
+
+
 situacao = 'Pendente'
 
 
