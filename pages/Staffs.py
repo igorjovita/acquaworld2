@@ -17,7 +17,7 @@ st.title('Sistema Acquaworld')
 
 st.header('Staffs')
 
-chars = "')([]"
+chars = "'),([]"
 cursor.execute("SELECT nome FROM staffs")
 lista = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split('')
 staffs = []
