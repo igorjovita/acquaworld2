@@ -1,6 +1,9 @@
 import streamlit as st
 import os
 import mysql.connector
+import pandas as pd
+
+chars = "'),([]"
 
 mydb = mysql.connector.connect(
     host=os.getenv("DB_HOST"),
@@ -15,32 +18,8 @@ st.title('Sistema Acquaworld')
 
 st.header('Staffs')
 
-chars = "'),([]"
-cursor.execute("SELECT nome FROM staffs")
-lista = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
-staffs = []
+cursor.execute("Select * FROM staffs")
+lista_staffs = id_staff = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
 
-data = st.date_input('Data:', format='DD/MM/YYYY')
-
-for i, item in enumerate(lista):
-    col1, col2, _ = st.columns([0.05, 0.8, 0.15])
-    done = col1.checkbox("a", key=str(i), label_visibility="hidden")
-
-    col2.markdown(item, unsafe_allow_html=True)
-
-    if done:
-        staffs.append(str(item))
-
-divisao = st.text_input('Divisao')
-
-if st.button('Lançar no Sistema'):
-    for i, nome_staff in enumerate(staffs):
-        nome = str(nome_staff)
-        cursor.execute(f"SELECT id FROM staffs WHERE nome = '{nome}'")
-        id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-        cursor.execute(f"SELECT comissao FROM staffs WHERE nome = '{nome}'")
-        situacao = 'PENDENTE'
-        cursor.execute(
-            'INSERT INTO lancamento_bat (data, id_staff, divisao,situacao) VALUES (%s, %s, %s, %s)',
-            (data, id_staff, divisao, situacao))
-        mydb.commit()
+df = pd.DataFrame(lista_staffs)
+st.dataframe(df)

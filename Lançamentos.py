@@ -67,7 +67,7 @@ with st.expander('Segundo Curso'):
 cursor.execute(f"SELECT id FROM staffs WHERE nome = '{apoio_superficie}'")
 id_as = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
 
-lista = []
+
 
 botao = st.button('Lançar no Sistema')
 if botao:
