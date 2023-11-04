@@ -19,7 +19,7 @@ st.title('Sistema Acquaworld')
 st.header('Staffs')
 
 cursor.execute("Select nome, ocupacao, status FROM staffs")
-lista_staffs = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
+lista_staffs = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
 
 df = pd.DataFrame(lista_staffs, columns=['Nome', 'Certificação', 'Status'])
 st.dataframe(df)
