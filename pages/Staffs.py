@@ -34,6 +34,16 @@ def seleciona_status(nome):
     status_staffs = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
     return status_staffs
 
+st.write('''<style>
+
+[data-testid="column"] {
+    width: calc(33.3333% - 1rem) !important;
+    flex: 1 1 calc(33.3333% - 1rem) !important;
+    min-width: calc(33% - 1rem) !important;
+}
+.css-1l269bu {max-width:20% !important;}
+</style>''', unsafe_allow_html=True)
+
 
 colunas = st.columns((2, 2, 2, 1))
 campos = ['Nome', 'Certificação', 'Status']
