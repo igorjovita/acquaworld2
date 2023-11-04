@@ -4,6 +4,7 @@ import mysql.connector
 import pandas as pd
 
 chars = "')([]"
+chars2 = "'),([]"
 
 mydb = mysql.connector.connect(
     host=os.getenv("DB_HOST"),
@@ -58,7 +59,7 @@ for item in nome_staffs:
 
     if on_click_status:
         cursor.execute(f"SELECT status from staffs WHERE nome = '{item[0]}'")
-        status = str(cursor.fetchone()).translate(str.maketrans('', '', chars))
+        status = str(cursor.fetchone()).translate(str.maketrans('', '', chars2))
         st.write(status)
         if status == 'Ativo':
             cursor.execute(f"UPDATE staffs set status = 'Inativo' WHERE nome = '{item[0]}'")
