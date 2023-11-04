@@ -61,7 +61,8 @@ for item in nome_staffs:
     if on_click_status:
         cursor.execute(f"SELECT status from staffs WHERE nome = '{item[0]}'")
         status = str(cursor.fetchone()).translate(str.maketrans('', '', chars2))
-        st.write(status)
+
+
         if status == 'Ativo':
             cursor.execute(f"UPDATE staffs set status = 'Inativo' WHERE nome = '{item[0]}'")
             mydb.commit()
