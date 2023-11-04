@@ -65,13 +65,11 @@ for item in nome_staffs:
 
         if status == 'Ativo':
             cursor.execute(f"UPDATE staffs set status = 'Inativo' WHERE nome = '{item[0]}'")
-            mydb.commit()
             st.success('Status Atualizado com Sucesso')
             time.sleep(0.5)
             st.experimental_rerun()
         if status == 'Inativo':
             cursor.execute(f"UPDATE staffs set status = 'Ativo' WHERE nome = '{item[0]}'")
-            mydb.commit()
             st.success('Status Atualizado com Sucesso')
             time.sleep(0.5)
             st.experimental_rerun()
