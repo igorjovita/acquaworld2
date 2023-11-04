@@ -21,5 +21,5 @@ st.header('Staffs')
 cursor.execute("Select * FROM staffs")
 lista_staffs = id_staff = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
 
-df = pd.DataFrame(lista_staffs)
+
 
