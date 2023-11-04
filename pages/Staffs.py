@@ -57,6 +57,13 @@ for item in nome_staffs:
         st.success('Staff Excluido com Sucesso')
 
     if on_click_status:
-        cursor.execute(f"UPDATE staffs set status = 'Inativo' WHERE nome = '{item[0]}'")
-        mydb.commit()
-        st.success('Status Atualizado com Sucesso')
+        cursor.execute(f"SELECT status from staffs WHERE nome = '{item[0]}'")
+        status = str(cursor.fetchone()).translate(str.maketrans('', '', chars))
+        if status == 'Ativo':
+            cursor.execute(f"UPDATE staffs set status = 'Inativo' WHERE nome = '{item[0]}'")
+            mydb.commit()
+            st.success('Status Atualizado com Sucesso')
+        if status == 'Inativo':
+            cursor.execute(f"UPDATE staffs set status = 'Ativo' WHERE nome = '{item[0]}'")
+            mydb.commit()
+            st.success('Status Atualizado com Sucesso')
