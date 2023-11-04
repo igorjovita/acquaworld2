@@ -17,9 +17,9 @@ st.title('Sistema Acquaworld')
 
 st.header('Staffs')
 
-chars = "'),([]"
+chars = "')([]"
 cursor.execute("SELECT nome FROM staffs")
-lista = cursor.fetchall()
+lista = (str(cursor.fetchall()).translate(str.maketrans('', '', chars))).split(',')
 staffs = []
 
 data = st.date_input('Data:', format='DD/MM/YYYY')
