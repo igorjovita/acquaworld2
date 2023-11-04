@@ -27,9 +27,10 @@ else:
 comissão = st.text_input('Valor da comissão')
 
 if st.button('Cadastrar Staff'):
+    status = 'Ativo'
     cursor.execute("""
-        INSERT INTO staffs (nome, telefone, ocupacao, tipo, salario, comissao) VALUES (%s, %s, %s, %s, %s, %s)
-    """, (nome, telefone, ocupação, tipo, salario, comissão))
+        INSERT INTO staffs (nome, telefone, ocupacao, tipo, salario, comissao, status) VALUES (%s, %s, %s, %s, %s, %s, %s)
+    """, (nome, telefone, ocupação, tipo, salario, comissão, status))
     mydb.commit()
     st.success('Staff Cadastrado com Sucesso!')
 
