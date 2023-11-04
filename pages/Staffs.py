@@ -38,7 +38,7 @@ for col, campo_nome in zip(colunas, campos):
     col.write(campo_nome)
 
 for item in nome_staffs:
-    col1, col2, col3, col4, col5, col6 = st.columns((2, 2, 2, 1))
+    col1, col2, col3, col4 = st.columns((2, 2, 2, 1))
     with col1:
         st.write(item[0])
 
