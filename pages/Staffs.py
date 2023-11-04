@@ -2,7 +2,6 @@ import streamlit as st
 import os
 import mysql.connector
 
-
 mydb = mysql.connector.connect(
     host=os.getenv("DB_HOST"),
     user=os.getenv("DB_USERNAME"),
@@ -11,7 +10,6 @@ mydb = mysql.connector.connect(
     autocommit=True)
 
 cursor = mydb.cursor(buffered=True)
-
 
 st.title('Sistema Acquaworld')
 
@@ -23,7 +21,6 @@ lista = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
 staffs = []
 
 data = st.date_input('Data:', format='DD/MM/YYYY')
-
 
 for i, item in enumerate(lista):
     col1, col2, _ = st.columns([0.05, 0.8, 0.15])
@@ -37,8 +34,8 @@ for i, item in enumerate(lista):
 divisao = st.text_input('Divisao')
 
 if st.button('Lançar no Sistema'):
-    for i in staffs:
-        nome = str(item)
+    for i, nome_staff in enumerate(staffs):
+        nome = str(nome_staff)
         cursor.execute(f"SELECT id FROM staffs WHERE nome = '{nome}'")
         id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
         cursor.execute(f"SELECT comissao FROM staffs WHERE nome = '{nome}'")
@@ -47,5 +44,3 @@ if st.button('Lançar no Sistema'):
             'INSERT INTO lancamento_bat (data, id_staff, divisao,situacao) VALUES (%s, %s, %s, %s)',
             (data, id_staff, divisao, situacao))
         mydb.commit()
-
-
