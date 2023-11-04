@@ -26,18 +26,16 @@ st.write('''<style>
 
 st.subheader('Cadastro de Staff')
 
-col1, col2, col3 = st.columns(3)
+col1, col2 = st.columns(2)
 
 with col1:
     nome = st.text_input('Nome:').capitalize().strip()
+    ocupação = st.selectbox('Função', ['', 'Instrutor', 'Divemaster', 'Gopro', 'AS', 'Capitão'])
     tipo = st.selectbox('Tipo', ['', 'FREELANCER', 'FIXO'])
 
 with col2:
     telefone = st.text_input('Telefone')
     comissão = st.text_input('Valor da comissão')
-
-with col3:
-    ocupação = st.selectbox('Ocupação', ['', 'Instrutor', 'Divemaster', 'Gopro', 'AS', 'Capitão'])
     if tipo == 'FIXO':
         salario = st.text_input('Valor do Salario')
     else:
