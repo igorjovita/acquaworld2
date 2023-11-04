@@ -50,4 +50,4 @@ for item in nome_staffs:
     if on_click_excluir:
         cursor.execute(f"DELETE FROM staffs WHERE nome = '{item[0]}'")
         mydb.commit()
-        st.sucess('Staff Excluido com Sucesso')
+        st.success('Staff Excluido com Sucesso')
