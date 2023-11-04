@@ -27,9 +27,9 @@ st.text('STAFFS:')
 st.write('''<style>
 
 [data-testid="column"] {
-    width: calc(33.3333% - 2rem) !important;
-    flex: 1 1 calc(33.3333% - 2rem) !important;
-    min-width: calc(33% - 2rem) !important;
+    width: calc(33.3333% - 5rem) !important;
+    flex: 1 1 calc(33.3333% - 5rem) !important;
+    min-width: calc(33% - 5rem) !important;
 }
 .css-1l269bu {max-width:20% !important;}
 </style>''', unsafe_allow_html=True)
