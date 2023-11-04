@@ -41,7 +41,7 @@ def seleciona_status(nome):
 
 def btn_click():
     mydb.connect()
-    cursor.execute(f"Update staffs set status = {status} where nome = '{nome}'")
+    cursor.execute(f"Update staffs set status = '{status}' where nome = '{nome}'")
     mydb.commit()
     mydb.close()
     st.rerun()
