@@ -44,7 +44,7 @@ def btn_click():
     cursor.execute(f"Update staffs set status = '{status}' where nome = '{nome}'")
     mydb.commit()
     mydb.close()
-    st.rerun()
+    
 
 
 st.write('''<style>
