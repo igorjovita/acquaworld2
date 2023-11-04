@@ -22,7 +22,7 @@ st.title('Sistema Acquaworld')
 
 st.header('Staffs')
 
-cursor.execute("Select nome, ocupacao, status FROM staffs")
+cursor.execute("Select nome, status FROM staffs")
 nome_staffs = cursor.fetchall()
 
 cursor.execute("SELECT nome FROM staffs")
@@ -51,7 +51,7 @@ for col, campo_nome in zip(colunas, campos):
     col.write(campo_nome)
 
 for item in nome_staffs:
-    col1, col2, col3, col4 = st.columns((1, 1, 1, 1))
+    col1, col2, col3= st.columns((1, 1, 1))
     with col1:
         st.write(item[0])
 
@@ -59,10 +59,7 @@ for item in nome_staffs:
         st.write(item[1])
 
     with col3:
-        st.write(item[2])
-
-    with col4:
-        excluir_botao = col4.empty()
+        excluir_botao = col3.empty()
         on_click_excluir = excluir_botao.button('🗑️', 'btnExcluir' + item[0])
 
 
