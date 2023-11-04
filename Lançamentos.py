@@ -113,11 +113,12 @@ if botao:
             'INSERT INTO lancamento_bat (data, id_staff, divisao,situacao) VALUES (%s, %s, %s, %s)',
             (data, id_staff, divisao, situacao))
         mydb.commit()
+
     st.success('Divisão Lançada no Sistema')
 
     data_formatada = str(data).translate(str.maketrans('', '', chars)).split('-')
     st.write('---')
-    lista_final = str(lista).translate(str.maketrans('', '', chars2))
+    lista_final = str(staffs_selecionados).translate(str.maketrans('', '', chars2))
 
     texto_p1 = f"""
             *Divisão:*
