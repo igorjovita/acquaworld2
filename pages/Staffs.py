@@ -97,4 +97,4 @@ if botao:
     mydb.commit()
     mydb.close()
     st.rerun()
-
+    st.stop()
