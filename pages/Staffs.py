@@ -37,20 +37,14 @@ def seleciona_status(nome):
     mydb.connect()
     cursor.execute(f"SELECT status FROM staffs where nome = {nome}")
     status_staffs = str(cursor.fetchone()).translate(str.maketrans('', '', chars)).split()
-    if status_staffs == 'Ativo':
-        mydb.connect()
-        cursor.execute(f"Update staffs set status = 'Inativo' where nome = {nome}")
-        mydb.commit()
-        mydb.close()
-        st.rerun()
     return status_staffs
 
-    if status_staff == 'Inativo':
-        mydb.connect()
-        cursor.execute(f"Update staffs set status = 'Ativo' where nome = {nome}")
-        mydb.commit()
-        mydb.close()
-        st.rerun()
+def btn_click():
+    mydb.connect()
+    cursor.execute(f"Update staffs set status = {status} where nome = '{nome}'")
+    mydb.commit()
+    mydb.close()
+    st.rerun()
 
 
 st.write('''<style>
