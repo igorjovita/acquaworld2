@@ -89,7 +89,7 @@ nome = st.selectbox('Staff', cert_staffs)
 
 status = st.selectbox('Status', ['Ativo', 'Inativo'])
 
-botao = st.button('Atualizar Status',seleciona_status(nome))
+botao = st.button('Atualizar Status', btn_click())
 
 
 
