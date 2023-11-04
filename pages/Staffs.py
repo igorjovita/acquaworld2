@@ -32,13 +32,13 @@ def seleciona_status(nome):
     status_staffs = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
     return status_staffs
 
-colunas = st.columns((2, 2, 2, 1, 1,1))
+colunas = st.columns((2, 2, 2, 1))
 campos = ['Nome', 'Certificação', 'Status']
 for col, campo_nome in zip(colunas, campos):
     col.write(campo_nome)
 
 for item in nome_staffs:
-    col1, col2, col3, col4, col5, col6 = st.columns((2, 2, 2, 1, 1,1))
+    col1, col2, col3, col4, col5, col6 = st.columns((2, 2, 2, 1))
     with col1:
         st.write(item[0])
 
@@ -67,5 +67,5 @@ nome = st.selectbox('Staff', cert_staffs)
 status = st.selectbox('Status', ['Ativo', 'Inativo'])
 
 if st.button('Atualizar Status'):
-    cursor.execute(f"Update staffs set status = '{status}'")
+    cursor.execute(f"Update staffs set status = '{status}' where nome = {nome}")
     mydb.commit()
