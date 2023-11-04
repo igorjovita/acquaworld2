@@ -23,11 +23,14 @@ st.header('Staffs')
 cursor.execute("Select nome, ocupacao, status FROM staffs")
 nome_staffs = cursor.fetchall()
 
-cursor.execute("SELECT ocupacao FROM staffs")
+cursor.execute("SELECT nome FROM staffs")
 cert_staffs = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
 
-cursor.execute("SELECT status FROM staffs")
-status_staffs = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
+
+def seleciona_status(nome):
+    cursor.execute(f"SELECT status FROM staffs where nome = {nome}")
+    status_staffs = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
+    return status_staffs
 
 colunas = st.columns((2, 2, 2, 1, 1,1))
 campos = ['Nome', 'Certificação', 'Status']
@@ -35,7 +38,7 @@ for col, campo_nome in zip(colunas, campos):
     col.write(campo_nome)
 
 for item in nome_staffs:
-    col1, col2, col3, col4, col5, col6= st.columns((2, 2, 2, 1, 1,1))
+    col1, col2, col3, col4, col5, col6 = st.columns((2, 2, 2, 1, 1,1))
     with col1:
         st.write(item[0])
 
@@ -49,34 +52,20 @@ for item in nome_staffs:
         excluir_botao = col4.empty()
         on_click_excluir = excluir_botao.button('🗑️', 'btnExcluir' + item[0])
 
-    with col5:
-        status_botao = col5.empty()
-        on_click_status_a = status_botao.button('🤿', 'btnStatus_a' + item[0])
-
-    with col6:
-        status_botao_a = col5.empty()
-        on_click_status_in = status_botao.button('😴', 'btnStatus_in' + item[0])
 
     if on_click_excluir:
         cursor.execute(f"DELETE FROM staffs WHERE nome = '{item[0]}'")
         mydb.commit()
         st.success('Staff Excluido com Sucesso')
 
-    if on_click_status_in:
-        cursor.execute(f"SELECT status from staffs WHERE nome = '{item[0]}'")
-        status = str(cursor.fetchone()).translate(str.maketrans('', '', chars2))
+st.write('---')
 
-        cursor.execute(f"UPDATE staffs set status = 'Ativo' WHERE nome = '{item[0]}'")
-        st.success('Status Atualizado com Sucesso')
-        time.sleep(0.5)
-        st.experimental_rerun()
+st.subheader('Atualizar Status')
 
-    if on_click_status_a:
-        cursor.execute(f"SELECT status from staffs WHERE nome = '{item[0]}'")
-        status = str(cursor.fetchone()).translate(str.maketrans('', '', chars2))
+nome = st.selectbox('Staff', cert_staffs)
 
-        cursor.execute(f"UPDATE staffs set status = 'Inativo' WHERE nome = '{item[0]}'")
-        st.success('Status Atualizado com Sucesso')
-        time.sleep(0.5)
-        st.experimental_rerun()
+status = st.selectbox('Status', ['Ativo', 'Inativo'])
 
+if st.button('Atualizar Status'):
+    cursor.execute(f"Update staffs set staus = '{status}'")
+    mydb.commit()
