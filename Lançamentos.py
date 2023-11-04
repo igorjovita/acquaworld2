@@ -27,14 +27,14 @@ st.text('STAFFS:')
 st.write('''<style>
 
 [data-testid="column"] {
-    width: calc(33.3333% - 1rem) !important;
-    flex: 1 1 calc(33.3333% - 1rem) !important;
-    min-width: calc(33% - 1rem) !important;
+    width: calc(25% - 1rem) !important;
+    flex: 1 1 calc(25% - 1rem) !important;
+    min-width: calc(20% - 1rem) !important;
 }
-</style>''', unsafe_allow_html=True)
+.css-1l269bu {max-width:20% !important;}
 
 for i, item in enumerate(lista_staffs):
-    col1, col2, _ = st.columns([0.05, 0.8, 1])
+    col1, col2, _ = st.columns([0.05, 0.8, 0.15])
     done = col1.checkbox("a", key=str(i), label_visibility="hidden")
 
     col2.markdown(item, unsafe_allow_html=True)
