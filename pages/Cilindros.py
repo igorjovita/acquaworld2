@@ -13,6 +13,16 @@ mydb = mysql.connector.connect(
     ssl_verify_identity=False,
     ssl_ca=r"C:\users\acqua\downloads\cacert-2023-08-22.pem")
 
+st.write('''<style>
+
+[data-testid="column"] {
+    width: calc(33.3333% - 1rem) !important;
+    flex: 1 1 calc(33.3333% - 1rem) !important;
+    min-width: calc(33% - 1rem) !important;
+}
+
+</style>''', unsafe_allow_html=True)
+
 chars = "'),([]"
 cursor = mydb.cursor()
 
@@ -29,7 +39,7 @@ with col2:
     final = str(st.text_input('Horario do Termino'))
     quantidade_pl = st.text_input('Cilindros PL')
     quentinha = st.selectbox('Almoço', ['', 'Sim', 'Não'])
-    
+
 cursor.execute(f"SELECT id FROM staffs WHERE nome = '{nome}'")
 id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
 
