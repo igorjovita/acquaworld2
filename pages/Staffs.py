@@ -96,4 +96,5 @@ if botao:
     cursor.execute(f"Update staffs set status = '{status}' where nome = '{nome}'")
     mydb.commit()
     mydb.close()
-    
+    st.rerun()
+
