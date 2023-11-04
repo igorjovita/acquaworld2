@@ -3,7 +3,7 @@ import os
 import mysql.connector
 import pandas as pd
 
-chars = "'),([]"
+chars = "')([]"
 
 mydb = mysql.connector.connect(
     host=os.getenv("DB_HOST"),
@@ -44,7 +44,7 @@ for item in nome_staffs:
         st.write(item[2])
 
     with col4:
-        excluir_botao = col4.empity()
+        excluir_botao = col4.empty()
         on_click_excluir = excluir_botao.button('🗑️', 'btnExcluir' + item[0])
 
     if on_click_excluir:
