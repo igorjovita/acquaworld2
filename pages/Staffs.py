@@ -7,8 +7,6 @@ import time
 chars = "')([]"
 chars2 = "'),([]"
 
-
-
 mydb = mysql.connector.connect(
     host=os.getenv("DB_HOST"),
     user=os.getenv("DB_USERNAME"),
@@ -21,6 +19,14 @@ cursor = mydb.cursor(buffered=True)
 st.title('Sistema Acquaworld')
 
 st.header('Staffs')
+
+if "botao" not in st.session_state:
+    st.session_state.botao = False
+
+
+def btn_click():
+    st.session_state.botao = True
+
 
 cursor.execute("Select nome, status FROM staffs")
 nome_staffs = cursor.fetchall()
@@ -36,6 +42,7 @@ def seleciona_status(nome):
     mydb.close()
     return status_staffs
 
+
 st.write('''<style>
 
 [data-testid="column"] {
@@ -45,7 +52,6 @@ st.write('''<style>
 }
 
 </style>''', unsafe_allow_html=True)
-
 
 colunas = st.columns((2, 2, 2, 1))
 campos = ['Nome', 'Status', 'Excluir']
@@ -64,7 +70,6 @@ for item in nome_staffs:
         excluir_botao = col3.empty()
         on_click_excluir = excluir_botao.button('🗑️', 'btnExcluir' + item[0])
 
-
     if on_click_excluir:
         mydb.connect()
         cursor.execute(f"DELETE FROM staffs WHERE nome = '{item[0]}'")
@@ -80,10 +85,10 @@ nome = st.selectbox('Staff', cert_staffs)
 
 status = st.selectbox('Status', ['Ativo', 'Inativo'])
 
-if st.button('Atualizar Status'):
+st.button('Atualizar Status', on_click=btn_click)
+
+if st.session_state.botao:
     mydb.connect()
     cursor.execute(f"Update staffs set status = '{status}' where nome = '{nome}'")
     mydb.commit()
     mydb.close()
-
-
