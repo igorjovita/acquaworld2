@@ -30,19 +30,19 @@ col1, col2, col3 = st.columns(3)
 
 with col1:
     nome = st.text_input('Nome:').capitalize().strip()
+    tipo = st.selectbox('Tipo', ['', 'FREELANCER', 'FIXO'])
 
 with col2:
     telefone = st.text_input('Telefone')
+    comissão = st.text_input('Valor da comissão')
 
 with col3:
     ocupação = st.selectbox('Ocupação', ['', 'Instrutor', 'Divemaster', 'Gopro', 'AS', 'Capitão'])
+    if tipo == 'FIXO':
+        salario = st.text_input('Valor do Salario')
+    else:
+        salario = 0
 
-tipo = st.selectbox('Tipo', ['', 'FREELANCER', 'FIXO'])
-if tipo == 'FIXO':
-    salario = st.text_input('Valor do Salario')
-else:
-    salario = 0
-comissão = st.text_input('Valor da comissão')
 
 if st.button('Cadastrar Staff'):
     status = 'Ativo'
