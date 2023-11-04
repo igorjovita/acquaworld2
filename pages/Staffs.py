@@ -20,12 +20,6 @@ st.title('Sistema Acquaworld')
 
 st.header('Staffs')
 
-
-
-
-
-
-
 cursor.execute("Select nome, status FROM staffs")
 nome_staffs = cursor.fetchall()
 
@@ -33,18 +27,11 @@ cursor.execute("SELECT nome FROM staffs")
 cert_staffs = str(cursor.fetchall()).translate(str.maketrans('', '', chars2)).split()
 
 
-def seleciona_status(nome):
-    mydb.connect()
-    cursor.execute(f"SELECT status FROM staffs where nome = {nome}")
-    status_staffs = str(cursor.fetchone()).translate(str.maketrans('', '', chars)).split()
-    return status_staffs
-
 def btn_click():
     mydb.connect()
     cursor.execute(f"Update staffs set status = '{status}' where nome = '{nome}'")
     mydb.commit()
     mydb.close()
-    
 
 
 st.write('''<style>
@@ -89,7 +76,4 @@ nome = st.selectbox('Staff', cert_staffs)
 
 status = st.selectbox('Status', ['Ativo', 'Inativo'])
 
-botao = st.button('Atualizar Status', on_click= btn_click)
-
-
-
+botao = st.button('Atualizar Status', on_click=btn_click)
