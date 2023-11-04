@@ -51,11 +51,11 @@ for item in nome_staffs:
 
     with col5:
         status_botao = col5.empty()
-        on_click_status_in = status_botao.button('🤿', 'btnStatus' + item[0])
+        on_click_status_a = status_botao.button('🤿', 'btnStatus_a' + item[0])
 
     with col6:
         status_botao_a = col5.empty()
-        on_click_status_a = status_botao.button('😴', 'btnStatus' + item[0])
+        on_click_status_in = status_botao.button('😴', 'btnStatus_in' + item[0])
 
     if on_click_excluir:
         cursor.execute(f"DELETE FROM staffs WHERE nome = '{item[0]}'")
