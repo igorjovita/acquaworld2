@@ -7,6 +7,8 @@ import time
 chars = "')([]"
 chars2 = "'),([]"
 
+
+
 mydb = mysql.connector.connect(
     host=os.getenv("DB_HOST"),
     user=os.getenv("DB_USERNAME"),
@@ -31,6 +33,7 @@ def seleciona_status(nome):
     cursor.execute(f"SELECT status FROM staffs where nome = {nome}")
     status_staffs = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
     return status_staffs
+
 
 colunas = st.columns((2, 2, 2, 1))
 campos = ['Nome', 'Certificação', 'Status']
@@ -72,4 +75,3 @@ if st.button('Atualizar Status'):
     time.sleep(0.5)
     st.rerun()
 
-    
