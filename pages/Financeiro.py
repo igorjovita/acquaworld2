@@ -26,6 +26,7 @@ data2 = st.date_input('Data Final', format='DD/MM/YYYY')
 
 cursor.execute(f"select data, id_staff, divisao from lancamento_bat where data between '{data1}' and '{data2}'")
 lista = cursor.fetchall()
-st.table(lista)
+df = pd.DataFrame(lista, columns=['Data', 'Staff', 'Divisão'])
+st.dataframe(df)
 
 
