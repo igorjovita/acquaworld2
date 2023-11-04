@@ -68,7 +68,7 @@ for item in nome_staffs:
             st.success('Status Atualizado com Sucesso')
             time.sleep(0.5)
             st.experimental_rerun()
-        if status == 'Inativo':
+        else:
             cursor.execute(f"UPDATE staffs set status = 'Ativo' WHERE nome = '{item[0]}'")
             st.success('Status Atualizado com Sucesso')
             time.sleep(0.5)
