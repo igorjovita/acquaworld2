@@ -74,7 +74,7 @@ with st.expander('Segundo Curso'):
         curso2 = st.selectbox('Curso2', ['', 'OWD', 'ADV', 'REVIEW', 'RESCUE', 'PRIMEIROS SOCORROS', 'DIVEMASTER'])
         pratica2 = st.selectbox('Pratica2', ['', 'Pratica 1', 'Pratica 2'])
 
-cursor.execute(f"SELECT id FROM staffs WHERE nome = '{apoio_superficie}'")
+cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{apoio_superficie}'")
 id_as = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
 
 
