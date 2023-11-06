@@ -24,7 +24,7 @@ st.subheader('Selecione o intervalo da pesquisa')
 data1 = st.date_input('Data Inicial', format='DD/MM/YYYY', value=datetime.date(year=2023, month=11, day=0o1))
 data2 = st.date_input('Data Final', format='DD/MM/YYYY')
 
-cursor.execute(f"select id_staff, sum(divisao) from lancamento_bat where data between '{data1}' and '{data2}' group by id_staff'")
+cursor.execute(f" select id_staff, sum(divisao) from lancamento_bat where data between '{data1}' and '{data2}' group by id_staff")
 lista = cursor.fetchall()
 df = pd.DataFrame(lista, columns=['Data', 'Staff', 'Divisão'])
 st.dataframe(df)
