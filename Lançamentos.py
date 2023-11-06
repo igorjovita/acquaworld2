@@ -88,7 +88,7 @@ if botao:
                        (data, id_as, equipagens, situacao))
         mydb.commit()
     if mestre != '':
-        cursor.execute(f"SELECT id FROM staffs WHERE nome = '{mestre}'")
+        cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{mestre}'")
         id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
         situacao = 'PENDENTE'
         cursor.execute("INSERT INTO lancamento_mestre(data, id_staff, embarques, situacao) VALUES (%s, %s, %s, %s)",
@@ -96,7 +96,7 @@ if botao:
         mydb.commit()
 
     if curso != '':
-        cursor.execute(f"SELECT id FROM staffs WHERE nome = '{instrutor}'")
+        cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{instrutor}'")
         id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
         situacao = 'PENDENTE'
         cursor.execute("INSERT INTO lancamento_curso(data, id_staff, curso, quantidade, pratica, situacao) VALUES ("
@@ -105,7 +105,7 @@ if botao:
         mydb.commit()
 
     if curso2 != '':
-        cursor.execute(f"SELECT id FROM staffs WHERE nome = '{instrutor2}'")
+        cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{instrutor2}'")
         id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
         situacao = 'PENDENTE'
         cursor.execute("INSERT INTO lancamento_curso(data, id_staff, curso, quantidade, pratica, situacao) VALUES ("
@@ -115,7 +115,7 @@ if botao:
 
     for i, nome_staff in enumerate(staffs_selecionados):
         nome = str(nome_staff)
-        cursor.execute(f"SELECT id FROM staffs WHERE nome = '{nome}'")
+        cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{nome}'")
         id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
         cursor.execute(f"SELECT comissao FROM staffs WHERE nome = '{nome}'")
         situacao = 'PENDENTE'
