@@ -15,7 +15,7 @@ cursor = mydb.cursor(buffered=True)
 
 chars = "'),([]"
 chars2 = "')([]"
-cursor.execute("SELECT nome FROM staffs where status = 'Ativo'")
+cursor.execute("SELECT nome FROM staffs where status = 'Ativo' and ocupacao = 'Instrutor' or 'Divemaster'")
 lista_staffs = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
 staffs_selecionados = []
 
