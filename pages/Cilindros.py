@@ -38,7 +38,7 @@ with col2:
     final = str(st.text_input('Horario do Termino'))
     quantidade_pl = st.text_input('Cilindros PL')
 
-cursor.execute(f"SELECT id FROM staffs WHERE nome = '{nome}'")
+cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{nome}'")
 id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
 
 situacao = 'Pendente'
