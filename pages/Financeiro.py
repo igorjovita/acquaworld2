@@ -130,11 +130,24 @@ if botao:
             quentinhas = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
             valor_total = (int(diarias)*50) + int(cilindros_acqua) + int(cilindros_pl) + (int(quentinhas)*17)
             mydb.close()
-            st.subheader(f'Staff : {staff_cilindro}')
-            st.subheader(f'Diárias : {diarias}')
-            st.subheader(f'Cilindros Acqua : {cilindros_acqua}')
-            st.subheader(f'Cilindros PL : {cilindros_pl}')
-            st.subheader(f'Quentinhas : {quentinhas}')
-            st.header(f'Valor a pagar : R$ {valor_total}')
+            col1, col2 = st.columns(2)
+            with col1:
+                st.subheader(f'Staff : {staff_cilindro}')
+                st.subheader(f'Diárias : {diarias}')
+                st.subheader(f'Cilindros Acqua : {cilindros_acqua}')
+                st.subheader(f'Cilindros PL : {cilindros_pl}')
+                st.subheader(f'Quentinhas : {quentinhas}')
+                st.header(f'Valor a pagar : R$ {valor_total}')
+
+            with col2:
+                if escolha_data =='Data Especifica':
+                    mydb.connect()
+                    cursor.execute(f"SELECT horario_inicio from lancamento_cilindro where data = '{data1}'")
+                    horario_inicial = cursor.fetchone()
+                    cursor.execute(f"SELECT horario_final from lancamento_cilindro where data = '{data1}'")
+                    horario_final = cursor.fetchone()
+                    mydb.close()
+                    st.subheader(f'O compressor foi ligado as {horario_inicial}')
+                    st.subheader(f'O compressor foi desligado as {horario_final}')
 
 
