@@ -49,7 +49,8 @@ for item in lista:
         cursor.execute(f"SELECT comissao from staffs where id_staff = '{id_staff}'")
         comissao_staff = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
         mydb.close()
-        valor_pagar = divisao * comissao_staff
+        valor_pagar = float(divisao) * int(comissao_staff)
+        st.subheader(valor_pagar)
 
 
 
