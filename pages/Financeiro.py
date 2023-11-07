@@ -36,7 +36,7 @@ for item in lista:
     cursor.execute(f"SELECT nome from staffs where id_staff = {id_staff}")
     nome_staff = cursor.fetchall()
     mydb.close()
-    st.write(nome_staff)
+    st.subheader(nome_staff)
     st.subheader(id_staff)
 
 
