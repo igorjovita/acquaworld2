@@ -73,4 +73,23 @@ if botao:
                 st.subheader(equipagens)
 
 
+    if escolha == 'Comissao Capitao':
+        cursor.execute(f" select id_staff, sum(embarques) as embarques from lancamento_mestre where data between '{data1}' and '{data2}' group by id_staff order by embarques desc")
+        lista = cursor.fetchall()
+
+        for item in lista:
+            id_staff = item[0]
+            embarques = item[1]
+            col1, col2 = st.columns(2)
+
+            with col1:
+                mydb.connect()
+                cursor.execute(f"SELECT nome from staffs where id_staff = {id_staff}")
+                nome_as = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
+                mydb.close()
+                st.subheader(nome_as)
+
+            with col2:
+                st.subheader(embarques)
+
 
