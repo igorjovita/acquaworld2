@@ -104,3 +104,17 @@ if botao:
                 st.subheader(embarques)
 
 
+
+    if escolha == 'Comissão Cilindro':
+        mydb.connect()
+        cursor.execute(f"SELECT id_staff, sum(cilindros_acqua), sum(cilindros_pl) from lancamento_cilindro where data between '{data1}' and '{data2}' group by id_staff")
+        lista = cursor.fetchall()
+
+        for item in lista:
+            id_staff = item[0]
+            cilindros_acqua = item[1]
+            cilindros_pl = item[2]
+            st.subheader(id_staff)
+            st.subheader(cilindros_acqua)
+            st.subheader(cilindros_pl)
+
