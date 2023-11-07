@@ -35,6 +35,7 @@ for item in lista:
     mydb.connect()
     col1, col2, col3 = st.columns(3)
     with col1:
+        mydb.connect()
         cursor.execute(f"SELECT nome from staffs where id_staff = {id_staff}")
         nome_staff = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
         mydb.close()
@@ -44,8 +45,10 @@ for item in lista:
         st.subheader(divisao)
 
     with col3:
+        mydb.connect()
         cursor.execute(f"SELECT comio from staffs where id_staff = '{id_staff}'")
         comissao_staff = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
+        mydb.close()
         valor_pagar = divisao * comissao_staff
 
 
