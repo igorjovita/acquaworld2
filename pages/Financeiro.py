@@ -3,7 +3,7 @@ import mysql.connector
 import os
 import pandas as pd
 import datetime
-
+from datetime import date
 mydb = mysql.connector.connect(
     host=os.getenv("DB_HOST"),
     user=os.getenv("DB_USERNAME"),
@@ -34,10 +34,11 @@ st.header('Financeiro')
 st.subheader('Selecione o intervalo da pesquisa')
 escolha_data = st.radio('Opçoes de filtragem', ['Data Especifica', 'Intervalo entre Datas'])
 if escolha_data == 'Intervalo entre Datas':
-    data1 = st.date_input('Data Inicial', format='DD/MM/YYYY', value=datetime.date(year=2023, month=11, day=0o1))
+    mes_atual = date.today().month
+    data1 = st.date_input('Data Inicial', format='DD/MM/YYYY', value=datetime.date(year=2023, month=mes_atual, day=0o1))
     data2 = st.date_input('Data Final', format='DD/MM/YYYY')
 if escolha_data == 'Data Especifica':
-    data1 = st.date_input('Data', format='DD/MM/YYYY', value=datetime.date(year=2023, month=11, day=0o1))
+    data1 = st.date_input('Data', format='DD/MM/YYYY')
     data2 = data1
 escolha = st.selectbox('Escolha o tipo', ['Comissão Staff', 'Comissão AS', 'Comissão Capitao', 'Comissão Cilindro'])
 botao = st.button('Pesquisar')
