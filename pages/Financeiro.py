@@ -34,7 +34,7 @@ for item in lista:
     divisao = item[1]
     mydb.connect()
     cursor.execute(f"SELECT nome from staffs where id_staff = {id_staff}")
-    nome_staff = cursor.fetchall()
+    nome_staff = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
     mydb.close()
     st.subheader(nome_staff)
     st.subheader(id_staff)
