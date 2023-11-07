@@ -147,7 +147,7 @@ if botao:
                     cursor.execute(f"SELECT horario_final from lancamento_cilindro where data = '{data1}'")
                     horario_final = cursor.fetchone()
                     mydb.close()
-                    st.subheader(f'O compressor foi ligado as {horario_inicial}')
-                    st.subheader(f'O compressor foi desligado as {horario_final}')
+                    st.subheader(f'Horario Inicial {horario_inicial}')
+                    st.subheader(f'Horario Final {horario_final}')
 
 
