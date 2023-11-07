@@ -23,7 +23,7 @@ st.header('Financeiro')
 st.subheader('Selecione o intervalo da pesquisa')
 data1 = st.date_input('Data Inicial', format='DD/MM/YYYY', value=datetime.date(year=2023, month=11, day=0o1))
 data2 = st.date_input('Data Final', format='DD/MM/YYYY')
-escolha = st.selectbox('Escolha o tipo', ['Comissão Staff', 'Comissao AS', 'Comisao Capitao', 'Comissao Cilindro'])
+escolha = st.selectbox('Escolha o tipo', ['Comissão Staff', 'Comissao AS', 'Comissao Capitao', 'Comissao Cilindro'])
 botao = st.button('Pesquisar')
 
 if botao:
