@@ -15,7 +15,7 @@ cursor = mydb.cursor(buffered=True)
 
 chars = "'),([]"
 chars2 = "')([]"
-cursor.execute("SELECT nome FROM staffs where status = 'Ativo' and ocupacao = 'Instrutor' or ocupacao = 'Divemaster'")
+cursor.execute("SELECT * FROM staffs where status ='Ativo' and  ocupacao ='Divemaster' or status ='Ativo' and ocupacao ='Instrutor'")
 lista_staffs = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
 staffs_selecionados = []
 
@@ -35,10 +35,6 @@ st.write('''<style>
 
 for i, item in enumerate(lista_staffs):
     done = st.checkbox(str(item), key= str(i))
-    # col1, col2, _ = st.columns([0.05, 0.8, 0.15])
-    # done = col1.checkbox("a", key=str(i), label_visibility="hidden")
-    #
-    # col2.markdown(item, unsafe_allow_html=True)
 
     if done:
         staffs_selecionados.append(str(item))
