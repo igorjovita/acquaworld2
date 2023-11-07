@@ -50,7 +50,7 @@ for item in lista:
         comissao_staff = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
         mydb.close()
         valor_pagar = float(divisao) * int(comissao_staff)
-        st.subheader(valor_pagar)
+        st.subheader(f'R$ {valor_pagar}')
 
 
 
