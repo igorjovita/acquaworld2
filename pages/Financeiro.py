@@ -111,7 +111,7 @@ if botao:
         lista = cursor.fetchall()
         mydb.close()
 
-        for item in lista:  
+        for item in lista:
             diarias = item[0]
             id_staff = item[1]
             cilindros_acqua = item[2]
@@ -122,11 +122,13 @@ if botao:
 
             cursor.execute(f"select count(almoco) from lancamento_cilindro where data between '{data1}' and '{data2}' and almoco = 'Sim'")
             quentinhas = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
+            valor_total = (int(diarias)*50) + int(cilindros_acqua) + int(cilindros_pl) + (int(quentinhas)*17)
             mydb.close()
             st.subheader(f'Staff : {staff_cilindro}')
             st.subheader(f'Diárias : {diarias}')
             st.subheader(f'Cilindros Acqua : {cilindros_acqua}')
             st.subheader(f'Cilindros PL : {cilindros_pl}')
             st.subheader(f'Quentinhas : {quentinhas}')
+            st.header(f'Valor a pagar : R$ {valor_total}')
 
 
