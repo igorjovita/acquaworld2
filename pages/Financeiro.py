@@ -35,5 +35,6 @@ for item in lista:
     mydb.connect()
     nome_staff = cursor.execute(f"SELECT nome from staffs where id_staff = '{id_staff}'")
     mydb.close()
+    st.write(nome_staff)
 
 
