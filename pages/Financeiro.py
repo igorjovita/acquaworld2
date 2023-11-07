@@ -31,6 +31,6 @@ df = pd.DataFrame(lista, columns=['Staff', 'Divisão'])
 st.dataframe(df)
 
 for item in lista:
-    st.write(item)
+    st.write(item[0])
 
 
