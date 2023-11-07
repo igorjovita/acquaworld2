@@ -33,7 +33,7 @@ for item in lista:
     id_staff = item[0]
     divisao = item[1]
     mydb.connect()
-    nome_staff = cursor.execute(f"SELECT nome from staffs where id_staff = '{id_staff}'")
+    nome_staff = cursor.execute(f"SELECT nome from staffs where id_staff = {id_staff}")
     mydb.close()
     st.write(nome_staff)
 
