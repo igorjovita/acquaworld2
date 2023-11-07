@@ -109,12 +109,21 @@ if botao:
         mydb.connect()
         cursor.execute(f"SELECT id_staff, sum(cilindros_acqua), sum(cilindros_pl) from lancamento_cilindro where data between '{data1}' and '{data2}' group by id_staff")
         lista = cursor.fetchall()
+        mydb.close()
 
         for item in lista:
             id_staff = item[0]
             cilindros_acqua = item[1]
             cilindros_pl = item[2]
-            st.subheader(id_staff)
-            st.subheader(cilindros_acqua)
-            st.subheader(cilindros_pl)
+            mydb.connect()
+            cursor.execute(f"SELECT nome from staffs where id_staff = {id_staff}")
+            staff_cilindro = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
+
+            cursor.execute(f"select count(almoco) from lancamento_cilindro where data between '{data1}' and '{data2}' and almoco = 'Sim'")
+            quentinhas = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
+            mydb.close()
+            st.subheader(f'Staff : {staff_cilindro}')
+            st.subheader(f'Cilindros Acqua : {cilindros_acqua}')
+            st.subheader(f'Cilindros PL : {cilindros_pl}')
+            st.subheader(f'Quentinhas : {quentinhas}')
 
