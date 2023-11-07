@@ -143,11 +143,11 @@ if botao:
                 if escolha_data =='Data Especifica':
                     mydb.connect()
                     cursor.execute(f"SELECT horario_inicio from lancamento_cilindro where data = '{data1}'")
-                    horario_inicial = cursor.fetchone()
+                    horario_inicial = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
                     cursor.execute(f"SELECT horario_final from lancamento_cilindro where data = '{data1}'")
-                    horario_final = cursor.fetchone()
+                    horario_final = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
                     mydb.close()
-                    st.subheader(f'Horario Inicial {horario_inicial}')
-                    st.subheader(f'Horario Final {horario_final}')
+                    st.subheader(f'Horario Inicial : {horario_inicial}')
+                    st.subheader(f'Horario Final : {horario_final}')
 
 
