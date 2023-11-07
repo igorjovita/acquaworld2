@@ -26,6 +26,7 @@ data2 = st.date_input('Data Final', format='DD/MM/YYYY')
 
 cursor.execute(f" select id_staff, sum(divisao) from lancamento_bat where data between '{data1}' and '{data2}' group by id_staff")
 lista = cursor.fetchall()
+st.write(lista)
 df = pd.DataFrame(lista, columns=['Staff', 'Divisão'])
 st.dataframe(df)
 
