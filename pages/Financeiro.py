@@ -33,10 +33,20 @@ for item in lista:
     id_staff = item[0]
     divisao = item[1]
     mydb.connect()
-    cursor.execute(f"SELECT nome from staffs where id_staff = {id_staff}")
-    nome_staff = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
-    mydb.close()
-    st.subheader(nome_staff)
-    st.subheader(id_staff)
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        cursor.execute(f"SELECT nome from staffs where id_staff = {id_staff}")
+        nome_staff = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
+        mydb.close()
+        st.subheader(nome_staff)
+
+    with col2:
+        st.subheader(divisao)
+
+    with col3:
+        cursor.execute(f"SELECT comio from staffs where id_staff = '{id_staff}'")
+        comissao_staff = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
+        valor_pagar = divisao * comissao_staff
+
 
 
