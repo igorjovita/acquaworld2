@@ -94,7 +94,7 @@ if botao:
             (data, id_staff_1, divisao_1, situacao))
 
     if staffd2 != '':
-        nome_2 = staffd1.split(',')
+        nome_2 = staffd2.split(',')
         cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{nome_2[0]}'")
         id_staff_2 = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
         cursor.execute(f"SELECT comissao FROM staffs WHERE nome = '{nome_2[0]}'")
