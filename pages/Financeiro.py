@@ -32,6 +32,7 @@ st.title('Sistema AcquaWorld')
 st.header('Financeiro')
 
 st.subheader('Selecione o intervalo da pesquisa')
+st.radio('Opçoes de filtragem', ['Data Especifica', 'Intervalo entre datas'])
 data1 = st.date_input('Data Inicial', format='DD/MM/YYYY', value=datetime.date(year=2023, month=11, day=0o1))
 data2 = st.date_input('Data Final', format='DD/MM/YYYY')
 escolha = st.selectbox('Escolha o tipo', ['Comissão Staff', 'Comissão AS', 'Comissão Capitao', 'Comissão Cilindro'])
