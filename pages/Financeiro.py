@@ -30,4 +30,8 @@ st.write(lista)
 df = pd.DataFrame(lista, columns=['Staff', 'Divisão'])
 st.dataframe(df)
 
+for i, item in enumerate(lista):
+    st.write(str(i))
+    st.write(str(item))
+
 
