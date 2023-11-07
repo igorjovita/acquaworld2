@@ -23,8 +23,9 @@ st.header('Financeiro')
 st.subheader('Selecione o intervalo da pesquisa')
 data1 = st.date_input('Data Inicial', format='DD/MM/YYYY', value=datetime.date(year=2023, month=11, day=0o1))
 data2 = st.date_input('Data Final', format='DD/MM/YYYY')
+botao = st.button('Pesquisar')
 
-if st.button('Pesquisar'):
+if botao:
     cursor.execute(f" select id_staff, sum(divisao) as divisao from lancamento_bat where data between '{data1}' and '{data2}' group by id_staff order by divisao desc")
     lista = cursor.fetchall()
 
