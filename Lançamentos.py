@@ -82,6 +82,29 @@ id_as = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
 botao = st.button('Lançar no Sistema')
 if botao:
 
+    if staffd1 != '':
+        nome = staffd1.split(',')
+        cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{nome[0]}'")
+        id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
+        cursor.execute(f"SELECT comissao FROM staffs WHERE nome = '{nome[0]}'")
+        situacao = 'PENDENTE'
+        divisao = nome[1]
+        cursor.execute(
+            'INSERT INTO lancamento_bat (data, id_staff, divisao,situacao) VALUES (%s, %s, %s, %s)',
+            (data, id_staff, divisao, situacao))
+
+    if staffd2 != '':
+        nome = staffd1.split(',')
+        cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{nome[0]}'")
+        id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
+        cursor.execute(f"SELECT comissao FROM staffs WHERE nome = '{nome[0]}'")
+        situacao = 'PENDENTE'
+        divisao = nome[1]
+        cursor.execute(
+            'INSERT INTO lancamento_bat (data, id_staff, divisao,situacao) VALUES (%s, %s, %s, %s)',
+            (data, id_staff, divisao, situacao))
+
+
     if apoio_superficie != '':
         situacao = 'PENDENTE'
         cursor.execute("INSERT INTO lancamento_as(data, id_staff, equipagens, situacao) VALUES (%s, %s, %s, %s)",
