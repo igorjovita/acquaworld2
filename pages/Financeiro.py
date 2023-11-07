@@ -67,7 +67,7 @@ if botao:
                 comissao_staff = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
                 mydb.close()
                 valor_pagar = float(divisao) * int(comissao_staff)
-                st.subheader(f'R$ {valor_pagar}')
+                st.subheader(f'R$ {int(valor_pagar):.2f}')
     if escolha == 'Comissão AS':
         cursor.execute(
             f" select id_staff, sum(equipagens) as equipagens from lancamento_as where data between '{data1}' and '{data2}' group by id_staff order by equipagens desc")
