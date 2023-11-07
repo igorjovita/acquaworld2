@@ -31,6 +31,11 @@ df = pd.DataFrame(lista, columns=['Staff', 'Divisão'])
 st.dataframe(df)
 
 for item in lista:
-    st.write(item[0])
+    id_staff = item[0]
+    divisao = item[1]
+    mydb.connect()
+    cursor.execute(f"SELECT nome from staffs where id_staff = '{id_staff}")
+    nome_staff = cursor.fetchall()
+    mydb.close()
 
 
