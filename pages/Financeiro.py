@@ -168,6 +168,7 @@ if botao:
                     st.subheader(horas_trabalhadas)
                     st.subheader(f'{min[0]} minutos e {min[1]} segundos')
                     st.header(f'R$ {valor_total}')
+                    st.write(minutos)
                     st.write(media_cilindro)
                     st.write(min)
 
