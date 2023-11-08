@@ -146,7 +146,7 @@ if botao:
             min = str(f'{float(media_cilindro):.2f}').split('.')
             if min[1] == '00':
                 seg = str(00)
-            else:
+            if min[1] != 00:
                 seg = str(int(min[1]) * 60)
 
             col1, col2 = st.columns(2)
