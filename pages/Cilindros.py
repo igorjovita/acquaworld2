@@ -50,9 +50,12 @@ if st.button('Lançar no Sistema'):
     hora_inicio = timedelta(hours=float(h1[0]), minutes=float(h1[1]))
     hora_final = timedelta(hours=float(h2[0]), minutes=float(h2[1]))
     horas_trabalhadas = hora_final - hora_inicio
+
     h3 = horas_trabalhadas.total_seconds() / 60
+    horario_total = str(timedelta(minutes=h3) / 60).split(':')
     media_cilindro = (int(h3) / (quantidade_acqua + quantidade_pl))
     m = str(f'{float(media_cilindro):.2f}').split('.')
+    st.subheader(horario_total)
 
 
     cursor.execute("""
