@@ -172,6 +172,7 @@ if botao:
                     st.write(minutos)
                     st.write(media_cilindro)
                     st.write(min)
+                    st.write(seg)
 
             if escolha_data == 'Intervalo entre Datas':
                 with col1:
@@ -191,6 +192,7 @@ if botao:
                     st.subheader(cilindros_pl)
                     st.subheader(quentinhas)
                     st.subheader(f'{horario_total[1]} horas e {horario_total[2]} minutos')
-                    st.subheader(f'{min[0]} minutos e {seg[0]} segundos')
+
+                    st.subheader(f'{min[0]} minutos e {seg[0]}{seg[1]} segundos')
                     st.header(f'R$ {valor_total}')
                     st.write(media_cilindro)
