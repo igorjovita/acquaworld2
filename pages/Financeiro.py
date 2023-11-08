@@ -154,6 +154,7 @@ if botao:
                     st.subheader(f'Total de Horas :')
                     st.subheader(f'Tempo Médio :')
                     st.header(f'Valor a pagar :')
+                    st.subheader(minutos)
 
                 with col2:
                     st.subheader(staff_cilindro)
