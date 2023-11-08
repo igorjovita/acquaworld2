@@ -129,9 +129,9 @@ if botao:
             cursor.execute(f"select count(almoco) from lancamento_cilindro where data between '{data1}' and '{data2}' and almoco = 'Sim'")
             quentinhas = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
             valor_total = (int(diarias)*50) + int(cilindros_acqua) + int(cilindros_pl) + (int(quentinhas)*17)
-            cursor.execute(f"SELECT horario_inicio from lancamento_cilindro where data = '{data1}'")
+            cursor.execute(f"SELECT horario_inicio from lancamento_cilindro where data between '{data1} and '{data2}'")
             horario_inicial = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-            cursor.execute(f"SELECT horario_final from lancamento_cilindro where data = '{data1}'")
+            cursor.execute(f"SELECT horario_final from lancamento_cilindro where data between '{data1}' and '{data2}'")
             horario_final = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
             mydb.close()
             h1 = horario_inicial.split(':')
@@ -154,7 +154,6 @@ if botao:
                     st.subheader(f'Total de Horas :')
                     st.subheader(f'Tempo Médio :')
                     st.header(f'Valor a pagar :')
-                    
 
                 with col2:
                     st.subheader(staff_cilindro)
@@ -167,4 +166,23 @@ if botao:
                     st.subheader(f'{float(media_cilindro):.2f} minutos')
                     st.header(f'R$ {valor_total}')
 
+            if escolha_data == 'Intervalo entre Datas':
+                with col1:
+                    st.subheader('Staff :')
+                    st.subheader('Diárias :')
+                    st.subheader('Cilindros Acqua :')
+                    st.subheader('Cilindros PL :')
+                    st.subheader('Quentinhas :')
+                    st.subheader(f'Total de Horas :')
+                    st.subheader(f'Tempo Médio :')
+                    st.header(f'Valor a pagar :')
 
+                with col2:
+                    st.subheader(staff_cilindro)
+                    st.subheader(diarias)
+                    st.subheader(cilindros_acqua)
+                    st.subheader(cilindros_pl)
+                    st.subheader(quentinhas)
+                    st.subheader(horas_trabalhadas)
+                    st.subheader(f'{float(media_cilindro):.2f} minutos')
+                    st.header(f'R$ {valor_total}')
