@@ -143,7 +143,7 @@ if botao:
             mydb.close()
             horario_total = str(timedelta(minutes=minutos)/60).split(':')
             media_cilindro = (int(minutos) / (cilindros_acqua + cilindros_pl))
-            min = str(f'{float(media_cilindro):.2f} minutos').split('.')
+            min = str(f'{float(media_cilindro):.2f}').split('.')
 
             col1, col2 = st.columns(2)
             if escolha_data == 'Data Especifica':
@@ -166,7 +166,7 @@ if botao:
                     st.subheader(horario_inicial)
                     st.subheader(horario_final)
                     st.subheader(horas_trabalhadas)
-                    st.subheader(f'{float(media_cilindro):.2f}')
+                    st.subheader(f'{float(media_cilindro):.2f} minutos')
                     st.header(f'R$ {valor_total}')
 
             if escolha_data == 'Intervalo entre Datas':
