@@ -63,5 +63,5 @@ if st.button('Lançar no Sistema'):
                    (data, id_staff, inicio, final, quantidade_acqua, quantidade_pl, quentinha, situacao, h3, m1))
     mydb.commit()
     st.success('Lançado no Sistema com Sucesso!')
-    st.subheader(f'Tempo Médio por cilindro: {m[0]} min e {m[1]} s')
+    st.subheader(f'Tempo Médio : {m[0]} min e {m[1]} s')
 
