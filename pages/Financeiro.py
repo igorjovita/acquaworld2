@@ -162,12 +162,13 @@ if botao:
                     st.subheader(quentinhas)
                     st.subheader(horario_inicial)
                     st.subheader(horario_final)
-                    st.subheader(f'{horario_total[1]} hrs e {horario_total[2]} minx')
+                    st.subheader(f'{horario_total[1]} horas e {horario_total[2]} min')
                     if seg != '0':
                         st.subheader(f'{min[0]} min e {seg[0]}{seg[1]} s')
                     else:
                         st.subheader(f'{min[0]} min e {seg[0]} s')
                     st.header(f'R$ {valor_total}')
+                    st.subheader(horario_total)
 
 
             if escolha_data == 'Intervalo entre Datas':
