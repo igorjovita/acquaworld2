@@ -166,7 +166,7 @@ if botao:
                     st.subheader(horario_inicial)
                     st.subheader(horario_final)
                     st.subheader(horas_trabalhadas)
-                    st.subheader(f'{float(media_cilindro):.2f} minutos')
+                    st.subheader(f'{min[0]} minutos e {min[1]} segundos')
                     st.header(f'R$ {valor_total}')
 
             if escolha_data == 'Intervalo entre Datas':
