@@ -145,7 +145,7 @@ if botao:
             media_cilindro = (int(minutos) / (cilindros_acqua + cilindros_pl))
             min = str(f'{float(media_cilindro):.2f}').split('.')
             if min[1] == 00 or min[1] == 0:
-                seg = 00
+                seg = str(00)
             else:
                 seg = str(int(min[1]) * 60)
 
