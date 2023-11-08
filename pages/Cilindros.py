@@ -37,7 +37,7 @@ with col1:
 with col2:
     nome = st.selectbox('Staff', ['', 'Juarez', 'Glauber', 'Roberta'])
     final = str(st.text_input('Horario do Termino'))
-    quantidade_pl = st.number_input('Cilindros PL',step=1)
+    quantidade_pl = st.number_input('Cilindros PL', step=1)
 
 cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{nome}'")
 id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
@@ -51,7 +51,7 @@ if st.button('Lançar no Sistema'):
     hora_final = timedelta(hours=float(h2[0]), minutes=float(h2[1]))
     horas_trabalhadas = hora_final - hora_inicio
     h3 = horas_trabalhadas.total_seconds() / 60
-    media_cilindro = (int(h3) / (quantidade_acqua + quantidade_pl))
+    media_cilindro = str((int(h3) / (quantidade_acqua + quantidade_pl))).split('.')
 
 
     cursor.execute("""
@@ -59,5 +59,5 @@ if st.button('Lançar no Sistema'):
                    (data, id_staff, inicio, final, quantidade_acqua, quantidade_pl, quentinha, situacao, horas_trabalhadas))
     mydb.commit()
     st.success('Lançado no Sistema com Sucesso!')
-    st.subheader(f'Tempo por Cilindro: {media_cilindro} minutos')
+    st.subheader(f'Tempo por Cilindro: {media_cilindro[0]} minutos e {media_cilindro[1]} segundos')
 
