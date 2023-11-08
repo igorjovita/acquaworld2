@@ -151,10 +151,10 @@ if botao:
                     st.subheader('Quentinhas :')
                     st.subheader(f'Horario Inicial :')
                     st.subheader(f'Horario Final :')
-                    st.subheader(f'Horas Trabalhadas :')
+                    st.subheader(f'Total de Horas :')
                     st.subheader(f'Tempo Médio :')
                     st.header(f'Valor a pagar :')
-                    st.write('oi')
+                    
 
                 with col2:
                     st.subheader(staff_cilindro)
