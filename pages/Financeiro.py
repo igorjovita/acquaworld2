@@ -195,7 +195,7 @@ if botao:
 
                 st.write('---')
                 mydb.connect()
-                cursor.execute(f"SELECT media_tempo FROM lancamento_cilindro where data between '{data1} and '{data2}'")
+                cursor.execute(f"SELECT media_tempo FROM lancamento_cilindro where data between '{data1}' and '{data2}'")
                 tempo_medio = float((str(cursor.fetchone()).translate(str.maketrans('', '', chars))))
                 df = pd.DataFrame(tempo_medio, columns=['Medias'])
                 st.bar_chart(df)
