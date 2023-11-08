@@ -189,3 +189,4 @@ if botao:
                     st.subheader(f'{float(media_cilindro):.2f} minutos')
                     st.header(f'R$ {valor_total}')
                     st.write(minutos)
+                    st.write(horario_total)
