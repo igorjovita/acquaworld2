@@ -148,7 +148,7 @@ if botao:
                     horario_final = (str(cursor.fetchone()).translate(str.maketrans('', '', chars))).split(':')
                     hora_inicio = timedelta(hours=float(horario_inicial[0]), minutes=float(horario_inicial[1]))
                     hora_final = timedelta(hours=float(horario_final[0]), minutes=float(horario_final[1]))
-                    horas_trabalhadas = hora_final - hora_inicial
+                    horas_trabalhadas = hora_final - hora_inicio
                     mydb.close()
                     st.subheader(f'Horario Inicial : {horario_inicial}')
                     st.subheader(f'Horario Final : {horario_final}')
