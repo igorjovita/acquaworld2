@@ -157,6 +157,6 @@ if botao:
                     st.subheader(f'Horario Inicial : {horario_inicial}')
                     st.subheader(f'Horario Final : {horario_final}')
                     st.subheader(f'Horas Trabalhadas : {horas_trabalhadas}')
-                    st.subheader(f'Tempo Médio por Cilindro : {int(media_cilindro).:2f}')
+                    st.subheader(f'Tempo Médio por Cilindro : {float(media_cilindro):.2f}')
 
 
