@@ -31,13 +31,13 @@ col1, col2 = st.columns(2)
 with col1:
     data = st.date_input('Data', format='DD/MM/YYYY')
     inicio = str(st.text_input('Horario de Inicio'))
-    quantidade_acqua = st.text_input('Cilindros Acqua')
+    quantidade_acqua = st.number_input('Cilindros Acqua', step=1)
     quentinha = st.selectbox('Almoço', ['', 'Sim', 'Não'])
 
 with col2:
     nome = st.selectbox('Staff', ['', 'Juarez', 'Glauber', 'Roberta'])
     final = str(st.text_input('Horario do Termino'))
-    quantidade_pl = st.text_input('Cilindros PL')
+    quantidade_pl = st.number_input('Cilindros PL',step=1)
 
 cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{nome}'")
 id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
@@ -51,7 +51,7 @@ if st.button('Lançar no Sistema'):
     hora_final = timedelta(hours=float(h2[0]), minutes=float(h2[1]))
     horas_trabalhadas = hora_final - hora_inicio
     h3 = horas_trabalhadas.total_seconds() / 60
-    media_cilindro = (int(h3) / (int(quantidade_acqua) + int(quantidade_pl)))
+    media_cilindro = (int(h3) / (quantidade_acqua + quantidade_pl))
 
 
     cursor.execute("""
