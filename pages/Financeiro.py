@@ -129,34 +129,41 @@ if botao:
             cursor.execute(f"select count(almoco) from lancamento_cilindro where data between '{data1}' and '{data2}' and almoco = 'Sim'")
             quentinhas = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
             valor_total = (int(diarias)*50) + int(cilindros_acqua) + int(cilindros_pl) + (int(quentinhas)*17)
+            cursor.execute(f"SELECT horario_inicio from lancamento_cilindro where data = '{data1}'")
+            horario_inicial = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
+            cursor.execute(f"SELECT horario_final from lancamento_cilindro where data = '{data1}'")
+            horario_final = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
             mydb.close()
-            col1, col2 = st.columns(2)
-            with col1:
-                st.subheader(f'Staff : {staff_cilindro}')
-                st.subheader(f'Diárias : {diarias}')
-                st.subheader(f'Cilindros Acqua : {cilindros_acqua}')
-                st.subheader(f'Cilindros PL : {cilindros_pl}')
-                st.subheader(f'Quentinhas : {quentinhas}')
-                st.header(f'Valor a pagar : R$ {valor_total}')
+            h1 = horario_inicial.split(':')
+            h2 = horario_final.split(':')
+            hora_inicio = timedelta(hours=float(h1[0]), minutes=float(h1[1]))
+            hora_final = timedelta(hours=float(h2[0]), minutes=float(h2[1]))
+            horas_trabalhadas = hora_final - hora_inicio
+            h3 = horas_trabalhadas.total_seconds() / 60
+            media_cilindro = (int(h3) / (cilindros_acqua + cilindros_pl))
 
-            with col2:
-                if escolha_data =='Data Especifica':
-                    mydb.connect()
-                    cursor.execute(f"SELECT horario_inicio from lancamento_cilindro where data = '{data1}'")
-                    horario_inicial = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-                    cursor.execute(f"SELECT horario_final from lancamento_cilindro where data = '{data1}'")
-                    horario_final = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-                    h1 = horario_inicial.split(':')
-                    h2 = horario_final.split(':')
-                    hora_inicio = timedelta(hours=float(h1[0]), minutes=float(h1[1]))
-                    hora_final = timedelta(hours=float(h2[0]), minutes=float(h2[1]))
-                    horas_trabalhadas = hora_final - hora_inicio
-                    h3 = horas_trabalhadas.total_seconds()/60
-                    media_cilindro = (int(h3)/(cilindros_acqua + cilindros_pl))
-                    mydb.close()
-                    st.subheader(f'Horario Inicial : {horario_inicial}')
-                    st.subheader(f'Horario Final : {horario_final}')
-                    st.subheader(f'Horas Trabalhadas : {horas_trabalhadas}')
-                    st.subheader(f'Tempo Médio por Cilindro : {float(media_cilindro):.2f}')
+            col1, col2 = st.columns(2)
+            if escolha_data == 'Data Especifica':
+                with col1:
+                    st.subheader('Staff :')
+                    st.subheader('Cilindros Acqua :')
+                    st.subheader('Cilindros PL :')
+                    st.subheader('Quentinhas :')
+                    st.subheader(f'Horario Inicial :')
+                    st.subheader(f'Horario Final :')
+                    st.subheader(f'Horas Trabalhadas :')
+                    st.subheader(f'Tempo Médio :')
+                    st.header(f'Valor a pagar :')
+
+                with col2:
+                    st.subheader(staff_cilindro)
+                    st.subheader(cilindros_acqua)
+                    st.subheader(cilindros_pl)
+                    st.subheader(quentinhas)
+                    st.subheader(horario_inicial)
+                    st.subheader(horario_final)
+                    st.subheader(horas_trabalhadas)
+                    st.subheader(f'{float(media_cilindro):.2f} minutos')
+                    st.header(f'R$ {valor_total}')
 
 
