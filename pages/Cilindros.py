@@ -55,7 +55,7 @@ if st.button('Lançar no Sistema'):
     horario_total = str(timedelta(minutes=h3) / 60).split(':')
     media_cilindro = (int(h3) / (quantidade_acqua + quantidade_pl))
     m = str(f'{float(media_cilindro):.2f}').split('.')
-    st.subheader(m)
+    st.subheader(str(m))
 
 
     cursor.execute("""
