@@ -159,6 +159,7 @@ if botao:
                     st.subheader(f'Horario Inicial :')
                     st.subheader(f'Horario Final :')
                     st.subheader(f'Total de Horas :')
+                    st.write(seg)
                     st.subheader(f'Tempo Médio :')
                     st.header(f'Valor a pagar :')
 
