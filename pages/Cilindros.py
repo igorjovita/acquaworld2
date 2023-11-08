@@ -55,7 +55,7 @@ if st.button('Lançar no Sistema'):
     media_cilindro = (int(h3) / (quantidade_acqua + quantidade_pl))
     m = str(f'{float(media_cilindro):.2f}').split('.')
     m1 = f'{m[0],m[1]}'
-    st.subheader(m1)
+
 
 
     cursor.execute("""
@@ -63,5 +63,5 @@ if st.button('Lançar no Sistema'):
                    (data, id_staff, inicio, final, quantidade_acqua, quantidade_pl, quentinha, situacao, h3, m1))
     mydb.commit()
     st.success('Lançado no Sistema com Sucesso!')
-    st.subheader(f'Tempo por Cilindro: {m[0]} minutos e {m[1]} segundos')
+    st.subheader(f'Tempo Médio por cilindro: {m[0]} min e {m[1]} s')
 
