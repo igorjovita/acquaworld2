@@ -192,12 +192,3 @@ if botao:
                     st.subheader(f'{horario_total[1]} horas e {horario_total[2]} min')
                     st.subheader(f'{min[0]} min e {seg[0]}{seg[1]} s')
                     st.header(f'R$ {valor_total}')
-
-                st.write('---')
-                mydb.connect()
-                cursor.execute(f"SELECT sum(media_tempo) FROM lancamento_cilindro where data between '{data1}' and '{data2}'")
-                tempo_medio = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-                mydb.close()
-                st.subheader(tempo_medio)
-                # df = pd.DataFrame(tempo_medio, columns=['Medias'])
-                # st.bar_chart(df)
