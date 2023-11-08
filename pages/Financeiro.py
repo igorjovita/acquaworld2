@@ -167,7 +167,7 @@ if botao:
                     st.subheader(horario_inicial)
                     st.subheader(horario_final)
                     st.subheader(horas_trabalhadas)
-                    st.subheader(media_cilindro)
+                    st.subheader(seg)
                     st.header(f'R$ {valor_total}')
                     st.write(minutos)
                     st.write(media_cilindro)
