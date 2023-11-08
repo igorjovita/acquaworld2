@@ -167,7 +167,7 @@ if botao:
                     st.subheader(quentinhas)
                     st.subheader(horario_inicial)
                     st.subheader(horario_final)
-                    st.subheader(horas_trabalhadas)
+                    st.subheader(f'{horario_total[1]} horas e {horario_total[2]} minutos')
                     if seg != '0':
                         st.subheader(f'{min[0]} minutos e {seg[0]}{seg[1]} segundos')
                     else:
