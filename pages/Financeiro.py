@@ -151,7 +151,8 @@ if botao:
                     hora_inicio = timedelta(hours=float(h1[0]), minutes=float(h1[1]))
                     hora_final = timedelta(hours=float(h2[0]), minutes=float(h2[1]))
                     horas_trabalhadas = hora_final - hora_inicio
-                    media_cilindro = horas_trabalhadas/(cilindros_acqua + cilindros_pl)
+                    h3 = str(horas_trabalhadas)
+                    media_cilindro = float(h3)/(cilindros_acqua + cilindros_pl)
                     mydb.close()
                     st.subheader(f'Horario Inicial : {horario_inicial}')
                     st.subheader(f'Horario Final : {horario_final}')
