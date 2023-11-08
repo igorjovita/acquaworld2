@@ -152,11 +152,11 @@ if botao:
                     hora_final = timedelta(hours=float(h2[0]), minutes=float(h2[1]))
                     horas_trabalhadas = hora_final - hora_inicio
                     h3 = horas_trabalhadas.total_seconds()/60
-                    media_cilindro = int(h3)/(cilindros_acqua + cilindros_pl)
+                    media_cilindro = (int(h3)/(cilindros_acqua + cilindros_pl))
                     mydb.close()
                     st.subheader(f'Horario Inicial : {horario_inicial}')
                     st.subheader(f'Horario Final : {horario_final}')
                     st.subheader(f'Horas Trabalhadas : {horas_trabalhadas}')
-                    st.subheader(f'Tempo Médio por Cilindro : {media_cilindro}')
+                    st.subheader(f'Tempo Médio por Cilindro : {int(media_cilindro).:2f}')
 
 
