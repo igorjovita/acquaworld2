@@ -162,11 +162,11 @@ if botao:
                     st.subheader(quentinhas)
                     st.subheader(horario_inicial)
                     st.subheader(horario_final)
-                    st.subheader(f'{horario_total[1]} horas e {horario_total[2]} minutos')
+                    st.subheader(f'{horario_total[1]} hrs e {horario_total[2]} minx')
                     if seg != '0':
-                        st.subheader(f'{min[0]} minutos e {seg[0]}{seg[1]} segundos')
+                        st.subheader(f'{min[0]} min e {seg[0]}{seg[1]} s')
                     else:
-                        st.subheader(f'{min[0]} minutos e {seg[0]} segundos')
+                        st.subheader(f'{min[0]} min e {seg[0]} s')
                     st.header(f'R$ {valor_total}')
 
 
@@ -187,6 +187,6 @@ if botao:
                     st.subheader(cilindros_acqua)
                     st.subheader(cilindros_pl)
                     st.subheader(quentinhas)
-                    st.subheader(f'{horario_total[1]} horas e {horario_total[2]} minutos')
-                    st.subheader(f'{min[0]} minutos e {seg[0]}{seg[1]} segundos')
+                    st.subheader(f'{horario_total[1]} horas e {horario_total[2]} min')
+                    st.subheader(f'{min[0]} min e {seg[0]}{seg[1]} s')
                     st.header(f'R$ {valor_total}')
