@@ -1,6 +1,7 @@
 import streamlit as st
 import mysql.connector
 import os
+from datetime import timedelta
 
 mydb = mysql.connector.connect(
     host=os.getenv("DB_HOST"),
@@ -44,10 +45,18 @@ id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
 situacao = 'Pendente'
 
 if st.button('Lançar no Sistema'):
+    h1 = inicio.split(':')
+    h2 = final.split(':')
+    hora_inicio = timedelta(hours=float(h1[0]), minutes=float(h1[1]))
+    hora_final = timedelta(hours=float(h2[0]), minutes=float(h2[1]))
+    horas_trabalhadas = hora_final - hora_inicio
+    h3 = horas_trabalhadas.total_seconds() / 60
+
+
     cursor.execute("""
-        INSERT INTO lancamento_cilindro (data, id_staff, horario_inicio, horario_final, cilindros_acqua, cilindros_pl, almoco, situacao) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""",
-                   (data, id_staff, inicio, final, quantidade_acqua, quantidade_pl, quentinha, situacao))
+        INSERT INTO lancamento_cilindro (data, id_staff, horario_inicio, horario_final, cilindros_acqua, cilindros_pl, almoco, situacao, horas_trabalhadas) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+                   (data, id_staff, inicio, final, quantidade_acqua, quantidade_pl, quentinha, situacao, horas_trabalhadas))
     mydb.commit()
     st.success('Lançado no Sistema com Sucesso!')
-    st.write(inicio)
-    st.write(final)
+    st.subheader(f'Tempo por Cilindro: {h3} minutos')
+
