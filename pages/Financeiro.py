@@ -133,7 +133,6 @@ if botao:
             horario_inicial = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
             cursor.execute(f"SELECT horario_final from lancamento_cilindro where data between '{data1}' and '{data2}'")
             horario_final = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-            mydb.close()
             h1 = horario_inicial.split(':')
             h2 = horario_final.split(':')
             hora_inicio = timedelta(hours=float(h1[0]), minutes=float(h1[1]))
@@ -141,6 +140,7 @@ if botao:
             horas_trabalhadas = hora_final - hora_inicio
             cursor.execute(f"select sum(horas_trabalhadas) from lancamento_cilindro where data between '{data1}' and '{data2}'")
             minutos = float((str(cursor.fetchone()).translate(str.maketrans('', '', chars))))
+            mydb.close()
             horario_total = timedelta(minutes=minutos)/60
             media_cilindro = (int(minutos) / (cilindros_acqua + cilindros_pl))
 
