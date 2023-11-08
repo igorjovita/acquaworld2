@@ -143,11 +143,13 @@ if botao:
                 if escolha_data =='Data Especifica':
                     mydb.connect()
                     cursor.execute(f"SELECT horario_inicio from lancamento_cilindro where data = '{data1}'")
-                    horario_inicial = (str(cursor.fetchone()).translate(str.maketrans('', '', chars))).split(':')
+                    horario_inicial = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
                     cursor.execute(f"SELECT horario_final from lancamento_cilindro where data = '{data1}'")
-                    horario_final = (str(cursor.fetchone()).translate(str.maketrans('', '', chars))).split(':')
-                    hora_inicio = timedelta(hours=float(horario_inicial[0]), minutes=float(horario_inicial[1]))
-                    hora_final = timedelta(hours=float(horario_final[0]), minutes=float(horario_final[1]))
+                    horario_final = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
+                    h1 = horario_inicial.split(':')
+                    h2 = horario_final.split(':')
+                    hora_inicio = timedelta(hours=float(h1[0]), minutes=float(h1[1]))
+                    hora_final = timedelta(hours=float(h2[0]), minutes=float(h2[1]))
                     horas_trabalhadas = hora_final - hora_inicio
                     mydb.close()
                     st.subheader(f'Horario Inicial : {horario_inicial}')
