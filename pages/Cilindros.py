@@ -52,7 +52,6 @@ if st.button('Lançar no Sistema'):
     horas_trabalhadas = hora_final - hora_inicio
 
     h3 = horas_trabalhadas.total_seconds() / 60
-    horario_total = str(timedelta(minutes=h3) / 60).split(':')
     media_cilindro = (int(h3) / (quantidade_acqua + quantidade_pl))
     m = str(f'{float(media_cilindro):.2f}').split('.')
     m1 = f'{m[0],m[1]}'
@@ -60,8 +59,8 @@ if st.button('Lançar no Sistema'):
 
 
     cursor.execute("""
-        INSERT INTO lancamento_cilindro (data, id_staff, horario_inicio, horario_final, cilindros_acqua, cilindros_pl, almoco, situacao, horas_trabalhadas) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)""",
-                   (data, id_staff, inicio, final, quantidade_acqua, quantidade_pl, quentinha, situacao, h3))
+        INSERT INTO lancamento_cilindro (data, id_staff, horario_inicio, horario_final, cilindros_acqua, cilindros_pl, almoco, situacao, horas_trabalhadas,media_tempo) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+                   (data, id_staff, inicio, final, quantidade_acqua, quantidade_pl, quentinha, situacao, h3, m))
     mydb.commit()
     st.success('Lançado no Sistema com Sucesso!')
     st.subheader(f'Tempo por Cilindro: {m[0]} minutos e {m[1]} segundos')
