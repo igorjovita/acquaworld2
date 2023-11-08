@@ -144,7 +144,10 @@ if botao:
             horario_total = str(timedelta(minutes=minutos)/60).split(':')
             media_cilindro = (int(minutos) / (cilindros_acqua + cilindros_pl))
             min = str(f'{float(media_cilindro):.2f}').split('.')
-            seg = str(int(min[1]) * 60)
+            if min[1] == 00:
+                seg = 00
+            else:
+                seg = str(int(min[1]) * 60)
 
             col1, col2 = st.columns(2)
             if escolha_data == 'Data Especifica':
