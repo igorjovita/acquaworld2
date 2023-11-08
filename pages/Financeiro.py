@@ -139,8 +139,10 @@ if botao:
             hora_inicio = timedelta(hours=float(h1[0]), minutes=float(h1[1]))
             hora_final = timedelta(hours=float(h2[0]), minutes=float(h2[1]))
             horas_trabalhadas = hora_final - hora_inicio
-            h3 = horas_trabalhadas.total_seconds() / 60
-            media_cilindro = (int(h3) / (cilindros_acqua + cilindros_pl))
+            cursor.execute(f"select sum(horas_trabalhadas) from lancamento_cilindro where data between '{data1}' and '{data2}'")
+            minutos = float((str(cursor.fetchone()).translate(str.maketrans('', '', chars))))
+            horario_total = timedelta(minutes=minutos)/60
+            media_cilindro = (int(minutos) / (cilindros_acqua + cilindros_pl))
 
             col1, col2 = st.columns(2)
             if escolha_data == 'Data Especifica':
@@ -183,7 +185,7 @@ if botao:
                     st.subheader(cilindros_acqua)
                     st.subheader(cilindros_pl)
                     st.subheader(quentinhas)
-                    st.subheader(horas_trabalhadas)
+                    st.subheader(horario_total)
                     st.subheader(f'{float(media_cilindro):.2f} minutos')
                     st.header(f'R$ {valor_total}')
                     st.write(horario_inicial)
