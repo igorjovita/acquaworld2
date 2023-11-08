@@ -157,8 +157,6 @@ if botao:
                     st.subheader(f'Horario Inicial :')
                     st.subheader(f'Horario Final :')
                     st.subheader(f'Total de Horas :')
-                    st.write(min)
-                    st.write(seg)
                     st.subheader(f'Tempo Médio :')
                     st.header(f'Valor a pagar :')
 
@@ -175,10 +173,7 @@ if botao:
                     else:
                         st.subheader(f'{min[0]} minutos e {seg[0]} segundos')
                     st.header(f'R$ {valor_total}')
-                    st.write(minutos)
-                    st.write(media_cilindro)
-                    st.write(min)
-                    st.write(seg)
+
 
             if escolha_data == 'Intervalo entre Datas':
                 with col1:
