@@ -141,7 +141,7 @@ if botao:
             cursor.execute(f"select sum(horas_trabalhadas) from lancamento_cilindro where data between '{data1}' and '{data2}'")
             minutos = float((str(cursor.fetchone()).translate(str.maketrans('', '', chars))))
             mydb.close()
-            horario_total = timedelta(minutes=minutos)/60
+            horario_total = str(timedelta(minutes=minutos)/60).split(':')
             media_cilindro = (int(minutos) / (cilindros_acqua + cilindros_pl))
 
             col1, col2 = st.columns(2)
@@ -185,7 +185,7 @@ if botao:
                     st.subheader(cilindros_acqua)
                     st.subheader(cilindros_pl)
                     st.subheader(quentinhas)
-                    st.subheader(horario_total)
+                    st.subheader(f'{horario_total[0]} horas e {horario_total[1]} minutos')
                     st.subheader(f'{float(media_cilindro):.2f} minutos')
                     st.header(f'R$ {valor_total}')
                     st.write(minutos)
