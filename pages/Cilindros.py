@@ -51,6 +51,7 @@ if st.button('Lançar no Sistema'):
     hora_final = timedelta(hours=float(h2[0]), minutes=float(h2[1]))
     horas_trabalhadas = hora_final - hora_inicio
     h3 = horas_trabalhadas.total_seconds() / 60
+    media_cilindro = (int(h3) / (cilindros_acqua + cilindros_pl))
 
 
     cursor.execute("""
@@ -58,5 +59,5 @@ if st.button('Lançar no Sistema'):
                    (data, id_staff, inicio, final, quantidade_acqua, quantidade_pl, quentinha, situacao, horas_trabalhadas))
     mydb.commit()
     st.success('Lançado no Sistema com Sucesso!')
-    st.subheader(f'Tempo por Cilindro: {h3} minutos')
+    st.subheader(f'Tempo por Cilindro: {media_cilindro} minutos')
 
