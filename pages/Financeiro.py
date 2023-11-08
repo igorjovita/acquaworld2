@@ -186,3 +186,6 @@ if botao:
                     st.subheader(horas_trabalhadas)
                     st.subheader(f'{float(media_cilindro):.2f} minutos')
                     st.header(f'R$ {valor_total}')
+                    st.write(horario_inicial)
+                    st.write(h1)
+                    st.write(h1[0])
