@@ -129,7 +129,7 @@ if botao:
             cursor.execute(f"select count(almoco) from lancamento_cilindro where data between '{data1}' and '{data2}' and almoco = 'Sim'")
             quentinhas = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
             valor_total = (int(diarias)*50) + int(cilindros_acqua) + int(cilindros_pl) + (int(quentinhas)*17)
-            cursor.execute(f"select horario_inicio from lancamento_cilindro where data between '2023-10-31' and '2023-11-06'")
+            cursor.execute(f"select horario_inicio from lancamento_cilindro where data between '{data1}' and '{data2}'")
             horario_inicial = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
             cursor.execute(f"SELECT horario_final from lancamento_cilindro where data between '{data1}' and '{data2}'")
             horario_final = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
