@@ -44,7 +44,7 @@ escolha = st.selectbox('Escolha o tipo', ['Comissão Staff', 'Comissão AS', 'Co
 botao = st.button('Pesquisar')
 
 if botao:
-    
+
     if escolha == 'Comissão Staff':
         cursor.execute(f" select id_staff, sum(divisao) as divisao from lancamento_bat where data between '{data1}' and '{data2}' group by id_staff order by divisao desc")
         lista = cursor.fetchall()
@@ -198,4 +198,4 @@ if botao:
             mydb.connect()
             cursor.execute(f"SELECT id_staff, curso, quantidade, pratica from lancamento_curso where data between '{data1}' and '{data2}'")
             cursos = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
-            st.subheader(cursos)
+            st.write(cursos)
