@@ -195,8 +195,12 @@ if botao:
                     st.header(f'R$ {valor_total}')
 
     if escolha == 'Comissão Curso':
+        instrutor = st.selectbox('Instrutor', ['Glauber', 'Martin'])
+
         mydb.connect()
-        cursor.execute(f"SELECT id_staff, curso, quantidade, pratica from lancamento_curso where data between '{data1}' and '{data2}'")
+        cursor.execute(f"Select id_staff from staffs where nome = '{instrutor}'")
+        id_instrutor = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
+        cursor.execute(f"SELECT curso, quantidade, pratica from lancamento_curso where data between '{data1}' and '{data2}' and id_staff = {id_instrutor}")
         cursos = cursor.fetchall()
         mydb.close()
         df = pd.DataFrame(cursos, columns=['Id_Staff', 'Curso', 'Quantidade', 'Pratica'])
