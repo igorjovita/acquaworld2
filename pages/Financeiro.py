@@ -199,5 +199,6 @@ if botao:
         cursor.execute(f"SELECT id_staff, curso, quantidade, pratica from lancamento_curso where data between '{data1}' and '{data2}'")
         cursos = cursor.fetchall()
         mydb.close()
-        st.table(cursos)
+        df = pd.DataFrame(cursos, index=None, columns=['Id_Staff', 'Curso', 'Quantidade', 'Pratica'])
+        st.dataframe(df)
 
