@@ -41,6 +41,8 @@ if escolha_data == 'Data Especifica':
     data1 = st.date_input('Data', format='DD/MM/YYYY')
     data2 = data1
 escolha = st.selectbox('Escolha o tipo', ['Comissão Staff', 'Comissão AS', 'Comissão Capitao', 'Comissão Curso', 'Comissão Cilindro'])
+if escolha == 'Comissão Curso':
+    instrutor = st.selectbox('Instrutor', ['Glauber', 'Martin'])
 botao = st.button('Pesquisar')
 
 if botao:
@@ -195,7 +197,7 @@ if botao:
                     st.header(f'R$ {valor_total}')
 
     if escolha == 'Comissão Curso':
-        instrutor = st.selectbox('Instrutor', ['Glauber', 'Martin'])
+
 
         mydb.connect()
         cursor.execute(f"Select id_staff from staffs where nome = '{instrutor}'")
@@ -203,6 +205,6 @@ if botao:
         cursor.execute(f"SELECT curso, quantidade, pratica from lancamento_curso where data between '{data1}' and '{data2}' and id_staff = {id_instrutor}")
         cursos = cursor.fetchall()
         mydb.close()
-        df = pd.DataFrame(cursos, columns=['Id_Staff', 'Curso', 'Quantidade', 'Pratica'])
+        df = pd.DataFrame(cursos, columns=['Curso', 'Quantidade', 'Pratica'])
         st.dataframe(df)
 
