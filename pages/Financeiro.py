@@ -40,7 +40,7 @@ if escolha_data == 'Intervalo entre Datas':
 if escolha_data == 'Data Especifica':
     data1 = st.date_input('Data', format='DD/MM/YYYY')
     data2 = data1
-escolha = st.selectbox('Escolha o tipo', ['Comissão Staff', 'Comissão AS', 'Comissão Capitao', 'Comissão Cilindro'])
+escolha = st.selectbox('Escolha o tipo', ['Comissão Staff', 'Comissão AS', 'Comissão Capitao', 'Comissão Curso', 'Comissão Cilindro'])
 botao = st.button('Pesquisar')
 
 if botao:
@@ -192,3 +192,9 @@ if botao:
                     st.subheader(f'{horario_total[1]} horas e {horario_total[2]} min')
                     st.subheader(f'{min[0]} min e {seg[0]}{seg[1]} s')
                     st.header(f'R$ {valor_total}')
+
+        if escolha == 'Comissão Curso':
+            mydb.connect()
+            cursor.execute(f"SELECT id_staff, curso, quantidade, pratica from lancamento_curso where data between '{data1}' and '{data2}'")
+            cursos = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
+            st.subheader(cursos)
