@@ -44,6 +44,7 @@ escolha = st.selectbox('Escolha o tipo', ['Comissão Staff', 'Comissão AS', 'Co
 botao = st.button('Pesquisar')
 
 if botao:
+    
     if escolha == 'Comissão Staff':
         cursor.execute(f" select id_staff, sum(divisao) as divisao from lancamento_bat where data between '{data1}' and '{data2}' group by id_staff order by divisao desc")
         lista = cursor.fetchall()
