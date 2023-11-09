@@ -197,7 +197,7 @@ if botao:
     if escolha == 'Comissão Curso':
         mydb.connect()
         cursor.execute(f"SELECT id_staff, curso, quantidade, pratica from lancamento_curso where data between '{data1}' and '{data2}'")
-        cursos = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
+        cursos = (str(cursor.fetchall()).translate(str.maketrans('', '', chars2)))
         mydb.close()
         st.write(cursos)
 
