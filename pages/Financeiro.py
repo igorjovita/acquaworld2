@@ -198,4 +198,6 @@ if botao:
         mydb.connect()
         cursor.execute(f"SELECT id_staff, curso, quantidade, pratica from lancamento_curso where data between '{data1}' and '{data2}'")
         cursos = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
-        st.subheader(cursos)
+        mydb.close()
+        st.write(cursos)
+
