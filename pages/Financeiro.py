@@ -197,8 +197,6 @@ if botao:
                     st.header(f'R$ {valor_total}')
 
     if escolha == 'Comissão Curso':
-
-
         mydb.connect()
         cursor.execute(f"Select id_staff from staffs where nome = '{instrutor}'")
         id_instrutor = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
