@@ -2,3 +2,4 @@ build-essential
 pkg-config
 default-libmysqlclient-dev
 msodbcsql17
+streamlit-option-menu
