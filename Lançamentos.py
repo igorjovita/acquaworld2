@@ -28,8 +28,8 @@ st.write('''<style>
 }
 </style>''', unsafe_allow_html=True)
 
-escolha = option_menu(menu_title=None, options=['Lançamentos', 'Visualizar', 'Editar', 'Deletar'],
-                      icons=['book', 'card-checklist', 'pencil-square', 'trash'],
+escolha = option_menu(menu_title=None, options=['Lançamentos', 'Editar', 'Deletar'],
+                      icons=['book', 'pencil-square', 'trash'],
                       orientation='horizontal')
 if escolha == 'Lançamentos':
     st.subheader('Divisão Diaria')
