@@ -31,7 +31,7 @@ st.write('''<style>
 escolha = option_menu(menu_title=None, options=['Lançar', 'Editar', 'Deletar'],
                       icons=['book', 'pencil-square', 'trash'],
                       orientation='horizontal')
-if escolha == 'Lançamentos':
+if escolha == 'Lançar':
     st.subheader('Divisão Diaria')
     data = st.date_input('Data:', format='DD/MM/YYYY')
     st.text('STAFFS:')
