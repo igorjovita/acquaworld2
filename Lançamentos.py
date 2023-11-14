@@ -254,5 +254,5 @@ if escolha == 'Editar':
     mydb.close()
     df = pd.DataFrame(selecionado, columns=['Data', 'Staff', 'Divisão'])
     st.dataframe(df)
-    for item in selecionado:
-        st.checkbox(item)
+    for i, item in enumerate(selecionado):
+        done = st.checkbox(str(item), key=str(i))
