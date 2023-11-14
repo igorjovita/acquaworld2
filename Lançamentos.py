@@ -254,7 +254,7 @@ if escolha == 'Editar':
     id_staff = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
     st.subheader(id_staff)
     for item in id_staff:
-        st.subheader(item)
         cursor.execute(f"SELECT nome from staffs where id_staff = '{item}'")
         staff = str(cursor.fetchone()).translate(str.maketrans('', '', chars))
-        st.subheader(staff)
+        st.checkbox(str(staff))
+        
