@@ -249,7 +249,7 @@ if escolha == 'Editar':
     st.title('Editar Lançamentos')
     mydb.connect()
     data1 = st.date_input('Selecione a data do lançamento')
-    cursor.execute(f"SELECT * FROM lancamentos_bat where data = '{data1}'")
+    cursor.execute(f"SELECT * FROM lancamento_bat where data = '{data1}'")
     selecionado = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
     mydb.close()
     st.subheader(selecionado)
