@@ -247,12 +247,12 @@ if escolha == 'Lançar':
 
 if escolha == 'Editar':
     st.title('Editar Lançamentos')
+    staffs = []
     mydb.connect()
     data1 = st.date_input('Selecione a data do lançamento')
-    cursor.execute(f"SELECT data, id_staff, divisao FROM lancamento_bat where data = '{data1}'")
-    selecionado = cursor.fetchall()
-    mydb.close()
-    df = pd.DataFrame(selecionado, columns=['Data', 'Staff', 'Divisão'])
-    st.dataframe(df)
-    for i, item in enumerate(selecionado):
-        done = st.checkbox(str(item), key=str(i))
+    cursor.execute(f"SELECT id_staff FROM lancamento_bat where data = '{data1}'")
+    id_staff = str(cursor.fetchall()).translate(str.maketrans('', '', chars))
+    for i, item in enumerate(id_staff):
+        cursor.execute(f"SELECT nome from staffs where id_staff = '{item}'")
+        staff = str(cursor.fetchone()).translate(str.maketrans('', '', chars)).split()
+        st.subheader(staff)
