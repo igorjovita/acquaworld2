@@ -252,4 +252,5 @@ if escolha == 'Editar':
     cursor.execute(f"SELECT data, id_staff, divisao FROM lancamento_bat where data = '{data1}'")
     selecionado = cursor.fetchall()
     mydb.close()
-    pd.DataFrame(selecionado, columns=['Data', 'Staff', 'Divisão'])
+    df = pd.DataFrame(selecionado, columns=['Data', 'Staff', 'Divisão'])
+    st.dataframe(df)
