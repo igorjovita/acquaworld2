@@ -247,7 +247,7 @@ if escolha == 'Deletar':
     st.title('Deletar Lançamentos')
     st.subheader('Selecione o lançamento para deletar')
     data1 = st.date_input('Selecione a Data')
-    l_bat = st.checkbox('Lançamento Bat')
+    l_bat = st.checkbox('Lançamento Bat') 
     l_as = st.checkbox('Lançamento AS')
     l_mestre = st.checkbox('Lançamento Mestre')
     l_curso = st.checkbox('Lançamento Curso')
