@@ -255,5 +255,5 @@ if escolha == 'Editar':
     for item in id_staff:
         st.subheader(item)
         cursor.execute(f"SELECT nome from staffs where id_staff = '{item}'")
-        staff = str(cursor.fetchone()).translate(str.maketrans('', '', chars)).split()
+        staff = str(cursor.fetchone()).translate(str.maketrans('', '', chars))
         st.subheader(staff)
