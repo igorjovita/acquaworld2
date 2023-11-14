@@ -251,7 +251,7 @@ if escolha == 'Editar':
     mydb.connect()
     data1 = st.date_input('Selecione a data do lançamento')
     cursor.execute(f"SELECT id_staff FROM lancamento_bat where data = '{data1}'")
-    id_staff = str(cursor.fetchall()).translate(str.maketrans('', '', chars))
+    id_staff = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
     st.subheader(id_staff)
     for item in id_staff:
         st.subheader(item)
