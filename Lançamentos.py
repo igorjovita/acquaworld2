@@ -252,4 +252,4 @@ if escolha == 'Editar':
     cursor.execute(f"SELECT * FROM lancamento_bat where data = '{data1}'")
     selecionado = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
     mydb.close()
-    st.subheader(selecionado)
+    st.write(selecionado)
