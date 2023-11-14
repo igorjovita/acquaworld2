@@ -243,22 +243,13 @@ if escolha == 'Lançar':
                 """
             st.code(texto_p1 + texto_staff_curso + texto_p2)
 
-# cursor.execute("SELECT * FROM lancamento_bat")
-# df = pd.DataFrame(cursor.fetchall(), columns=['ID', 'Data', 'Id_staff', 'Divisao', 'Situação'])
-# st.dataframe(df)
-#
-# cursor.execute("SELECT * FROM lancamento_as")
-# df2 = pd.DataFrame(cursor.fetchall())
-# st.dataframe(df2)
-#
-# cursor.execute("SELECT * FROM lancamento_mestre")
-# df3 = pd.DataFrame(cursor.fetchall())
-# st.dataframe(df3)
-#
-# cursor.execute("SELECT * FROM lancamento_curso")
-# df4 = pd.DataFrame(cursor.fetchall())
-# st.dataframe(df4)
-#
-# cursor.execute("SELECT * FROM staffs")
-# df5 = pd.DataFrame(cursor.fetchall())
-# st.dataframe(df5)
+
+
+if escolha == 'Editar':
+    st.title('Editar Lançamentos')
+    mydb.connect()
+    data1 = st.date_input('Selecione a data do lançamento')
+    cursor.execute(f"SELECT * FROM lancamentos_bat where data = '{data1}'")
+    selecionado = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
+    mydb.close()
+    st.subheader(selecionado)
