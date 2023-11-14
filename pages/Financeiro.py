@@ -200,7 +200,7 @@ if botao:
         mydb.connect()
         cursor.execute(f"Select id_staff from staffs where nome = '{instrutor}'")
         id_instrutor = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-        cursor.execute(f"SELECT curso, quantidade, pratica from lancamento_curso where data between '{data1}' and '{data2}' and id_staff = {id_instrutor}")
+        cursor.execute(f"SELECT data, curso, quantidade, pratica from lancamento_curso where data between '{data1}' and '{data2}' and id_staff = {id_instrutor}")
         cursos = cursor.fetchall()
         mydb.close()
         df = pd.DataFrame(cursos, columns=['Curso', 'Quantidade', 'Pratica'])
