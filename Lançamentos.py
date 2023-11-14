@@ -253,6 +253,7 @@ if escolha == 'Editar':
     cursor.execute(f"SELECT id_staff FROM lancamento_bat where data = '{data1}'")
     id_staff = str(cursor.fetchall()).translate(str.maketrans('', '', chars))
     for i, item in enumerate(id_staff):
+        st.subheader(item)
         cursor.execute(f"SELECT nome from staffs where id_staff = '{item}'")
         staff = str(cursor.fetchone()).translate(str.maketrans('', '', chars)).split()
         st.subheader(staff)
