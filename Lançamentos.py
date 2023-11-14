@@ -252,7 +252,7 @@ if escolha == 'Editar':
     data1 = st.date_input('Selecione a data do lançamento')
     cursor.execute(f"SELECT id_staff FROM lancamento_bat where data = '{data1}'")
     id_staff = str(cursor.fetchall()).translate(str.maketrans('', '', chars))
-    for i, item in enumerate(id_staff):
+    for item in id_staff:
         st.subheader(item)
         cursor.execute(f"SELECT nome from staffs where id_staff = '{item}'")
         staff = str(cursor.fetchone()).translate(str.maketrans('', '', chars)).split()
