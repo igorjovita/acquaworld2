@@ -124,6 +124,7 @@ if botao:
         cursor.execute(f"SELECT count(id_staff), id_staff, sum(cilindros_acqua), sum(cilindros_pl) from lancamento_cilindro where data between '{data1}' and '{data2}' and id_staff = {id_staff_cilindro}")
         lista = cursor.fetchall()
         mydb.close()
+        
         if lista is not None:
             for item in lista:
                 diarias = item[0]
