@@ -138,7 +138,7 @@ if botao:
                 cursor.execute(f"SELECT nome from staffs where id_staff = {id_staff}")
                 staff_cilindro = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
 
-                cursor.execute(f"select count(almoco) from lancamento_cilindro where data between '{data1}' and '{data2}' and almoco = 'Sim'")
+                cursor.execute(f"select count(almoco) from lancamento_cilindro where data between '{data1}' and '{data2}' and almoco = 'Sim' and id_staff = {id_staff_cilindro}")
                 quentinhas = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
                 if nome_staff_cilindro == 'Juarez':
                     valor_total = (int(diarias)*50) + int(cilindros_acqua) + int(cilindros_pl) + (int(quentinhas)*17)
