@@ -43,6 +43,9 @@ if escolha_data == 'Data Especifica':
 escolha = st.selectbox('Escolha o tipo', ['Comissão Staff', 'Comissão AS', 'Comissão Capitao', 'Comissão Curso', 'Comissão Cilindro'])
 if escolha == 'Comissão Curso':
     instrutor = st.selectbox('Instrutor', ['Glauber', 'Martin'])
+
+if escolha == 'Comissão Cilindro':
+    nome_staff_cilindro = st.selectbox('Staff', options=['Juarez', 'Glauber', 'Roberta'])
 botao = st.button('Pesquisar')
 
 if botao:
