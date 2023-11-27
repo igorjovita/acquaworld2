@@ -118,7 +118,6 @@ if botao:
 
 
     if escolha == 'Comissão Cilindro':
-        nome_staff_cilindro = st.selectbox('Staff', options=['Juarez', 'Glauber', 'Roberta'])
         mydb.connect()
         cursor.execute(f"SELECT id FROM staff WHERE nome = '{nome_staff_cilindro}'")
         id_staff_cilindro = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
