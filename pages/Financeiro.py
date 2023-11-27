@@ -119,7 +119,7 @@ if botao:
 
     if escolha == 'Comissão Cilindro':
         mydb.connect()
-        cursor.execute(f"SELECT id FROM staff WHERE nome = '{nome_staff_cilindro}'")
+        cursor.execute(f"SELECT id FROM staffs WHERE nome = '{nome_staff_cilindro}'")
         id_staff_cilindro = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
         cursor.execute(f"SELECT count(id_staff), id_staff, sum(cilindros_acqua), sum(cilindros_pl) from lancamento_cilindro where data between '{data1}' and '{data2}' and id_staff = {id_staff_cilindro}")
         lista = cursor.fetchall()
