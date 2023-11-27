@@ -124,82 +124,84 @@ if botao:
         cursor.execute(f"SELECT count(id_staff), id_staff, sum(cilindros_acqua), sum(cilindros_pl) from lancamento_cilindro where data between '{data1}' and '{data2}' and id_staff = {id_staff_cilindro}")
         lista = cursor.fetchall()
         mydb.close()
+        if lista is not None:
+            for item in lista:
+                diarias = item[0]
+                id_staff = item[1]
+                cilindros_acqua = item[2]
+                cilindros_pl = item[3]
+                mydb.connect()
+                cursor.execute(f"SELECT nome from staffs where id_staff = {id_staff}")
+                staff_cilindro = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
 
-        for item in lista:
-            diarias = item[0]
-            id_staff = item[1]
-            cilindros_acqua = item[2]
-            cilindros_pl = item[3]
-            mydb.connect()
-            cursor.execute(f"SELECT nome from staffs where id_staff = {id_staff}")
-            staff_cilindro = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
+                cursor.execute(f"select count(almoco) from lancamento_cilindro where data between '{data1}' and '{data2}' and almoco = 'Sim'")
+                quentinhas = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
+                valor_total = (int(diarias)*50) + int(cilindros_acqua) + int(cilindros_pl) + (int(quentinhas)*17)
+                cursor.execute(f"select horario_inicio from lancamento_cilindro where data between '{data1}' and '{data2}'")
+                horario_inicial = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
+                cursor.execute(f"SELECT horario_final from lancamento_cilindro where data between '{data1}' and '{data2}'")
+                horario_final = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
+                cursor.execute(f"select sum(horas_trabalhadas) from lancamento_cilindro where data between '{data1}' and '{data2}'")
+                minutos = float((str(cursor.fetchone()).translate(str.maketrans('', '', chars))))
+                mydb.close()
+                horario_total = str(timedelta(minutes=minutos)/60).split(':')
+                media_cilindro = (int(minutos) / (cilindros_acqua + cilindros_pl))
+                min = str(f'{float(media_cilindro):.2f}').split('.')
 
-            cursor.execute(f"select count(almoco) from lancamento_cilindro where data between '{data1}' and '{data2}' and almoco = 'Sim'")
-            quentinhas = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
-            valor_total = (int(diarias)*50) + int(cilindros_acqua) + int(cilindros_pl) + (int(quentinhas)*17)
-            cursor.execute(f"select horario_inicio from lancamento_cilindro where data between '{data1}' and '{data2}'")
-            horario_inicial = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-            cursor.execute(f"SELECT horario_final from lancamento_cilindro where data between '{data1}' and '{data2}'")
-            horario_final = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-            cursor.execute(f"select sum(horas_trabalhadas) from lancamento_cilindro where data between '{data1}' and '{data2}'")
-            minutos = float((str(cursor.fetchone()).translate(str.maketrans('', '', chars))))
-            mydb.close()
-            horario_total = str(timedelta(minutes=minutos)/60).split(':')
-            media_cilindro = (int(minutos) / (cilindros_acqua + cilindros_pl))
-            min = str(f'{float(media_cilindro):.2f}').split('.')
+                seg = str(int(min[1]) * 60)
 
-            seg = str(int(min[1]) * 60)
-
-            col1, col2 = st.columns(2)
-            if escolha_data == 'Data Especifica':
-                with col1:
-                    st.subheader('Staff :')
-                    st.subheader('Cilindros Acqua :')
-                    st.subheader('Cilindros PL :')
-                    st.subheader('Quentinhas :')
-                    st.subheader(f'Horario Inicial :')
-                    st.subheader(f'Horario Final :')
-                    st.subheader(f'Total de Horas :')
-                    st.subheader(f'Tempo Médio :')
-                    st.header(f'Valor a pagar :')
+                col1, col2 = st.columns(2)
+                if escolha_data == 'Data Especifica':
+                    with col1:
+                        st.subheader('Staff :')
+                        st.subheader('Cilindros Acqua :')
+                        st.subheader('Cilindros PL :')
+                        st.subheader('Quentinhas :')
+                        st.subheader(f'Horario Inicial :')
+                        st.subheader(f'Horario Final :')
+                        st.subheader(f'Total de Horas :')
+                        st.subheader(f'Tempo Médio :')
+                        st.header(f'Valor a pagar :')
 
 
-                with col2:
-                    st.subheader(staff_cilindro)
-                    st.subheader(cilindros_acqua)
-                    st.subheader(cilindros_pl)
-                    st.subheader(quentinhas)
-                    st.subheader(horario_inicial)
-                    st.subheader(horario_final)
-                    st.subheader(f'{horario_total[1]} horas e {horario_total[2]} min')
-                    if seg != '0':
+                    with col2:
+                        st.subheader(staff_cilindro)
+                        st.subheader(cilindros_acqua)
+                        st.subheader(cilindros_pl)
+                        st.subheader(quentinhas)
+                        st.subheader(horario_inicial)
+                        st.subheader(horario_final)
+                        st.subheader(f'{horario_total[1]} horas e {horario_total[2]} min')
+                        if seg != '0':
+                            st.subheader(f'{min[0]} min e {seg[0]}{seg[1]} s')
+                        else:
+                            st.subheader(f'{min[0]} min e {seg[0]} s')
+                        st.header(f'R$ {valor_total}')
+
+
+
+                if escolha_data == 'Intervalo entre Datas':
+                    with col1:
+                        st.subheader('Staff :')
+                        st.subheader('Diárias :')
+                        st.subheader('Cilindros Acqua :')
+                        st.subheader('Cilindros PL :')
+                        st.subheader('Quentinhas :')
+                        st.subheader(f'Total de Horas :')
+                        st.subheader(f'Tempo Médio :')
+                        st.header(f'Valor a pagar :')
+
+                    with col2:
+                        st.subheader(staff_cilindro)
+                        st.subheader(diarias)
+                        st.subheader(cilindros_acqua)
+                        st.subheader(cilindros_pl)
+                        st.subheader(quentinhas)
+                        st.subheader(f'{horario_total[1]} horas e {horario_total[2]} min')
                         st.subheader(f'{min[0]} min e {seg[0]}{seg[1]} s')
-                    else:
-                        st.subheader(f'{min[0]} min e {seg[0]} s')
-                    st.header(f'R$ {valor_total}')
-
-
-
-            if escolha_data == 'Intervalo entre Datas':
-                with col1:
-                    st.subheader('Staff :')
-                    st.subheader('Diárias :')
-                    st.subheader('Cilindros Acqua :')
-                    st.subheader('Cilindros PL :')
-                    st.subheader('Quentinhas :')
-                    st.subheader(f'Total de Horas :')
-                    st.subheader(f'Tempo Médio :')
-                    st.header(f'Valor a pagar :')
-
-                with col2:
-                    st.subheader(staff_cilindro)
-                    st.subheader(diarias)
-                    st.subheader(cilindros_acqua)
-                    st.subheader(cilindros_pl)
-                    st.subheader(quentinhas)
-                    st.subheader(f'{horario_total[1]} horas e {horario_total[2]} min')
-                    st.subheader(f'{min[0]} min e {seg[0]}{seg[1]} s')
-                    st.header(f'R$ {valor_total}')
+                        st.header(f'R$ {valor_total}')
+            else:
+                st.error('Nenhum Lançamento na Data informada')
 
     if escolha == 'Comissão Curso':
         mydb.connect()
