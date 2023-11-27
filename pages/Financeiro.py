@@ -133,7 +133,7 @@ if botao:
             cilindros_pl = item[3]
             mydb.connect()
             if id_staff is None:
-                st.error(f"Nenhum lançamento de '{nome_staff_cilindro}' na data informada")
+                st.error(f"Nenhum lançamento de {nome_staff_cilindro} na data informada")
             else:
                 cursor.execute(f"SELECT nome from staffs where id_staff = {id_staff}")
                 staff_cilindro = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
