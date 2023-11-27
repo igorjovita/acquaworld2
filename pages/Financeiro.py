@@ -124,14 +124,17 @@ if botao:
         cursor.execute(f"SELECT count(id_staff), id_staff, sum(cilindros_acqua), sum(cilindros_pl) from lancamento_cilindro where data between '{data1}' and '{data2}' and id_staff = {id_staff_cilindro}")
         lista = cursor.fetchall()
         mydb.close()
-        
-        if lista is not None:
-            for item in lista:
-                diarias = item[0]
-                id_staff = item[1]
-                cilindros_acqua = item[2]
-                cilindros_pl = item[3]
-                mydb.connect()
+
+
+        for item in lista:
+            diarias = item[0]
+            id_staff = item[1]
+            cilindros_acqua = item[2]
+            cilindros_pl = item[3]
+            mydb.connect()
+            if id_staff is None:
+                st.error(f"Nenhum lançamento de '{nome_staff_cilindro}' na data informada")
+            else:
                 cursor.execute(f"SELECT nome from staffs where id_staff = {id_staff}")
                 staff_cilindro = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
 
@@ -201,8 +204,7 @@ if botao:
                         st.subheader(f'{horario_total[1]} horas e {horario_total[2]} min')
                         st.subheader(f'{min[0]} min e {seg[0]}{seg[1]} s')
                         st.header(f'R$ {valor_total}')
-            else:
-                st.error('Nenhum Lançamento na Data informada')
+
 
     if escolha == 'Comissão Curso':
         mydb.connect()
