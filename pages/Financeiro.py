@@ -57,8 +57,7 @@ if botao:
         for item in lista:
             id_staff = item[0]
             divisao = item[1]
-            st.write(id_staff)
-            st.write(divisao)
+
             col1, col2, col3 = st.columns(3)
             with col1:
                 mydb.connect()
@@ -75,7 +74,7 @@ if botao:
                 cursor.execute(f"SELECT comissao from staffs where id_staff = '{id_staff}'")
                 comissao_staff = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
                 mydb.close()
-                valor_pagar = float(divisao) * float(comissao_staff)
+                valor_pagar = float(divisao) * int(comissao_staff)
                 st.subheader(str(f'R$ {float(valor_pagar):.2f}').replace('.', ','))
     if escolha == 'Comissão AS':
         cursor.execute(
