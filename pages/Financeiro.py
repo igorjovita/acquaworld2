@@ -57,6 +57,8 @@ if botao:
         for item in lista:
             id_staff = item[0]
             divisao = item[1]
+            st.write(id_staff)
+            st.write(divisao)
             col1, col2, col3 = st.columns(3)
             with col1:
                 mydb.connect()
