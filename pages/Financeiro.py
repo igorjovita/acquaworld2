@@ -73,7 +73,7 @@ if botao:
                 cursor.execute(f"SELECT comissao from staffs where id_staff = '{id_staff}'")
                 comissao_staff = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
                 mydb.close()
-                valor_pagar = float(divisao) * int(comissao_staff)
+                valor_pagar = float(divisao) * float(comissao_staff)
                 st.subheader(str(f'R$ {float(valor_pagar):.2f}').replace('.', ','))
     if escolha == 'Comissão AS':
         cursor.execute(
