@@ -56,7 +56,7 @@ if st.button('Lançar no Sistema'):
     media_cilindro = (int(h3) / (quantidade_acqua + quantidade_pl))
     m = str(f'{float(media_cilindro):.2f}').split('.')
     m1 = f'{m[0], m[1]}'
-
+    st.write(data, id_staff, inicio, final, quantidade_acqua, quantidade_pl, quentinha, situacao, h3, m1)
 
 
     cursor.execute("""
