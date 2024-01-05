@@ -39,6 +39,7 @@ with col2:
     final = str(st.text_input('Horario do Termino'))
     quantidade_pl = st.number_input('Cilindros PL', step=1)
 
+mydb.connect()
 cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{nome}'")
 id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
 
@@ -54,7 +55,7 @@ if st.button('Lançar no Sistema'):
     h3 = horas_trabalhadas.total_seconds() / 60
     media_cilindro = (int(h3) / (quantidade_acqua + quantidade_pl))
     m = str(f'{float(media_cilindro):.2f}').split('.')
-    m1 = f'{m[0],m[1]}'
+    m1 = f'{m[0], m[1]}'
 
 
 
@@ -62,6 +63,7 @@ if st.button('Lançar no Sistema'):
         INSERT INTO lancamento_cilindro (data, id_staff, horario_inicio, horario_final, cilindros_acqua, cilindros_pl, almoco, situacao, horas_trabalhadas,media_tempo) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
                    (data, id_staff, inicio, final, quantidade_acqua, quantidade_pl, quentinha, situacao, h3, m1))
     mydb.commit()
+    mydb.close()
     st.success('Lançado no Sistema com Sucesso!')
     st.subheader(f'Tempo Médio : {m[0]} min e {m[1]} s')
 
