@@ -35,17 +35,18 @@ with col1:
     quentinha = st.selectbox('Almoço', ['', 'Sim', 'Não'])
 
 with col2:
-    nome = st.selectbox('Staff', ['Juarez', 'Glauber', 'Roberta'], index=False)
+    nome = st.selectbox('Staff', ['Juarez', 'Glauber', 'Roberta'], index=None)
     final = str(st.text_input('Horario do Termino'))
     quantidade_pl = st.number_input('Cilindros PL', step=1)
 
-mydb.connect()
-cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{nome}'")
-id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
+
 
 situacao = 'Pendente'
 
 if st.button('Lançar no Sistema'):
+    mydb.connect()
+    cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{nome}'")
+    id_staff = cursor.fetchone()[0]
     h1 = inicio.split(':')
     h2 = final.split(':')
     hora_inicio = timedelta(hours=float(h1[0]), minutes=float(h1[1]))
@@ -60,6 +61,7 @@ if st.button('Lançar no Sistema'):
 
     cursor.execute("INSERT INTO lancamento_cilindro (data, id_staff, horario_inicio, horario_final, cilindros_acqua, cilindros_pl, almoco, situacao, horas_trabalhadas,media_tempo) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                    (data, id_staff, inicio, final, quantidade_acqua, quantidade_pl, quentinha, situacao, h3, m1))
+
     mydb.commit()
     mydb.close()
     st.success('Lançado no Sistema com Sucesso!')
