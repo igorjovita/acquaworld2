@@ -35,7 +35,7 @@ with col1:
     quentinha = st.selectbox('Almoço', ['', 'Sim', 'Não'])
 
 with col2:
-    nome = st.selectbox('Staff', ['', 'Juarez', 'Glauber', 'Roberta'])
+    nome = st.selectbox('Staff', ['Juarez', 'Glauber', 'Roberta'], index=False)
     final = str(st.text_input('Horario do Termino'))
     quantidade_pl = st.number_input('Cilindros PL', step=1)
 
