@@ -45,7 +45,7 @@ if escolha == 'Comissão Curso':
     instrutor = st.selectbox('Instrutor', ['Glauber', 'Martin'])
 
 if escolha == 'Comissão Cilindro':
-    nome_staff_cilindro = st.selectbox('Staff Cilindro', options=['Juarez', 'Glauber', 'Roberta'])
+    nome_staff_cilindro = st.selectbox('Staff Cilindro', options=['Juninho', 'Glauber', 'Roberta'])
 botao = st.button('Pesquisar')
 
 if botao:
