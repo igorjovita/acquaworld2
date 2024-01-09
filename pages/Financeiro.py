@@ -35,8 +35,8 @@ st.subheader('Selecione o intervalo da pesquisa')
 escolha_data = st.radio('Opçoes de filtragem', ['Data Especifica', 'Intervalo entre Datas'])
 if escolha_data == 'Intervalo entre Datas':
     mes_atual = date.today().month
-    data1 = st.date_input('Data Inicial', format='DD/MM/YYYY', value=datetime.date(year=2023, month=mes_atual, day=0o1))
-    data2 = st.date_input('Data Final', format='DD/MM/YYYY')
+    data1 = st.date_input('Data Inicial', format='DD/MM/YYYY', value=None)
+    data2 = st.date_input('Data Final', format='DD/MM/YYYY', value=None)
 if escolha_data == 'Data Especifica':
     data1 = st.date_input('Data', format='DD/MM/YYYY')
     data2 = data1
@@ -49,7 +49,8 @@ if escolha == 'Comissão Cilindro':
 botao = st.button('Pesquisar')
 
 if botao:
-
+    total_divisao = 0
+    total_valor_pagar = 0
     if escolha == 'Comissão Staff':
         cursor.execute(f" select id_staff, sum(divisao) as divisao from lancamento_bat where data between '{data1}' and '{data2}' group by id_staff order by divisao desc")
         lista = cursor.fetchall()
@@ -57,6 +58,8 @@ if botao:
         for item in lista:
             id_staff = item[0]
             divisao = item[1]
+
+            total_divisao += divisao
 
             col1, col2, col3 = st.columns(3)
             with col1:
@@ -75,7 +78,10 @@ if botao:
                 comissao_staff = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
                 mydb.close()
                 valor_pagar = float(divisao) * int(comissao_staff)
+                total_valor_pagar += valor_pagar
                 st.subheader(str(f'R$ {float(valor_pagar):.2f}').replace('.', ','))
+        st.subheader("Total Divisão: {}".format(total_divisao))
+        st.subheader("Total Valor a Pagar: R$ {:.2f}".format(total_valor_pagar))
     if escolha == 'Comissão AS':
         cursor.execute(
             f" select id_staff, sum(equipagens) as equipagens from lancamento_as where data between '{data1}' and '{data2}' group by id_staff order by equipagens desc")
