@@ -4,6 +4,7 @@ import os
 import pandas as pd
 import datetime
 from datetime import date, timedelta
+
 mydb = mysql.connector.connect(
     host=os.getenv("DB_HOST"),
     user=os.getenv("DB_USERNAME"),
@@ -23,7 +24,6 @@ st.write('''<style>
 
 </style>''', unsafe_allow_html=True)
 
-
 chars = "'),([]"
 chars2 = "')([]"
 
@@ -40,7 +40,8 @@ if escolha_data == 'Intervalo entre Datas':
 if escolha_data == 'Data Especifica':
     data1 = st.date_input('Data', format='DD/MM/YYYY')
     data2 = data1
-escolha = st.selectbox('Escolha o tipo', ['Comissão Staff', 'Comissão AS', 'Comissão Capitao', 'Comissão Curso', 'Comissão Cilindro'])
+escolha = st.selectbox('Escolha o tipo',
+                       ['Comissão Staff', 'Comissão AS', 'Comissão Capitao', 'Comissão Curso', 'Comissão Cilindro'])
 if escolha == 'Comissão Curso':
     instrutor = st.selectbox('Instrutor', ['Glauber', 'Martin'])
 
@@ -52,7 +53,8 @@ if botao:
     total_divisao = 0
     total_valor_pagar = 0
     if escolha == 'Comissão Staff':
-        cursor.execute(f" select id_staff, sum(divisao) as divisao from lancamento_bat where data between '{data1}' and '{data2}' group by id_staff order by divisao desc")
+        cursor.execute(
+            f" select id_staff, sum(divisao) as divisao from lancamento_bat where data between '{data1}' and '{data2}' group by id_staff order by divisao desc")
         lista = cursor.fetchall()
 
         for item in lista:
@@ -102,9 +104,9 @@ if botao:
             with col2:
                 st.subheader(equipagens)
 
-
     if escolha == 'Comissão Capitao':
-        cursor.execute(f" select id_staff, sum(embarques) as embarques from lancamento_mestre where data between '{data1}' and '{data2}' group by id_staff order by embarques desc")
+        cursor.execute(
+            f" select id_staff, sum(embarques) as embarques from lancamento_mestre where data between '{data1}' and '{data2}' group by id_staff order by embarques desc")
         lista = cursor.fetchall()
 
         for item in lista:
@@ -122,16 +124,14 @@ if botao:
             with col2:
                 st.subheader(embarques)
 
-
-
     if escolha == 'Comissão Cilindro':
         mydb.connect()
         cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{nome_staff_cilindro}'")
         id_staff_cilindro = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-        cursor.execute(f"SELECT count(id_staff), id_staff, sum(cilindros_acqua), sum(cilindros_pl) from lancamento_cilindro where data between '{data1}' and '{data2}' and id_staff = {id_staff_cilindro}")
+        cursor.execute(
+            f"SELECT count(id_staff), id_staff, sum(cilindros_acqua), sum(cilindros_pl) from lancamento_cilindro where data between '{data1}' and '{data2}' and id_staff = {id_staff_cilindro}")
         lista = cursor.fetchall()
         mydb.close()
-
 
         for item in lista:
             diarias = item[0]
@@ -145,20 +145,25 @@ if botao:
                 cursor.execute(f"SELECT nome from staffs where id_staff = {id_staff}")
                 staff_cilindro = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
 
-                cursor.execute(f"select count(almoco) from lancamento_cilindro where data between '{data1}' and '{data2}' and id_staff = {id_staff_cilindro} and almoco = 'Sim'")
+                cursor.execute(
+                    f"select count(almoco) from lancamento_cilindro where data between '{data1}' and '{data2}' and id_staff = {id_staff_cilindro} and almoco = 'Sim'")
                 quentinhas = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
-                if nome_staff_cilindro == 'Juarez':
-                    valor_total = (int(diarias)*50) + int(cilindros_acqua) + int(cilindros_pl) + (int(quentinhas)*17)
+                if nome_staff_cilindro == 'Juninho':
+                    valor_total = (int(diarias) * 50) + int(cilindros_acqua) + int(cilindros_pl) + (
+                                int(quentinhas) * 17)
                 else:
                     valor_total = int(cilindros_acqua) + int(cilindros_pl) + (int(quentinhas) * 17)
-                cursor.execute(f"select horario_inicio from lancamento_cilindro where data between '{data1}' and '{data2}'")
+                cursor.execute(
+                    f"select horario_inicio from lancamento_cilindro where data between '{data1}' and '{data2}'")
                 horario_inicial = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-                cursor.execute(f"SELECT horario_final from lancamento_cilindro where data between '{data1}' and '{data2}'")
+                cursor.execute(
+                    f"SELECT horario_final from lancamento_cilindro where data between '{data1}' and '{data2}'")
                 horario_final = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-                cursor.execute(f"select sum(horas_trabalhadas) from lancamento_cilindro where data between '{data1}' and '{data2}'")
+                cursor.execute(
+                    f"select sum(horas_trabalhadas) from lancamento_cilindro where data between '{data1}' and '{data2}'")
                 minutos = float((str(cursor.fetchone()).translate(str.maketrans('', '', chars))))
                 mydb.close()
-                horario_total = str(timedelta(minutes=minutos)/60).split(':')
+                horario_total = str(timedelta(minutes=minutos) / 60).split(':')
                 media_cilindro = (int(minutos) / (cilindros_acqua + cilindros_pl))
                 min = str(f'{float(media_cilindro):.2f}').split('.')
 
@@ -177,7 +182,6 @@ if botao:
                         st.subheader(f'Tempo Médio :')
                         st.header(f'Valor a pagar :')
 
-
                     with col2:
                         st.subheader(staff_cilindro)
                         st.subheader(cilindros_acqua)
@@ -191,8 +195,6 @@ if botao:
                         else:
                             st.subheader(f'{min[0]} min e {seg[0]} s')
                         st.header(f'R$ {valor_total}')
-
-
 
                 if escolha_data == 'Intervalo entre Datas':
                     with col1:
@@ -215,14 +217,13 @@ if botao:
                         st.subheader(f'{min[0]} min e {seg[0]}{seg[1]} s')
                         st.header(f'R$ {valor_total}')
 
-
     if escolha == 'Comissão Curso':
         mydb.connect()
         cursor.execute(f"Select id_staff from staffs where nome = '{instrutor}'")
         id_instrutor = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-        cursor.execute(f"SELECT data, curso, quantidade, pratica from lancamento_curso where data between '{data1}' and '{data2}' and id_staff = {id_instrutor}")
+        cursor.execute(
+            f"SELECT data, curso, quantidade, pratica from lancamento_curso where data between '{data1}' and '{data2}' and id_staff = {id_instrutor}")
         cursos = cursor.fetchall()
         mydb.close()
         df = pd.DataFrame(cursos, columns=['Data', 'Curso', 'Quantidade', 'Pratica'])
         st.dataframe(df)
-
