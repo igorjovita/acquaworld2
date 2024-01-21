@@ -253,24 +253,9 @@ if escolha == 'Deletar':
     st.title('Deletar Lançamentos')
     st.subheader('Selecione o lançamento para deletar')
     data1 = st.date_input('Selecione a Data', format='DD/MM/YYYY')
-    l_bat = st.checkbox('Lançamento Bat')
-    l_as = st.checkbox('Lançamento AS')
-    l_mestre = st.checkbox('Lançamento Mestre')
-    l_curso = st.checkbox('Lançamento Curso')
     if st.button('Apagar do Sistema'):
-        mydb.connect()
-        if l_bat:
-            cursor.execute(f"delete from lancamento_bat where data = '{data1}'")
-            mydb.commit()
-        elif l_as:
-            cursor.execute(f"delete from lancamento_as where data = '{data1}'")
-            mydb.commit()
-        elif l_mestre:
-            cursor.execute(f"delete from lancamento_mestre where data = '{data1}'")
-            mydb.commit()
-        elif l_curso:
-            cursor.execute(f"delete from lancamento_curso where data = '{data1}'")
-            mydb.commit()
+        cursor.execute(f'Delete from lancamentos_bat where data = {data1}')
+        mydb.commit()
         st.success('Lançamento Deletado com Sucesso')
 
 # if escolha == 'Editar':
