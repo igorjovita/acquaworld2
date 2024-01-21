@@ -285,4 +285,5 @@ if escolha == 'Editar':
 
         df2.insert(0, 'Selecionar', [False] * len(df2))
 
+        st.markdown('#Cursos')
         df_final2 = st.data_editor(df2, key="editable_df2", hide_index=True)
