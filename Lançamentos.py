@@ -281,8 +281,8 @@ if escolha == 'Editar':
                        f"'{data2}'")
         resultado = cursor.fetchall()
 
-        df = pd.DataFrame(resultado, columns=['Nome', 'Curso', 'Quantidade','Pratica', 'Almoço'])
+        df2 = pd.DataFrame(resultado, columns=['Nome', 'Curso', 'Quantidade','Pratica', 'Almoço'])
 
-        df.insert(0, 'Selecionar', [False] * len(df))
+        df2.insert(0, 'Selecionar', [False] * len(df))
 
-        df_final = st.data_editor(df, key="editable_df", hide_index=True)
+        df_final2 = st.data_editor(df, key="editable_df2", hide_index=True)
