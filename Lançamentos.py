@@ -274,22 +274,23 @@ if escolha == 'Editar':
         df.insert(0, 'Selecionar', [False] * len(df))
 
         df_final = st.data_editor(df, key="editable_df", hide_index=True)
+        if st.button('Editar Lançamento'):
+            if df_final is not None and not df_final.equals(df):
+                for index, row in df_final.iterrows():
+                    nome = row['Nome']
+                    quantidade = row['Quantidade']
+                    quentinha = row['Almoço']
+                    cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{nome}'")
+                    id_staff_ed = cursor.fetchone()[0]
+                    # Gerar a instrução SQL UPDATE correspondente
+                    update_query = f"UPDATE lancamentos_barco SET quantidade = {quantidade}, quentinha = '{quentinha}' " \
+                                   f"WHERE data = '{data2}' AND id_staff = {id_staff_ed} AND funcao != 'CURSO'"
 
-        if df_final is not None and not df_final.equals(df):
-            for index, row in df_final.iterrows():
-                nome = row['Nome']
-                quantidade = row['Quantidade']
-                quentinha = row['Almoço']
+                    # Executar a instrução SQL UPDATE
+                    cursor.execute(update_query)
 
-                # Gerar a instrução SQL UPDATE correspondente
-                update_query = f"UPDATE lancamentos_barco SET quantidade = {quantidade}, quentinha = '{quentinha}' " \
-                               f"WHERE data = '{data2}' AND nome = '{nome}' AND funcao != 'CURSO'"
-
-                # Executar a instrução SQL UPDATE
-                cursor.execute(update_query)
-
-                # Commit para aplicar as alterações no banco de dados
-            mydb.commit()
+                    # Commit para aplicar as alterações no banco de dados
+                mydb.commit()
 
 
     if check_curso:
