@@ -274,10 +274,7 @@ if escolha == 'Editar':
 
     df = pd.DataFrame(resultado, columns=['Nome', 'Quantidade', 'Almoço'])
 
-    cursor.execute(f"SELECT staffs.nome, lancamentos_barco.curso, lancamentos_barco.quantidade, "
-                   f"lancamentos_barco.pratica, lancamentos_barco.quentinha from"
-                   f"lancamentos_barco JOIN staffs ON lancamentos_barco.id_staff = staffs.id_staff where data = "
-                   f"'{data2}' and lancamentos_barco.funcao = 'CURSO' ")
+    cursor.execute(f"SELECT staffs.nome, lancamentos_barco.curso, lancamentos_barco.quantidade, lancamentos_barco.pratica, lancamentos_barco.quentinha from lancamentos_barco JOIN staffs ON lancamentos_barco.id_staff = staffs.id_staff where data = '{data2}' and lancamentos_barco.funcao = 'CURSO'")
     resultado = cursor.fetchall()
 
     df2 = pd.DataFrame(resultado, columns=['Nome', 'Curso', 'Quantidade', 'Pratica', 'Almoço'])
@@ -323,4 +320,3 @@ if escolha == 'Editar':
                     # Commit para aplicar as alterações no banco de dados
                 mydb.commit()
         st.success('Lançamentos editados com sucesso!')
-        
