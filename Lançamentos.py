@@ -265,7 +265,7 @@ if escolha == 'Editar':
     check_curso = st.checkbox('Lançamento Curso')
     if check_lancamentos:
         cursor.execute(f"SELECT staffs.nome, lancamentos_barco.quantidade, lancamentos_barco.quentinha from "
-                       f"lancamentos_barco JOIN staffs ON lancamentos_barco.id_staff = staffs.id_staffs where data = "
+                       f"lancamentos_barco JOIN staffs ON lancamentos_barco.id_staff = staffs.id_staff where data = "
                        f"'{data2}'")
         resultado = cursor.fetchall()
 
