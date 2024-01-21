@@ -283,6 +283,6 @@ if escolha == 'Editar':
 
         df2 = pd.DataFrame(resultado, columns=['Nome', 'Curso', 'Quantidade', 'Pratica', 'Almoço'])
 
-        df2.insert(0, 'Selecionar', [False] * len(df))
+        df2.insert(0, 'Selecionar', [False] * len(df2))
 
         df_final2 = st.data_editor(df2, key="editable_df2", hide_index=True)
