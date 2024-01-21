@@ -271,8 +271,6 @@ if escolha == 'Editar':
 
         df = pd.DataFrame(resultado, columns=['Nome', 'Quantidade', 'Almoço'])
 
-        df.insert(0, 'Selecionar', [False] * len(df))
-
         df_final = st.data_editor(df, key="editable_df", hide_index=True)
         if st.button('Editar Lançamento'):
             if df_final is not None and not df_final.equals(df):
