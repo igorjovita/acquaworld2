@@ -276,8 +276,11 @@ if escolha == 'Editar':
         df_final = st.data_editor(df, key="editable_df", hide_index=True)
 
         if df_final is not None and not df_final.equals(df):
-            diferencas = df_final.loc[df_final.equals(df)]
-            st.write(diferencas)
+            # Concatenar os DataFrames verticalmente
+            concatenado = pd.concat([df_final, df], ignore_index=True)
+
+            # Identificar linhas duplicadas
+            diferencas = concatenado[concatenado.duplicated(keep=False)]
 
     if check_curso:
         cursor.execute(f"SELECT staffs.nome, lancamentos_barco.curso, lancamentos_barco.quantidade, lancamentos_barco.pratica, lancamentos_barco.quentinha from "
