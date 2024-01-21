@@ -311,7 +311,7 @@ if escolha == 'Editar':
                     cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{nome}'")
                     id_staff_ed = cursor.fetchone()[0]
                     # Gerar a instrução SQL UPDATE correspondente
-                    update_query = f"UPDATE lancamentos_barco SET quantidade = {quantidade}, curso = '{curso}', pratica = '{pratica}' quentinha = '{quentinha}' " \
+                    update_query = f"UPDATE lancamentos_barco SET quantidade = {quantidade}, curso = '{curso}', pratica = '{pratica}', quentinha = '{quentinha}' " \
                                    f"WHERE data = '{data2}' AND id_staff = {id_staff_ed} AND funcao = 'CURSO'"
 
                     # Executar a instrução SQL UPDATE
