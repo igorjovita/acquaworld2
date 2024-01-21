@@ -282,6 +282,8 @@ if escolha == 'Editar':
             # Identificar linhas duplicadas
             diferencas = concatenado[concatenado.duplicated(keep=False)]
             st.write(diferencas)
+            st.write(df)
+            st.write(df_final)
 
     if check_curso:
         cursor.execute(f"SELECT staffs.nome, lancamentos_barco.curso, lancamentos_barco.quantidade, lancamentos_barco.pratica, lancamentos_barco.quentinha from "
