@@ -52,25 +52,25 @@ if escolha == 'Lançar':
     with colu1:
         apoio_superficie = st.selectbox('Apoio de Superficie', ['Manu', 'Catatau', 'Juninho', 'Glauber', 'Roberta'],
                                         index=None)
-        mestre = st.selectbox('Mestre', ['', 'Risadinha', 'Marquinhos', 'Freelancer'])
-        instrutor = st.selectbox('Instrutor', ['', 'Glauber', 'Martin'])
+        mestre = st.selectbox('Mestre', ['Risadinha', 'Marquinhos', 'Freelancer'], index=None)
+        instrutor = st.selectbox('Instrutor', ['Glauber', 'Martin'], index=None)
         quantidade = st.text_input('Quantidade')
 
     with colu2:
         equipagens = st.text_input('Equipagens')
         embarques = st.text_input('Embarques')
-        curso = st.selectbox('Curso', ['', 'OWD', 'ADV', 'REVIEW', 'RESCUE', 'PRIMEIROS SOCORROS', 'DIVEMASTER'])
-        pratica = st.selectbox('Pratica', ['', 'Pratica 1', 'Pratica 2'])
+        curso = st.selectbox('Curso', ['OWD', 'ADV', 'REVIEW', 'RESCUE', 'PRIMEIROS SOCORROS', 'DIVEMASTER'], index=None)
+        pratica = st.selectbox('Pratica', ['Pratica 1', 'Pratica 2'], index=None)
 
     with st.expander('Segundo Curso'):
         colun1, colun2 = st.columns(2)
         with colun1:
-            instrutor2 = st.selectbox('Instrutor2', ['', 'Glauber', 'Martin'])
+            instrutor2 = st.selectbox('Instrutor2', ['Glauber', 'Martin'],index=None)
             quantidade2 = st.text_input('Quantidade2')
 
         with colun2:
-            curso2 = st.selectbox('Curso2', ['', 'OWD', 'ADV', 'REVIEW', 'RESCUE', 'PRIMEIROS SOCORROS', 'DIVEMASTER'])
-            pratica2 = st.selectbox('Pratica2', ['', 'Pratica 1', 'Pratica 2'])
+            curso2 = st.selectbox('Curso2', ['OWD', 'ADV', 'REVIEW', 'RESCUE', 'PRIMEIROS SOCORROS', 'DIVEMASTER'],index=None)
+            pratica2 = st.selectbox('Pratica2', ['Pratica 1', 'Pratica 2'],index=None)
 
     cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{apoio_superficie}'")
     id_as = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
