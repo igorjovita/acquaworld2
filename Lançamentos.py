@@ -276,7 +276,7 @@ if escolha == 'Editar':
         df_final = st.data_editor(df, key="editable_df", hide_index=True)
 
         if df_final is not None and not df_final.equals(df):
-            diferencas = df_final.loc[~df_final.equals(df)]
+            diferencas = df_final[~df_final.equals(df)]
             st.write(diferencas)
 
     if check_curso:
