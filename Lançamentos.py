@@ -276,14 +276,21 @@ if escolha == 'Editar':
         df_final = st.data_editor(df, key="editable_df", hide_index=True)
 
         if df_final is not None and not df_final.equals(df):
-            # Concatenar os DataFrames verticalmente
-            concatenado = pd.concat([df_final, df], ignore_index=True)
+            for index, row in df_final.iterrows():
+                nome = row['Nome']
+                quantidade = row['Quantidade']
+                quentinha = row['Almoço']
 
-            # Identificar linhas duplicadas
-            diferencas = concatenado[concatenado.duplicated(keep=False)]
-            st.write(diferencas)
-            st.write(df)
-            st.write(df_final)
+                # Gerar a instrução SQL UPDATE correspondente
+                update_query = f"UPDATE lancamentos_barco SET quantidade = {quantidade}, quentinha = '{quentinha}' " \
+                               f"WHERE data = '{data2}' AND nome = '{nome}' AND funcao != 'CURSO'"
+
+                # Executar a instrução SQL UPDATE
+                cursor.execute(update_query)
+
+                # Commit para aplicar as alterações no banco de dados
+            mydb.commit()
+
 
     if check_curso:
         cursor.execute(f"SELECT staffs.nome, lancamentos_barco.curso, lancamentos_barco.quantidade, lancamentos_barco.pratica, lancamentos_barco.quentinha from "
