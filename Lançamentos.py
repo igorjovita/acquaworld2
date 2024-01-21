@@ -44,8 +44,8 @@ if escolha == 'Lançar':
     divisao = st.text_input('Divisão')
 
     with st.expander('Divisão diferente'):
-        staffd1 = st.text_input('Staff1 - Lance o staff , quantidade').capitalize()
-        staffd2 = st.text_input('Staff2 - Lance o staff , quantidade').capitalize()
+        staff_diferente1 = st.text_input('Staff1 - Lance o staff , quantidade').capitalize()
+        staff_diferente2 = st.text_input('Staff2 - Lance o staff , quantidade').capitalize()
 
     colu1, colu2 = st.columns(2)
 
@@ -74,71 +74,77 @@ if escolha == 'Lançar':
     cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{apoio_superficie}'")
     id_as = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
 
+    almoco = st.selectbox('Pagar quentinhas nessa data?', ['Sim', 'Não'], index=None)
+
     botao = st.button('Lançar no Sistema')
     if botao:
 
-        if staffd1 != '':
-            nome_1 = staffd1.split(',')
-            cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{nome_1[0]}'")
+        if staff_diferente1 != '':
+            info_staff_diferente1 = staff_diferente1.split(',')
+            cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{info_staff_diferente1[0]}'")
             id_staff_1 = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-            cursor.execute(f"SELECT comissao FROM staffs WHERE nome = '{nome_1[0]}'")
+            funcao = 'BAT'
             situacao = 'PENDENTE'
-            divisao_1 = nome_1[1]
+            divisao_1 = info_staff_diferente1[1]
             cursor.execute(
-                'INSERT INTO lancamento_bat (data, id_staff, divisao,situacao) VALUES (%s, %s, %s, %s)',
-                (data, id_staff_1, divisao_1, situacao))
+                'INSERT INTO lancamento_barco (data, id_staff, funcao, quantidade,situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)',
+                (data, id_staff_1, funcao, divisao_1, situacao, almoco))
 
-        if staffd2 != '':
-            nome_2 = staffd2.split(',')
-            cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{nome_2[0]}'")
+        if staff_diferente2 != '':
+            info_staff_diferente2 = staff_diferente2.split(',')
+            cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{info_staff_diferente2[0]}'")
             id_staff_2 = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-            cursor.execute(f"SELECT comissao FROM staffs WHERE nome = '{nome_2[0]}'")
             situacao = 'PENDENTE'
-            divisao_2 = nome_2[1]
+            divisao_2 = info_staff_diferente2[1]
+            funcao = 'BAT'
             cursor.execute(
-                'INSERT INTO lancamento_bat (data, id_staff, divisao,situacao) VALUES (%s, %s, %s, %s)',
-                (data, id_staff_2, divisao_2, situacao))
+                'INSERT INTO lancamento_barco (data, id_staff, funcao, quantidade,situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)',
+                (data, id_staff_2, funcao, divisao_2, situacao, almoco))
 
         if apoio_superficie != '':
             situacao = 'PENDENTE'
-            cursor.execute("INSERT INTO lancamento_as(data, id_staff, equipagens, situacao) VALUES (%s, %s, %s, %s)",
-                           (data, id_as, equipagens, situacao))
+            funcao = 'AS'
+            cursor.execute("INSERT INTO lancamento_barco(data, id_staff, funcao, quantidade, situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)",
+                           (data, id_as, funcao, equipagens, situacao, almoco))
             mydb.commit()
         if mestre != '':
             cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{mestre}'")
-            id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
+            id_staff_mestre = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
             situacao = 'PENDENTE'
-            cursor.execute("INSERT INTO lancamento_mestre(data, id_staff, embarques, situacao) VALUES (%s, %s, %s, %s)",
-                           (data, id_staff, embarques, situacao))
+            funcao = 'CAPITAO'
+            cursor.execute("INSERT INTO lancamento_barco(data, id_staff, funcao, quantidade, situacao, quentinha) VALUES (%s, %s, %s, %s, %s)",
+                           (data, id_staff_mestre, funcao, embarques, situacao, almoco))
             mydb.commit()
 
         if curso != '':
             cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{instrutor}'")
             id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
             situacao = 'PENDENTE'
-            cursor.execute("INSERT INTO lancamento_curso(data, id_staff, curso, quantidade, pratica, situacao) VALUES ("
-                           "%s, %s, %s, %s, %s, %s)",
-                           (data, id_staff, curso, quantidade, pratica, situacao))
+            funcao = 'CURSO'
+            cursor.execute("INSERT INTO lancamento_barco(data, id_staff, funcao, curso, quantidade, pratica, situacao, quentinha) VALUES ("
+                           "%s, %s, %s, %s, %s, %s, %s, %s)",
+                           (data, id_staff, funcao, curso, quantidade, pratica, situacao, almoco))
             mydb.commit()
 
         if curso2 != '':
             cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{instrutor2}'")
             id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
             situacao = 'PENDENTE'
-            cursor.execute("INSERT INTO lancamento_curso(data, id_staff, curso, quantidade, pratica, situacao) VALUES ("
-                           "%s, %s, %s, %s, %s, %s)",
-                           (data, id_staff, curso2, quantidade2, pratica2, situacao))
+            funcao = 'CURSO'
+            cursor.execute("INSERT INTO lancamento_barco(data, id_staff, funcao, curso, quantidade, pratica, situacao, quentinha) VALUES ("
+                           "%s, %s, %s, %s, %s, %s, %s, %s)",
+                           (data, id_staff, funcao, curso2, quantidade2, pratica2, situacao, almoco))
             mydb.commit()
 
         for i, nome_staff in enumerate(staffs_selecionados):
             nome = str(nome_staff)
             cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{nome}'")
             id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-            cursor.execute(f"SELECT comissao FROM staffs WHERE nome = '{nome}'")
             situacao = 'PENDENTE'
+            funcao = 'BAT'
             cursor.execute(
-                'INSERT INTO lancamento_bat (data, id_staff, divisao,situacao) VALUES (%s, %s, %s, %s)',
-                (data, id_staff, divisao, situacao))
+                'INSERT INTO lancamento_barco (data, id_staff, funcao, quantidade, situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)',
+                (data, id_staff, funcao, divisao, situacao, almoco))
             mydb.commit()
 
         st.success('Divisão Lançada no Sistema')
@@ -160,11 +166,11 @@ if escolha == 'Lançar':
         texto_curso = f"{instrutor} - {quantidade} {curso} {pratica}"
         texto_curso2 = f"{instrutor2} - {quantidade2} {curso2} {pratica2}"
 
-        if instrutor == '' and staffd1 == '':  # Somente batismo sem staff extra
+        if instrutor == '' and staff_diferente1 == '':  # Somente batismo sem staff extra
 
             st.code(texto_p1 + texto_p2)
 
-        if instrutor != '' and staffd1 == '' and instrutor2 == '' and staffd2 == '':  # 1  curso
+        if instrutor != '' and staff_diferente1 == '' and instrutor2 == '' and staff_diferente2 == '':  # 1  curso
             texto_curso = f"""
                 {instrutor} - {quantidade} {curso} {pratica}
                 
@@ -173,7 +179,7 @@ if escolha == 'Lançar':
                 {mestre} - {embarques} embarques"""
             st.code(texto_p1 + texto_curso)
 
-        if instrutor2 != '' and staffd1 == '' and staffd2 == '':  # 2 cursos
+        if instrutor2 != '' and staff_diferente1 == '' and staff_diferente2 == '':  # 2 cursos
             texto_curso_total = f"""
                 {instrutor} - {quantidade} {curso} {pratica}
                 {instrutor2} - {quantidade2} {curso2} {pratica2}
@@ -181,8 +187,8 @@ if escolha == 'Lançar':
                 """
             st.code(texto_p1 + texto_curso_total + texto_p2)
 
-        if staffd1 != '' and staffd2 == '' and instrutor == '' and instrutor2 == '':  # 1 staff extra
-            staffd1_formatado = staffd1.split(',')
+        if staff_diferente1 != '' and staff_diferente2 == '' and instrutor == '' and instrutor2 == '':  # 1 staff extra
+            staffd1_formatado = staff_diferente1.split(',')
             texto_staff = f"""
                 {staffd1_formatado[1]} - {staffd1_formatado[0]}
                 {divisao} - {lista_final}
@@ -190,9 +196,9 @@ if escolha == 'Lançar':
                 {mestre} - {embarques} embarques"""
             st.code(texto_p1 + texto_staff)
 
-        if staffd1 != '' and staffd2 != '' and instrutor == '' and instrutor2 == '':  # 2 staffs extras e 1 curso
-            staffd1_formatado = staffd1.split(',')
-            staffd2_formatado = staffd2.split(',')
+        if staff_diferente1 != '' and staff_diferente2 != '' and instrutor == '' and instrutor2 == '':  # 2 staffs extras e 1 curso
+            staffd1_formatado = staff_diferente1.split(',')
+            staffd2_formatado = staff_diferente2.split(',')
             texto_staff2 = f"""
                 {staffd1_formatado[1]} - {staffd1_formatado[0]}
                 {staffd2_formatado[1]} - {staffd2_formatado[0]}
@@ -201,8 +207,8 @@ if escolha == 'Lançar':
                 {mestre} - {embarques} embarques"""
             st.code(texto_p1 + texto_staff2)
 
-        if staffd1 != '' and instrutor != '' and staffd2 == '' and instrutor2 == '':  # 1 staff extra e 1 curso
-            staffd1_formatado = staffd1.split(',')
+        if staff_diferente1 != '' and instrutor != '' and staff_diferente2 == '' and instrutor2 == '':  # 1 staff extra e 1 curso
+            staffd1_formatado = staff_diferente1.split(',')
             texto_staff = f"""
                 {instrutor} - {quantidade} {curso} {pratica}
                 
@@ -210,8 +216,8 @@ if escolha == 'Lançar':
                 """
             st.code(texto_p1 + texto_staff + texto_p2)
 
-        if staffd1 != '' and instrutor != '' and instrutor2 != '' and staffd2 == '':  # 1 staff extra e 2 cursos
-            staffd1_formatado = staffd1.split(',')
+        if staff_diferente1 != '' and instrutor != '' and instrutor2 != '' and staff_diferente2 == '':  # 1 staff extra e 2 cursos
+            staffd1_formatado = staff_diferente1.split(',')
             texto_staff = f"""
                 {instrutor} - {quantidade} {curso} {pratica}
                 {instrutor2} - {quantidade2} {curso2} {pratica2}
@@ -220,9 +226,9 @@ if escolha == 'Lançar':
                 """
             st.code(texto_p1 + texto_staff + texto_p2)
 
-        if staffd1 != '' and staffd2 != '' and instrutor != '' and instrutor2 != '':  # 2 staffs extra e 2 cursos
-            staffd1_formatado = staffd1.split(',')
-            staffd2_formatado = staffd2.split(',')
+        if staff_diferente1 != '' and staff_diferente2 != '' and instrutor != '' and instrutor2 != '':  # 2 staffs extra e 2 cursos
+            staffd1_formatado = staff_diferente1.split(',')
+            staffd2_formatado = staff_diferente2.split(',')
             texto_staff_curso2 = f"""
                 {instrutor} - {quantidade} {curso} {pratica}
                 {instrutor2} - {quantidade2} {curso2} {pratica2}
@@ -232,9 +238,9 @@ if escolha == 'Lançar':
                 """
             st.code(texto_p1 + texto_staff_curso2 + texto_p2)
 
-        if staffd1 != '' and staffd2 != '' and instrutor != '' and instrutor2 == '':  # 1 curso e 2 staffs extras
-            staffd1_formatado = staffd1.split(',')
-            staffd2_formatado = staffd2.split(',')
+        if staff_diferente1 != '' and staff_diferente2 != '' and instrutor != '' and instrutor2 == '':  # 1 curso e 2 staffs extras
+            staffd1_formatado = staff_diferente1.split(',')
+            staffd2_formatado = staff_diferente2.split(',')
             texto_staff_curso = f"""
                 {instrutor} - {quantidade} {curso} {pratica}
     
