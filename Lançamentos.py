@@ -87,7 +87,7 @@ if escolha == 'Lançar':
             situacao = 'PENDENTE'
             divisao_1 = info_staff_diferente1[1]
             cursor.execute(
-                'INSERT INTO lancamento_barco (data, id_staff, funcao, quantidade,situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)',
+                'INSERT INTO lancamentos_barco (data, id_staff, funcao, quantidade,situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)',
                 (data, id_staff_1, funcao, divisao_1, situacao, almoco))
 
         if staff_diferente2 != '':
@@ -98,13 +98,13 @@ if escolha == 'Lançar':
             divisao_2 = info_staff_diferente2[1]
             funcao = 'BAT'
             cursor.execute(
-                'INSERT INTO lancamento_barco (data, id_staff, funcao, quantidade,situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)',
+                'INSERT INTO lancamentos_barco (data, id_staff, funcao, quantidade,situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)',
                 (data, id_staff_2, funcao, divisao_2, situacao, almoco))
 
         if apoio_superficie != '':
             situacao = 'PENDENTE'
             funcao = 'AS'
-            cursor.execute("INSERT INTO lancamento_barco(data, id_staff, funcao, quantidade, situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)",
+            cursor.execute("INSERT INTO lancamentos_barco(data, id_staff, funcao, quantidade, situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)",
                            (data, id_as, funcao, equipagens, situacao, almoco))
             mydb.commit()
         if mestre != '':
@@ -112,7 +112,7 @@ if escolha == 'Lançar':
             id_staff_mestre = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
             situacao = 'PENDENTE'
             funcao = 'CAPITAO'
-            cursor.execute("INSERT INTO lancamento_barco(data, id_staff, funcao, quantidade, situacao, quentinha) VALUES (%s, %s, %s, %s, %s)",
+            cursor.execute("INSERT INTO lancamentos_barco(data, id_staff, funcao, quantidade, situacao, quentinha) VALUES (%s, %s, %s, %s, %s)",
                            (data, id_staff_mestre, funcao, embarques, situacao, almoco))
             mydb.commit()
 
@@ -121,7 +121,7 @@ if escolha == 'Lançar':
             id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
             situacao = 'PENDENTE'
             funcao = 'CURSO'
-            cursor.execute("INSERT INTO lancamento_barco(data, id_staff, funcao, curso, quantidade, pratica, situacao, quentinha) VALUES ("
+            cursor.execute("INSERT INTO lancamentos_barco(data, id_staff, funcao, curso, quantidade, pratica, situacao, quentinha) VALUES ("
                            "%s, %s, %s, %s, %s, %s, %s, %s)",
                            (data, id_staff, funcao, curso, quantidade, pratica, situacao, almoco))
             mydb.commit()
@@ -131,7 +131,7 @@ if escolha == 'Lançar':
             id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
             situacao = 'PENDENTE'
             funcao = 'CURSO'
-            cursor.execute("INSERT INTO lancamento_barco(data, id_staff, funcao, curso, quantidade, pratica, situacao, quentinha) VALUES ("
+            cursor.execute("INSERT INTO lancamentos_barco(data, id_staff, funcao, curso, quantidade, pratica, situacao, quentinha) VALUES ("
                            "%s, %s, %s, %s, %s, %s, %s, %s)",
                            (data, id_staff, funcao, curso2, quantidade2, pratica2, situacao, almoco))
             mydb.commit()
@@ -143,7 +143,7 @@ if escolha == 'Lançar':
             situacao = 'PENDENTE'
             funcao = 'BAT'
             cursor.execute(
-                'INSERT INTO lancamento_barco (data, id_staff, funcao, quantidade, situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)',
+                'INSERT INTO lancamentos_barco (data, id_staff, funcao, quantidade, situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)',
                 (data, id_staff, funcao, divisao, situacao, almoco))
             mydb.commit()
 
