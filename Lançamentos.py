@@ -301,22 +301,22 @@ if escolha == 'Editar':
                 # Commit para aplicar as alterações no banco de dados
             mydb.commit()
 
-            if df_final2 is not None and not df_final2.equals(df2):
-                for index, row in df_final2.iterrows():
-                    nome = row['Nome']
-                    curso = row['Curso']
-                    pratica = row['Pratica']
-                    quantidade = row['Quantidade']
-                    quentinha = row['Almoço']
-                    cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{nome}'")
-                    id_staff_ed = cursor.fetchone()[0]
-                    # Gerar a instrução SQL UPDATE correspondente
-                    update_query = f"UPDATE lancamentos_barco SET quantidade = {quantidade}, curso = '{curso}', pratica = '{pratica}', quentinha = '{quentinha}' " \
-                                   f"WHERE data = '{data2}' AND id_staff = {id_staff_ed} AND funcao = 'CURSO'"
+        if df_final2 is not None and not df_final2.equals(df2):
+            for index, row in df_final2.iterrows():
+                nome = row['Nome']
+                curso = row['Curso']
+                pratica = row['Pratica']
+                quantidade = row['Quantidade']
+                quentinha = row['Almoço']
+                cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{nome}'")
+                id_staff_ed = cursor.fetchone()[0]
+                # Gerar a instrução SQL UPDATE correspondente
+                update_query = f"UPDATE lancamentos_barco SET quantidade = {quantidade}, curso = '{curso}', pratica = '{pratica}', quentinha = '{quentinha}' " \
+                               f"WHERE data = '{data2}' AND id_staff = {id_staff_ed} AND funcao = 'CURSO'"
 
-                    # Executar a instrução SQL UPDATE
-                    cursor.execute(update_query)
+                # Executar a instrução SQL UPDATE
+                cursor.execute(update_query)
 
-                    # Commit para aplicar as alterações no banco de dados
-                mydb.commit()
+                # Commit para aplicar as alterações no banco de dados
+            mydb.commit()
         st.success('Lançamentos editados com sucesso!')
