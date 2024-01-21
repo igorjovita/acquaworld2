@@ -50,7 +50,8 @@ if escolha == 'Lançar':
     colu1, colu2 = st.columns(2)
 
     with colu1:
-        apoio_superficie = st.selectbox('Apoio de Superficie', ['Manu', 'Catatau', 'Juninho', 'Glauber', 'Roberta'], index=None)
+        apoio_superficie = st.selectbox('Apoio de Superficie', ['Manu', 'Catatau', 'Juninho', 'Glauber', 'Roberta'],
+                                        index=None)
         mestre = st.selectbox('Mestre', ['', 'Risadinha', 'Marquinhos', 'Freelancer'])
         instrutor = st.selectbox('Instrutor', ['', 'Glauber', 'Martin'])
         quantidade = st.text_input('Quantidade')
@@ -104,16 +105,18 @@ if escolha == 'Lançar':
         if apoio_superficie != '':
             situacao = 'PENDENTE'
             funcao = 'AS'
-            cursor.execute("INSERT INTO lancamentos_barco(data, id_staff, funcao, quantidade, situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)",
-                           (data, id_as, funcao, equipagens, situacao, almoco))
+            cursor.execute(
+                "INSERT INTO lancamentos_barco(data, id_staff, funcao, quantidade, situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)",
+                (data, id_as, funcao, equipagens, situacao, almoco))
             mydb.commit()
         if mestre != '':
             cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{mestre}'")
             id_staff_mestre = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
             situacao = 'PENDENTE'
             funcao = 'CAPITAO'
-            cursor.execute("INSERT INTO lancamentos_barco(data, id_staff, funcao, quantidade, situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)",
-                           (data, id_staff_mestre, funcao, embarques, situacao, almoco))
+            cursor.execute(
+                "INSERT INTO lancamentos_barco(data, id_staff, funcao, quantidade, situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)",
+                (data, id_staff_mestre, funcao, embarques, situacao, almoco))
             mydb.commit()
 
         if curso != '':
@@ -121,9 +124,10 @@ if escolha == 'Lançar':
             id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
             situacao = 'PENDENTE'
             funcao = 'CURSO'
-            cursor.execute("INSERT INTO lancamentos_barco(data, id_staff, funcao, curso, quantidade, pratica, situacao, quentinha) VALUES ("
-                           "%s, %s, %s, %s, %s, %s, %s, %s)",
-                           (data, id_staff, funcao, curso, quantidade, pratica, situacao, almoco))
+            cursor.execute(
+                "INSERT INTO lancamentos_barco(data, id_staff, funcao, curso, quantidade, pratica, situacao, quentinha) VALUES ("
+                "%s, %s, %s, %s, %s, %s, %s, %s)",
+                (data, id_staff, funcao, curso, quantidade, pratica, situacao, almoco))
             mydb.commit()
 
         if curso2 != '':
@@ -131,9 +135,10 @@ if escolha == 'Lançar':
             id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
             situacao = 'PENDENTE'
             funcao = 'CURSO'
-            cursor.execute("INSERT INTO lancamentos_barco(data, id_staff, funcao, curso, quantidade, pratica, situacao, quentinha) VALUES ("
-                           "%s, %s, %s, %s, %s, %s, %s, %s)",
-                           (data, id_staff, funcao, curso2, quantidade2, pratica2, situacao, almoco))
+            cursor.execute(
+                "INSERT INTO lancamentos_barco(data, id_staff, funcao, curso, quantidade, pratica, situacao, quentinha) VALUES ("
+                "%s, %s, %s, %s, %s, %s, %s, %s)",
+                (data, id_staff, funcao, curso2, quantidade2, pratica2, situacao, almoco))
             mydb.commit()
 
         for i, nome_staff in enumerate(staffs_selecionados):
@@ -261,27 +266,55 @@ if escolha == 'Deletar':
 if escolha == 'Editar':
     st.title('Editar Lançamentos')
     data2 = st.date_input('Selecione a data para editar', format='DD/MM/YYYY')
-    check_lancamentos = st.checkbox('Lançamentos sem curso')
-    check_curso = st.checkbox('Lançamento Curso')
-    if check_lancamentos:
-        cursor.execute(f"SELECT staffs.nome, lancamentos_barco.quantidade, lancamentos_barco.quentinha from "
-                       f"lancamentos_barco JOIN staffs ON lancamentos_barco.id_staff = staffs.id_staff where data = "
-                       f"'{data2}' and lancamentos_barco.funcao != 'CURSO'")
-        resultado = cursor.fetchall()
 
-        df = pd.DataFrame(resultado, columns=['Nome', 'Quantidade', 'Almoço'])
+    cursor.execute(f"SELECT staffs.nome, lancamentos_barco.quantidade, lancamentos_barco.quentinha from "
+                   f"lancamentos_barco JOIN staffs ON lancamentos_barco.id_staff = staffs.id_staff where data = "
+                   f"'{data2}' and lancamentos_barco.funcao != 'CURSO'")
+    resultado = cursor.fetchall()
 
-        df_final = st.data_editor(df, key="editable_df", hide_index=True)
-        if st.button('Editar Lançamento'):
-            if df_final is not None and not df_final.equals(df):
-                for index, row in df_final.iterrows():
+    df = pd.DataFrame(resultado, columns=['Nome', 'Quantidade', 'Almoço'])
+
+    cursor.execute(f"SELECT staffs.nome, lancamentos_barco.curso, lancamentos_barco.quantidade, "
+                   f"lancamentos_barco.pratica, lancamentos_barco.quentinha from"
+                   f"lancamentos_barco JOIN staffs ON lancamentos_barco.id_staff = staffs.id_staff where data = "
+                   f"'{data2}' and lancamentos_barco.funcao = 'CURSO' ")
+    resultado = cursor.fetchall()
+
+    df2 = pd.DataFrame(resultado, columns=['Nome', 'Curso', 'Quantidade', 'Pratica', 'Almoço'])
+
+    df_final2 = st.data_editor(df2, key="editable_df2", hide_index=True)
+
+    df_final = st.data_editor(df, key="editable_df", hide_index=True)
+
+    if st.button('Editar Lançamento'):
+        if df_final is not None and not df_final.equals(df):
+            for index, row in df_final.iterrows():
+                nome = row['Nome']
+                quantidade = row['Quantidade']
+                quentinha = row['Almoço']
+                cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{nome}'")
+                id_staff_ed = cursor.fetchone()[0]
+                # Gerar a instrução SQL UPDATE correspondente
+                update_query = f"UPDATE lancamentos_barco SET quantidade = {quantidade}, quentinha = '{quentinha}' " \
+                               f"WHERE data = '{data2}' AND id_staff = {id_staff_ed} AND funcao != 'CURSO'"
+
+                # Executar a instrução SQL UPDATE
+                cursor.execute(update_query)
+
+                # Commit para aplicar as alterações no banco de dados
+            mydb.commit()
+
+            if df_final2 is not None and not df_final2.equals(df2):
+                for index, row in df_final2.iterrows():
                     nome = row['Nome']
+                    curso = row['Curso']
+                    pratica = row['Pratica']
                     quantidade = row['Quantidade']
                     quentinha = row['Almoço']
                     cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{nome}'")
                     id_staff_ed = cursor.fetchone()[0]
                     # Gerar a instrução SQL UPDATE correspondente
-                    update_query = f"UPDATE lancamentos_barco SET quantidade = {quantidade}, quentinha = '{quentinha}' " \
+                    update_query = f"UPDATE lancamentos_barco SET quantidade = {quantidade}, curso = '{curso}', pratica = '{pratica}' quentinha = '{quentinha}' " \
                                    f"WHERE data = '{data2}' AND id_staff = {id_staff_ed} AND funcao != 'CURSO'"
 
                     # Executar a instrução SQL UPDATE
@@ -289,17 +322,5 @@ if escolha == 'Editar':
 
                     # Commit para aplicar as alterações no banco de dados
                 mydb.commit()
-
-
-    if check_curso:
-        cursor.execute(f"SELECT staffs.nome, lancamentos_barco.curso, lancamentos_barco.quantidade, lancamentos_barco.pratica, lancamentos_barco.quentinha from "
-                       f"lancamentos_barco JOIN staffs ON lancamentos_barco.id_staff = staffs.id_staff where data = "
-                       f"'{data2}' and lancamentos_barco.funcao = 'CURSO' ")
-        resultado = cursor.fetchall()
-
-        df2 = pd.DataFrame(resultado, columns=['Nome', 'Curso', 'Quantidade', 'Pratica', 'Almoço'])
-
-        df2.insert(0, 'Selecionar', [False] * len(df2))
-
-        st.markdown('#Cursos')
-        df_final2 = st.data_editor(df2, key="editable_df2", hide_index=True)
+        st.success('Lançamentos editados com sucesso!')
+        
