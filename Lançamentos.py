@@ -254,7 +254,7 @@ if escolha == 'Deletar':
     st.subheader('Selecione o lançamento para deletar')
     data1 = st.date_input('Selecione a Data', format='DD/MM/YYYY')
     if st.button('Apagar do Sistema'):
-        cursor.execute(f'Delete from lancamentos_barco where data = {data1}')
+        cursor.execute(f"Delete from lancamentos_barco where data = '{data1}'")
         mydb.commit()
         st.success('Lançamento Deletado com Sucesso')
 
