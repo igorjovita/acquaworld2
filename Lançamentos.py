@@ -266,7 +266,7 @@ if escolha == 'Editar':
     if check_lancamentos:
         cursor.execute(f"SELECT staffs.nome, lancamentos_barco.quantidade, lancamentos_barco.quentinha from "
                        f"lancamentos_barco JOIN staffs ON lancamentos_barco.id_staff = staffs.id_staff where data = "
-                       f"'{data2} and 'lancamentos_barco.funcao != 'CURSO'")
+                       f"'{data2}' and lancamentos_barco.funcao != 'CURSO'")
         resultado = cursor.fetchall()
 
         df = pd.DataFrame(resultado, columns=['Nome', 'Quantidade', 'Almoço'])
