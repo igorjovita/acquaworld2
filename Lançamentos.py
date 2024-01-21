@@ -260,7 +260,7 @@ if escolha == 'Deletar':
 
 if escolha == 'Editar':
     st.title('Editar Lançamentos')
-    data2 = st.date_input('Selecione a data para editar')
+    data2 = st.date_input('Selecione a data para editar', format='DD/MM/YYYY')
     check_lancamentos = st.checkbox('Lançamentos sem curso')
     check_curso = st.checkbox('Lançamento Curso')
     if check_lancamentos:
@@ -270,6 +270,18 @@ if escolha == 'Editar':
         resultado = cursor.fetchall()
 
         df = pd.DataFrame(resultado, columns=['Nome', 'Quantidade', 'Almoço'])
+
+        df.insert(0, 'Selecionar', [False] * len(df))
+
+        df_final = st.data_editor(df, key="editable_df", hide_index=True)
+
+    if check_curso:
+        cursor.execute(f"SELECT staffs.nome, lancamentos_barco.curso, lancamentos_barco.quantidade, lancamentos_barco.pratica, lancamentos_barco.quentinha from "
+                       f"lancamentos_barco JOIN staffs ON lancamentos_barco.id_staff = staffs.id_staff where data = "
+                       f"'{data2}'")
+        resultado = cursor.fetchall()
+
+        df = pd.DataFrame(resultado, columns=['Nome', 'Curso', 'Quantidade','Pratica', 'Almoço'])
 
         df.insert(0, 'Selecionar', [False] * len(df))
 
