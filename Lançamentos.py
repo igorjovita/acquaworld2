@@ -258,15 +258,19 @@ if escolha == 'Deletar':
         mydb.commit()
         st.success('Lançamento Deletado com Sucesso')
 
-# if escolha == 'Editar':
-#     st.title('Editar Lançamentos')
-#     staffs = []
-#     mydb.connect()
-#     data1 = st.date_input('Selecione a data do lançamento')
-#     cursor.execute(f"SELECT id_staff FROM lancamento_bat where data = '{data1}'")
-#     id_staff = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
-#     st.subheader(id_staff)
-#     for item in id_staff:
-#         cursor.execute(f"SELECT nome from staffs where id_staff = '{item}'")
-#         staff = str(cursor.fetchone()).translate(str.maketrans('', '', chars))
-#         st.checkbox(str(staff))
+if escolha == 'Editar':
+    st.title('Editar Lançamentos')
+    data2 = st.date_input('Selecione a data para editar')
+    check_lancamentos = st.checkbox('Lançamentos sem curso')
+    check_curso = st.checkbox('Lançamento Curso')
+    if check_lancamentos:
+        cursor.execute(f"SELECT staffs.nome, lancamentos_barco.quantidade, lancamentos_barco.quentinha from "
+                       f"lancamentos_barco JOIN staffs ON lancamentos_barco.id_staff = staffs.id_staffs where data = "
+                       f"'{data2}'")
+        resultado = cursor.fetchall()
+
+        df = pd.DataFrame(resultado, columns=['Nome', 'Quantidade', 'Almoço'])
+
+        df.insert(0, 'Selecionar', [False] * len(df))
+
+        df_final = st.data_editor(df, key="editable_df", hide_index=True)
