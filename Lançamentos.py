@@ -119,7 +119,7 @@ if escolha == 'Lançar':
                 (data, id_staff_mestre, funcao, embarques, situacao, almoco))
             mydb.commit()
 
-        if curso != '':
+        if curso is not None:
             cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{instrutor}'")
             id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
             situacao = 'PENDENTE'
@@ -133,7 +133,7 @@ if escolha == 'Lançar':
             mydb.commit()
 
 
-        if curso2 != '':
+        if curso2 is not None:
             cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{instrutor2}'")
             id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
             situacao = 'PENDENTE'
