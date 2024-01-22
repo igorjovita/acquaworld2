@@ -51,7 +51,7 @@ if escolha == 'Lançar':
 
         with col2:
             quantidade_diferente1 = st.text_input('Divisão')
-            quantidade_diferente2 = st.text_input('Divisão')
+            quantidade_diferente2 = st.text_input('Divisão2')
 
     colu1, colu2 = st.columns(2)
 
