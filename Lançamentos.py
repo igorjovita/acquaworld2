@@ -44,8 +44,14 @@ if escolha == 'Lançar':
     divisao = st.text_input('Divisão')
 
     with st.expander('Divisão diferente'):
-        staff_diferente1 = st.text_input('Staff1 - Lance o staff , quantidade').capitalize()
-        staff_diferente2 = st.text_input('Staff2 - Lance o staff , quantidade').capitalize()
+        col1, col2 = st.columns(2)
+        with col1:
+            staff_diferente1 = st.selectbox('Nome do staff', options=lista_staffs)
+            staff_diferente2 = st.selectbox('Nome do staff', options=lista_staffs)
+
+        with col2:
+            quantidade_diferente1 = st.text_input('Divisão')
+            quantidade_diferente2 = st.text_input('Divisão')
 
     colu1, colu2 = st.columns(2)
 
@@ -85,26 +91,22 @@ if escolha == 'Lançar':
         st.write(staff_diferente2)
 
         if staff_diferente1 is not None:
-            info_staff_diferente1 = staff_diferente1.split(',')
-            cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{info_staff_diferente1[0]}'")
+            cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{staff_diferente1}'")
             id_staff_1 = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
             funcao = 'BAT'
             situacao = 'PENDENTE'
-            divisao_1 = info_staff_diferente1[1]
             cursor.execute(
                 'INSERT INTO lancamentos_barco (data, id_staff, funcao, quantidade,situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)',
-                (data, id_staff_1, funcao, divisao_1, situacao, almoco))
+                (data, id_staff_1, funcao, quantidade_diferente1, situacao, almoco))
 
         if staff_diferente2 is not None:
-            info_staff_diferente2 = staff_diferente2.split(',')
-            cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{info_staff_diferente2[0]}'")
+            cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{staff_diferente2}'")
             id_staff_2 = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
             situacao = 'PENDENTE'
-            divisao_2 = info_staff_diferente2[1]
             funcao = 'BAT'
             cursor.execute(
                 'INSERT INTO lancamentos_barco (data, id_staff, funcao, quantidade,situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)',
-                (data, id_staff_2, funcao, divisao_2, situacao, almoco))
+                (data, id_staff_2, funcao, quantidade_diferente2, situacao, almoco))
 
         if apoio_superficie is not None:
             situacao = 'PENDENTE'
