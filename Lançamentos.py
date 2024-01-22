@@ -111,7 +111,7 @@ if escolha == 'Lançar':
                 "INSERT INTO lancamentos_barco(data, id_staff, funcao, quantidade, situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)",
                 (data, id_as, funcao, equipagens, situacao, almoco))
             mydb.commit()
-        if mestre != '':
+        if mestre is not None:
             cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{mestre}'")
             id_staff_mestre = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
             situacao = 'PENDENTE'
