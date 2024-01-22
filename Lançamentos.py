@@ -104,7 +104,7 @@ if escolha == 'Lançar':
                 'INSERT INTO lancamentos_barco (data, id_staff, funcao, quantidade,situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)',
                 (data, id_staff_2, funcao, divisao_2, situacao, almoco))
 
-        if apoio_superficie != '':
+        if apoio_superficie is not None:
             situacao = 'PENDENTE'
             funcao = 'AS'
             cursor.execute(
