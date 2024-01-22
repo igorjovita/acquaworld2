@@ -175,7 +175,9 @@ if escolha == 'Lançar':
                 """
         texto_p2 = f"""
                 {divisao} - {lista_final}
+                
                 {apoio_superficie} - {equipagens} equipagens
+                
                 {mestre} - {embarques} embarques
                 """
         texto_curso = f"{instrutor} - {quantidade} {curso} {pratica}"
@@ -190,7 +192,9 @@ if escolha == 'Lançar':
                 {instrutor} - {quantidade} {curso} {pratica}
                 
                 {divisao} - {lista_final}
+                
                 {apoio_superficie} - {equipagens} equipagens
+                
                 {mestre} - {embarques} embarques"""
             st.code(texto_p1 + texto_curso)
 
@@ -205,17 +209,24 @@ if escolha == 'Lançar':
         if staff_diferente1 is not None and staff_diferente2 is None and instrutor is None and instrutor2 is None:  # 1 staff extra
             texto_staff = f"""
                 {quantidade_diferente1} - {staff_diferente1}
+                
                 {divisao} - {lista_final}
+                
                 {apoio_superficie} - {equipagens} equipagens
+                
                 {mestre} - {embarques} embarques"""
             st.code(texto_p1 + texto_staff)
 
         if staff_diferente1 is not None and staff_diferente2 is not None and instrutor is None and instrutor2 is None:  # 2 staffs extras e 1 curso
             texto_staff2 = f"""
                 {quantidade_diferente1} - {staff_diferente1} 
+                
                 {quantidade_diferente2} - {staff_diferente2} 
+                
                 {divisao} - {lista_final}
+                
                 {apoio_superficie} - {equipagens} equipagens
+                
                 {mestre} - {embarques} embarques"""
             st.code(texto_p1 + texto_staff2)
 
