@@ -54,7 +54,7 @@ if botao:
     total_valor_pagar = 0
     if escolha == 'Comissão Staff':
         cursor.execute(
-            f" select id_staff, sum(divisao) as divisao from lancamento_bat where data between '{data1}' and '{data2}' group by id_staff order by divisao desc")
+            f" select id_staff, sum(quantidade) as quantidade from lancamentos_barco where data between '{data1}' and '{data2}' and funcao = 'BAT' group by id_staff order by quantidade desc")
         lista = cursor.fetchall()
 
         for item in lista:
@@ -86,7 +86,7 @@ if botao:
         st.subheader("Total Valor a Pagar: R$ {:.2f}".format(total_valor_pagar))
     if escolha == 'Comissão AS':
         cursor.execute(
-            f" select id_staff, sum(equipagens) as equipagens from lancamento_as where data between '{data1}' and '{data2}' group by id_staff order by equipagens desc")
+            f" select id_staff, sum(quantidade) as quantidade from lancamentos_barco where data between '{data1}' and '{data2}' and funcao = 'AS' group by id_staff order by quantidade desc")
         lista = cursor.fetchall()
 
         for item in lista:
@@ -106,7 +106,7 @@ if botao:
 
     if escolha == 'Comissão Capitao':
         cursor.execute(
-            f" select id_staff, sum(embarques) as embarques from lancamento_mestre where data between '{data1}' and '{data2}' group by id_staff order by embarques desc")
+            f" select id_staff, sum(quantidade) as embarques from lancamentos_barco where data between '{data1}' and '{data2}' and funcao = 'CAPITAO'group by id_staff order by embarques desc")
         lista = cursor.fetchall()
 
         for item in lista:
@@ -222,7 +222,7 @@ if botao:
         cursor.execute(f"Select id_staff from staffs where nome = '{instrutor}'")
         id_instrutor = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
         cursor.execute(
-            f"SELECT data, curso, quantidade, pratica from lancamento_curso where data between '{data1}' and '{data2}' and id_staff = {id_instrutor}")
+            f"SELECT data, curso, quantidade, pratica from lancamentos_barco where data between '{data1}' and '{data2}' and id_staff = {id_instrutor} and funcao = 'CURSO'")
         cursos = cursor.fetchall()
         mydb.close()
         df = pd.DataFrame(cursos, columns=['Data', 'Curso', 'Quantidade', 'Pratica'])
