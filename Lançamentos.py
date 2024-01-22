@@ -203,64 +203,55 @@ if escolha == 'Lançar':
             st.code(texto_p1 + texto_curso_total + texto_p2)
 
         if staff_diferente1 is not None and staff_diferente2 is None and instrutor is None and instrutor2 is None:  # 1 staff extra
-            staffd1_formatado = staff_diferente1.split(',')
             texto_staff = f"""
-                {staffd1_formatado[1]} - {staffd1_formatado[0]}
+                {quantidade_diferente1} - {staff_diferente1}
                 {divisao} - {lista_final}
                 {apoio_superficie} - {equipagens} equipagens
                 {mestre} - {embarques} embarques"""
             st.code(texto_p1 + texto_staff)
 
         if staff_diferente1 is not None and staff_diferente2 is not None and instrutor is None and instrutor2 is None:  # 2 staffs extras e 1 curso
-            staffd1_formatado = staff_diferente1.split(',')
-            staffd2_formatado = staff_diferente2.split(',')
             texto_staff2 = f"""
-                {staffd1_formatado[1]} - {staffd1_formatado[0]}
-                {staffd2_formatado[1]} - {staffd2_formatado[0]}
+                {quantidade_diferente1} - {staff_diferente1} 
+                {quantidade_diferente2} - {staff_diferente2} 
                 {divisao} - {lista_final}
                 {apoio_superficie} - {equipagens} equipagens
                 {mestre} - {embarques} embarques"""
             st.code(texto_p1 + texto_staff2)
 
         if staff_diferente1 is not None and instrutor is not None and staff_diferente2 is None and instrutor2 is None:  # 1 staff extra e 1 curso
-            staffd1_formatado = staff_diferente1.split(',')
             texto_staff = f"""
                 {instrutor} - {quantidade} {curso} {pratica}
                 
-                {staffd1_formatado[1]} - {staffd1_formatado[0]}
+                {quantidade_diferente1} - {staff_diferente1}
                 """
             st.code(texto_p1 + texto_staff + texto_p2)
 
         if staff_diferente1 is not None and instrutor is not None and instrutor2 is not None and staff_diferente2 is None:  # 1 staff extra e 2 cursos
-            staffd1_formatado = staff_diferente1.split(',')
             texto_staff = f"""
                 {instrutor} - {quantidade} {curso} {pratica}
                 {instrutor2} - {quantidade2} {curso2} {pratica2}
                 
-                {staffd1_formatado[1]} - {staffd1_formatado[0]}
+                {quantidade_diferente2} - {staff_diferente1} 
                 """
             st.code(texto_p1 + texto_staff + texto_p2)
 
         if staff_diferente1 is not None and staff_diferente2 is not None and instrutor is not None and instrutor2 is not None:  # 2 staffs extra e 2 cursos
-            staffd1_formatado = staff_diferente1.split(',')
-            staffd2_formatado = staff_diferente2.split(',')
             texto_staff_curso2 = f"""
                 {instrutor} - {quantidade} {curso} {pratica}
                 {instrutor2} - {quantidade2} {curso2} {pratica2}
                 
-                {staffd1_formatado[1]} - {staffd1_formatado[0]}
-                {staffd2_formatado[1]} - {staffd2_formatado[0]}
+                {quantidade_diferente1} - {staff_diferente1}
+                {quantidade_diferente2} - {staff_diferente2}  
                 """
             st.code(texto_p1 + texto_staff_curso2 + texto_p2)
 
         if staff_diferente1 is not None and staff_diferente2 is not None and instrutor is not None and instrutor2 is None:  # 1 curso e 2 staffs extras
-            staffd1_formatado = staff_diferente1.split(',')
-            staffd2_formatado = staff_diferente2.split(',')
             texto_staff_curso = f"""
                 {instrutor} - {quantidade} {curso} {pratica}
     
-                {staffd1_formatado[1]} - {staffd1_formatado[0]}
-                {staffd2_formatado[1]} - {staffd2_formatado[0]}
+                {quantidade_diferente1} - {staff_diferente1}
+                {quantidade_diferente2} - {staff_diferente2}
                 """
             st.code(texto_p1 + texto_staff_curso + texto_p2)
 
