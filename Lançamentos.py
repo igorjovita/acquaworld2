@@ -81,6 +81,8 @@ if escolha == 'Lançar':
 
     botao = st.button('Lançar no Sistema')
     if botao:
+        st.write(staff_diferente1)
+        st.write(staff_diferente2)
 
         if staff_diferente1 is not None:
             info_staff_diferente1 = staff_diferente1.split(',')
