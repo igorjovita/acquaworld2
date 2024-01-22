@@ -50,7 +50,7 @@ if escolha == 'Lançar':
             staff_diferente2 = st.selectbox('Nome do staff2', options=lista_staffs)
 
         with col2:
-            quantidade_diferente1 = st.text_input('Divisão')
+            quantidade_diferente1 = st.text_input('Divisão1')
             quantidade_diferente2 = st.text_input('Divisão2')
 
     colu1, colu2 = st.columns(2)
