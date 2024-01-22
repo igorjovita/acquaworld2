@@ -81,10 +81,8 @@ if escolha == 'Lançar':
 
     botao = st.button('Lançar no Sistema')
     if botao:
-        st.write(staff_diferente1)
-        st.write(staff_diferente2)
 
-        if staff_diferente1 is not None:
+        if staff_diferente1 != '':
             info_staff_diferente1 = staff_diferente1.split(',')
             cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{info_staff_diferente1[0]}'")
             id_staff_1 = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
@@ -95,7 +93,7 @@ if escolha == 'Lançar':
                 'INSERT INTO lancamentos_barco (data, id_staff, funcao, quantidade,situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)',
                 (data, id_staff_1, funcao, divisao_1, situacao, almoco))
 
-        if staff_diferente2 is not None:
+        if staff_diferente2 != '':
             info_staff_diferente2 = staff_diferente2.split(',')
             cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{info_staff_diferente2[0]}'")
             id_staff_2 = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
@@ -179,11 +177,11 @@ if escolha == 'Lançar':
         texto_curso = f"{instrutor} - {quantidade} {curso} {pratica}"
         texto_curso2 = f"{instrutor2} - {quantidade2} {curso2} {pratica2}"
 
-        if instrutor is None and staff_diferente1 is None:  # Somente batismo sem staff extra
+        if instrutor is None and staff_diferente1 == '':  # Somente batismo sem staff extra
 
             st.code(texto_p1 + texto_p2)
 
-        if instrutor is not None and staff_diferente1 is None and instrutor2 is None and staff_diferente2 is None:  # 1  curso
+        if instrutor is not None and staff_diferente1 == '' and instrutor2 is None and staff_diferente2 == '':  # 1  curso
             texto_curso = f"""
                 {instrutor} - {quantidade} {curso} {pratica}
                 
@@ -192,7 +190,7 @@ if escolha == 'Lançar':
                 {mestre} - {embarques} embarques"""
             st.code(texto_p1 + texto_curso)
 
-        if instrutor2 is not None and staff_diferente1 is None and staff_diferente2 is None:  # 2 cursos
+        if instrutor2 is not None and staff_diferente1 == '' and staff_diferente2 == '':  # 2 cursos
             texto_curso_total = f"""
                 {instrutor} - {quantidade} {curso} {pratica}
                 {instrutor2} - {quantidade2} {curso2} {pratica2}
@@ -200,7 +198,7 @@ if escolha == 'Lançar':
                 """
             st.code(texto_p1 + texto_curso_total + texto_p2)
 
-        if staff_diferente1 is not None and staff_diferente2 is None and instrutor is None and instrutor2 is None:  # 1 staff extra
+        if staff_diferente1 != '' and staff_diferente2 == '' and instrutor is None and instrutor2 is None:  # 1 staff extra
             staffd1_formatado = staff_diferente1.split(',')
             texto_staff = f"""
                 {staffd1_formatado[1]} - {staffd1_formatado[0]}
@@ -209,7 +207,7 @@ if escolha == 'Lançar':
                 {mestre} - {embarques} embarques"""
             st.code(texto_p1 + texto_staff)
 
-        if staff_diferente1 is not None and staff_diferente2 is not None and instrutor is None and instrutor2 is None:  # 2 staffs extras e 1 curso
+        if staff_diferente1 != '' and staff_diferente2 != '' and instrutor is None and instrutor2 is None:  # 2 staffs extras e 1 curso
             staffd1_formatado = staff_diferente1.split(',')
             staffd2_formatado = staff_diferente2.split(',')
             texto_staff2 = f"""
@@ -220,7 +218,7 @@ if escolha == 'Lançar':
                 {mestre} - {embarques} embarques"""
             st.code(texto_p1 + texto_staff2)
 
-        if staff_diferente1 is not None and instrutor is not None and staff_diferente2 is None and instrutor2 is None:  # 1 staff extra e 1 curso
+        if staff_diferente1 != '' and instrutor is not None and staff_diferente2 == '' and instrutor2 is None:  # 1 staff extra e 1 curso
             staffd1_formatado = staff_diferente1.split(',')
             texto_staff = f"""
                 {instrutor} - {quantidade} {curso} {pratica}
@@ -229,7 +227,7 @@ if escolha == 'Lançar':
                 """
             st.code(texto_p1 + texto_staff + texto_p2)
 
-        if staff_diferente1 is not None and instrutor is not None and instrutor2 is not None and staff_diferente2 is None:  # 1 staff extra e 2 cursos
+        if staff_diferente1 != '' and instrutor is not None and instrutor2 is not None and staff_diferente2 == '':  # 1 staff extra e 2 cursos
             staffd1_formatado = staff_diferente1.split(',')
             texto_staff = f"""
                 {instrutor} - {quantidade} {curso} {pratica}
@@ -239,7 +237,7 @@ if escolha == 'Lançar':
                 """
             st.code(texto_p1 + texto_staff + texto_p2)
 
-        if staff_diferente1 is not None and staff_diferente2 is not None and instrutor is not None and instrutor2 is not None:  # 2 staffs extra e 2 cursos
+        if staff_diferente1 != '' and staff_diferente2 != '' and instrutor is not None and instrutor2 is not None:  # 2 staffs extra e 2 cursos
             staffd1_formatado = staff_diferente1.split(',')
             staffd2_formatado = staff_diferente2.split(',')
             texto_staff_curso2 = f"""
@@ -251,7 +249,7 @@ if escolha == 'Lançar':
                 """
             st.code(texto_p1 + texto_staff_curso2 + texto_p2)
 
-        if staff_diferente1 is not None and staff_diferente2 is not None and instrutor is not None and instrutor2 is None:  # 1 curso e 2 staffs extras
+        if staff_diferente1 != '' and staff_diferente2 != '' and instrutor is not None and instrutor2 is None:  # 1 curso e 2 staffs extras
             staffd1_formatado = staff_diferente1.split(',')
             staffd2_formatado = staff_diferente2.split(',')
             texto_staff_curso = f"""
