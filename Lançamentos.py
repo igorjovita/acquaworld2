@@ -124,11 +124,14 @@ if escolha == 'Lançar':
             id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
             situacao = 'PENDENTE'
             funcao = 'CURSO'
+            st.write(curso)
+            st.write(f'Id curso2 = {id_staff}')
             cursor.execute(
                 "INSERT INTO lancamentos_barco(data, id_staff, funcao, curso, quantidade, pratica, situacao, quentinha) VALUES ("
                 "%s, %s, %s, %s, %s, %s, %s, %s)",
                 (data, id_staff, funcao, curso, quantidade, pratica, situacao, almoco))
             mydb.commit()
+
 
         if curso2 != '':
             cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{instrutor2}'")
@@ -140,6 +143,7 @@ if escolha == 'Lançar':
                 "%s, %s, %s, %s, %s, %s, %s, %s)",
                 (data, id_staff, funcao, curso2, quantidade2, pratica2, situacao, almoco))
             mydb.commit()
+            st.write(f'Id curso2 = {id_staff}')
 
         for i, nome_staff in enumerate(staffs_selecionados):
             nome = str(nome_staff)
@@ -151,6 +155,7 @@ if escolha == 'Lançar':
                 'INSERT INTO lancamentos_barco (data, id_staff, funcao, quantidade, situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)',
                 (data, id_staff, funcao, divisao, situacao, almoco))
             mydb.commit()
+            st.write(f'Id Bat = {id_staff}')
 
         st.success('Divisão Lançada no Sistema')
 
