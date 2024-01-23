@@ -53,10 +53,11 @@ if botao:
     total_divisao = 0
     total_valor_pagar = 0
     if escolha == 'Comissão Staff':
+        st.subheader('Teste')
         cursor.execute(
             f" select id_staff, sum(quantidade) as quantidade from lancamentos_barco where data between '{data1}' and '{data2}' and funcao = 'BAT' group by id_staff order by quantidade desc")
         lista = cursor.fetchall()
-        st.subheader('Teste')
+
         for item in lista:
             id_staff = item[0]
             divisao = item[1]
