@@ -233,7 +233,7 @@ filtro = st.radio('Opções de Filtragem', ['Intervalo entre datas', 'Data Espec
 if filtro == 'Intervalo entre datas':
     data1_pagamento = st.date_input('Data Inicial1', format='DD/MM/YYYY', value=None)
     data2_pagamento = st.date_input('Data Final2', format='DD/MM/YYYY', value=None)
-if escolha_data == 'Data Especifica':
+if filtro == 'Data Especifica':
     data1_pagamento = st.date_input('Data2', format='DD/MM/YYYY')
     data2_pagamento = data1_pagamento
 
