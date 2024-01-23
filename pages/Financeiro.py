@@ -56,7 +56,7 @@ if botao:
         cursor.execute(
             f" select id_staff, sum(quantidade) as quantidade from lancamentos_barco where data between '{data1}' and '{data2}' and funcao = 'BAT' group by id_staff order by quantidade desc")
         lista = cursor.fetchall()
-
+        st.subheader('Teste')
         for item in lista:
             id_staff = item[0]
             divisao = item[1]
@@ -73,7 +73,7 @@ if botao:
 
             if data1 != data2:
                 st.write(f'{nome_staff} - {total_divisao} Bat do dia {data1} a {data2} - {valor_formatado}')
-                
+
         st.subheader("Total Divisão: {}".format(total_divisao))
         st.subheader("Total Valor a Pagar: R$ {:.2f}".format(total_valor_pagar))
     if escolha == 'Comissão AS':
