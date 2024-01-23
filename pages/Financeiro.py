@@ -34,7 +34,6 @@ st.header('Financeiro')
 st.subheader('Selecione o intervalo da pesquisa')
 escolha_data = st.radio('Opçoes de filtragem', ['Data Especifica', 'Intervalo entre Datas'])
 if escolha_data == 'Intervalo entre Datas':
-    mes_atual = date.today().month
     data1 = st.date_input('Data Inicial', format='DD/MM/YYYY', value=None)
     data2 = st.date_input('Data Final', format='DD/MM/YYYY', value=None)
 if escolha_data == 'Data Especifica':
@@ -75,10 +74,9 @@ if botao:
             data2_split = str(data2).split('-')
             data2_formatada = f'{data2_split[2]}/{data2_split[1]}/{data2_split[0]}'
 
-
-            st.markdown(f"<span style='font-size:20px;'>{nome_staff} - {divisao} Bat do dia {data1_formatada} a {data2_formatada} - {valor_formatado}</span>",
-                        unsafe_allow_html=True)
-
+            st.markdown(
+                f"<span style='font-size:20px;'>{nome_staff} - {divisao} Bat do dia {data1_formatada} a {data2_formatada} - {valor_formatado}</span>",
+                unsafe_allow_html=True)
 
         st.subheader("Total Divisão: {}".format(total_divisao))
         st.subheader("Total Valor a Pagar: R$ {:.2f}".format(total_valor_pagar))
@@ -148,7 +146,7 @@ if botao:
                 quentinhas = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
                 if nome_staff_cilindro == 'Juninho':
                     valor_total = (int(diarias) * 50) + int(cilindros_acqua) + int(cilindros_pl) + (
-                                int(quentinhas) * 17)
+                            int(quentinhas) * 17)
                 else:
                     valor_total = int(cilindros_acqua) + int(cilindros_pl) + (int(quentinhas) * 17)
                 cursor.execute(
@@ -225,3 +223,35 @@ if botao:
         mydb.close()
         df = pd.DataFrame(cursos, columns=['Data', 'Curso', 'Quantidade', 'Pratica'])
         st.dataframe(df)
+
+st.write('---')
+
+st.subheader('Pagamento')
+
+filtro = st.radio('Opções de Filtragem', ['Intervalo entre datas', 'Data Especifica'])
+
+if filtro == 'Intervalo entre datas':
+    data1_pagamento = st.date_input('Data Inicial', format='DD/MM/YYYY', value=None)
+    data2_pagamento = st.date_input('Data Final', format='DD/MM/YYYY', value=None)
+if escolha_data == 'Data Especifica':
+    data1_pagamento = st.date_input('Data', format='DD/MM/YYYY')
+    data2_pagamento = data1_pagamento
+
+if st.button('Pesquisar'):
+    cursor.execute(f"SELECT staffs.nome, lancamentos_barco.quantidade, lancamentos_barco.curso, lancamentos_barco.pratica, lancamentos_barco.quentinha from "
+                   f"lancamentos_barco JOIN staffs ON lancamentos_barco.id_staff = staffs.id_staff where data between {data1_pagamento} and {data2_pagamento}")
+    resultados = cursor.fetchall()
+
+    for resultado in resultados:
+        st.write(resultado)
+
+
+
+
+
+
+
+
+
+
+
