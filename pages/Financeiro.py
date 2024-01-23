@@ -237,7 +237,7 @@ if escolha_data == 'Data Especifica':
     data1_pagamento = st.date_input('Data2', format='DD/MM/YYYY')
     data2_pagamento = data1_pagamento
 
-if st.button('Pesquisar'):
+if st.button('Pesquisar2'):
     cursor.execute(f"SELECT staffs.nome, lancamentos_barco.quantidade, lancamentos_barco.curso, lancamentos_barco.pratica, lancamentos_barco.quentinha from "
                    f"lancamentos_barco JOIN staffs ON lancamentos_barco.id_staff = staffs.id_staff where data between {data1_pagamento} and {data2_pagamento}")
     resultados = cursor.fetchall()
