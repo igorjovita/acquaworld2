@@ -63,25 +63,36 @@ if botao:
 
             total_divisao += divisao
 
-            col1, col2, col3 = st.columns(3)
-            with col1:
-                mydb.connect()
-                cursor.execute(f"SELECT nome from staffs where id_staff = {id_staff}")
-                nome_staff = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
-                mydb.close()
-                st.subheader(nome_staff)
+            cursor.execute(f"SELECT nome, comissao from staffs where id_staff = {id_staff}")
+            info_staff = cursor.fetchone()
+            nome_staff = info_staff[0]
+            comissao_staff = info_staff[1]
+            valor_pagar = float(divisao) * int(comissao_staff)
+            total_valor_pagar += valor_pagar
+            valor_formatado = str(f'R$ {float(valor_pagar):.2f}').replace('.', ',')
 
-            with col2:
-                st.subheader(divisao)
+            if data1 != data2:
+                st.write(f'{nome_staff} - {total_divisao} Bat do dia {data1} a {data2} - {valor_formatado}')
 
-            with col3:
-                mydb.connect()
-                cursor.execute(f"SELECT comissao from staffs where id_staff = '{id_staff}'")
-                comissao_staff = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
-                mydb.close()
-                valor_pagar = float(divisao) * int(comissao_staff)
-                total_valor_pagar += valor_pagar
-                st.subheader(str(f'R$ {float(valor_pagar):.2f}').replace('.', ','))
+            # col1, col2, col3 = st.columns(3)
+            # with col1:
+            #     mydb.connect()
+            #     cursor.execute(f"SELECT nome from staffs where id_staff = {id_staff}")
+            #     nome_staff = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
+            #     mydb.close()
+            #     st.subheader(nome_staff)
+            #
+            # with col2:
+            #     st.subheader(divisao)
+            #
+            # with col3:
+            #     mydb.connect()
+            #     cursor.execute(f"SELECT comissao from staffs where id_staff = '{id_staff}'")
+            #     comissao_staff = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
+            #     mydb.close()
+            #     valor_pagar = float(divisao) * int(comissao_staff)
+            #     total_valor_pagar += valor_pagar
+            #     st.subheader(str(f'R$ {float(valor_pagar):.2f}').replace('.', ','))
         st.subheader("Total Divisão: {}".format(total_divisao))
         st.subheader("Total Valor a Pagar: R$ {:.2f}".format(total_valor_pagar))
     if escolha == 'Comissão AS':
