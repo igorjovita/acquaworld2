@@ -73,6 +73,7 @@ if botao:
 
             if data1 != data2:
                 st.write(f'{nome_staff} - {total_divisao} Bat do dia {data1} a {data2} - {valor_formatado}')
+                
 
             # col1, col2, col3 = st.columns(3)
             # with col1:
