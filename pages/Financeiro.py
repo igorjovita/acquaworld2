@@ -76,9 +76,9 @@ if botao:
             data2_formatada = f'{data2_split[2]}/{data2_split[1]}/{data2_split[0]}'
 
             if data1 != data2:
-                st.markdown(f"<span style='font-size:20px;'>'{nome_staff} - {divisao} Bat do dia {data1_formatada} a {data2_formatada} - {valor_formatado}'</span>",
+                st.markdown(f"<span style='font-size:20px;'>{nome_staff} - {divisao} Bat do dia {data1_formatada} a {data2_formatada} - {valor_formatado}</span>",
                             unsafe_allow_html=True)
-                
+
 
         st.subheader("Total Divisão: {}".format(total_divisao))
         st.subheader("Total Valor a Pagar: R$ {:.2f}".format(total_valor_pagar))
