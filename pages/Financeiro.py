@@ -70,9 +70,13 @@ if botao:
             valor_pagar = float(divisao) * int(comissao_staff)
             total_valor_pagar += valor_pagar
             valor_formatado = str(f'R$ {float(valor_pagar):.2f}').replace('.', ',')
+            data1_split = str(data1).split('-')
+            data1_formatada = f'{data1_split[2]}/{data1_split[1]}/{data1_split[0]}'
+            data2_split = str(data2).split('-')
+            data2_formatada = f'{data2_split[2]}/{data2_split[1]}/{data2_split[0]}'
 
             if data1 != data2:
-                st.text(f'{nome_staff} - {divisao} Bat do dia {data1} a {data2} - {valor_formatado}')
+                st.text(f'{nome_staff} - {divisao} Bat do dia {data1_formatada} a {data2_formatada} - {valor_formatado}')
 
         st.subheader("Total Divisão: {}".format(total_divisao))
         st.subheader("Total Valor a Pagar: R$ {:.2f}".format(total_valor_pagar))
