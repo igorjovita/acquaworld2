@@ -72,7 +72,7 @@ if botao:
             valor_formatado = str(f'R$ {float(valor_pagar):.2f}').replace('.', ',')
 
             if data1 != data2:
-                st.text(f'{nome_staff} - {total_divisao} Bat do dia {data1} a {data2} - {valor_formatado}')
+                st.text(f'{nome_staff} - {divisao} Bat do dia {data1} a {data2} - {valor_formatado}')
 
         st.subheader("Total Divisão: {}".format(total_divisao))
         st.subheader("Total Valor a Pagar: R$ {:.2f}".format(total_valor_pagar))
