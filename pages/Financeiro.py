@@ -260,7 +260,7 @@ if filtro == 'Data Especifica':
 staff = st.selectbox('Nome do Staff', lista_staff)
 if st.button('Pesquisar2'):
     cursor.execute(f"SELECT staffs.nome, lancamentos_barco.quantidade, lancamentos_barco.curso, lancamentos_barco.pratica, lancamentos_barco.quentinha from "
-                   f"lancamentos_barco JOIN staffs ON lancamentos_barco.id_staff = staffs.id_staff where data between '{data1_pagamento}' and '{data2_pagamento}' and staffs.nome = {staff}")
+                   f"lancamentos_barco JOIN staffs ON lancamentos_barco.id_staff = staffs.id_staff where data between '{data1_pagamento}' and '{data2_pagamento}' and staffs.nome = '{staff}'")
     resultados = cursor.fetchall()
 
     for resultado in resultados:
