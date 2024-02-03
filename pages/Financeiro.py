@@ -270,10 +270,12 @@ if st.button('Pesquisar2'):
     dados_str = ''
     st.write('oi')
     # Itera sobre cada tupla em 'dados'
+    total_equipagens = 0
+    total_bat = 0
+    total_curso = 0
+    
     for dado in dados:
-        total_equipagens = 0
-        total_bat = 0
-        total_curso = 0
+
         # Converta o objeto datetime para uma string formatada
         data_form = datetime.strftime(dado[0], "%d/%m/%Y")
 
