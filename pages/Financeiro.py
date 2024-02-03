@@ -262,7 +262,9 @@ if st.button('Pesquisar2'):
 
     cursor.execute(f"SELECT id_staff FROM staffs where nome ='{staff}'")
     id_staff = cursor.fetchone()[0]
-    cursor.execute('SELECT data, funcao, quantidade, curso, pratica, quentinha FROM lancamento_barco WHERE id_staff = %s and data between %s and %s)',(id_staff, data1_pagamento, data2_pagamento))
+    cursor.execute(
+        'SELECT data, funcao, quantidade, curso, pratica, quentinha FROM lancamento_barco WHERE id_staff = %s and data between %s and %s',
+        (id_staff, data1_pagamento, data2_pagamento))
     dados = cursor.fetchall()
 
     df = pd.DataFrame(dados, columns=['Data', 'Função', 'Quantidade', 'Curso', 'Pratica', 'Quentinha'])
