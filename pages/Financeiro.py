@@ -225,7 +225,7 @@ if botao:
         df['Data'] = pd.to_datetime(df['Data'])
 
         # Formatando a coluna 'Data' para o formato brasileiro
-        df['Data_formatada'] = df['Data'].dt.strftime('%d/%m/%Y')
+        df['Data'] = df['Data'].dt.strftime('%d/%m/%Y')
         st.dataframe(df)
 
 st.write('---')
