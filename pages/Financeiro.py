@@ -222,7 +222,7 @@ if botao:
             f"SELECT data, curso, quantidade, pratica from lancamentos_barco where data between '{data1}' and '{data2}' and id_staff = {id_instrutor} and funcao = 'CURSO'")
         cursos = cursor.fetchall()
         mydb.close()
-        df = pd.DataFrame(cursos, columns=['Data', 'Curso', 'Quantidade', 'Pratica'])
+        df = pd.DataFrame(cursos, columns=['Data', 'Curso', 'Quantidade', 'Pratica'], index=None)
         df['Data'] = pd.to_datetime(df['Data'])
 
         # Formatando a coluna 'Data' para o formato brasileiro
