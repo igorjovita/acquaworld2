@@ -315,19 +315,19 @@ if st.button('Pesquisar2'):
 
         if total_equipagens != 0:
             texto_equipagem = (f"""Total Equipagens - {total_equipagens}
-            """)
+""")
         else:
             texto_equipagem = ''
 
         if total_curso != 0:
             texto_curso = (f"""Total Praticas - {total_curso}
-            """)
+""")
         else:
             texto_curso = ''
 
         if total_bat != 0:
             texto_bat = f"""Total Batismo - {total_bat}
-            """
+"""
 
         else:
             texto_bat = ''
