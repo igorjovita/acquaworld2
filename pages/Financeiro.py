@@ -354,12 +354,11 @@ if st.button('Pesquisar2'):
     LEFT JOIN
         lancamento_cilindro lc ON lb.id_staff = lc.id_staff
     WHERE
-        lb.data between %s and %s and
         lb.id_staff = %s
         AND (
             lc.id_staff = %s
             OR lc.id_staff IS NULL
-        )""", (id_staff, id_staff, data1_pagamento, data2_pagamento))
+        )""", (id_staff, id_staff))
 
     dados2 = cursor.fetchall()
     st.dataframe(dados2)
