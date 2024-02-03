@@ -273,7 +273,7 @@ if st.button('Pesquisar2'):
 
     cursor.execute("SELECT data, cilindros_acqua, cilindros_pl, almoco FROM lancamento_cilindro where id_staff = %s and data between %s and %s", (id_staff, data1_pagamento, data2_pagamento))
     dados2 = cursor.fetchall()
-    
+
     dados_str = ''
     # Itera sobre cada tupla em 'dados'
     total_equipagens = 0
@@ -284,6 +284,7 @@ if st.button('Pesquisar2'):
     total_comissao = 0
     agrupado_por_data = {}
     total_cilindro = 0
+    total_diaria = 0
     # Itera sobre cada tupla em 'dados'
     for dado in dados:
         # Converta o objeto datetime para uma string formatada
@@ -349,10 +350,12 @@ if st.button('Pesquisar2'):
 
         # Certifica-se de que há pelo menos 4 elementos na tupla
         if len(dado) >= 4:
+
+            if staff == 'Juninho':
+                total_diaria += 1
             # Inicializa a lista para a data se ainda não existir
             if data_form not in agrupado_por_data:
                 agrupado_por_data[data_form] = []
-
 
             if dado[2] == 0:
                 texto = f'{int(dado[1])} Cilindros Acqua'
@@ -395,10 +398,15 @@ if st.button('Pesquisar2'):
         quentinha_formatado = format_currency(calculo_quentinha, 'BRL', locale='pt_BR')
         dados_str += f"Total Quentinha - {total_quentinha} = {quentinha_formatado}\n"
 
+    if total_diaria != 0:
+        diaria_formatada = format_currency(total_diaria * 50, 'BRL', locale='pt_BR')
+        dados_str += f"Total Diarias - {total_diaria} = {diaria_formatada}\n"
+
     if total_cilindro_acqua != 0 or total_cilindro_pl != 0:
         total_cilindro = total_cilindro_acqua + total_cilindro_pl
         cilindro_formatado = format_currency(total_cilindro, 'BRL', locale='pt_BR')
         dados_str += f"Total Cilindros - {total_cilindro_acqua} Acqua + {total_cilindro_pl} Pl = {cilindro_formatado}\n"
+
 
     total_pagar = total_equipagens + total_comissao + calculo_bat + calculo_quentinha + total_cilindro
     total_formatado = format_currency(total_pagar, 'BRL', locale='pt_BR')
