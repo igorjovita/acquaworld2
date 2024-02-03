@@ -279,6 +279,9 @@ if st.button('Pesquisar2'):
         else:
             pratica = dado[4]
 
+        if dado[1] == 'AS':
+            dado[1] = 'equipagens'
+
         # Certifica-se de que há pelo menos 5 elementos na tupla
         if len(dado) >= 5:
             if dado[5] == 'Sim':
