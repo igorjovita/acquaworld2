@@ -270,7 +270,7 @@ if st.button('Pesquisar2'):
 
     # Itera sobre cada tupla em 'dados'
     for dado in dados:
-        print(f'Tupla atual: {dado}')
+        st.write(f'Tupla atual: {dado}')
         if len(dado) >= 7:  # Certifique-se de que há pelo menos 7 elementos na tupla
             if dado[1] == 'CURSO':
                 texto = f'{dado[0]} - {dado[1]} - {dado[2]} - {dado[3]} - {dado[4]} - {dado[5]} - {dado[6]}'
@@ -280,7 +280,7 @@ if st.button('Pesquisar2'):
             # Adiciona o texto e uma quebra de linha ao final de dados_str
             dados_str += texto + '\n'
         else:
-            print(f'A tupla {dado} não possui o comprimento esperado.')
+            st.write(f'A tupla {dado} não possui o comprimento esperado.')
 
     # Agora, dados_str conterá todos os textos com quebras de linha entre eles
     st.write(dados_str)
