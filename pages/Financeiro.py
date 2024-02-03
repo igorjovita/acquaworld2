@@ -336,7 +336,7 @@ if st.button('Pesquisar2'):
     # Agora, dados_str conterá todos os textos com quebras de linha entre eles
     st.code(dados_str + texto_equipagem + texto_curso + texto_bat)
 
-    cursor.execute(f"""
+    cursor.execute("""
     SELECT
         lb.data,
         lb.funcao,
@@ -344,32 +344,48 @@ if st.button('Pesquisar2'):
         lb.curso,
         lb.pratica,
         lb.quentinha,
-        lc.cilindros_acqua,
-        lc.cilindros_pl,
-        lc.almoco,
         s.nome
     FROM
         lancamentos_barco lb
     JOIN
         staffs s ON lb.id_staff = s.id_staff
-    LEFT JOIN
-        (
-            SELECT
-                id_staff,
-                SUM(cilindros_acqua) as cilindros_acqua,
-                SUM(cilindros_pl) as cilindros_pl,
-                SUM(almoco) as almoco
-            FROM
-                lancamento_cilindro
-            GROUP BY
-                id_staff
-        ) lc ON lb.id_staff = lc.id_staff
     WHERE
         lb.id_staff = %s
     """, (id_staff,))
 
-    dados2 = cursor.fetchall()
-    st.dataframe(dados2)
+    # Obtenha os resultados da consulta para lancamentos_barco
+    result_lancamentos_barco = cursor.fetchall()
+
+    # Execute a consulta para lancamento_cilindro
+    cursor.execute("""
+    SELECT
+        lc.cilindros_acqua,
+        lc.cilindros_pl,
+        lc.almoco,
+        s.nome
+    FROM
+        lancamento_cilindro lc
+    JOIN
+        staffs s ON lc.id_staff = s.id_staff
+    WHERE
+        lc.id_staff = %s
+    """, (id_staff,))
+
+    # Obtenha os resultados da consulta para lancamento_cilindro
+    result_lancamento_cilindro = cursor.fetchall()
+
+    # Converta os resultados para DataFrames do Pandas
+    df_lancamentos_barco = pd.DataFrame(result_lancamentos_barco,
+                                        columns=["data", "funcao", "quantidade", "curso", "pratica", "quentinha",
+                                                 "nome"])
+    df_lancamento_cilindro = pd.DataFrame(result_lancamento_cilindro,
+                                          columns=["cilindros_acqua", "cilindros_pl", "almoco", "nome"])
+
+    # Combine os DataFrames usando o nome como chave
+    df_combined = pd.merge(df_lancamentos_barco, df_lancamento_cilindro, on="nome", how="left")
+
+    # Exiba o DataFrame combinado
+    st.table(df_combined)
 
 
 
