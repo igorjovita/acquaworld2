@@ -266,6 +266,16 @@ if st.button('Pesquisar2'):
         'SELECT data, funcao, quantidade, curso, pratica, quentinha FROM lancamentos_barco WHERE id_staff = %s and data between %s and %s',
         (id_staff, data1_pagamento, data2_pagamento))
     dados = cursor.fetchall()
+    dados_str = ''
+
+    for dado in dados:
+        if dado[1] == 'CURSO':
+            texto = f'{dado[0]} - {dado[1]} - {dado[2]} - {dado[3]} - {dado[4]} - {dado[5]} - {dado[6]}'
+        else:
+            texto = f'{dado[0]} - {dado[1]} - {dado[2]} - {dado[3]} - {dado[6]}'
+        dados_str += texto + '\n'
+
+    st.code(dados_str)
 
     df = pd.DataFrame(dados, columns=['Data', 'Função', 'Quantidade', 'Curso', 'Pratica', 'Quentinha'])
     st.table(df)
