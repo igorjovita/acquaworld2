@@ -338,6 +338,14 @@ if st.button('Pesquisar2'):
                 texto = f'{int(dado[1])} Cilindro Acqua + {int(dado[2])} Cilindro Pl'
                 agrupado_por_data[data_form].append(texto)
 
+            if dados[2] == 0:
+                if dado[3] == 'Sim':
+                    texto = f'{int(dado[1])} Cilindro Acqua + {int(dado[2])} Cilindro Pl + quentinha'
+                    agrupado_por_data[data_form].append(texto)
+                else:
+                    texto = f'{int(dado[1])} Cilindro Acqua + {int(dado[2])} Cilindro Pl'
+                    agrupado_por_data[data_form].append(texto)
+
     # Agora você pode iterar sobre o dicionário para criar a string final
     dados_str = ''
     for data, textos in agrupado_por_data.items():
