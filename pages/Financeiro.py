@@ -337,21 +337,25 @@ if st.button('Pesquisar2'):
     st.code(dados_str + texto_equipagem + texto_curso + texto_bat)
 
     cursor.execute(f"""SELECT
-    lb.data,
-    lb.funcao,
-    lb.quantidade,
-    lb.curso,
-    lb.pratica,
-    lb.quentinha,
-    lc.cilindros_acqua,
-    lc.cilindros_pl,
-    lc.almoco,
-    s.nome
-    FROM lancamentos_barco lb
-    JOIN lancamento_cilindro lc ON lb.id_staff = lc.id_staff
-    JOIN staffs s ON lb.id_staff = s.id_staff
-    WHERE lb.data between {data1_pagamento} and {data2_pagamento} and s.id_staff = {id_staff};
-""")
+        lb.data,
+        lb.funcao,
+        lb.quantidade,
+        lb.curso,
+        lb.pratica,
+        lb.quentinha,
+        lc.cilindros_acqua,
+        lc.cilindros_pl,
+        lc.almoco,
+        s.nome
+    FROM
+        lancamentos_barco lb
+    JOIN
+        lancamento_cilindro lc ON lb.id_staff = lc.id_staff
+    JOIN
+        staffs s ON lb.id_staff = s.id_staff
+    WHERE
+        lb.id_staff = %s""", (id_staff,))
+
     dados2 = cursor.fetchall()
     st.dataframe(dados2)
 
