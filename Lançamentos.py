@@ -53,16 +53,20 @@ if escolha == 'Lançar':
             quantidade_diferente1 = st.text_input('Divisão1')
             quantidade_diferente2 = st.text_input('Divisão2')
 
-    # colun1, colun2, colun3 = st.columns(3)
-    #
-    #
-    # with colun1:
+    colun1, colun2, colun3 = st.columns(3)
 
+    with colun1:
+        st.number_input('Quantidade de AS')
+
+    with colun2:
+        apoio_superficie = st.multiselect('Apoio de Superficie', ['Manu', 'Catatau', 'Juninho', 'Glauber', 'Roberta'])
+
+    with colun3:
+        equipagens = st.text_input('Equipagens')
 
     colu1, colu2 = st.columns(2)
 
     with colu1:
-        apoio_superficie = st.multiselect('Apoio de Superficie', ['Manu', 'Catatau', 'Juninho', 'Glauber', 'Roberta'])
         mestre = st.selectbox('Mestre', ['Risadinha', 'Marquinhos', 'Freelancer'], index=None)
         instrutor = st.selectbox('Instrutor', ['Glauber', 'Martin'], index=None)
         quantidade = st.text_input('Quantidade')
@@ -85,8 +89,7 @@ if escolha == 'Lançar':
                                   index=None)
             pratica2 = st.selectbox('Pratica2', ['Pratica 1', 'Pratica 2'], index=None)
 
-    cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{apoio_superficie}'")
-    id_as = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
+
 
     almoco = st.selectbox('Pagar quentinhas nessa data?', ['Sim', 'Não'], index=None)
 
@@ -113,10 +116,14 @@ if escolha == 'Lançar':
         if apoio_superficie is not None:
             situacao = 'PENDENTE'
             funcao = 'AS'
-            cursor.execute(
-                "INSERT INTO lancamentos_barco(data, id_staff, funcao, quantidade, situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)",
-                (data, id_as, funcao, equipagens, situacao, almoco))
-            mydb.commit()
+            for staff in apoio_superficie:
+                cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{staff}'")
+                id_as = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
+
+                cursor.execute(
+                    "INSERT INTO lancamentos_barco(data, id_staff, funcao, quantidade, situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)",
+                    (data, id_as, funcao, equipagens, situacao, almoco))
+                mydb.commit()
         if mestre is not None:
             cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{mestre}'")
             id_staff_mestre = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
