@@ -285,7 +285,7 @@ if st.button('Pesquisar2'):
     total_quentinha = 0
     total_comissao = 0
     agrupado_por_data = {}
-
+    total_cilindro = 0
     # Itera sobre cada tupla em 'dados'
     for dado in dados:
         # Converta o objeto datetime para uma string formatada
