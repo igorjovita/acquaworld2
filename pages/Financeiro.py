@@ -233,7 +233,16 @@ if botao:
         df['Comissao'] = df['Comissao'].apply(int)
         df['Quantidade'] = df['Quantidade'].apply(int)
         df['Comissao'] *= df['Quantidade']
-        st.table(df)
+        df = df.fillna('')
+        # Configuração de estilo para ocultar o índice
+        styles = [
+            dict(selector="tr:hover", props=[("background", "")]),
+            dict(selector="th", props=[("font-size", "0%")]),
+            dict(selector="td", props=[("font-size", "0%")]),
+        ]
+
+        # Exibir o DataFrame no st.table
+        st.table(df.style.set_table_styles(styles))
         total_comissao = df['Comissao'].sum()
         comissao_total = format_currency(total_comissao, 'BRL', locale='pt_BR')
         st.subheader(f'{int(total_praticas)} praticas - Total {comissao_total}')
