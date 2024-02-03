@@ -274,10 +274,10 @@ if st.button('Pesquisar2'):
         # Converta o objeto datetime para uma string formatada
         data_form = datetime.strftime(dado[0], "%d/%m/%Y")
 
-        if dados[4] is None:
+        if dado[4] is None:
             pratica = ''
         else:
-            pratica = dados[4]
+            pratica = dado[4]
 
         # Certifica-se de que há pelo menos 5 elementos na tupla
         if len(dado) >= 5:
