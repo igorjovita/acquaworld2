@@ -288,6 +288,7 @@ if st.button('Pesquisar2'):
     calculo_bat = 0
     # Itera sobre cada tupla em 'dados'
     for dado in dados:
+        st.write(dado)
         # Converta o objeto datetime para uma string formatada
         data_form = datetime.strftime(dado[0], "%d/%m/%Y")
 
