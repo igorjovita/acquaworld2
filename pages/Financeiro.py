@@ -275,12 +275,10 @@ if st.button('Pesquisar2'):
         # Certifica-se de que há pelo menos 5 elementos na tupla
         if len(dado) >= 5:
             # Construa o texto com base no número de elementos
-            if len(dado) == 6:
-                texto = f'{dado[0]} - {dado[1]} - {dado[2]} - {dado[3]} - {dado[4]} - {dado[5]}'
-            elif len(dado) == 5:
-                texto = f'{dado[0]} - {dado[1]} - {dado[2]} - {dado[3]} - {dado[4]}'
-            else:
-                texto = 'Número de elementos não esperado'
+            texto = f'{dado[0]} - {dado[1]} - {dado[2]} - {dado[3]} - {dado[4]} - {dado[5]}'
+
+            # Substitui os valores None por uma string vazia
+            texto = ' - '.join('' if valor is None else str(valor) for valor in dado)
 
             # Adiciona o texto e uma quebra de linha ao final de dados_str
             dados_str += texto + '\n'
