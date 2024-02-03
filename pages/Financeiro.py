@@ -248,7 +248,7 @@ st.write('---')
 
 st.subheader('Pagamento')
 cursor.execute("SELECT nome from staffs")
-lista_staff = str(cursor.fetchall()).translate(str.maketrans('', '', chars2)).split(',')
+lista_staff = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
 filtro = st.radio('Opções de Filtragem', ['Intervalo entre datas', 'Data Especifica'])
 
 if filtro == 'Intervalo entre datas':
