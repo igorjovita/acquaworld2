@@ -271,7 +271,7 @@ if st.button('Pesquisar2'):
     # Itera sobre cada tupla em 'dados'
     for dado in dados:
         st.write(f'Tupla atual: {dado}')
-        if len(dado) >= 7:  # Certifique-se de que há pelo menos 7 elementos na tupla
+        if len(dado) >= 5:  # Certifique-se de que há pelo menos 7 elementos na tupla
             if dado[1] == 'CURSO':
                 texto = f'{dado[0]} - {dado[1]} - {dado[2]} - {dado[3]} - {dado[4]} - {dado[5]} - {dado[6]}'
             else:
@@ -283,7 +283,7 @@ if st.button('Pesquisar2'):
             st.write(f'A tupla {dado} não possui o comprimento esperado.')
 
     # Agora, dados_str conterá todos os textos com quebras de linha entre eles
-    st.write(dados_str)
+    st.code(dados_str)
 
     # df = pd.DataFrame(dados, columns=['Data', 'Função', 'Quantidade', 'Curso', 'Pratica', 'Quentinha'])
     # st.table(df)
