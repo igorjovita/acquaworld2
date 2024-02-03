@@ -275,7 +275,7 @@ if st.button('Pesquisar2'):
             if dado[1] == 'CURSO':
                 texto = f'{dado[0]} - {dado[1]} - {dado[2]} - {dado[3]} - {dado[4]} - {dado[5]} - {dado[6]}'
             else:
-                texto = f'{dado[0]} - {dado[1]} - {dado[2]} - {dado[3]} - {dado[6]}'
+                texto = f'{dado[0]} - {dado[1]} - {dado[2]} - {dado[3]} - {dado[4]}'
 
             # Adiciona o texto e uma quebra de linha ao final de dados_str
             dados_str += texto + '\n'
