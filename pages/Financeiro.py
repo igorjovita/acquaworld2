@@ -406,6 +406,10 @@ if st.button('Pesquisar2'):
         cilindro_formatado = format_currency(total_cilindro, 'BRL', locale='pt_BR')
         dados_str += f"Total Cilindros - {total_cilindro_acqua} Cilindro_acqua + {total_cilindro_pl} Cilindro_pl = {cilindro_formatado}"
 
+    total_pagar = total_equipagens + total_comissao + calculo_bat + calculo_quentinha + total_cilindro
+    total_formatado = format_currency(total_pagar, 'BRL', locale='pt_BR')
+    dados_str += f"Total a pagar - {total_formatado}"
+
     # Agora, dados_str conterá todos os textos com quebras de linha entre eles
     st.code(dados_str)
 
