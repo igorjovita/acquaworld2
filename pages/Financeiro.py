@@ -354,7 +354,7 @@ if st.button('Pesquisar2'):
     JOIN
         staffs s ON lb.id_staff = s.id_staff
     WHERE
-        lb.id_staff = %s and lc.id_staff = %s """, (id_staff, id_staff))
+        lb.id_staff = %s and lc.id_staff = %s  and lb.data between %s and %s""", (id_staff, id_staff, data1_pagamento, data2_pagamento))
 
     dados2 = cursor.fetchall()
     st.dataframe(dados2)
