@@ -340,7 +340,7 @@ if st.button('Pesquisar2'):
 
             if dados[2] == 0:
                 if dado[3] == 'Sim':
-                    texto = f'{int(dado[1])} Cilindro Acqua + {int(dado[2])} Cilindro Pl + quentinha'
+                    texto = f'{int(dado[1])} Cilindro Acqua + quentinha'
                     agrupado_por_data[data_form].append(texto)
                 else:
                     texto = f'{int(dado[1])} Cilindro Acqua + {int(dado[2])} Cilindro Pl'
