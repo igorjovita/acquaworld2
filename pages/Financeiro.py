@@ -308,14 +308,14 @@ if st.button('Pesquisar2'):
 
             if dado[5] == 'Sim':
                 if dado[1] == 'CURSO':
-                    texto = f'{int(dado[2])} {dado[1]} {dado[3]} {pratica} + quentinha'
+                    texto = f'{int(dado[2])}{tipo} {dado[3]} {pratica} + quentinha'
                 else:
-                    texto = f'{int(dado[2])} {dado[1]} + quentinha'
+                    texto = f'{int(dado[2])}{tipo} + quentinha'
             else:
                 if dado[1] == 'CURSO':
-                    texto = f'{int(dado[2])} {dado[1]} {dado[3]} {pratica}'
+                    texto = f'{int(dado[2])}{tipo} {dado[3]} {pratica}'
                 else:
-                    texto = f'{float(dado[2])} {dado[1]}'
+                    texto = f'{float(dado[2])}{tipo}'
 
             # Adiciona à lista correspondente à data
             agrupado_por_data[data_form].append(texto)
