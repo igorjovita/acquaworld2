@@ -291,12 +291,12 @@ if st.button('Pesquisar2'):
         if len(dado) >= 5:
             if dado[5] == 'Sim':
                 if dado[1] == 'CURSO':
-                    texto = f'{data_form} - {int(dado[2])} {tipo} {dado[3]} {pratica} + quentinha'
+                    texto = f'{data_form} - {int(dado[2])} {tipo}{dado[3]} {pratica} + quentinha'
                 else:
                     texto = f'{data_form} - {int(dado[2])} {tipo} + quentinha'
             else:
                 if dado[1] == 'CURSO':
-                    texto = f'{data_form} - {int(dado[2])} {tipo} {dado[3]} {pratica} '
+                    texto = f'{data_form} - {int(dado[2])} {tipo}{dado[3]} {pratica} '
                 else:
                     texto = f'{data_form} - {int(dado[2])} {tipo}'
 
