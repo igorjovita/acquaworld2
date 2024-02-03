@@ -279,8 +279,6 @@ if st.button('Pesquisar2'):
             # Construa o texto com base no número de elementos
             texto = f'{data_form} - {dado[1]} - {dado[2]} - {dado[3]} - {dado[4]} - {dado[5]}'
 
-            # Substitui os valores None por uma string vazia
-            texto = ' - '.join('' if valor is None else str(valor) for valor in dado)
 
             # Adiciona o texto e uma quebra de linha ao final de dados_str
             dados_str += texto + '\n'
