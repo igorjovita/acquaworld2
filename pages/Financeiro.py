@@ -349,7 +349,7 @@ if st.button('Pesquisar2'):
 
     # Agrupando informações do lancamento_cilindro
     for data, cilindros_acqua, cilindros_pl, almoco in dados2:
-        agrupado_por_data[data].append(('Cilindro', cilindros_acqua + cilindros_pl + almoco))
+        agrupado_por_data[data].append(('Cilindro', cilindros_acqua + cilindros_pl))
 
     # Exibindo os resultados
     for data, informacoes in agrupado_por_data.items():
