@@ -270,8 +270,6 @@ if st.button('Pesquisar2'):
 
     # Itera sobre cada tupla em 'dados'
     for dado in dados:
-        st.write(f'Tupla atual: {dado}')
-
         # Certifica-se de que há pelo menos 5 elementos na tupla
         if len(dado) >= 5:
             # Construa o texto com base no número de elementos
