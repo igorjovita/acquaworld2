@@ -160,7 +160,7 @@ if escolha == 'Lançar':
 
         st.success('Divisão Lançada no Sistema')
 
-        apoio_superficie = str(apoio_superficie).strip('[]')
+        apoio_superficie = str(apoio_superficie).strip('[]').strip("'")
 
         data_formatada = str(data).translate(str.maketrans('', '', chars)).split('-')
         st.write('---')
