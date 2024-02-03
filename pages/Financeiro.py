@@ -235,14 +235,10 @@ if botao:
         df['Comissao'] *= df['Quantidade']
         df = df.fillna('')
         # Configuração de estilo para ocultar o índice
-        styles = [
-            dict(selector="tr:hover", props=[("background", "")]),
-            dict(selector="th", props=[("font-size", "0%")]),
-            dict(selector="td", props=[("font-size", "0%")]),
-        ]
+        html_table = df.to_html(index=False)
 
-        # Exibir o DataFrame no st.table
-        st.table(df.style.set_table_styles(styles))
+        # Exibir HTML no Streamlit
+        st.markdown(html_table, unsafe_allow_html=True)
         total_comissao = df['Comissao'].sum()
         comissao_total = format_currency(total_comissao, 'BRL', locale='pt_BR')
         st.subheader(f'{int(total_praticas)} praticas - Total {comissao_total}')
