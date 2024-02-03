@@ -283,10 +283,7 @@ if st.button('Pesquisar2'):
             tipo = 'equipagens'
 
         elif dado[1] == 'CURSO':
-            if int(dado[2]) > 1:
-                tipo = 'CURSOS'
-            else:
-                tipo = 'CURSO'
+            tipo = ''
         else:
             tipo = dado[1]
 
