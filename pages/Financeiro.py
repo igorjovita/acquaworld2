@@ -282,8 +282,8 @@ if st.button('Pesquisar2'):
 
     # Agora, dados_str conterá todos os textos com quebras de linha entre eles
     st.write(dados_str)
-    df = pd.DataFrame(dados, columns=['Data', 'Função', 'Quantidade', 'Curso', 'Pratica', 'Quentinha'])
-    st.table(df)
+    # df = pd.DataFrame(dados, columns=['Data', 'Função', 'Quantidade', 'Curso', 'Pratica', 'Quentinha'])
+    # st.table(df)
 
 
 
