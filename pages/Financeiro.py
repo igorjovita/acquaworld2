@@ -338,16 +338,14 @@ if st.button('Pesquisar2'):
             if data_form not in agrupado_por_data:
                 agrupado_por_data[data_form] = []
 
-            if dado[3] == 'Sim':
-                if dado[2] == 0:
-                    texto = f'{int(dado[1])} Cilindro Acqua + quentinha'
-                    agrupado_por_data[data_form].append(texto)
-                else:
-                    texto = f'{int(dado[1])} Cilindro Acqua + {int(dado[2])} Cilindro Pl + quentinha'
-                    agrupado_por_data[data_form].append(texto)
+
+            if dado[2] == 0:
+                texto = f'{int(dado[1])} Cilindro Acqua'
+                agrupado_por_data[data_form].append(texto)
             else:
                 texto = f'{int(dado[1])} Cilindro Acqua + {int(dado[2])} Cilindro Pl'
                 agrupado_por_data[data_form].append(texto)
+
 
 
 
@@ -363,7 +361,7 @@ if st.button('Pesquisar2'):
     # Calcula os totais e adiciona ao resultado final
     total_equipagens = sum(int(dado[2]) for dado in dados if dado[1] == 'AS')
     total_curso = sum(int(dado[2]) for dado in dados if dado[1] == 'CURSO')
-    total_bat = sum(int(dado[2]) for dado in dados if dado[1] not in ['AS', 'CURSO'])
+    total_bat = sum(int(dado[2]) for dado in dados if dado[1] not in ['AS', 'CURSO', 'CAPITAO'])
 
     total_cilindro_acqua = sum(int(dado[1]) for dado in dados2)
     total_cilindro_pl = sum(int(dado[2]) for dado in dados2)
@@ -383,7 +381,7 @@ if st.button('Pesquisar2'):
     if total_quentinha != 0:
         calculo_quentinha = total_quentinha * 15
         quentinha_formatado = format_currency(calculo_quentinha, 'BRL', locale='pt_BR')
-        dados_str += f"Total Batismo - {total_quentinha} = {quentinha_formatado}\n"
+        dados_str += f"Total Quentinha - {total_quentinha} = {quentinha_formatado}\n"
 
     if total_cilindro_acqua != 0 or total_cilindro_pl != 0:
         total_cilindro = total_cilindro_acqua + total_cilindro_pl
