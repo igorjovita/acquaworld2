@@ -281,6 +281,7 @@ if st.button('Pesquisar2'):
     total_equipagens = 0
     total_bat = 0
     total_curso = 0
+    valor_curso = 0
     total_quentinha = 0
     agrupado_por_data = {}
 
@@ -300,7 +301,18 @@ if st.button('Pesquisar2'):
 
         elif dado[1] == 'CURSO':
             tipo = ''
-            total_curso += int(dado[2])
+            if dado[3] == 'RESCUE':
+                total_comissao += int(dado[2]) * 150
+                total_curso += int(dado[2])
+            elif dado[3] == 'REVIEW':
+                total_comissao += int(dado[2]) * 120
+                total_curso += int(dado[2])
+            elif dado[3] == 'DIVEMASTER':
+                total_comissao += int(dado[2]) * 200
+                total_curso += int(dado[2])
+            else:
+                total_comissao += int(dado[2]) * 75
+                total_curso += int(dado[2])
 
         elif dados[1] == 'CAPITAO':
             tipo = 'Embarques'
@@ -375,7 +387,8 @@ if st.button('Pesquisar2'):
         dados_str += f"Total Equipagens - {total_equipagens} = {equipagens_formatado}\n"
 
     if total_curso != 0:
-        dados_str += f"Total Praticas - {total_curso}\n"
+        curso_formatado = format_currency(total_comissao, 'BRL', locale='pt_BR')
+        dados_str += f"Total Praticas - {total_curso} = {curso_formatado}\n"
 
     if total_bat != 0:
         calculo_bat = total_bat * comissao
