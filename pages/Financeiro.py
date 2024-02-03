@@ -231,7 +231,7 @@ if botao:
         df['Comissao'] = df['Curso'].apply(obter_comissao)
         df['Quantidade'] = df['Quantidade'].apply(float)
         df['Comissao'] *= df['Quantidade']
-        st.data_editor(df, hide_index=True)
+        st.dataframe(df, hide_index=True)
         st.write(total_praticas)
 
 st.write('---')
