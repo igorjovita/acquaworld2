@@ -404,7 +404,7 @@ if st.button('Pesquisar2'):
     if total_cilindro_acqua != 0 or total_cilindro_pl != 0:
         total_cilindro = total_cilindro_acqua + total_cilindro_pl
         cilindro_formatado = format_currency(total_cilindro, 'BRL', locale='pt_BR')
-        dados_str += f"Total Cilindros - {total_cilindro_acqua} Cilindro_acqua + {total_cilindro_pl} Cilindro_pl = {cilindro_formatado}"
+        dados_str += f"Total Cilindros - {total_cilindro_acqua} Cilindro_acqua + {total_cilindro_pl} Cilindro_pl = {cilindro_formatado}\n"
 
     total_pagar = total_equipagens + total_comissao + calculo_bat + calculo_quentinha + total_cilindro
     total_formatado = format_currency(total_pagar, 'BRL', locale='pt_BR')
