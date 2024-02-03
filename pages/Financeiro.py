@@ -303,7 +303,7 @@ if st.button('Pesquisar2'):
 
         if dado[1] == 'CAPITAO':
             tipo = 'Embarques'
-            total_embarque = int(dado[2])
+            total_embarque += int(dado[2])
 
         if dado[1] == 'CURSO':
             tipo = ''
