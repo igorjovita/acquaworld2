@@ -369,7 +369,8 @@ if st.button('Pesquisar2'):
     total_cilindro_pl = sum(int(dado[2]) for dado in dados2)
 
     if total_equipagens != 0:
-        dados_str += f"Total Equipagens - {total_equipagens}\n"
+        equipagens_formatado = format_currency(total_equipagens, 'BRL', locale='pt_BR')
+        dados_str += f"Total Equipagens - {total_equipagens} = {equipagens_formatado}\n"
 
     if total_curso != 0:
         dados_str += f"Total Praticas - {total_curso}\n"
