@@ -321,7 +321,7 @@ if st.button('Pesquisar2'):
     # Agora você pode iterar sobre o dicionário para criar a string final
     dados_str = ''
     for data, textos in agrupado_por_data.items():
-        dados_str += f"{data} - {' | '.join(textos)}\n"
+        dados_str += f"{data} - {' , '.join(textos)}\n"
 
     # Adiciona uma linha em branco
     dados_str += '\n'
