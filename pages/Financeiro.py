@@ -403,7 +403,7 @@ if st.button('Pesquisar2'):
 
     if total_embarque != 0:
         embarque_formatado = format_currency(total_embarque, 'BRL', locale='pt_BR')
-        dados_str += f"Total Embarques - {total_embarque} = {embarque_formatada}\n"
+        dados_str += f"Total Embarques - {total_embarque} = {embarque_formatado}\n"
 
     if total_diaria != 0:
         diaria_formatada = format_currency(total_diaria * 50, 'BRL', locale='pt_BR')
