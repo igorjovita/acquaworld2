@@ -319,7 +319,7 @@ if st.button('Pesquisar2'):
             else:
                 total_comissao += int(dado[2]) * 75
                 total_curso += int(dado[2])
-        else:
+        if dado[1] == 'BAT':
             tipo = dado[1]
             total_bat += float(dado[2])
 
