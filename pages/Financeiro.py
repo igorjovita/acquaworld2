@@ -6,6 +6,7 @@ import datetime
 from datetime import date, timedelta
 from functions import obter_comissao
 from babel.numbers import format_currency
+from datetime import datetime
 
 mydb = mysql.connector.connect(
     host=os.getenv("DB_HOST"),
