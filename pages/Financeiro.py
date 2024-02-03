@@ -270,6 +270,7 @@ if st.button('Pesquisar2'):
 
     # Itera sobre cada tupla em 'dados'
     for dado in dados:
+        print(f'Tupla atual: {dado}')
         if len(dado) >= 7:  # Certifique-se de que há pelo menos 7 elementos na tupla
             if dado[1] == 'CURSO':
                 texto = f'{dado[0]} - {dado[1]} - {dado[2]} - {dado[3]} - {dado[4]} - {dado[5]} - {dado[6]}'
