@@ -7,6 +7,7 @@ from datetime import date, timedelta
 from functions import obter_comissao
 from babel.numbers import format_currency
 from datetime import datetime
+from collections import defaultdict
 
 mydb = mysql.connector.connect(
     host=os.getenv("DB_HOST"),
@@ -267,6 +268,10 @@ if st.button('Pesquisar2'):
         'SELECT data, funcao, quantidade, curso, pratica, quentinha FROM lancamentos_barco WHERE id_staff = %s and data between %s and %s',
         (id_staff, data1_pagamento, data2_pagamento))
     dados = cursor.fetchall()
+
+    cursor.execute("SELECT data, cilindro_acqua, cilindro_pl, almoco FOM lancamento_cilindro where id_staff = %s", id_staff)
+    dados2 = cursor.fetchall()
+
     dados_str = ''
     # Itera sobre cada tupla em 'dados'
     total_equipagens = 0
@@ -336,56 +341,24 @@ if st.button('Pesquisar2'):
     # Agora, dados_str conterá todos os textos com quebras de linha entre eles
     st.code(dados_str + texto_equipagem + texto_curso + texto_bat)
 
-    cursor.execute("""
-    SELECT
-        lb.data,
-        lb.funcao,
-        lb.quantidade,
-        lb.curso,
-        lb.pratica,
-        lb.quentinha,
-        s.nome
-    FROM
-        lancamentos_barco lb
-    JOIN
-        staffs s ON lb.id_staff = s.id_staff
-    WHERE
-        lb.id_staff = %s
-    """, (id_staff,))
+    agrupado_por_data = defaultdict(list)
 
-    # Obtenha os resultados da consulta para lancamentos_barco
-    result_lancamentos_barco = cursor.fetchall()
+    # Agrupando informações do lancamento_bat
+    for data, funcao, quantidade, curso, pratica, quentinha in dados:
+        agrupado_por_data[data].append((funcao, quantidade))
 
-    # Execute a consulta para lancamento_cilindro
-    cursor.execute("""
-    SELECT
-        lc.cilindros_acqua,
-        lc.cilindros_pl,
-        lc.almoco,
-        s.nome
-    FROM
-        lancamento_cilindro lc
-    JOIN
-        staffs s ON lc.id_staff = s.id_staff
-    WHERE
-        lc.id_staff = %s
-    """, (id_staff,))
+    # Agrupando informações do lancamento_cilindro
+    for data, cilindros_acqua, cilindros_pl, almoco in dados2:
+        agrupado_por_data[data].append(('Cilindro', cilindros_acqua + cilindros_pl + almoco))
 
-    # Obtenha os resultados da consulta para lancamento_cilindro
-    result_lancamento_cilindro = cursor.fetchall()
+    # Exibindo os resultados
+    for data, informacoes in agrupado_por_data.items():
+        st.write(f'Data: {data}')
+        for funcao, quantidade in informacoes:
+            st.write(f'{funcao}: {quantidade}')
+        st.write('-' * 20)
 
-    # Converta os resultados para DataFrames do Pandas
-    df_lancamentos_barco = pd.DataFrame(result_lancamentos_barco,
-                                        columns=["data", "funcao", "quantidade", "curso", "pratica", "quentinha",
-                                                 "nome"])
-    df_lancamento_cilindro = pd.DataFrame(result_lancamento_cilindro,
-                                          columns=["cilindros_acqua", "cilindros_pl", "almoco", "nome"])
 
-    # Combine os DataFrames usando o nome como chave
-    df_combined = pd.merge(df_lancamentos_barco, df_lancamento_cilindro, on="nome", how="left")
-
-    # Exiba o DataFrame combinado
-    st.table(df_combined)
 
 
 
