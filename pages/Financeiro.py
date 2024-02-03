@@ -300,11 +300,11 @@ if st.button('Pesquisar2'):
             tipo = 'Equipagens'
             total_equipagens += int(dado[2])
 
-        elif dados[1] == 'CAPITAO':
+        if dados[1] == 'CAPITAO':
             tipo = 'Embarques'
             total_embarque = int(dados[2])
 
-        elif dado[1] == 'CURSO':
+        if dado[1] == 'CURSO':
             tipo = ''
             if dado[3] == 'RESCUE':
                 total_comissao += int(dado[2]) * 150
