@@ -280,20 +280,28 @@ if st.button('Pesquisar2'):
             pratica = dado[4]
 
         if dado[1] == 'AS':
-            dado[1] = 'equipagens'
+            tipo = 'equipagens'
+
+        elif dado[1] == 'CURSO':
+            if int(dado[2]) > 1:
+                tipo = 'CURSOS'
+            else:
+                tipo = 'CURSO'
+        else:
+            tipo = dado[1]
 
         # Certifica-se de que há pelo menos 5 elementos na tupla
         if len(dado) >= 5:
             if dado[5] == 'Sim':
                 if dado[1] == 'CURSO':
-                    texto = f'{data_form} - {int(dado[2])} {dado[1]} {dado[3]} {pratica} + quentinha'
+                    texto = f'{data_form} - {int(dado[2])} {tipo} {dado[3]} {pratica} + quentinha'
                 else:
-                    texto = f'{data_form} - {int(dado[2])} {dado[1]} + quentinha'
+                    texto = f'{data_form} - {int(dado[2])} {tipo} + quentinha'
             else:
                 if dado[1] == 'CURSO':
-                    texto = f'{data_form} - {int(dado[2])} {dado[1]} {dado[3]} {pratica} '
+                    texto = f'{data_form} - {int(dado[2])} {tipo} {dado[3]} {pratica} '
                 else:
-                    texto = f'{data_form} - {int(dado[2])} {dado[1]}'
+                    texto = f'{data_form} - {int(dado[2])} {tipo}'
 
             # Adiciona o texto e uma quebra de linha ao final de dados_str
             dados_str += texto + '\n'
