@@ -277,7 +277,7 @@ if st.button('Pesquisar2'):
         # Certifica-se de que há pelo menos 5 elementos na tupla
         if len(dado) >= 5:
             # Construa o texto com base no número de elementos
-            texto = f'{data_form} - {dado[2]} - {dado[1]} - {dado[3]} - {dado[4]} - {dado[5]}'
+            texto = f'{data_form} - {int(dado[2])} - {dado[1]} - {dado[3]} - {dado[4]} - {dado[5]}'
 
 
             # Adiciona o texto e uma quebra de linha ao final de dados_str
