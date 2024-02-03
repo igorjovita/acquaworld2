@@ -229,7 +229,8 @@ if botao:
         df['Data'] = df['Data'].dt.strftime('%d/%m/%Y')
         total_praticas = df['Quantidade'].sum()
         df['Comissao'] = df['Curso'].apply(obter_comissao)
-        df['Comissao'] *= float(df['Quantidade'])
+        df['Quantidade'] = df['Quantidade'].apply(float)
+        df['Comissao'] *= df['Quantidade']
         st.dataframe(df)
         st.write(total_praticas)
 
