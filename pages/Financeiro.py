@@ -277,88 +277,165 @@ if st.button('Pesquisar2'):
     total_equipagens = 0
     total_bat = 0
     total_curso = 0
+    agrupado_por_data = {}
 
+    # Itera sobre cada tupla em 'dados'
     for dado in dados:
-
         # Converta o objeto datetime para uma string formatada
         data_form = datetime.strftime(dado[0], "%d/%m/%Y")
 
-        if dado[4] is None:
-            pratica = ''
-        else:
-            pratica = dado[4]
-
-        if dado[1] == 'AS':
-            tipo = 'equipagens'
-            total_equipagens += int(dado[2])
-
-        elif dado[1] == 'CURSO':
-            tipo = ''
-            total_curso += int(dado[2])
-        else:
-            tipo = dado[1]
-            total_bat += int(dado[2])
-
         # Certifica-se de que há pelo menos 5 elementos na tupla
         if len(dado) >= 5:
+            # Inicializa a lista para a data se ainda não existir
+            if data_form not in agrupado_por_data:
+                agrupado_por_data[data_form] = []
+
             if dado[5] == 'Sim':
                 if dado[1] == 'CURSO':
-                    texto = f'{data_form} - {int(dado[2])} {tipo}{dado[3]} {pratica} + quentinha'
+                    texto = f'{int(dado[2])} {dado[1]} {dado[3]} {dado[4]} + quentinha'
                 else:
-                    texto = f'{data_form} - {int(dado[2])} {tipo} + quentinha'
+                    texto = f'{int(dado[2])} {dado[1]} + quentinha'
             else:
                 if dado[1] == 'CURSO':
-                    texto = f'{data_form} - {int(dado[2])} {tipo}{dado[3]} {pratica} '
+                    texto = f'{int(dado[2])} {dado[1]} {dado[3]} {dado[4]}'
                 else:
-                    texto = f'{data_form} - {float(dado[2])} {tipo}'
+                    texto = f'{float(dado[2])} {dado[1]}'
 
-            # Adiciona o texto e uma quebra de linha ao final de dados_str
-            dados_str += texto + '\n'
-        else:
-            st.warning(f'A tupla {dado} não possui o comprimento esperado.')
+            # Adiciona à lista correspondente à data
+            agrupado_por_data[data_form].append(texto)
 
+    # Adiciona os dados da tabela lancamento_cilindro ao dicionário agrupado_por_data
+    for dado in dados2:
+        # Converta o objeto datetime para uma string formatada
+        data_form = datetime.strftime(dado[0], "%d/%m/%Y")
+
+        # Certifica-se de que há pelo menos 4 elementos na tupla
+        if len(dado) >= 4:
+            # Inicializa a lista para a data se ainda não existir
+            if data_form not in agrupado_por_data:
+                agrupado_por_data[data_form] = []
+
+            texto = f'{int(dado[1])} Cilindro_acqua, {int(dado[2])} Cilindro_pl, {dado[3]} almoco'
+            agrupado_por_data[data_form].append(texto)
+
+    # Agora você pode iterar sobre o dicionário para criar a string final
+    dados_str = ''
+    for data, textos in agrupado_por_data.items():
+        dados_str += f"{data} - {' | '.join(textos)}\n"
+
+    # Adiciona uma linha em branco
     dados_str += '\n'
 
+    # Calcula os totais e adiciona ao resultado final
+    total_equipagens = sum(int(dado[2]) for dado in dados if dado[1] == 'AS')
+    total_curso = sum(int(dado[2]) for dado in dados if dado[1] == 'CURSO')
+    total_bat = sum(int(dado[2]) for dado in dados if dado[1] not in ['AS', 'CURSO'])
+
+    total_cilindro_acqua = sum(int(dado[1]) for dado in dados2)
+    total_cilindro_pl = sum(int(dado[2]) for dado in dados2)
+
     if total_equipagens != 0:
-        texto_equipagem = (f"""Total Equipagens - {total_equipagens}
-""")
-    else:
-        texto_equipagem = ''
+        dados_str += f"Total Equipagens - {total_equipagens}\n"
 
     if total_curso != 0:
-        texto_curso = (f"""Total Praticas - {total_curso}
-""")
-    else:
-        texto_curso = ''
+        dados_str += f"Total Praticas - {total_curso}\n"
 
     if total_bat != 0:
-        texto_bat = f"""Total Batismo - {total_bat}
-"""
+        dados_str += f"Total Batismo - {total_bat}\n"
 
-    else:
-        texto_bat = ''
+    if total_cilindro_acqua != 0 or total_cilindro_pl != 0:
+        dados_str += f"Total Cilindros - {total_cilindro_acqua} Cilindro_acqua, {total_cilindro_pl} Cilindro_pl\n"
 
     # Agora, dados_str conterá todos os textos com quebras de linha entre eles
-    st.code(dados_str + texto_equipagem + texto_curso + texto_bat)
-
-    agrupado_por_data = defaultdict(list)
-
-    # Agrupando informações do lancamento_bat
-    for data, funcao, quantidade, curso, pratica, quentinha in dados:
-        agrupado_por_data[data].append((funcao, quantidade))
-
-    # Agrupando informações do lancamento_cilindro
-    for data, cilindros_acqua, cilindros_pl, almoco in dados2:
-        agrupado_por_data[data].append(('Cilindro', cilindros_acqua + cilindros_pl))
-
-    # Exibindo os resultados
-    for data, informacoes in agrupado_por_data.items():
-        st.write(f'Data: {data}')
-        for funcao, quantidade in informacoes:
-            st.write(f'{funcao}: {quantidade}')
-        st.write('-' * 20)
+    st.code(dados_str)
 
 
+
+
+
+
+
+#     for dado in dados:
+#
+#         # Converta o objeto datetime para uma string formatada
+#         data_form = datetime.strftime(dado[0], "%d/%m/%Y")
+#
+#         if dado[4] is None:
+#             pratica = ''
+#         else:
+#             pratica = dado[4]
+#
+#         if dado[1] == 'AS':
+#             tipo = 'equipagens'
+#             total_equipagens += int(dado[2])
+#
+#         elif dado[1] == 'CURSO':
+#             tipo = ''
+#             total_curso += int(dado[2])
+#         else:
+#             tipo = dado[1]
+#             total_bat += int(dado[2])
+#
+#         # Certifica-se de que há pelo menos 5 elementos na tupla
+#         if len(dado) >= 5:
+#             if dado[5] == 'Sim':
+#                 if dado[1] == 'CURSO':
+#                     texto = f'{data_form} - {int(dado[2])} {tipo}{dado[3]} {pratica} + quentinha'
+#                 else:
+#                     texto = f'{data_form} - {int(dado[2])} {tipo} + quentinha'
+#             else:
+#                 if dado[1] == 'CURSO':
+#                     texto = f'{data_form} - {int(dado[2])} {tipo}{dado[3]} {pratica} '
+#                 else:
+#                     texto = f'{data_form} - {float(dado[2])} {tipo}'
+#
+#             # Adiciona o texto e uma quebra de linha ao final de dados_str
+#             dados_str += texto + '\n'
+#         else:
+#             st.warning(f'A tupla {dado} não possui o comprimento esperado.')
+#
+#     dados_str += '\n'
+#
+#     if total_equipagens != 0:
+#         texto_equipagem = (f"""Total Equipagens - {total_equipagens}
+# """)
+#     else:
+#         texto_equipagem = ''
+#
+#     if total_curso != 0:
+#         texto_curso = (f"""Total Praticas - {total_curso}
+# """)
+#     else:
+#         texto_curso = ''
+#
+#     if total_bat != 0:
+#         texto_bat = f"""Total Batismo - {total_bat}
+# """
+#
+#     else:
+#         texto_bat = ''
+#
+#     # Agora, dados_str conterá todos os textos com quebras de linha entre eles
+#     st.code(dados_str + texto_equipagem + texto_curso + texto_bat)
+
+    # agrupado_por_data = defaultdict(list)
+    #
+    # # Agrupando informações do lancamento_bat
+    # for data, funcao, quantidade, curso, pratica, quentinha in dados:
+    #     agrupado_por_data[data].append((funcao, quantidade))
+    #
+    # # Agrupando informações do lancamento_cilindro
+    # for data, cilindros_acqua, cilindros_pl, almoco in dados2:
+    #     agrupado_por_data[data].append(('Cilindro', cilindros_acqua + cilindros_pl))
+    #
+    # # Exibindo os resultados
+    # for data, informacoes in agrupado_por_data.items():
+    #     st.write(f'Data: {data}')
+    #     for funcao, quantidade in informacoes:
+    #         st.write(f'{funcao}: {quantidade}')
+    #     st.write('-' * 20)
+    #
+    #
 
 
 
