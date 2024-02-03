@@ -53,20 +53,10 @@ if escolha == 'Lançar':
             quantidade_diferente1 = st.text_input('Divisão1')
             quantidade_diferente2 = st.text_input('Divisão2')
 
-    colun1, colun2, colun3 = st.columns(3)
-
-    with colun1:
-        st.number_input('Quantidade de AS')
-
-    with colun2:
-        apoio_superficie = st.multiselect('Apoio de Superficie', ['Manu', 'Catatau', 'Juninho', 'Glauber', 'Roberta'])
-
-    with colun3:
-        equipagens = st.text_input('Equipagens')
-
     colu1, colu2 = st.columns(2)
 
     with colu1:
+        apoio_superficie = st.multiselect('Apoio de Superficie', ['Manu', 'Catatau', 'Juninho', 'Glauber', 'Roberta'])
         mestre = st.selectbox('Mestre', ['Risadinha', 'Marquinhos', 'Freelancer'], index=None)
         instrutor = st.selectbox('Instrutor', ['Glauber', 'Martin'], index=None)
         quantidade = st.text_input('Quantidade')
