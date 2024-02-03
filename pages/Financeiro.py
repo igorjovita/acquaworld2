@@ -222,6 +222,10 @@ if botao:
         cursos = cursor.fetchall()
         mydb.close()
         df = pd.DataFrame(cursos, columns=['Data', 'Curso', 'Quantidade', 'Pratica'])
+        df['Data'] = pd.to_datetime(df['Data'])
+
+        # Formatando a coluna 'Data' para o formato brasileiro
+        df['Data_formatada'] = df['Data'].dt.strftime('%d/%m/%Y')
         st.dataframe(df)
 
 st.write('---')
