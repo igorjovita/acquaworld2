@@ -313,6 +313,8 @@ if st.button('Pesquisar2'):
         else:
             st.warning(f'A tupla {dado} não possui o comprimento esperado.')
 
+        dados_str += '\n'
+
         if total_equipagens != 0:
             texto_equipagem = (f"""Total Equipagens - {total_equipagens}
 """)
@@ -334,21 +336,7 @@ if st.button('Pesquisar2'):
 
     # Agora, dados_str conterá todos os textos com quebras de linha entre eles
     st.code(dados_str + texto_equipagem + texto_curso + texto_bat)
-    st.write(total_equipagens)
-    st.write(total_curso)
-    st.write(total_bat)
-    # df = pd.DataFrame(dados, columns=['Data', 'Função', 'Quantidade', 'Curso', 'Pratica', 'Quentinha'])
-    # st.table(df)
 
-
-
-    # cursor.execute(f"SELECT staffs.nome, lancamentos_barco.quantidade, lancamentos_barco.curso, lancamentos_barco.pratica, lancamentos_barco.quentinha from "
-    #                f"lancamentos_barco JOIN staffs ON lancamentos_barco.id_staff = staffs.id_staff where data between '{data1_pagamento}' and '{data2_pagamento}' and staffs.nome = '{staff}'")
-    # resultados = cursor.fetchall()
-    #
-    # for resultado in resultados:
-    #     st.markdown(
-    #         f"<span style='font-size:20px;'>{resultado}</span>", unsafe_allow_html=True)
 
 
 
