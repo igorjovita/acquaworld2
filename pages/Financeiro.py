@@ -4,6 +4,7 @@ import os
 import pandas as pd
 import datetime
 from datetime import date, timedelta
+from functions import obter_comissao
 
 mydb = mysql.connector.connect(
     host=os.getenv("DB_HOST"),
@@ -227,6 +228,8 @@ if botao:
         # Formatando a coluna 'Data' para o formato brasileiro
         df['Data'] = df['Data'].dt.strftime('%d/%m/%Y')
         total_praticas = df['Quantidade'].sum()
+        df['Comissao'] = df['Pratica'].apply(obter_comissao)
+
         st.dataframe(df)
         st.write(total_praticas)
 
