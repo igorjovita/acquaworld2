@@ -222,7 +222,7 @@ if botao:
             f"SELECT data, curso, quantidade, pratica from lancamentos_barco where data between '{data1}' and '{data2}' and id_staff = {id_instrutor} and funcao = 'CURSO'")
         cursos = cursor.fetchall()
         mydb.close()
-        df = pd.DataFrame(cursos, columns=['Data', 'Curso', 'Quantidade', 'Pratica'], index=None)
+        df = pd.DataFrame(cursos, columns=['Data', 'Curso', 'Quantidade', 'Pratica'])
         df['Data'] = pd.to_datetime(df['Data'])
 
         # Formatando a coluna 'Data' para o formato brasileiro
@@ -231,7 +231,7 @@ if botao:
         df['Comissao'] = df['Curso'].apply(obter_comissao)
         df['Quantidade'] = df['Quantidade'].apply(float)
         df['Comissao'] *= df['Quantidade']
-        st.dataframe(df)
+        st.data_editor(df, hide_index=True)
         st.write(total_praticas)
 
 st.write('---')
