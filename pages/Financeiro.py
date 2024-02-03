@@ -232,7 +232,9 @@ if botao:
         df['Quantidade'] = df['Quantidade'].apply(float)
         df['Comissao'] *= df['Quantidade']
         st.dataframe(df, hide_index=True)
-        st.write(total_praticas)
+        total_comissao = df['Comissao'].sum()
+        st.subheader(f'{total_praticas} praticas - Total R$ {total_comissao}')
+
 
 st.write('---')
 
