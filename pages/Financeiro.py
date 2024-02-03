@@ -267,7 +267,7 @@ if st.button('Pesquisar2'):
         (id_staff, data1_pagamento, data2_pagamento))
     dados = cursor.fetchall()
     dados_str = ''
-
+    st.write('oi')
     # Itera sobre cada tupla em 'dados'
     for dado in dados:
         data = str(dado[0]).split('-')
