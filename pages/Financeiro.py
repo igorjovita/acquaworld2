@@ -268,20 +268,26 @@ if st.button('Pesquisar2'):
     dados = cursor.fetchall()
     dados_str = ''
 
+    dados_str = ''
+
     for dado in dados:
-        if len(dado) >= 7:  # Certifique-se de que há pelo menos 7 elementos na tupla
+        if len(dado) >= 7:
             if dado[1] == 'CURSO':
                 texto = f'{dado[0]} - {dado[1]} - {dado[2]} - {dado[3]} - {dado[4]} - {dado[5]} - {dado[6]}'
             else:
                 texto = f'{dado[0]} - {dado[1]} - {dado[2]} - {dado[3]} - {dado[6]}'
 
-            # Adiciona o texto e uma quebra de linha ao final de dados_str
             dados_str += texto + '\n'
         else:
             print(f'A tupla {dado} não possui o comprimento esperado.')
 
+    # Adicione alguns st.write para depuração
+    st.write('Dados:', dados)
+    st.write('Dados Str:', dados_str)
+
     # Agora, dados_str conterá todos os textos com quebras de linha entre eles
     st.write(dados_str)
+
     # df = pd.DataFrame(dados, columns=['Data', 'Função', 'Quantidade', 'Curso', 'Pratica', 'Quentinha'])
     # st.table(df)
 
