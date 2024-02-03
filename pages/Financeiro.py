@@ -235,7 +235,7 @@ if botao:
         st.table(df)
         total_comissao = df['Comissao'].sum()
         comissao_total = format_currency(total_comissao, 'BRL', locale='pt_BR')
-        st.subheader(f'{int(total_praticas)} praticas - Total R$ {comissao_total}')
+        st.subheader(f'{int(total_praticas)} praticas - Total {comissao_total}')
 
 
 st.write('---')
