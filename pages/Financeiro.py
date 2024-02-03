@@ -283,6 +283,7 @@ if st.button('Pesquisar2'):
     total_curso = 0
     valor_curso = 0
     total_quentinha = 0
+    total_comissao = 0
     agrupado_por_data = {}
 
     # Itera sobre cada tupla em 'dados'
