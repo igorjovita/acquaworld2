@@ -273,9 +273,7 @@ if st.button('Pesquisar2'):
 
     cursor.execute("SELECT data, cilindros_acqua, cilindros_pl, almoco FROM lancamento_cilindro where id_staff = %s and data between %s and %s", (id_staff, data1_pagamento, data2_pagamento))
     dados2 = cursor.fetchall()
-
-
-
+    
     dados_str = ''
     # Itera sobre cada tupla em 'dados'
     total_equipagens = 0
@@ -357,15 +355,11 @@ if st.button('Pesquisar2'):
 
 
             if dado[2] == 0:
-                texto = f'{int(dado[1])} Cilindro Acqua'
+                texto = f'{int(dado[1])} Cilindros Acqua'
                 agrupado_por_data[data_form].append(texto)
             else:
-                texto = f'{int(dado[1])} Cilindro Acqua + {int(dado[2])} Cilindro Pl'
+                texto = f'{int(dado[1])} Cilindros Acqua + {int(dado[2])} Cilindro Pl'
                 agrupado_por_data[data_form].append(texto)
-
-
-
-
 
     # Agora você pode iterar sobre o dicionário para criar a string final
     dados_str = ''
@@ -404,7 +398,7 @@ if st.button('Pesquisar2'):
     if total_cilindro_acqua != 0 or total_cilindro_pl != 0:
         total_cilindro = total_cilindro_acqua + total_cilindro_pl
         cilindro_formatado = format_currency(total_cilindro, 'BRL', locale='pt_BR')
-        dados_str += f"Total Cilindros - {total_cilindro_acqua} Cilindro_acqua + {total_cilindro_pl} Cilindro_pl = {cilindro_formatado}\n"
+        dados_str += f"Total Cilindros - {total_cilindro_acqua} Acqua + {total_cilindro_pl} Pl = {cilindro_formatado}\n"
 
     total_pagar = total_equipagens + total_comissao + calculo_bat + calculo_quentinha + total_cilindro
     total_formatado = format_currency(total_pagar, 'BRL', locale='pt_BR')
