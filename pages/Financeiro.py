@@ -259,13 +259,24 @@ if filtro == 'Data Especifica':
     data2_pagamento = data1_pagamento
 staff = st.selectbox('Nome do Staff', lista_staff)
 if st.button('Pesquisar2'):
-    cursor.execute(f"SELECT staffs.nome, lancamentos_barco.quantidade, lancamentos_barco.curso, lancamentos_barco.pratica, lancamentos_barco.quentinha from "
-                   f"lancamentos_barco JOIN staffs ON lancamentos_barco.id_staff = staffs.id_staff where data between '{data1_pagamento}' and '{data2_pagamento}' and staffs.nome = '{staff}'")
-    resultados = cursor.fetchall()
 
-    for resultado in resultados:
-        st.markdown(
-            f"<span style='font-size:20px;'>{resultado}</span>", unsafe_allow_html=True)
+    cursor.execute(f"SELECT id_staff FROM staffs where nome ='{staff}'")
+    id_staff = cursor.fetchone()[0]
+    cursor.execute('SELECT FROM lancamento_barco (data, funcao, quantidade, curso, pratica, quentinha) WHERE id_staff = %s and data between %s and %s',(id_staff, data1_pagamento, data2_pagamento))
+    dados = cursor.fetchall()
+
+    df = pd.DataFrame(dados, columns=['Data', 'Função', 'Quantidade', 'Curso', 'Pratica', 'Quentinha'])
+    st.table(df)
+
+
+
+    # cursor.execute(f"SELECT staffs.nome, lancamentos_barco.quantidade, lancamentos_barco.curso, lancamentos_barco.pratica, lancamentos_barco.quentinha from "
+    #                f"lancamentos_barco JOIN staffs ON lancamentos_barco.id_staff = staffs.id_staff where data between '{data1_pagamento}' and '{data2_pagamento}' and staffs.nome = '{staff}'")
+    # resultados = cursor.fetchall()
+    #
+    # for resultado in resultados:
+    #     st.markdown(
+    #         f"<span style='font-size:20px;'>{resultado}</span>", unsafe_allow_html=True)
 
 
 
