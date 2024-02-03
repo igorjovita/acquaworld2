@@ -365,7 +365,7 @@ if st.button('Pesquisar2'):
     # Calcula os totais e adiciona ao resultado final
     total_equipagens = sum(int(dado[2]) for dado in dados if dado[1] == 'AS')
     total_curso = sum(int(dado[2]) for dado in dados if dado[1] == 'CURSO')
-    total_bat = sum(int(dado[2]) for dado in dados if dado[1] not in ['AS', 'CURSO', 'CAPITAO'])
+    total_bat = sum(float(dado[2]) for dado in dados if dado[1] not in ['AS', 'CURSO', 'CAPITAO'])
 
     total_cilindro_acqua = sum(int(dado[1]) for dado in dados2)
     total_cilindro_pl = sum(int(dado[2]) for dado in dados2)
