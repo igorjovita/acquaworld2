@@ -305,7 +305,7 @@ if st.button('Pesquisar2'):
                 if dado[1] == 'CURSO':
                     texto = f'{data_form} - {int(dado[2])} {tipo}{dado[3]} {pratica} '
                 else:
-                    texto = f'{data_form} - {int(dado[2])} {tipo}'
+                    texto = f'{data_form} - {float(dado[2])} {tipo}'
 
             # Adiciona o texto e uma quebra de linha ao final de dados_str
             dados_str += texto + '\n'
