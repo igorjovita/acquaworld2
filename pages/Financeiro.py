@@ -281,6 +281,7 @@ if st.button('Pesquisar2'):
     total_equipagens = 0
     total_bat = 0
     total_curso = 0
+    total_quentinha = 0
     agrupado_por_data = {}
 
     # Itera sobre cada tupla em 'dados'
@@ -313,8 +314,10 @@ if st.button('Pesquisar2'):
             if dado[5] == 'Sim':
                 if dado[1] == 'CURSO':
                     texto = f'{int(dado[2])}{tipo} {dado[3]} {pratica} + quentinha'
+                    total_quentinha += 1
                 else:
                     texto = f'{float(dado[2])} {tipo} + quentinha'
+                    total_quentinha += 1
             else:
                 if dado[1] == 'CURSO':
                     texto = f'{int(dado[2])}{tipo} {dado[3]} {pratica}'
@@ -375,6 +378,11 @@ if st.button('Pesquisar2'):
         calculo_bat = total_bat * comissao
         bat_formatado = format_currency(calculo_bat, 'BRL', locale='pt_BR')
         dados_str += f"Total Batismo - {total_bat} = {bat_formatado}\n"
+
+    if total_quentinha != 0:
+        calculo_quentinha = total_quentinha * 15
+        quentinha_formatado = format_currency(calculo_quentinha, 'BRL', locale='pt_BR')
+        dados_str += f"Total Batismo - {total_quentinha} = {quentinha_formatado}\n"
 
     if total_cilindro_acqua != 0 or total_cilindro_pl != 0:
         total_cilindro = total_cilindro_acqua + total_cilindro_pl
