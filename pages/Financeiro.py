@@ -271,6 +271,9 @@ if st.button('Pesquisar2'):
     st.write('oi')
     # Itera sobre cada tupla em 'dados'
     for dado in dados:
+        total_equipagens = 0
+        total_bat = 0
+        total_curso = 0
         # Converta o objeto datetime para uma string formatada
         data_form = datetime.strftime(dado[0], "%d/%m/%Y")
 
@@ -281,11 +284,14 @@ if st.button('Pesquisar2'):
 
         if dado[1] == 'AS':
             tipo = 'equipagens'
+            total_equipagens += int(dado[2])
 
         elif dado[1] == 'CURSO':
             tipo = ''
+            total_curso += int(dado[2])
         else:
             tipo = dado[1]
+            total_bat += int(dado[2])
 
         # Certifica-se de que há pelo menos 5 elementos na tupla
         if len(dado) >= 5:
@@ -305,9 +311,12 @@ if st.button('Pesquisar2'):
         else:
             st.warning(f'A tupla {dado} não possui o comprimento esperado.')
 
+
     # Agora, dados_str conterá todos os textos com quebras de linha entre eles
     st.code(dados_str)
-
+    st.write(total_equipagens)
+    st.write(total_curso)
+    st.write(total_bat)
     # df = pd.DataFrame(dados, columns=['Data', 'Função', 'Quantidade', 'Curso', 'Pratica', 'Quentinha'])
     # st.table(df)
 
