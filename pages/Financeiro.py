@@ -272,10 +272,9 @@ if st.button('Pesquisar2'):
     for dado in dados:
         st.write(f'Tupla atual: {dado}')
         if len(dado) >= 5:  # Certifique-se de que há pelo menos 7 elementos na tupla
-            if dado[1] == 'CURSO':
-                texto = f'{dado[0]} - {dado[1]} - {dado[2]} - {dado[3]} - {dado[4]} - {dado[5]} - {dado[6]}'
-            else:
-                texto = f'{dado[0]} - {dado[1]} - {dado[2]} - {dado[3]} - {dado[4]}'
+
+            texto = f'{dado[0]} - {dado[1]} - {dado[2]} - {dado[3]} - {dado[4]} - {dado[5]} - {dado[6]}'
+
 
             # Adiciona o texto e uma quebra de linha ao final de dados_str
             dados_str += texto + '\n'
