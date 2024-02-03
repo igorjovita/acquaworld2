@@ -336,7 +336,8 @@ if st.button('Pesquisar2'):
     # Agora, dados_str conterá todos os textos com quebras de linha entre eles
     st.code(dados_str + texto_equipagem + texto_curso + texto_bat)
 
-    cursor.execute(f"""SELECT
+    cursor.execute(f"""
+    SELECT
         lb.data,
         lb.funcao,
         lb.quantidade,
@@ -352,13 +353,20 @@ if st.button('Pesquisar2'):
     JOIN
         staffs s ON lb.id_staff = s.id_staff
     LEFT JOIN
-        lancamento_cilindro lc ON lb.id_staff = lc.id_staff
+        (
+            SELECT
+                id_staff,
+                SUM(cilindros_acqua) as cilindros_acqua,
+                SUM(cilindros_pl) as cilindros_pl,
+                SUM(almoco) as almoco
+            FROM
+                lancamento_cilindro
+            GROUP BY
+                id_staff
+        ) lc ON lb.id_staff = lc.id_staff
     WHERE
         lb.id_staff = %s
-        AND (
-            lc.id_staff = %s
-            OR lc.id_staff IS NULL
-        )""", (id_staff, id_staff))
+    """, (id_staff,))
 
     dados2 = cursor.fetchall()
     st.dataframe(dados2)
