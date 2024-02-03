@@ -62,8 +62,7 @@ if escolha == 'Lançar':
     colu1, colu2 = st.columns(2)
 
     with colu1:
-        apoio_superficie = st.multiselect('Apoio de Superficie', ['Manu', 'Catatau', 'Juninho', 'Glauber', 'Roberta'],
-                                        index=None)
+        apoio_superficie = st.multiselect('Apoio de Superficie', ['Manu', 'Catatau', 'Juninho', 'Glauber', 'Roberta'])
         mestre = st.selectbox('Mestre', ['Risadinha', 'Marquinhos', 'Freelancer'], index=None)
         instrutor = st.selectbox('Instrutor', ['Glauber', 'Martin'], index=None)
         quantidade = st.text_input('Quantidade')
