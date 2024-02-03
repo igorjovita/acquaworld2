@@ -315,13 +315,17 @@ if st.button('Pesquisar2'):
             if data_form not in agrupado_por_data:
                 agrupado_por_data[data_form] = []
 
-            texto = f'{int(dado[1])} Cilindro_acqua, {int(dado[2])} Cilindro_pl, {dado[3]} almoco'
-            agrupado_por_data[data_form].append(texto)
+            if dado[3] == 'Sim':
+                texto = f'{int(dado[1])} Cilindro Acqua + {int(dado[2])} Cilindro Pl + quentinha'
+                agrupado_por_data[data_form].append(texto)
+            else:
+                texto = f'{int(dado[1])} Cilindro Acqua + {int(dado[2])} Cilindro Pl'
+                agrupado_por_data[data_form].append(texto)
 
     # Agora você pode iterar sobre o dicionário para criar a string final
     dados_str = ''
     for data, textos in agrupado_por_data.items():
-        dados_str += f"{data} - {' , '.join(textos)}\n"
+        dados_str += f"{data} - {' + '.join(textos)}\n"
 
     # Adiciona uma linha em branco
     dados_str += '\n'
