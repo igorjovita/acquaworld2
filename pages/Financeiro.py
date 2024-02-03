@@ -269,7 +269,7 @@ if st.button('Pesquisar2'):
         (id_staff, data1_pagamento, data2_pagamento))
     dados = cursor.fetchall()
 
-    cursor.execute("SELECT data, cilindros_acqua, cilindros_pl, almoco FROM lancamento_cilindro where id_staff = %s", (id_staff,))
+    cursor.execute("SELECT data, cilindros_acqua, cilindros_pl, almoco FROM lancamento_cilindro where id_staff = %s and data between %s and %s", (id_staff, data1_pagamento, data2_pagamento))
     dados2 = cursor.fetchall()
 
     dados_str = ''
