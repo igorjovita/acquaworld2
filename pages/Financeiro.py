@@ -270,7 +270,7 @@ if st.button('Pesquisar2'):
 
     # Itera sobre cada tupla em 'dados'
     for dado in dados:
-        data = dado[0].split('-')
+        data = str(dado[0]).split('-')
         data_form = f"{data[2]}/{data[1]}/{data[0]}"
         # Certifica-se de que há pelo menos 5 elementos na tupla
         if len(dado) >= 5:
