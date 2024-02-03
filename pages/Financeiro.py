@@ -276,10 +276,16 @@ if st.button('Pesquisar2'):
 
         # Certifica-se de que há pelo menos 5 elementos na tupla
         if len(dado) >= 5:
-            if dado[1] == 'CURSO':
-                texto = f'{data_form} - {int(dado[2])} {dado[1]} - {dado[3]} - {dado[4]} - {dado[5]}'
+            if dado[5] == 'Sim':
+                if dado[1] == 'CURSO':
+                    texto = f'{data_form} - {int(dado[2])} {dado[1]} - {dado[3]} - {dado[4]} + quentinha'
+                else:
+                    texto = f'{data_form} - {int(dado[2])} {dado[1]} + quentinha'
             else:
-                texto = f'{data_form} - {int(dado[2])} {dado[1]}'
+                if dado[1] == 'CURSO':
+                    texto = f'{data_form} - {int(dado[2])} {dado[1]} - {dado[3]} - {dado[4]} '
+                else:
+                    texto = f'{data_form} - {int(dado[2])} {dado[1]}'
 
             # Adiciona o texto e uma quebra de linha ao final de dados_str
             dados_str += texto + '\n'
