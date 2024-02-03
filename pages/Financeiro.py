@@ -313,26 +313,26 @@ if st.button('Pesquisar2'):
         else:
             st.warning(f'A tupla {dado} não possui o comprimento esperado.')
 
-        dados_str += '\n'
+    dados_str += '\n'
 
-        if total_equipagens != 0:
-            texto_equipagem = (f"""Total Equipagens - {total_equipagens}
+    if total_equipagens != 0:
+        texto_equipagem = (f"""Total Equipagens - {total_equipagens}
 """)
-        else:
-            texto_equipagem = ''
+    else:
+        texto_equipagem = ''
 
-        if total_curso != 0:
-            texto_curso = (f"""Total Praticas - {total_curso}
+    if total_curso != 0:
+        texto_curso = (f"""Total Praticas - {total_curso}
 """)
-        else:
-            texto_curso = ''
+    else:
+        texto_curso = ''
 
-        if total_bat != 0:
-            texto_bat = f"""Total Batismo - {total_bat}
+    if total_bat != 0:
+        texto_bat = f"""Total Batismo - {total_bat}
 """
 
-        else:
-            texto_bat = ''
+    else:
+        texto_bat = ''
 
     # Agora, dados_str conterá todos os textos com quebras de linha entre eles
     st.code(dados_str + texto_equipagem + texto_curso + texto_bat)
