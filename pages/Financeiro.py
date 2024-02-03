@@ -343,7 +343,7 @@ if st.button('Pesquisar2'):
                 agrupado_por_data[data_form].append(texto)
 
 
-                
+
 
     # Agora você pode iterar sobre o dicionário para criar a string final
     dados_str = ''
@@ -371,7 +371,9 @@ if st.button('Pesquisar2'):
         dados_str += f"Total Batismo - {total_bat}\n"
 
     if total_cilindro_acqua != 0 or total_cilindro_pl != 0:
-        dados_str += f"Total Cilindros - {total_cilindro_acqua} Cilindro_acqua, {total_cilindro_pl} Cilindro_pl\n"
+        total_cilindro = total_cilindro_acqua + total_cilindro_pl
+        cilindro_formatado = format_currency(total_cilindro, 'BRL', locale='pt_BR')
+        dados_str += f"Total Cilindros - {total_cilindro_acqua} Cilindro_acqua + {total_cilindro_pl} Cilindro_pl = {cilindro_formatado}"
 
     # Agora, dados_str conterá todos os textos com quebras de linha entre eles
     st.code(dados_str)
