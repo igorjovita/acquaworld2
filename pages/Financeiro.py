@@ -228,7 +228,7 @@ if botao:
         # Formatando a coluna 'Data' para o formato brasileiro
         df['Data'] = df['Data'].dt.strftime('%d/%m/%Y')
         total_praticas = df['Quantidade'].sum()
-        df['Comissao'] = df['Curso'].apply(obter_comissao)
+        df['Comissao'] = (df['Curso'].apply(obter_comissao)) * df['Quantidade']
 
         st.dataframe(df)
         st.write(total_praticas)
