@@ -286,9 +286,9 @@ if st.button('Pesquisar2'):
     total_cilindro = 0
     total_diaria = 0
     calculo_bat = 0
+    total_embarque = 0
     # Itera sobre cada tupla em 'dados'
     for dado in dados:
-        st.write(dado)
         # Converta o objeto datetime para uma string formatada
         data_form = datetime.strftime(dado[0], "%d/%m/%Y")
 
@@ -301,7 +301,7 @@ if st.button('Pesquisar2'):
             tipo = 'Equipagens'
             total_equipagens += int(dado[2])
 
-        if dados[1] == 'CAPITAO':
+        if dado[1] == 'CAPITAO':
             tipo = 'Embarques'
             total_embarque = int(dados[2])
 
@@ -394,12 +394,16 @@ if st.button('Pesquisar2'):
     if total_bat != 0:
         calculo_bat = total_bat * comissao
         bat_formatado = format_currency(calculo_bat, 'BRL', locale='pt_BR')
-        dados_str += f"Total Batismo - {total_bat:.2f} = {bat_formatado}\n"
+        dados_str += f"Total Batismos - {total_bat:.2f} = {bat_formatado}\n"
 
     if total_quentinha != 0:
         calculo_quentinha = total_quentinha * 15
         quentinha_formatado = format_currency(calculo_quentinha, 'BRL', locale='pt_BR')
-        dados_str += f"Total Quentinha - {total_quentinha} = {quentinha_formatado}\n"
+        dados_str += f"Total Quentinhas - {total_quentinha} = {quentinha_formatado}\n"
+
+    if total_embarque != 0:
+        embarque_formatado = format_currency(total_embarque, 'BRL', locale='pt_BR')
+        dados_str += f"Total Embarques - {total_embarque} = {embarque_formatada}\n"
 
     if total_diaria != 0:
         diaria_formatada = format_currency(total_diaria * 50, 'BRL', locale='pt_BR')
@@ -411,7 +415,7 @@ if st.button('Pesquisar2'):
         dados_str += f"Total Cilindros - {total_cilindro_acqua} Acqua + {total_cilindro_pl} Pl = {cilindro_formatado}\n"
 
 
-    total_pagar = total_equipagens + total_comissao + calculo_bat + calculo_quentinha + total_cilindro + (total_diaria * 50)
+    total_pagar = total_equipagens + total_comissao + calculo_bat + calculo_quentinha + total_cilindro + (total_diaria * 50) + total_embarque
     total_formatado = format_currency(total_pagar, 'BRL', locale='pt_BR')
     dados_str += f"Total a pagar - {total_formatado}"
 
