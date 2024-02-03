@@ -310,7 +310,7 @@ if st.button('Pesquisar2'):
                 if dado[1] == 'CURSO':
                     texto = f'{int(dado[2])}{tipo} {dado[3]} {pratica} + quentinha'
                 else:
-                    texto = f'{int(dado[2])} {tipo} + quentinha'
+                    texto = f'{float(dado[2])} {tipo} + quentinha'
             else:
                 if dado[1] == 'CURSO':
                     texto = f'{int(dado[2])}{tipo} {dado[3]} {pratica}'
