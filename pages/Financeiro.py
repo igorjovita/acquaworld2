@@ -270,14 +270,14 @@ if st.button('Pesquisar2'):
     st.write('oi')
     # Itera sobre cada tupla em 'dados'
     for dado in dados:
-        data = str(dado[0]).split('-')
-        data_form = f"{data[2]}/{data[1]}/{data[0]}"
+        data_form = dado[0].strftime('%d/%m/%Y')
+
         # Certifica-se de que há pelo menos 5 elementos na tupla
         if len(dado) >= 5:
             # Construa o texto com base no número de elementos
             texto = f'{data_form} - {dado[1]} - {dado[2]} - {dado[3]} - {dado[4]} - {dado[5]}'
 
-            # Substitui os valores None por uma string vazia
+            # Substitui os valores None por uma string vazia apenas nas posições desejadas
             texto = ' - '.join('' if i in [3, 4, 5] and valor is None else str(valor) for i, valor in enumerate(dado))
 
             # Adiciona o texto e uma quebra de linha ao final de dados_str
