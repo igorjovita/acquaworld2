@@ -273,7 +273,7 @@ if st.button('Pesquisar2'):
     total_equipagens = 0
     total_bat = 0
     total_curso = 0
-    
+
     for dado in dados:
 
         # Converta o objeto datetime para uma string formatada
@@ -313,9 +313,24 @@ if st.button('Pesquisar2'):
         else:
             st.warning(f'A tupla {dado} não possui o comprimento esperado.')
 
+        if total_equipagens != 0:
+            texto_equipagem = f'Total Equipagens - {total_equipagens}'
+        else:
+            texto_equipagem = ''
+
+        if total_curso != 0:
+            texto_curso = f'Total Praticas - {total_curso}'
+        else:
+            texto_curso = ''
+
+        if total_bat != 0:
+            texto_bat = f'Total Batismo - {total_bat}'
+
+        else:
+            texto_bat = ''
 
     # Agora, dados_str conterá todos os textos com quebras de linha entre eles
-    st.code(dados_str)
+    st.code(dados_str + texto_equipagem + texto_curso + texto_bat)
     st.write(total_equipagens)
     st.write(total_curso)
     st.write(total_bat)
