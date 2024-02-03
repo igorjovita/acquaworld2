@@ -158,8 +158,8 @@ if escolha == 'Lançar':
             mydb.commit()
 
         st.success('Divisão Lançada no Sistema')
-        for staff in apoio_superficie:
-            apoio_superficie = str(staff).strip('[]').strip("'")
+
+        apoio_superficie = str(apoio_superficie).translate(str.maketrans('', '', chars2))
 
         data_formatada = str(data).translate(str.maketrans('', '', chars)).split('-')
         st.write('---')
