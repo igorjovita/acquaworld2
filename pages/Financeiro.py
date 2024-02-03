@@ -300,6 +300,10 @@ if st.button('Pesquisar2'):
             tipo = 'Equipagens'
             total_equipagens += int(dado[2])
 
+        elif dados[1] == 'CAPITAO':
+            tipo = 'Embarques'
+            total_embarque = int(dados[2])
+
         elif dado[1] == 'CURSO':
             tipo = ''
             if dado[3] == 'RESCUE':
@@ -314,13 +318,10 @@ if st.button('Pesquisar2'):
             else:
                 total_comissao += int(dado[2]) * 75
                 total_curso += int(dado[2])
-
-        elif dados[1] == 'CAPITAO':
-            tipo = 'Embarques'
-            total_embarque = int(dados[2])
         else:
             tipo = dado[1]
             total_bat += float(dado[2])
+
 
         # Certifica-se de que há pelo menos 5 elementos na tupla
         if len(dado) >= 5:
