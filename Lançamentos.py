@@ -160,6 +160,8 @@ if escolha == 'Lançar':
 
         st.success('Divisão Lançada no Sistema')
 
+        apoio_superficie = str(apoio_superficie).strip('[]')
+
         data_formatada = str(data).translate(str.maketrans('', '', chars)).split('-')
         st.write('---')
         lista_final = str(staffs_selecionados).translate(str.maketrans('', '', chars2))
