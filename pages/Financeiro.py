@@ -262,8 +262,10 @@ if filtro == 'Data Especifica':
 staff = st.selectbox('Nome do Staff', lista_staff)
 if st.button('Pesquisar2'):
 
-    cursor.execute(f"SELECT id_staff FROM staffs where nome ='{staff}'")
-    id_staff = cursor.fetchone()[0]
+    cursor.execute(f"SELECT id_staff, comissao FROM staffs where nome ='{staff}'")
+    result = cursor.fetchone()
+    id_staff = result[0]
+    comissao = result[1]
     cursor.execute(
         'SELECT data, funcao, quantidade, curso, pratica, quentinha FROM lancamentos_barco WHERE id_staff = %s and data between %s and %s',
         (id_staff, data1_pagamento, data2_pagamento))
@@ -271,6 +273,8 @@ if st.button('Pesquisar2'):
 
     cursor.execute("SELECT data, cilindros_acqua, cilindros_pl, almoco FROM lancamento_cilindro where id_staff = %s and data between %s and %s", (id_staff, data1_pagamento, data2_pagamento))
     dados2 = cursor.fetchall()
+
+
 
     dados_str = ''
     # Itera sobre cada tupla em 'dados'
@@ -368,7 +372,9 @@ if st.button('Pesquisar2'):
         dados_str += f"Total Praticas - {total_curso}\n"
 
     if total_bat != 0:
-        dados_str += f"Total Batismo - {total_bat}\n"
+        calculo_bat = total_bat * comissao
+        bat_formatado = format_currency(calculo_bat, 'BRL', locale='pt_BR')
+        dados_str += f"Total Batismo - {total_bat} = {bat_formatado}\n"
 
     if total_cilindro_acqua != 0 or total_cilindro_pl != 0:
         total_cilindro = total_cilindro_acqua + total_cilindro_pl
