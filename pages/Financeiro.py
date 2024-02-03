@@ -274,16 +274,21 @@ if st.button('Pesquisar2'):
         # Converta o objeto datetime para uma string formatada
         data_form = datetime.strftime(dado[0], "%d/%m/%Y")
 
+        if dados[4] is None:
+            pratica = ''
+        else:
+            pratica = dados[4]
+
         # Certifica-se de que há pelo menos 5 elementos na tupla
         if len(dado) >= 5:
             if dado[5] == 'Sim':
                 if dado[1] == 'CURSO':
-                    texto = f'{data_form} - {int(dado[2])} {dado[1]} {dado[3]} {dado[4]} + quentinha'
+                    texto = f'{data_form} - {int(dado[2])} {dado[1]} {dado[3]} {pratica} + quentinha'
                 else:
                     texto = f'{data_form} - {int(dado[2])} {dado[1]} + quentinha'
             else:
                 if dado[1] == 'CURSO':
-                    texto = f'{data_form} - {int(dado[2])} {dado[1]} {dado[3]} {dado[4]} '
+                    texto = f'{data_form} - {int(dado[2])} {dado[1]} {dado[3]} {pratica} '
                 else:
                     texto = f'{data_form} - {int(dado[2])} {dado[1]}'
 
