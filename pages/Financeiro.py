@@ -281,7 +281,7 @@ if st.button('Pesquisar2'):
             print(f'A tupla {dado} não possui o comprimento esperado.')
 
     # Agora, dados_str conterá todos os textos com quebras de linha entre eles
-    st.code(dados_str)
+    st.write(dados_str)
     df = pd.DataFrame(dados, columns=['Data', 'Função', 'Quantidade', 'Curso', 'Pratica', 'Quentinha'])
     st.table(df)
 
