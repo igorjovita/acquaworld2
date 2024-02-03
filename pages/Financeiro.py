@@ -232,7 +232,7 @@ if botao:
         df['Comissao'] = df['Curso'].apply(obter_comissao)
         df['Quantidade'] = df['Quantidade'].apply(float)
         df['Comissao'] *= df['Quantidade']
-        st.table(df, hide_index=True)
+        st.table(df)
         total_comissao = df['Comissao'].sum()
         comissao_total = format_currency(total_comissao, 'BRL', locale='pt_BR')
         st.subheader(f'{int(total_praticas)} praticas - Total R$ {comissao_total}')
