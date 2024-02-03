@@ -5,6 +5,7 @@ import pandas as pd
 import datetime
 from datetime import date, timedelta
 from functions import obter_comissao
+from babel.numbers import format_currency
 
 mydb = mysql.connector.connect(
     host=os.getenv("DB_HOST"),
@@ -233,7 +234,8 @@ if botao:
         df['Comissao'] *= df['Quantidade']
         st.dataframe(df, hide_index=True)
         total_comissao = df['Comissao'].sum()
-        st.subheader(f'{total_praticas} praticas - Total R$ {total_comissao}')
+        comissao_total = format_currency(total_comissao, 'BRL', locale='pt_BR')
+        st.subheader(f'{int(total_praticas)} praticas - Total R$ {comissao_total}')
 
 
 st.write('---')
