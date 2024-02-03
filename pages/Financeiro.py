@@ -408,7 +408,7 @@ if st.button('Pesquisar2'):
         dados_str += f"Total Cilindros - {total_cilindro_acqua} Acqua + {total_cilindro_pl} Pl = {cilindro_formatado}\n"
 
 
-    total_pagar = total_equipagens + total_comissao + calculo_bat + calculo_quentinha + total_cilindro + diaria_formatada
+    total_pagar = total_equipagens + total_comissao + calculo_bat + calculo_quentinha + total_cilindro + (total_diaria * 50)
     total_formatado = format_currency(total_pagar, 'BRL', locale='pt_BR')
     dados_str += f"Total a pagar - {total_formatado}"
 
