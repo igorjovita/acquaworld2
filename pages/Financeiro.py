@@ -394,7 +394,7 @@ if st.button('Pesquisar2'):
     if total_bat != 0:
         calculo_bat = total_bat * comissao
         bat_formatado = format_currency(calculo_bat, 'BRL', locale='pt_BR')
-        dados_str += f"Total Batismo - {total_bat} = {bat_formatado}\n"
+        dados_str += f"Total Batismo - {total_bat:.2f} = {bat_formatado}\n"
 
     if total_quentinha != 0:
         calculo_quentinha = total_quentinha * 15
