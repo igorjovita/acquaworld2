@@ -274,12 +274,12 @@ if st.button('Pesquisar2'):
         if len(dado) >= 5:  # Certifique-se de que há pelo menos 7 elementos na tupla
 
             texto = f'{dado[0]} - {dado[1]} - {dado[2]} - {dado[3]} - {dado[4]} - {dado[5]} - {dado[6]}'
-
+        else:
+            texto = f'{dado[0]} - {dado[1]} - {dado[2]} - {dado[3]} - {dado[4]}'
 
             # Adiciona o texto e uma quebra de linha ao final de dados_str
             dados_str += texto + '\n'
-        else:
-            st.write(f'A tupla {dado} não possui o comprimento esperado.')
+
 
     # Agora, dados_str conterá todos os textos com quebras de linha entre eles
     st.code(dados_str)
