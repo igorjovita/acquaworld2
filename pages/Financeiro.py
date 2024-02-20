@@ -249,9 +249,11 @@ if botao:
 st.write('---')
 
 st.subheader('Pagamento')
+mydb.connect()
 cursor.execute("SELECT nome from staffs")
 lista_staff = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
 filtro = st.radio('Opções de Filtragem', ['Intervalo entre datas', 'Data Especifica'])
+mydb.close()
 
 if filtro == 'Intervalo entre datas':
     data1_pagamento = st.date_input('Data Inicial1', format='DD/MM/YYYY', value=None)
@@ -261,7 +263,7 @@ if filtro == 'Data Especifica':
     data2_pagamento = data1_pagamento
 staff = st.selectbox('Nome do Staff', lista_staff)
 if st.button('Pesquisar2'):
-
+    mydb.connect()
     cursor.execute(f"SELECT id_staff, comissao FROM staffs where nome ='{staff}'")
     result = cursor.fetchone()
     id_staff = result[0]
@@ -288,7 +290,7 @@ if st.button('Pesquisar2'):
     calculo_bat = 0
     total_embarque = 0
     calculo_quentinha = 0
-    
+
     # Itera sobre cada tupla em 'dados'
     for dado in dados:
         # Converta o objeto datetime para uma string formatada
@@ -416,13 +418,13 @@ if st.button('Pesquisar2'):
         cilindro_formatado = format_currency(total_cilindro, 'BRL', locale='pt_BR')
         dados_str += f"Total Cilindros - {total_cilindro_acqua} Acqua + {total_cilindro_pl} Pl = {cilindro_formatado}\n"
 
-
     total_pagar = total_equipagens + total_comissao + calculo_bat + calculo_quentinha + total_cilindro + (total_diaria * 50) + total_embarque
     total_formatado = format_currency(total_pagar, 'BRL', locale='pt_BR')
     dados_str += f"Total a pagar - {total_formatado}"
 
     # Agora, dados_str conterá todos os textos com quebras de linha entre eles
     st.code(dados_str)
+    mydb.close()
 
 
 

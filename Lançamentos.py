@@ -79,8 +79,6 @@ if escolha == 'Lançar':
                                   index=None)
             pratica2 = st.selectbox('Pratica2', ['Pratica 1', 'Pratica 2'], index=None)
 
-
-
     almoco = st.selectbox('Pagar quentinhas nessa data?', ['Sim', 'Não'], index=None)
 
     botao = st.button('Lançar no Sistema')
