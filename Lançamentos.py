@@ -128,13 +128,13 @@ if escolha == 'Lançar':
         if curso is not None:
 
             funcao = 'CURSO'
-            index_lista_staffs = lista_staffs_total.index(curso)
+            index_lista_staffs = lista_staffs_total.index(instrutor)
             id_staff = select_nome_id_staff[index_lista_staffs][0]
             repo.insert_lancamento_barco(data, id_staff, funcao, quantidade, pratica, situacao, quentinha)
 
         if curso2 is not None:
             funcao = 'CURSO'
-            index_lista_staffs = lista_staffs_total.index(curso2)
+            index_lista_staffs = lista_staffs_total.index(instrutor2)
             id_staff = select_nome_id_staff[index_lista_staffs][0]
             repo.insert_lancamento_barco(data, id_staff, funcao, quantidade2, pratica2, situacao, quentinha)
 
