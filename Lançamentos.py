@@ -107,7 +107,7 @@ if escolha == 'Lançar':
         ]
 
         # Iterar sobre os casos e inserir os lançamentos de barco correspondentes
-        for staff, quantidade, curso_cliente, pratica_cliente, funcao in casos_insercao:
+        for staff, quantidade_iteracao, curso_iteracao, pratica_iteracao, funcao in casos_insercao:
             # Verifica se staff é uma lista
             if isinstance(staff, list):
                 # Itera sobre cada nome na lista
@@ -115,7 +115,7 @@ if escolha == 'Lançar':
                     try:
                         index_lista_staffs = lista_staffs_total.index(nome_staff)
                         id_staff = select_nome_id_staff[index_lista_staffs][0]
-                        repo.insert_lancamento_barco(data, id_staff, funcao, quantidade, curso_cliente, pratica_cliente,
+                        repo.insert_lancamento_barco(data, id_staff, funcao, quantidade_iteracao, curso_iteracao, pratica_iteracao,
                                                      'PENDENTE', quentinha)
                     except ValueError:
                         # Lida com o caso em que o nome do staff não está na lista
@@ -125,7 +125,7 @@ if escolha == 'Lançar':
                 try:
                     index_lista_staffs = lista_staffs_total.index(staff)
                     id_staff = select_nome_id_staff[index_lista_staffs][0]
-                    repo.insert_lancamento_barco(data, id_staff, funcao, quantidade, curso_cliente, pratica_cliente, 'PENDENTE',
+                    repo.insert_lancamento_barco(data, id_staff, funcao, quantidade_iteracao, curso_iteracao, pratica_iteracao, 'PENDENTE',
                                                  quentinha)
                 except ValueError:
                     # Lida com o caso em que o nome do staff não está na lista
