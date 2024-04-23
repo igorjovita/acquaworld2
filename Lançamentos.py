@@ -102,8 +102,8 @@ if escolha == 'Lançar':
             (staff_diferente2, quantidade_diferente2, '', '', 'BAT'),
             (apoio_superficie, equipagens, '', '', 'AS'),
             (mestre, embarques, '', '', 'CAPITAO'),
-            (curso, quantidade, curso, pratica, 'CURSO'),
-            (curso2, quantidade2, curso2, pratica2, 'CURSO'),
+            (instrutor, quantidade, curso, pratica, 'CURSO'),
+            (instrutor2, quantidade2, curso2, pratica2, 'CURSO'),
             (staffs_selecionados, divisao, '', '', 'BARCO')
         ]
 
