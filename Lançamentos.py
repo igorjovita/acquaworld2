@@ -103,46 +103,46 @@ if escolha == 'Lançar':
             index_lista_staffs = lista_staffs_total.index(staff_diferente1)
             id_staff = select_nome_id_staff[index_lista_staffs][0]
 
-            repo.insert_lancamento_barco(data, id_staff, funcao, quantidade_diferente1, '', situacao, quentinha)
+            repo.insert_lancamento_barco(data, id_staff, funcao, quantidade_diferente1, '', '', situacao, quentinha)
 
         if staff_diferente2 is not None:
             index_lista_staffs = lista_staffs_total.index(staff_diferente2)
             id_staff = select_nome_id_staff[index_lista_staffs][0]
 
-            repo.insert_lancamento_barco(data, id_staff, funcao, quantidade_diferente2, '', situacao, quentinha)
+            repo.insert_lancamento_barco(data, id_staff, funcao, quantidade_diferente2, '', '', situacao, quentinha)
 
         if apoio_superficie is not None:
             funcao = 'AS'
             for staff in apoio_superficie:
                 index_lista_staffs = lista_staffs_total.index(staff)
                 id_staff = select_nome_id_staff[index_lista_staffs][0]
-                repo.insert_lancamento_barco(data, id_staff, funcao, equipagens, '', situacao, quentinha)
+                repo.insert_lancamento_barco(data, id_staff, funcao, equipagens, '', '', situacao, quentinha)
 
         if mestre is not None:
 
             funcao = 'CAPITAO'
             index_lista_staffs = lista_staffs_total.index(mestre)
             id_staff = select_nome_id_staff[index_lista_staffs][0]
-            repo.insert_lancamento_barco(data, id_staff, funcao, embarques, '', situacao, quentinha)
+            repo.insert_lancamento_barco(data, id_staff, funcao, embarques, '', '', situacao, quentinha)
 
         if curso is not None:
 
             funcao = 'CURSO'
             index_lista_staffs = lista_staffs_total.index(instrutor)
             id_staff = select_nome_id_staff[index_lista_staffs][0]
-            repo.insert_lancamento_barco(data, id_staff, funcao, quantidade, pratica, situacao, quentinha)
+            repo.insert_lancamento_barco(data, id_staff, funcao, quantidade,curso, pratica, situacao, quentinha)
 
         if curso2 is not None:
             funcao = 'CURSO'
             index_lista_staffs = lista_staffs_total.index(instrutor2)
             id_staff = select_nome_id_staff[index_lista_staffs][0]
-            repo.insert_lancamento_barco(data, id_staff, funcao, quantidade2, pratica2, situacao, quentinha)
+            repo.insert_lancamento_barco(data, id_staff, funcao, quantidade2,curso2, pratica2, situacao, quentinha)
 
         for i, nome_staff in enumerate(staffs_selecionados):
 
             index_lista_staffs = lista_staffs_total.index(nome_staff)
             id_staff = select_nome_id_staff[index_lista_staffs][0]
-            repo.insert_lancamento_barco(data, id_staff, funcao, divisao, '', situacao, quentinha)
+            repo.insert_lancamento_barco(data, id_staff, funcao, divisao, '', '', situacao, quentinha)
 
         st.success('Divisão Lançada no Sistema')
 

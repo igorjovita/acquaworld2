@@ -11,13 +11,13 @@ class MainRepository:
 
         return self.db.execute_query(query)
 
-    def insert_lancamento_barco(self, data, id_staff, funcao, quantidade, pratica, situacao, quentinha):
+    def insert_lancamento_barco(self, data, id_staff, funcao, quantidade, curso, pratica, situacao, quentinha):
         query = """
         INSERT INTO lancamentos_barco 
-        (data, id_staff, funcao, quantidade, pratica, situacao, quentinha)
-         VALUES (%s, %s, %s, %s, %s, %s, %s)
+        (data, id_staff, funcao, quantidade, curso, pratica, situacao, quentinha)
+         VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
         """
-        params = (data, id_staff, funcao, quantidade, pratica, situacao, quentinha)
+        params = (data, id_staff, funcao, quantidade, curso, pratica, situacao, quentinha)
 
         return self.db.execute_query(query, params)
 
