@@ -2,7 +2,6 @@ import os
 import mysql.connector
 import streamlit as st
 
-
 class DataBaseMysql:
     def __init__(self, ):
         self.__connection = None
