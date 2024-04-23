@@ -5,14 +5,13 @@ import os
 import mysql.connector
 from database import DataBaseMysql
 from repository import MainRepository
+
 mysql_db = DataBaseMysql()
 
 repo = MainRepository(mysql_db)
 
-
 chars = "'),([]"
 chars2 = "')([]"
-
 
 st.write('''<style>
 
@@ -104,7 +103,7 @@ if escolha == 'Lançar':
             (mestre, embarques, '', '', 'CAPITAO'),
             (instrutor, quantidade, curso, pratica, 'CURSO'),
             (instrutor2, quantidade2, curso2, pratica2, 'CURSO'),
-            (staffs_selecionados, divisao, '', '', 'BARCO')
+            (staffs_selecionados, divisao, '', '', 'BAT')
         ]
 
         # Iterar sobre os casos e inserir os lançamentos de barco correspondentes
@@ -116,125 +115,65 @@ if escolha == 'Lançar':
                     try:
                         index_lista_staffs = lista_staffs_total.index(nome_staff)
                         id_staff = select_nome_id_staff[index_lista_staffs][0]
-                        repo.insert_lancamento_barco(data, id_staff, funcao, quantidade, curso_cliente, pratica, 'PENDENTE', quentinha)
+                        repo.insert_lancamento_barco(data, id_staff, funcao, quantidade, curso_cliente, pratica,
+                                                     'PENDENTE', quentinha)
                     except ValueError:
                         # Lida com o caso em que o nome do staff não está na lista
-                        st.error(f"Nome '{nome_staff}' não encontrado na lista de staffs ativos, o lançamento desse staff não foi feito")
+                        st.error(
+                            f"Nome '{nome_staff}' não encontrado na lista de staffs ativos, o lançamento desse staff não foi feito")
             elif staff is not None:
                 try:
                     index_lista_staffs = lista_staffs_total.index(staff)
                     id_staff = select_nome_id_staff[index_lista_staffs][0]
-                    repo.insert_lancamento_barco(data, id_staff, funcao, quantidade, curso_cliente, pratica, 'PENDENTE', quentinha)
+                    repo.insert_lancamento_barco(data, id_staff, funcao, quantidade, curso_cliente, pratica, 'PENDENTE',
+                                                 quentinha)
                 except ValueError:
                     # Lida com o caso em que o nome do staff não está na lista
-                    st.error(f"Nome '{staff}' não encontrado na lista de staffs ativos, o lançamento desse staff não foi feito")
+                    st.error(
+                        f"Nome '{staff}' não encontrado na lista de staffs ativos, o lançamento desse staff não foi feito")
 
         st.success('Divisão Lançada no Sistema')
 
-        
-#         apoio_superficie = str(apoio_superficie).translate(str.maketrans('', '', chars2))
-#
-#         data_formatada = str(data).translate(str.maketrans('', '', chars)).split('-')
-#         st.write('---')
-#         lista_final = str(staffs_selecionados).translate(str.maketrans('', '', chars2))
-#
-#         texto_p1 = f"""
-#                 *Divisão:*
-#
-#                 *{data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}*
-#                 """
-#         texto_p2 = f"""
-#                 {divisao} - {lista_final}
-#
-#                 {apoio_superficie} - {equipagens} equipagens
-#
-#                 {mestre} - {embarques} embarques
-#                 """
-#         texto_curso = f"{instrutor} - {quantidade} {curso} {pratica}"
-#         texto_curso2 = f"{instrutor2} - {quantidade2} {curso2} {pratica2}"
-#
-#         if instrutor is None and staff_diferente1 is None:  # Somente batismo sem staff extra
-#
-#             st.code(texto_p1 + texto_p2)
-#
-#         if instrutor is not None and staff_diferente1 is None and instrutor2 is None and staff_diferente2 is None:  # 1  curso
-#             texto_curso = f"""
-#                 {instrutor} - {quantidade} {curso} {pratica}
-#
-#                 {divisao} - {lista_final}
-#
-#                 {apoio_superficie} - {equipagens} equipagens
-#
-#                 {mestre} - {embarques} embarques"""
-#             st.code(texto_p1 + texto_curso)
-#
-#         if instrutor2 is not None and staff_diferente1 is None and staff_diferente2 is None:  # 2 cursos
-#             texto_curso_total = f"""
-#                 {instrutor} - {quantidade} {curso} {pratica}
-#                 {instrutor2} - {quantidade2} {curso2} {pratica2}
-#
-#                 """
-#             st.code(texto_p1 + texto_curso_total + texto_p2)
-#
-#         if staff_diferente1 is not None and staff_diferente2 is None and instrutor is None and instrutor2 is None:  # 1 staff extra
-#             texto_staff = f"""
-#                 {quantidade_diferente1} - {staff_diferente1}
-#
-#                 {divisao} - {lista_final}
-#
-#                 {apoio_superficie} - {equipagens} equipagens
-#
-#                 {mestre} - {embarques} embarques"""
-#             st.code(texto_p1 + texto_staff)
-#
-#         if staff_diferente1 is not None and staff_diferente2 is not None and instrutor is None and instrutor2 is None:  # 2 staffs extras e 1 curso
-#             texto_staff2 = f"""
-#                 {quantidade_diferente1} - {staff_diferente1}
-#
-#                 {quantidade_diferente2} - {staff_diferente2}
-#
-#                 {divisao} - {lista_final}
-#
-#                 {apoio_superficie} - {equipagens} equipagens
-#
-#                 {mestre} - {embarques} embarques"""
-#             st.code(texto_p1 + texto_staff2)
-#
-#         if staff_diferente1 is not None and instrutor is not None and staff_diferente2 is None and instrutor2 is None:  # 1 staff extra e 1 curso
-#             texto_staff = f"""
-#                 {instrutor} - {quantidade} {curso} {pratica}
-#
-#                 {quantidade_diferente1} - {staff_diferente1}
-#                 """
-#             st.code(texto_p1 + texto_staff + texto_p2)
-#
-#         if staff_diferente1 is not None and instrutor is not None and instrutor2 is not None and staff_diferente2 is None:  # 1 staff extra e 2 cursos
-#             texto_staff = f"""
-#                 {instrutor} - {quantidade} {curso} {pratica}
-#                 {instrutor2} - {quantidade2} {curso2} {pratica2}
-#
-#                 {quantidade_diferente2} - {staff_diferente1}
-#                 """
-#             st.code(texto_p1 + texto_staff + texto_p2)
-#
-#         if staff_diferente1 is not None and staff_diferente2 is not None and instrutor is not None and instrutor2 is not None:  # 2 staffs extra e 2 cursos
-#             texto_staff_curso2 = f"""
-#                 {instrutor} - {quantidade} {curso} {pratica}
-#                 {instrutor2} - {quantidade2} {curso2} {pratica2}
-#
-#                 {quantidade_diferente1} - {staff_diferente1}
-#                 {quantidade_diferente2} - {staff_diferente2}
-#                 """
-#             st.code(texto_p1 + texto_staff_curso2 + texto_p2)
-#
-#         if staff_diferente1 is not None and staff_diferente2 is not None and instrutor is not None and instrutor2 is None:  # 1 curso e 2 staffs extras
-#             texto_staff_curso = f"""
-#                 {instrutor} - {quantidade} {curso} {pratica}
-#
-#                 {quantidade_diferente1} - {staff_diferente1}
-#                 {quantidade_diferente2} - {staff_diferente2}
-#                 """
-#             st.code(texto_p1 + texto_staff_curso + texto_p2)
+        texto_p1 = f"*Divisão:*\n\n*{data.strftime('%d/%m/%Y')}*\n\n"
+        texto_p2 = ''
+
+        # Verifica se há instrutor e adiciona à mensagem
+        if instrutor:
+            texto_curso = f"{instrutor} - {quantidade} {curso} {pratica}\n\n"
+            texto_p2 += texto_curso
+
+        # Verifica se há instrutor2 e adiciona à mensagem
+        if instrutor2:
+            texto_curso2 = f"{instrutor2} - {quantidade2} {curso2} {pratica2}\n\n"
+            texto_p2 += texto_curso2
+
+        # Verifica se há staff_diferente1 e adiciona à mensagem
+        if staff_diferente1:
+            texto_staff = f"{quantidade_diferente1} - {staff_diferente1}\n\n"
+            texto_p2 += texto_staff
+
+        # Verifica se há staff_diferente2 e adiciona à mensagem
+        if staff_diferente2:
+            texto_staff2 = f"{quantidade_diferente2} - {staff_diferente2}\n\n"
+            texto_p2 += texto_staff2
+
+        # Adiciona a divisão à mensagem
+        texto_divisao = f"{divisao} - {', '.join(staffs_selecionados)}\n\n"
+        texto_p2 += texto_divisao
+
+        # Verifica se há apoio_superficie e adiciona à mensagem
+        if apoio_superficie:
+            texto_apoio = f"{', '.join(apoio_superficie)} - {equipagens} equipagens\n\n"
+            texto_p2 += texto_apoio
+
+        # Verifica se há mestre e adiciona à mensagem
+        if mestre:
+            texto_mestre = f"{mestre} - {embarques} embarques\n\n"
+            texto_p2 += texto_mestre
+
+        # Exibe a mensagem completa
+        st.code(texto_p1 + texto_p2)
+
 #
 # if escolha == 'Deletar':
 #     st.title('Deletar Lançamentos')
