@@ -14,7 +14,7 @@ chars2 = "')([]"
 
 select_nome_id_staff = repo.select_dm_instrutor()
 
-
+lista_staffs = []
 staffs_selecionados = []
 st.write('''<style>
 
@@ -44,6 +44,8 @@ if escolha == 'Lançar':
         if done:
             if str(item[1]) not in staffs_selecionados:
                 staffs_selecionados.append(str(item[1]))
+
+        lista_staffs.append(item[1])
 
     divisao = st.text_input('Divisão')
 
