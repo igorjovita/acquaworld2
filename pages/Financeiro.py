@@ -35,14 +35,19 @@ st.title('Sistema AcquaWorld')
 
 st.header('Financeiro')
 
-st.subheader('Selecione o intervalo da pesquisa')
-escolha_data = st.radio('Opçoes de filtragem', ['Data Especifica', 'Intervalo entre Datas'])
+escolha_data = st.radio('Selecione o intervalo da pesquisa', ['Data Especifica', 'Intervalo entre Datas'])
+
 if escolha_data == 'Intervalo entre Datas':
     data1 = st.date_input('Data Inicial', format='DD/MM/YYYY', value=None)
     data2 = st.date_input('Data Final', format='DD/MM/YYYY', value=None)
 if escolha_data == 'Data Especifica':
     data1 = st.date_input('Data', format='DD/MM/YYYY')
     data2 = data1
+
+filtro_staffs = st.radio('Selecione o filtro da pesquisa', ['Todos', 'Staff especifico'])
+
+
+
 escolha = st.selectbox('Escolha o tipo',
                        ['Comissão Staff', 'Comissão AS', 'Comissão Capitao', 'Comissão Curso', 'Comissão Cilindro'])
 if escolha == 'Comissão Curso':
