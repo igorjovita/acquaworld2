@@ -3,21 +3,21 @@ class MainRepository:
     def __init__(self, db):
         self.db = db
 
-    def select_dm_instrutor(self):
+    def select_staffs(self):
         query = """
         SELECT id_staff, nome, ocupacao 
         FROM staffs 
-        where status ='Ativo' and  ocupacao IN ('Divemaster', 'Instrutor')"""
+        where status ='Ativo' """
 
         return self.db.execute_query(query)
 
-    def insert_lancamento_barco(self, data, id_staff, funcao, quantidade, situacao, quentinha):
+    def insert_lancamento_barco(self, data, id_staff, funcao, quantidade, pratica, situacao, quentinha):
         query = """
         INSERT INTO lancamentos_barco 
-        (data, id_staff, funcao, quantidade,situacao, quentinha)
-         VALUES (%s, %s, %s, %s, %s, %s)
+        (data, id_staff, funcao, quantidade, pratica, situacao, quentinha)
+         VALUES (%s, %s, %s, %s, %s, %s, %s)
         """
-        params = (data, id_staff, funcao, quantidade, situacao, quentinha)
+        params = (data, id_staff, funcao, quantidade, pratica, situacao, quentinha)
 
         return self.db.execute_query(query, params)
 
