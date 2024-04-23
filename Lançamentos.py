@@ -12,10 +12,7 @@ repo = MainRepository(mysql_db)
 chars = "'),([]"
 chars2 = "')([]"
 
-select_nome_id_staff = repo.select_dm_instrutor()
 
-lista_staffs = []
-staffs_selecionados = []
 st.write('''<style>
 
 [data-testid="column"] {
@@ -29,23 +26,31 @@ escolha = option_menu(menu_title=None, options=['Lançar', 'Editar', 'Deletar'],
                       icons=['book', 'pencil-square', 'trash'],
                       orientation='horizontal')
 if escolha == 'Lançar':
+
+    lista_staffs = []
+    select_nome_id_staff = repo.select_dm_instrutor()
+
+    for select in select_nome_id_staff:
+        if select[3] in ['Divemaster', 'Instrutor']:
+            lista_staffs.append(select[2])
+
+    staffs_selecionados = []
+
     st.subheader('Divisão Diaria')
     data = st.date_input('Data:', format='DD/MM/YYYY')
     st.text('STAFFS:')
 
     col1, col2 = st.columns(2)
 
-    for i, item in enumerate(select_nome_id_staff):
-        if i < len(select_nome_id_staff) / 2:
-            done = col1.checkbox(str(item[1]), key=str(i))
+    for i, item in enumerate(lista_staffs):
+        if i < len(lista_staffs) / 2:
+            done = col1.checkbox(str(item), key=str(i))
         else:
-            done = col2.checkbox(str(item[1]), key=str(i))
+            done = col2.checkbox(str(item), key=str(i))
 
         if done:
-            if str(item[1]) not in staffs_selecionados:
-                staffs_selecionados.append(str(item[1]))
-
-        lista_staffs.append(item[1])
+            if str(item) not in staffs_selecionados:
+                staffs_selecionados.append(str(item))
 
     divisao = st.text_input('Divisão')
 
@@ -85,252 +90,247 @@ if escolha == 'Lançar':
                                   index=None)
             pratica2 = st.selectbox('Pratica2', ['Pratica 1', 'Pratica 2'], index=None)
 
-    almoco = st.selectbox('Pagar quentinhas nessa data?', ['Sim', 'Não'], index=None)
+    quentinha = st.selectbox('Pagar quentinhas nessa data?', ['Sim', 'Não'], index=None)
 
     if st.button('Lançar no Sistema'):
+        funcao = 'BAT'
+        situacao = 'PENDENTE'
         if staff_diferente1 is not None:
             index_lista_staffs = lista_staffs.index(staff_diferente1)
             id_staff = select_nome_id_staff[index_lista_staffs][0]
-            st.write(id_staff)
-#             funcao = 'BAT'
-#             situacao = 'PENDENTE'
-#             cursor.execute(
-#                 'INSERT INTO lancamentos_barco (data, id_staff, funcao, quantidade,situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)',
-#                 (data, id_staff_1, funcao, quantidade_diferente1, situacao, almoco))
-#
-#         if staff_diferente2 is not None:
-#             cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{staff_diferente2}'")
-#             id_staff_2 = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-#             situacao = 'PENDENTE'
-#             funcao = 'BAT'
-#             cursor.execute(
-#                 'INSERT INTO lancamentos_barco (data, id_staff, funcao, quantidade,situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)',
-#                 (data, id_staff_2, funcao, quantidade_diferente2, situacao, almoco))
-#
-#         if apoio_superficie is not None:
-#             situacao = 'PENDENTE'
-#             funcao = 'AS'
-#             for staff in apoio_superficie:
-#                 cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{staff}'")
-#                 id_as = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-#
-#                 cursor.execute(
-#                     "INSERT INTO lancamentos_barco(data, id_staff, funcao, quantidade, situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)",
-#                     (data, id_as, funcao, equipagens, situacao, almoco))
-#                 mydb.commit()
-#         if mestre is not None:
-#             cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{mestre}'")
-#             id_staff_mestre = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-#             situacao = 'PENDENTE'
-#             funcao = 'CAPITAO'
-#             cursor.execute(
-#                 "INSERT INTO lancamentos_barco(data, id_staff, funcao, quantidade, situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)",
-#                 (data, id_staff_mestre, funcao, embarques, situacao, almoco))
-#             mydb.commit()
-#
-#         if curso is not None:
-#             cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{instrutor}'")
-#             id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-#             situacao = 'PENDENTE'
-#             funcao = 'CURSO'
-#             cursor.execute(
-#                 "INSERT INTO lancamentos_barco(data, id_staff, funcao, curso, quantidade, pratica, situacao, quentinha) VALUES ("
-#                 "%s, %s, %s, %s, %s, %s, %s, %s)",
-#                 (data, id_staff, funcao, curso, quantidade, pratica, situacao, almoco))
-#             mydb.commit()
-#
-#         if curso2 is not None:
-#             cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{instrutor2}'")
-#             id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-#             situacao = 'PENDENTE'
-#             funcao = 'CURSO'
-#             cursor.execute(
-#                 "INSERT INTO lancamentos_barco(data, id_staff, funcao, curso, quantidade, pratica, situacao, quentinha) VALUES ("
-#                 "%s, %s, %s, %s, %s, %s, %s, %s)",
-#                 (data, id_staff, funcao, curso2, quantidade2, pratica2, situacao, almoco))
-#             mydb.commit()
-#
-#         for i, nome_staff in enumerate(staffs_selecionados):
-#             nome = str(nome_staff)
-#             cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{nome}'")
-#             id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-#             situacao = 'PENDENTE'
-#             funcao = 'BAT'
-#             cursor.execute(
-#                 'INSERT INTO lancamentos_barco (data, id_staff, funcao, quantidade, situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)',
-#                 (data, id_staff, funcao, divisao, situacao, almoco))
-#             mydb.commit()
-#
-#         st.success('Divisão Lançada no Sistema')
-#
-#         apoio_superficie = str(apoio_superficie).translate(str.maketrans('', '', chars2))
-#
-#         data_formatada = str(data).translate(str.maketrans('', '', chars)).split('-')
-#         st.write('---')
-#         lista_final = str(staffs_selecionados).translate(str.maketrans('', '', chars2))
-#
-#         texto_p1 = f"""
-#                 *Divisão:*
-#
-#                 *{data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}*
-#                 """
-#         texto_p2 = f"""
-#                 {divisao} - {lista_final}
-#
-#                 {apoio_superficie} - {equipagens} equipagens
-#
-#                 {mestre} - {embarques} embarques
-#                 """
-#         texto_curso = f"{instrutor} - {quantidade} {curso} {pratica}"
-#         texto_curso2 = f"{instrutor2} - {quantidade2} {curso2} {pratica2}"
-#
-#         if instrutor is None and staff_diferente1 is None:  # Somente batismo sem staff extra
-#
-#             st.code(texto_p1 + texto_p2)
-#
-#         if instrutor is not None and staff_diferente1 is None and instrutor2 is None and staff_diferente2 is None:  # 1  curso
-#             texto_curso = f"""
-#                 {instrutor} - {quantidade} {curso} {pratica}
-#
-#                 {divisao} - {lista_final}
-#
-#                 {apoio_superficie} - {equipagens} equipagens
-#
-#                 {mestre} - {embarques} embarques"""
-#             st.code(texto_p1 + texto_curso)
-#
-#         if instrutor2 is not None and staff_diferente1 is None and staff_diferente2 is None:  # 2 cursos
-#             texto_curso_total = f"""
-#                 {instrutor} - {quantidade} {curso} {pratica}
-#                 {instrutor2} - {quantidade2} {curso2} {pratica2}
-#
-#                 """
-#             st.code(texto_p1 + texto_curso_total + texto_p2)
-#
-#         if staff_diferente1 is not None and staff_diferente2 is None and instrutor is None and instrutor2 is None:  # 1 staff extra
-#             texto_staff = f"""
-#                 {quantidade_diferente1} - {staff_diferente1}
-#
-#                 {divisao} - {lista_final}
-#
-#                 {apoio_superficie} - {equipagens} equipagens
-#
-#                 {mestre} - {embarques} embarques"""
-#             st.code(texto_p1 + texto_staff)
-#
-#         if staff_diferente1 is not None and staff_diferente2 is not None and instrutor is None and instrutor2 is None:  # 2 staffs extras e 1 curso
-#             texto_staff2 = f"""
-#                 {quantidade_diferente1} - {staff_diferente1}
-#
-#                 {quantidade_diferente2} - {staff_diferente2}
-#
-#                 {divisao} - {lista_final}
-#
-#                 {apoio_superficie} - {equipagens} equipagens
-#
-#                 {mestre} - {embarques} embarques"""
-#             st.code(texto_p1 + texto_staff2)
-#
-#         if staff_diferente1 is not None and instrutor is not None and staff_diferente2 is None and instrutor2 is None:  # 1 staff extra e 1 curso
-#             texto_staff = f"""
-#                 {instrutor} - {quantidade} {curso} {pratica}
-#
-#                 {quantidade_diferente1} - {staff_diferente1}
-#                 """
-#             st.code(texto_p1 + texto_staff + texto_p2)
-#
-#         if staff_diferente1 is not None and instrutor is not None and instrutor2 is not None and staff_diferente2 is None:  # 1 staff extra e 2 cursos
-#             texto_staff = f"""
-#                 {instrutor} - {quantidade} {curso} {pratica}
-#                 {instrutor2} - {quantidade2} {curso2} {pratica2}
-#
-#                 {quantidade_diferente2} - {staff_diferente1}
-#                 """
-#             st.code(texto_p1 + texto_staff + texto_p2)
-#
-#         if staff_diferente1 is not None and staff_diferente2 is not None and instrutor is not None and instrutor2 is not None:  # 2 staffs extra e 2 cursos
-#             texto_staff_curso2 = f"""
-#                 {instrutor} - {quantidade} {curso} {pratica}
-#                 {instrutor2} - {quantidade2} {curso2} {pratica2}
-#
-#                 {quantidade_diferente1} - {staff_diferente1}
-#                 {quantidade_diferente2} - {staff_diferente2}
-#                 """
-#             st.code(texto_p1 + texto_staff_curso2 + texto_p2)
-#
-#         if staff_diferente1 is not None and staff_diferente2 is not None and instrutor is not None and instrutor2 is None:  # 1 curso e 2 staffs extras
-#             texto_staff_curso = f"""
-#                 {instrutor} - {quantidade} {curso} {pratica}
-#
-#                 {quantidade_diferente1} - {staff_diferente1}
-#                 {quantidade_diferente2} - {staff_diferente2}
-#                 """
-#             st.code(texto_p1 + texto_staff_curso + texto_p2)
-#
-# if escolha == 'Deletar':
-#     st.title('Deletar Lançamentos')
-#     st.subheader('Selecione o lançamento para deletar')
-#     data1 = st.date_input('Selecione a Data', format='DD/MM/YYYY')
-#     if st.button('Apagar do Sistema'):
-#         cursor.execute(f"Delete from lancamentos_barco where data = '{data1}'")
-#         mydb.commit()
-#         st.success('Lançamento Deletado com Sucesso')
-#
-# if escolha == 'Editar':
-#     st.title('Editar Lançamentos')
-#     data2 = st.date_input('Selecione a data para editar', format='DD/MM/YYYY')
-#
-#     cursor.execute(f"SELECT staffs.nome, lancamentos_barco.quantidade, lancamentos_barco.quentinha from "
-#                    f"lancamentos_barco JOIN staffs ON lancamentos_barco.id_staff = staffs.id_staff where data = "
-#                    f"'{data2}' and lancamentos_barco.funcao != 'CURSO'")
-#     resultado = cursor.fetchall()
-#
-#     df = pd.DataFrame(resultado, columns=['Nome', 'Quantidade', 'Almoço'])
-#
-#     cursor.execute(
-#         f"SELECT staffs.nome, lancamentos_barco.curso, lancamentos_barco.quantidade, lancamentos_barco.pratica, lancamentos_barco.quentinha from lancamentos_barco JOIN staffs ON lancamentos_barco.id_staff = staffs.id_staff where data = '{data2}' and lancamentos_barco.funcao = 'CURSO'")
-#     resultado = cursor.fetchall()
-#
-#     df2 = pd.DataFrame(resultado, columns=['Nome', 'Curso', 'Quantidade', 'Pratica', 'Almoço'])
-#
-#     df_final2 = st.data_editor(df2, key="editable_df2", hide_index=True)
-#
-#     df_final = st.data_editor(df, key="editable_df", hide_index=True)
-#
-#     if st.button('Editar Lançamento'):
-#         if df_final is not None and not df_final.equals(df):
-#             for index, row in df_final.iterrows():
-#                 nome = row['Nome']
-#                 quantidade = row['Quantidade']
-#                 quentinha = row['Almoço']
-#                 cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{nome}'")
-#                 id_staff_ed = cursor.fetchone()[0]
-#                 # Gerar a instrução SQL UPDATE correspondente
-#                 update_query = f"UPDATE lancamentos_barco SET quantidade = {quantidade}, quentinha = '{quentinha}' " \
-#                                f"WHERE data = '{data2}' AND id_staff = {id_staff_ed} AND funcao != 'CURSO'"
-#
-#                 # Executar a instrução SQL UPDATE
-#                 cursor.execute(update_query)
-#
-#                 # Commit para aplicar as alterações no banco de dados
-#             mydb.commit()
-#
-#         if df_final2 is not None and not df_final2.equals(df2):
-#             for index, row in df_final2.iterrows():
-#                 nome = row['Nome']
-#                 curso = row['Curso']
-#                 pratica = row['Pratica']
-#                 quantidade = row['Quantidade']
-#                 quentinha = row['Almoço']
-#                 cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{nome}'")
-#                 id_staff_ed = cursor.fetchone()[0]
-#                 # Gerar a instrução SQL UPDATE correspondente
-#                 update_query = f"UPDATE lancamentos_barco SET quantidade = {quantidade}, curso = '{curso}', pratica = '{pratica}', quentinha = '{quentinha}' " \
-#                                f"WHERE data = '{data2}' AND id_staff = {id_staff_ed} AND funcao = 'CURSO'"
-#
-#                 # Executar a instrução SQL UPDATE
-#                 cursor.execute(update_query)
-#
-#                 # Commit para aplicar as alterações no banco de dados
-#             mydb.commit()
-#         st.success('Lançamentos editados com sucesso!')
+
+            repo.insert_lancamento_barco(data, id_staff, funcao, quantidade_diferente1, situacao, quentinha)
+
+        if staff_diferente2 is not None:
+            index_lista_staffs = lista_staffs.index(staff_diferente2)
+            id_staff = select_nome_id_staff[index_lista_staffs][0]
+
+            repo.insert_lancamento_barco(data, id_staff, funcao, quantidade_diferente2, situacao, quentinha)
+
+        if apoio_superficie is not None:
+            situacao = 'PENDENTE'
+            funcao = 'AS'
+            for staff in apoio_superficie:
+                cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{staff}'")
+                id_as = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
+
+                cursor.execute(
+                    "INSERT INTO lancamentos_barco(data, id_staff, funcao, quantidade, situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)",
+                    (data, id_as, funcao, equipagens, situacao, almoco))
+                mydb.commit()
+        if mestre is not None:
+            cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{mestre}'")
+            id_staff_mestre = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
+            situacao = 'PENDENTE'
+            funcao = 'CAPITAO'
+            cursor.execute(
+                "INSERT INTO lancamentos_barco(data, id_staff, funcao, quantidade, situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)",
+                (data, id_staff_mestre, funcao, embarques, situacao, almoco))
+            mydb.commit()
+
+        if curso is not None:
+            cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{instrutor}'")
+            id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
+            situacao = 'PENDENTE'
+            funcao = 'CURSO'
+            cursor.execute(
+                "INSERT INTO lancamentos_barco(data, id_staff, funcao, curso, quantidade, pratica, situacao, quentinha) VALUES ("
+                "%s, %s, %s, %s, %s, %s, %s, %s)",
+                (data, id_staff, funcao, curso, quantidade, pratica, situacao, almoco))
+            mydb.commit()
+
+        if curso2 is not None:
+            cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{instrutor2}'")
+            id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
+            situacao = 'PENDENTE'
+            funcao = 'CURSO'
+            cursor.execute(
+                "INSERT INTO lancamentos_barco(data, id_staff, funcao, curso, quantidade, pratica, situacao, quentinha) VALUES ("
+                "%s, %s, %s, %s, %s, %s, %s, %s)",
+                (data, id_staff, funcao, curso2, quantidade2, pratica2, situacao, almoco))
+            mydb.commit()
+
+        for i, nome_staff in enumerate(staffs_selecionados):
+            nome = str(nome_staff)
+            cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{nome}'")
+            id_staff = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
+            situacao = 'PENDENTE'
+            funcao = 'BAT'
+            cursor.execute(
+                'INSERT INTO lancamentos_barco (data, id_staff, funcao, quantidade, situacao, quentinha) VALUES (%s, %s, %s, %s, %s, %s)',
+                (data, id_staff, funcao, divisao, situacao, almoco))
+            mydb.commit()
+
+        st.success('Divisão Lançada no Sistema')
+
+        apoio_superficie = str(apoio_superficie).translate(str.maketrans('', '', chars2))
+
+        data_formatada = str(data).translate(str.maketrans('', '', chars)).split('-')
+        st.write('---')
+        lista_final = str(staffs_selecionados).translate(str.maketrans('', '', chars2))
+
+        texto_p1 = f"""
+                *Divisão:*
+
+                *{data_formatada[2]}/{data_formatada[1]}/{data_formatada[0]}*
+                """
+        texto_p2 = f"""
+                {divisao} - {lista_final}
+
+                {apoio_superficie} - {equipagens} equipagens
+
+                {mestre} - {embarques} embarques
+                """
+        texto_curso = f"{instrutor} - {quantidade} {curso} {pratica}"
+        texto_curso2 = f"{instrutor2} - {quantidade2} {curso2} {pratica2}"
+
+        if instrutor is None and staff_diferente1 is None:  # Somente batismo sem staff extra
+
+            st.code(texto_p1 + texto_p2)
+
+        if instrutor is not None and staff_diferente1 is None and instrutor2 is None and staff_diferente2 is None:  # 1  curso
+            texto_curso = f"""
+                {instrutor} - {quantidade} {curso} {pratica}
+
+                {divisao} - {lista_final}
+
+                {apoio_superficie} - {equipagens} equipagens
+
+                {mestre} - {embarques} embarques"""
+            st.code(texto_p1 + texto_curso)
+
+        if instrutor2 is not None and staff_diferente1 is None and staff_diferente2 is None:  # 2 cursos
+            texto_curso_total = f"""
+                {instrutor} - {quantidade} {curso} {pratica}
+                {instrutor2} - {quantidade2} {curso2} {pratica2}
+
+                """
+            st.code(texto_p1 + texto_curso_total + texto_p2)
+
+        if staff_diferente1 is not None and staff_diferente2 is None and instrutor is None and instrutor2 is None:  # 1 staff extra
+            texto_staff = f"""
+                {quantidade_diferente1} - {staff_diferente1}
+
+                {divisao} - {lista_final}
+
+                {apoio_superficie} - {equipagens} equipagens
+
+                {mestre} - {embarques} embarques"""
+            st.code(texto_p1 + texto_staff)
+
+        if staff_diferente1 is not None and staff_diferente2 is not None and instrutor is None and instrutor2 is None:  # 2 staffs extras e 1 curso
+            texto_staff2 = f"""
+                {quantidade_diferente1} - {staff_diferente1}
+
+                {quantidade_diferente2} - {staff_diferente2}
+
+                {divisao} - {lista_final}
+
+                {apoio_superficie} - {equipagens} equipagens
+
+                {mestre} - {embarques} embarques"""
+            st.code(texto_p1 + texto_staff2)
+
+        if staff_diferente1 is not None and instrutor is not None and staff_diferente2 is None and instrutor2 is None:  # 1 staff extra e 1 curso
+            texto_staff = f"""
+                {instrutor} - {quantidade} {curso} {pratica}
+
+                {quantidade_diferente1} - {staff_diferente1}
+                """
+            st.code(texto_p1 + texto_staff + texto_p2)
+
+        if staff_diferente1 is not None and instrutor is not None and instrutor2 is not None and staff_diferente2 is None:  # 1 staff extra e 2 cursos
+            texto_staff = f"""
+                {instrutor} - {quantidade} {curso} {pratica}
+                {instrutor2} - {quantidade2} {curso2} {pratica2}
+
+                {quantidade_diferente2} - {staff_diferente1}
+                """
+            st.code(texto_p1 + texto_staff + texto_p2)
+
+        if staff_diferente1 is not None and staff_diferente2 is not None and instrutor is not None and instrutor2 is not None:  # 2 staffs extra e 2 cursos
+            texto_staff_curso2 = f"""
+                {instrutor} - {quantidade} {curso} {pratica}
+                {instrutor2} - {quantidade2} {curso2} {pratica2}
+
+                {quantidade_diferente1} - {staff_diferente1}
+                {quantidade_diferente2} - {staff_diferente2}
+                """
+            st.code(texto_p1 + texto_staff_curso2 + texto_p2)
+
+        if staff_diferente1 is not None and staff_diferente2 is not None and instrutor is not None and instrutor2 is None:  # 1 curso e 2 staffs extras
+            texto_staff_curso = f"""
+                {instrutor} - {quantidade} {curso} {pratica}
+
+                {quantidade_diferente1} - {staff_diferente1}
+                {quantidade_diferente2} - {staff_diferente2}
+                """
+            st.code(texto_p1 + texto_staff_curso + texto_p2)
+
+if escolha == 'Deletar':
+    st.title('Deletar Lançamentos')
+    st.subheader('Selecione o lançamento para deletar')
+    data1 = st.date_input('Selecione a Data', format='DD/MM/YYYY')
+    if st.button('Apagar do Sistema'):
+        cursor.execute(f"Delete from lancamentos_barco where data = '{data1}'")
+        mydb.commit()
+        st.success('Lançamento Deletado com Sucesso')
+
+if escolha == 'Editar':
+    st.title('Editar Lançamentos')
+    data2 = st.date_input('Selecione a data para editar', format='DD/MM/YYYY')
+
+    cursor.execute(f"SELECT staffs.nome, lancamentos_barco.quantidade, lancamentos_barco.quentinha from "
+                   f"lancamentos_barco JOIN staffs ON lancamentos_barco.id_staff = staffs.id_staff where data = "
+                   f"'{data2}' and lancamentos_barco.funcao != 'CURSO'")
+    resultado = cursor.fetchall()
+
+    df = pd.DataFrame(resultado, columns=['Nome', 'Quantidade', 'Almoço'])
+
+    cursor.execute(
+        f"SELECT staffs.nome, lancamentos_barco.curso, lancamentos_barco.quantidade, lancamentos_barco.pratica, lancamentos_barco.quentinha from lancamentos_barco JOIN staffs ON lancamentos_barco.id_staff = staffs.id_staff where data = '{data2}' and lancamentos_barco.funcao = 'CURSO'")
+    resultado = cursor.fetchall()
+
+    df2 = pd.DataFrame(resultado, columns=['Nome', 'Curso', 'Quantidade', 'Pratica', 'Almoço'])
+
+    df_final2 = st.data_editor(df2, key="editable_df2", hide_index=True)
+
+    df_final = st.data_editor(df, key="editable_df", hide_index=True)
+
+    if st.button('Editar Lançamento'):
+        if df_final is not None and not df_final.equals(df):
+            for index, row in df_final.iterrows():
+                nome = row['Nome']
+                quantidade = row['Quantidade']
+                quentinha = row['Almoço']
+                cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{nome}'")
+                id_staff_ed = cursor.fetchone()[0]
+                # Gerar a instrução SQL UPDATE correspondente
+                update_query = f"UPDATE lancamentos_barco SET quantidade = {quantidade}, quentinha = '{quentinha}' " \
+                               f"WHERE data = '{data2}' AND id_staff = {id_staff_ed} AND funcao != 'CURSO'"
+
+                # Executar a instrução SQL UPDATE
+                cursor.execute(update_query)
+
+                # Commit para aplicar as alterações no banco de dados
+            mydb.commit()
+
+        if df_final2 is not None and not df_final2.equals(df2):
+            for index, row in df_final2.iterrows():
+                nome = row['Nome']
+                curso = row['Curso']
+                pratica = row['Pratica']
+                quantidade = row['Quantidade']
+                quentinha = row['Almoço']
+                cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{nome}'")
+                id_staff_ed = cursor.fetchone()[0]
+                # Gerar a instrução SQL UPDATE correspondente
+                update_query = f"UPDATE lancamentos_barco SET quantidade = {quantidade}, curso = '{curso}', pratica = '{pratica}', quentinha = '{quentinha}' " \
+                               f"WHERE data = '{data2}' AND id_staff = {id_staff_ed} AND funcao = 'CURSO'"
+
+                # Executar a instrução SQL UPDATE
+                cursor.execute(update_query)
+
+                # Commit para aplicar as alterações no banco de dados
+            mydb.commit()
+        st.success('Lançamentos editados com sucesso!')
