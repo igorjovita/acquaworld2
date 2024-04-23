@@ -90,7 +90,7 @@ if escolha == 'Lançar':
     if st.button('Lançar no Sistema'):
         if staff_diferente1 is not None:
             index_lista_staffs = lista_staffs.index(staff_diferente1)
-            id_staff = select_nome_id_staff[index_lista_staffs]
+            id_staff = select_nome_id_staff[index_lista_staffs][0]
             st.write(id_staff)
 #             funcao = 'BAT'
 #             situacao = 'PENDENTE'
