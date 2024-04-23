@@ -109,13 +109,27 @@ if escolha == 'Lançar':
 
         # Iterar sobre os casos e inserir os lançamentos de barco correspondentes
         for staff, quantidade, curso, pratica, funcao in casos_insercao:
-            if staff is not None:
-                index_lista_staffs = lista_staffs.index(staff)
-                id_staff = select_nome_id_staff[index_lista_staffs][0]
-                repo.insert_lancamento_barco(data, id_staff, funcao, quantidade, curso, pratica, 'PENDENTE', quentinha)
+            # Verifica se staff é uma lista
+            if isinstance(staff, list):
+                # Itera sobre cada nome na lista
+                for nome_staff in staff:
+                    try:
+                        index_lista_staffs = lista_staffs.index(nome_staff)
+                        id_staff = select_nome_id_staff[index_lista_staffs][0]
+                        repo.insert_lancamento_barco(data, id_staff, funcao, quantidade, curso, pratica, 'PENDENTE', quentinha)
+                    except ValueError:
+                        # Lida com o caso em que o nome do staff não está na lista
+                        st.error(f"Nome '{nome_staff}' não encontrado na lista de staffs ativos")
+            elif staff is not None:
+                try:
+                    index_lista_staffs = lista_staffs.index(staff)
+                    id_staff = select_nome_id_staff[index_lista_staffs][0]
+                    repo.insert_lancamento_barco(data, id_staff, funcao, quantidade, curso, pratica, 'PENDENTE', quentinha)
+                except ValueError:
+                    # Lida com o caso em que o nome do staff não está na lista
+                    st.error(f"Nome '{staff}' não encontrado na lista de staffs ativos")
 
         st.success('Divisão Lançada no Sistema')
-
 #         apoio_superficie = str(apoio_superficie).translate(str.maketrans('', '', chars2))
 #
 #         data_formatada = str(data).translate(str.maketrans('', '', chars)).split('-')
