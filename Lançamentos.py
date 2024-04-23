@@ -119,7 +119,7 @@ if escolha == 'Lançar':
                         repo.insert_lancamento_barco(data, id_staff, funcao, quantidade, curso_cliente, pratica, 'PENDENTE', quentinha)
                     except ValueError:
                         # Lida com o caso em que o nome do staff não está na lista
-                        st.error(f"Nome '{nome_staff}' não encontrado na lista de staffs ativos")
+                        st.error(f"Nome '{nome_staff}' não encontrado na lista de staffs ativos, o lançamento desse staff não foi feito")
             elif staff is not None:
                 try:
                     index_lista_staffs = lista_staffs_total.index(staff)
@@ -127,9 +127,11 @@ if escolha == 'Lançar':
                     repo.insert_lancamento_barco(data, id_staff, funcao, quantidade, curso_cliente, pratica, 'PENDENTE', quentinha)
                 except ValueError:
                     # Lida com o caso em que o nome do staff não está na lista
-                    st.error(f"Nome '{staff}' não encontrado na lista de staffs ativos")
+                    st.error(f"Nome '{staff}' não encontrado na lista de staffs ativos, o lançamento desse staff não foi feito")
 
         st.success('Divisão Lançada no Sistema')
+
+        
 #         apoio_superficie = str(apoio_superficie).translate(str.maketrans('', '', chars2))
 #
 #         data_formatada = str(data).translate(str.maketrans('', '', chars)).split('-')
