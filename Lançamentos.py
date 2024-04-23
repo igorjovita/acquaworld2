@@ -31,7 +31,7 @@ if escolha == 'Lançar':
     select_nome_id_staff = repo.select_dm_instrutor()
 
     for select in select_nome_id_staff:
-        if select[3] == 'Divemaster' or select[3] 'Instrutor':
+        if select[3] == 'Divemaster' or select[3] == 'Instrutor':
             lista_staffs.append(select[2])
 
     staffs_selecionados = []
