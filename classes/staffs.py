@@ -26,9 +26,9 @@ class Staffs:
                             f"não foi feito")
 
                     except IntegrityError:
-                        st.error(f'Já possui um lançamento igual do staff {nome_staff} no dia {data.strftime('%d/%m/%Y')}')
+                        st.error(f'Já possui um lançamento igual do staff {nome_staff} na data informada')
 
-                        
+
             elif staff is not None:
                 try:
                     index_lista_staffs = lista_staffs_total.index(staff)
@@ -42,7 +42,7 @@ class Staffs:
                         f"feito")
 
                 except IntegrityError:
-                    st.error(f'Já possui um lançamento igual do staff {staff} no dia {data.strftime('%d/%m/%Y')}')
+                    st.error(f'Já possui um lançamento igual do staff {staff} na data informada')
 
     def formatar_mensagem(self, data):
 
