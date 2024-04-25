@@ -5,7 +5,7 @@ import os
 import mysql.connector
 from database import DataBaseMysql
 from repository import MainRepository
-
+from classes import Staffs
 mysql_db = DataBaseMysql()
 
 repo = MainRepository(mysql_db)
@@ -70,7 +70,7 @@ if escolha == 'Lançar':
 
     with colu1:
         apoio_superficie = st.multiselect('Apoio de Superficie', ['Manu', 'Catatau', 'Juninho', 'Glauber', 'Roberta'])
-        mestre = st.selectbox('Mestre', ['Risadinha', 'Marquinhos', 'Freelancer'], index=None)
+        mestre = st.selectbox('Mestre', ['Risadinha', 'Marquinhos'], index=None)
         instrutor = st.selectbox('Instrutor', ['Glauber', 'Martin'], index=None)
         quantidade = st.text_input('Quantidade')
 
@@ -106,73 +106,14 @@ if escolha == 'Lançar':
             (staffs_selecionados, divisao, '', '', 'BAT')
         ]
 
-        # Iterar sobre os casos e inserir os lançamentos de barco correspondentes
-        for staff, quantidade_iteracao, curso_iteracao, pratica_iteracao, funcao in casos_insercao:
-            # Verifica se staff é uma lista
-            if isinstance(staff, list):
-                # Itera sobre cada nome na lista
-                for nome_staff in staff:
-                    try:
-                        index_lista_staffs = lista_staffs_total.index(nome_staff)
-                        id_staff = select_nome_id_staff[index_lista_staffs][0]
-                        repo.insert_lancamento_barco(data, id_staff, funcao, quantidade_iteracao, curso_iteracao, pratica_iteracao,
-                                                     'PENDENTE', quentinha)
-                    except ValueError:
-                        # Lida com o caso em que o nome do staff não está na lista
-                        st.error(
-                            f"Nome '{nome_staff}' não encontrado na lista de staffs ativos, o lançamento desse staff não foi feito")
-            elif staff is not None:
-                try:
-                    index_lista_staffs = lista_staffs_total.index(staff)
-                    id_staff = select_nome_id_staff[index_lista_staffs][0]
-                    repo.insert_lancamento_barco(data, id_staff, funcao, quantidade_iteracao, curso_iteracao, pratica_iteracao, 'PENDENTE',
-                                                 quentinha)
-                except ValueError:
-                    # Lida com o caso em que o nome do staff não está na lista
-                    st.error(
-                        f"Nome '{staff}' não encontrado na lista de staffs ativos, o lançamento desse staff não foi feito")
+        staffs = Staffs(repo, casos_insercao)
+
+        staffs.logica_inserir(lista_staffs_total, select_nome_id_staff, quentinha, data)
 
         st.success('Divisão Lançada no Sistema')
 
-        texto_p1 = f"*Divisão:*\n\n*{data.strftime('%d/%m/%Y')}*\n\n"
-        texto_p2 = ''
+        staffs.formatar_mensagem(data)
 
-        # Verifica se há instrutor e adiciona à mensagem
-        if instrutor:
-            texto_curso = f"{instrutor} - {quantidade} {curso} {pratica}\n\n"
-            texto_p2 += texto_curso
-
-        # Verifica se há instrutor2 e adiciona à mensagem
-        if instrutor2:
-            texto_curso2 = f"{instrutor2} - {quantidade2} {curso2} {pratica2}\n\n"
-            texto_p2 += texto_curso2
-
-        # Verifica se há staff_diferente1 e adiciona à mensagem
-        if staff_diferente1:
-            texto_staff = f"{quantidade_diferente1} - {staff_diferente1}\n\n"
-            texto_p2 += texto_staff
-
-        # Verifica se há staff_diferente2 e adiciona à mensagem
-        if staff_diferente2:
-            texto_staff2 = f"{quantidade_diferente2} - {staff_diferente2}\n\n"
-            texto_p2 += texto_staff2
-
-        # Adiciona a divisão à mensagem
-        texto_divisao = f"{divisao} - {', '.join(staffs_selecionados)}\n\n"
-        texto_p2 += texto_divisao
-
-        # Verifica se há apoio_superficie e adiciona à mensagem
-        if apoio_superficie:
-            texto_apoio = f"{', '.join(apoio_superficie)} - {equipagens} equipagens\n\n"
-            texto_p2 += texto_apoio
-
-        # Verifica se há mestre e adiciona à mensagem
-        if mestre:
-            texto_mestre = f"{mestre} - {embarques} embarques\n\n"
-            texto_p2 += texto_mestre
-
-        # Exibe a mensagem completa
-        st.code(texto_p1 + texto_p2)
 
 #
 # if escolha == 'Deletar':
