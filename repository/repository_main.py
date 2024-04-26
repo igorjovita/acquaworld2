@@ -15,38 +15,39 @@ class MainRepository:
         query = """
         SELECT 
             staffs.nome,
-            SUM(CASE WHEN l.funcao = 'BAT' THEN l.quantidade ELSE 0 END) AS total_bat,
-            SUM(CASE WHEN l.funcao = 'AS' THEN l.quantidade ELSE 0 END) AS total_equipagens,
-            SUM(CASE WHEN l.funcao = 'CAPITAO' THEN l.quantidade ELSE 0 END) AS total_embarques,
-            SUM(CASE WHEN l.funcao = 'CURSO' THEN l.quantidade ELSE 0 END) AS total_curso,
-            COALESCE(SUM(lc.cilindros_acqua + lc.cilindros_pl), 0) AS total_cilindros,
-            CASE WHEN MAX(l.quentinha = 'Sim' OR lc.almoco = 'Sim') THEN 1 ELSE 0 END AS total_quentinhas,
-            SUM(
-                CASE 
-                    WHEN l.id_staff IS NOT NULL THEN
-                        CASE 
-                            WHEN l.funcao = 'BAT' THEN l.quantidade * staffs.comissao
-                            WHEN l.funcao = 'AS' THEN l.quantidade * 1
-                            WHEN l.funcao = 'CAPITAO' THEN l.quantidade * 1
-                            WHEN l.funcao = 'CURSO' THEN 
-                                CASE 
-                                    WHEN l.curso = 'OWD' THEN l.quantidade * 75
-                                    WHEN l.curso = 'ADV' THEN l.quantidade * 75
-                                    WHEN l.curso = 'RESCUE' THEN l.quantidade * 150
-                                    WHEN l.curso = 'REVIEW' THEN l.quantidade * 120
-                                    WHEN l.curso = 'DIVEMASTER' THEN l.quantidade * 200
-                                    ELSE 0
-                                END
-                            ELSE 0
-                        END +
-                        CASE 
-                            WHEN l.quentinha = 'Sim' THEN 15
-                            ELSE 0
-                        END
-                    ELSE
-                        0
-                END
-            ) AS total_a_pagar
+            CONCAT(
+                'Total BAT: ', SUM(CASE WHEN l.funcao = 'BAT' THEN l.quantidade ELSE 0 END), ' | ',
+                'Total Equipagens: ', SUM(CASE WHEN l.funcao = 'AS' THEN l.quantidade ELSE 0 END), ' | ',
+                'Total Embarques: ', SUM(CASE WHEN l.funcao = 'CAPITAO' THEN l.quantidade ELSE 0 END), ' | ',
+                'Total Curso: ', SUM(CASE WHEN l.funcao = 'CURSO' THEN l.quantidade ELSE 0 END), ' | ',
+                'Total Cilindros: ', COALESCE(SUM(lc.cilindros_acqua + lc.cilindros_pl), 0), ' | ',
+                'Total Quentinhas/Almoço: ', CASE WHEN MAX(l.quentinha = 'Sim' OR lc.almoco = 'Sim') THEN 1 ELSE 0 END, ' | ',
+                'Total a Pagar: ', SUM(
+                    CASE 
+                        WHEN l.id_staff IS NOT NULL THEN
+                            CASE 
+                                WHEN l.funcao = 'BAT' THEN l.quantidade * staffs.comissao
+                                WHEN l.funcao = 'AS' THEN l.quantidade * 1
+                                WHEN l.funcao = 'CAPITAO' THEN l.quantidade * 1
+                                WHEN l.funcao = 'CURSO' THEN 
+                                    CASE 
+                                        WHEN l.curso IN ('OWD', 'ADV') THEN l.quantidade * 75
+                                        WHEN l.curso = 'RESCUE' THEN l.quantidade * 150
+                                        WHEN l.curso = 'REVIEW' THEN l.quantidade * 120
+                                        WHEN l.curso = 'DIVEMASTER' THEN l.quantidade * 200
+                                        ELSE 0
+                                    END
+                                ELSE 0
+                            END +
+                            CASE 
+                                WHEN l.quentinha = 'Sim' THEN 15
+                                ELSE 0
+                            END
+                        ELSE
+                            0
+                    END
+                )
+            ) AS summary
         FROM 
             staffs
         LEFT JOIN 
@@ -55,6 +56,7 @@ class MainRepository:
             lancamento_cilindro AS lc ON staffs.id_staff = lc.id_staff AND l.data = lc.data
         GROUP BY 
             staffs.nome;
+
 
         """
         params = (data_incial, data_final)
