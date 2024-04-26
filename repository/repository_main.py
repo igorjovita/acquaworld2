@@ -17,11 +17,11 @@ class MainRepository:
             CONCAT(
                  staffs.nome, ' - ',
                  SUM(CASE WHEN l.funcao = 'BAT' THEN l.quantidade ELSE 0 END), ' BAT', ' + ',
-                 SUM(CASE WHEN l.funcao = 'AS' THEN CONCAT(l.quantidade ' Equipagens') ELSE '' END), ' + ',
-                'Embarques: ', SUM(CASE WHEN l.funcao = 'CAPITAO' THEN l.quantidade ELSE 0 END), ' + ',
-                'Curso: ', SUM(CASE WHEN l.funcao = 'CURSO' THEN l.quantidade ELSE 0 END), ' + ',
-                'Cilindros: ', COALESCE(SUM(lc.cilindros_acqua + lc.cilindros_pl), 0), ' + ',
-                'Quentinhas: ', SUM(CASE WHEN l.quentinha = 'Sim' OR lc.almoco = 'Sim' THEN 1 ELSE 0 END), ' = ',
+                 SUM(CASE WHEN l.funcao = 'AS' THEN l.quantidade ELSE 0 END),' Equipagens' ' + ',
+                 SUM(CASE WHEN l.funcao = 'CAPITAO' THEN l.quantidade ELSE 0 END),' Embarques', ' + ',
+                 SUM(CASE WHEN l.funcao = 'CURSO' THEN l.quantidade ELSE 0 END), ' Curso' ' + ',
+                 COALESCE(SUM(lc.cilindros_acqua + lc.cilindros_pl), 0), ' Cilindros', ' + ',
+                 SUM(CASE WHEN l.quentinha = 'Sim' OR lc.almoco = 'Sim' THEN 1 ELSE 0 END),' Quentinhas', ' = ',
                 'R$ : ', SUM(
                     CASE 
                         WHEN l.id_staff IS NOT NULL THEN
