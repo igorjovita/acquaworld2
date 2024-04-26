@@ -274,7 +274,7 @@ if filtro1 == 'Data Especifica':
 
 filtro2 = st.radio('Opções de filtragem dos dados', ['Todos', 'Staff especifico'], index=None)
 
-if filtro2 == 'Staff Especifico':
+if filtro2 == 'Staff especifico':
     staff = st.selectbox('Nome do Staff', lista_staff)
 
 if st.button('Pesquisar2'):
