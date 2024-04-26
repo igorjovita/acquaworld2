@@ -48,7 +48,7 @@ class MainRepository:
                             ELSE
                                 0
                         END
-                    ) + (SELECT COUNT(*) FROM lancamento_cilindro as lc INNER JOIN staffs on staffs.id_staff = lc.id_staff WHERE lc.data between %s AND %s   AND staffs.tipo != 'FIXO') * 50, 2)
+                    ) + (SELECT (COUNT(*) FROM lancamento_cilindro as lc INNER JOIN staffs on staffs.id_staff = lc.id_staff WHERE lc.data between %s AND %s  AND staffs.tipo != 'FIXO') * 50, 2)
             ) AS summary
         FROM 
             staffs
