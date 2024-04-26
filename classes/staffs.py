@@ -1,6 +1,7 @@
 import streamlit as st
 from mysql.connector import IntegrityError
 
+
 class Staffs:
 
     def __init__(self, repo, casos_insercao):

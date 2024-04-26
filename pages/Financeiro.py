@@ -8,6 +8,8 @@ from functions import obter_comissao
 from babel.numbers import format_currency
 from datetime import datetime
 from collections import defaultdict
+from database import DataBaseMysql
+from repository import MainRepository
 
 mydb = mysql.connector.connect(
     host=os.getenv("DB_HOST"),
@@ -45,8 +47,6 @@ if escolha_data == 'Data Especifica':
     data2 = data1
 
 filtro_staffs = st.radio('Selecione o filtro da pesquisa', ['Todos', 'Staff especifico'])
-
-
 
 escolha = st.selectbox('Escolha o tipo',
                        ['Comissão Staff', 'Comissão AS', 'Comissão Capitao', 'Comissão Curso', 'Comissão Cilindro'])
@@ -250,192 +250,210 @@ if botao:
         comissao_total = format_currency(total_comissao, 'BRL', locale='pt_BR')
         st.subheader(f'{int(total_praticas)} praticas - Total {comissao_total}')
 
-
 st.write('---')
 
 st.subheader('Pagamento')
-mydb.connect()
-cursor.execute("SELECT nome from staffs")
-lista_staff = str(cursor.fetchall()).translate(str.maketrans('', '', chars)).split()
-filtro = st.radio('Opções de Filtragem', ['Intervalo entre datas', 'Data Especifica'])
-mydb.close()
 
-if filtro == 'Intervalo entre datas':
+lista_staff = []
+repo = DataBaseMysql()
+repository_staffs = MainRepository(repo)
+
+info_staff = repository_staffs.select_staffs()
+
+for resultado in info_staff:
+    lista_staff.append(resultado[1])
+
+filtro1 = st.radio('Opções de filtragem da data', ['Intervalo entre datas', 'Data Especifica'])
+
+if filtro1 == 'Intervalo entre datas':
     data1_pagamento = st.date_input('Data Inicial1', format='DD/MM/YYYY', value=None)
     data2_pagamento = st.date_input('Data Final2', format='DD/MM/YYYY', value=None)
-if filtro == 'Data Especifica':
+if filtro1 == 'Data Especifica':
     data1_pagamento = st.date_input('Data2', format='DD/MM/YYYY')
     data2_pagamento = data1_pagamento
-staff = st.selectbox('Nome do Staff', lista_staff)
+
+filtro2 = st.radio('Opções de filtragem dos dados', ['Todos', 'Staff especifico'], index=None)
+
+if filtro2 == 'Staff Especifico':
+    staff = st.selectbox('Nome do Staff', lista_staff)
+
 if st.button('Pesquisar2'):
-    mydb.connect()
-    cursor.execute(f"SELECT id_staff, comissao FROM staffs where nome ='{staff}'")
-    result = cursor.fetchone()
-    id_staff = result[0]
-    comissao = result[1]
-    cursor.execute(
-        'SELECT data, funcao, quantidade, curso, pratica, quentinha FROM lancamentos_barco WHERE id_staff = %s and data between %s and %s',
-        (id_staff, data1_pagamento, data2_pagamento))
-    dados = cursor.fetchall()
 
-    cursor.execute("SELECT data, cilindros_acqua, cilindros_pl, almoco FROM lancamento_cilindro where id_staff = %s and data between %s and %s", (id_staff, data1_pagamento, data2_pagamento))
-    dados2 = cursor.fetchall()
+    if filtro2 == 'Todos':
+        select_total_comissoes = repository_staffs.select_soma_total_comissoes(data1_pagamento, data2_pagamento)
+        st.write(select_total_comissoes)
 
-    dados_str = ''
-    # Itera sobre cada tupla em 'dados'
-    total_equipagens = 0
-    total_bat = 0
-    total_curso = 0
-    valor_curso = 0
-    total_quentinha = 0
-    total_comissao = 0
-    agrupado_por_data = {}
-    total_cilindro = 0
-    total_diaria = 0
-    calculo_bat = 0
-    total_embarque = 0
-    calculo_quentinha = 0
-
-    # Itera sobre cada tupla em 'dados'
-    for dado in dados:
-        # Converta o objeto datetime para uma string formatada
-        data_form = datetime.strftime(dado[0], "%d/%m/%Y")
-
-        if dado[4] is None:
-            pratica = ''
-        else:
-            pratica = dado[4]
-
-        if dado[1] == 'AS':
-            tipo = 'Equipagens'
-            total_equipagens += int(dado[2])
-
-        if dado[1] == 'CAPITAO':
-            tipo = 'Embarques'
-            total_embarque += int(dado[2])
-
-        if dado[1] == 'CURSO':
-            tipo = ''
-            if dado[3] == 'RESCUE':
-                total_comissao += int(dado[2]) * 150
-                total_curso += int(dado[2])
-            elif dado[3] == 'REVIEW':
-                total_comissao += int(dado[2]) * 120
-                total_curso += int(dado[2])
-            elif dado[3] == 'DIVEMASTER':
-                total_comissao += int(dado[2]) * 200
-                total_curso += int(dado[2])
-            else:
-                total_comissao += int(dado[2]) * 75
-                total_curso += int(dado[2])
-        if dado[1] == 'BAT':
-            tipo = dado[1]
-            total_bat += float(dado[2])
+    elif filtro2 == 'Staff especifico':
+        index_lista = lista_staff.index(staff)
+        id_staff = info_staff[index_lista][0]
+        select_comissao_individual = repository_staffs.select_soma_comissao_individual(data1_pagamento, data2_pagamento, id_staff)
+        st.write(select_comissao_individual)
 
 
-        # Certifica-se de que há pelo menos 5 elementos na tupla
-        if len(dado) >= 5:
-            # Inicializa a lista para a data se ainda não existir
-            if data_form not in agrupado_por_data:
-                agrupado_por_data[data_form] = []
-
-            if dado[5] == 'Sim':
-                if dado[1] == 'CURSO':
-                    texto = f'{int(dado[2])}{tipo} {dado[3]} {pratica} + quentinha'
-                    total_quentinha += 1
-                else:
-                    texto = f'{float(dado[2])} {tipo} + quentinha'
-                    total_quentinha += 1
-            else:
-                if dado[1] == 'CURSO':
-                    texto = f'{int(dado[2])}{tipo} {dado[3]} {pratica}'
-                else:
-                    texto = f'{float(dado[2])} {tipo}'
-
-            # Adiciona à lista correspondente à data
-            agrupado_por_data[data_form].append(texto)
-
-    # Adiciona os dados da tabela lancamento_cilindro ao dicionário agrupado_por_data
-    for dado in dados2:
-        # Converta o objeto datetime para uma string formatada
-        data_form = datetime.strftime(dado[0], "%d/%m/%Y")
-
-        # Certifica-se de que há pelo menos 4 elementos na tupla
-        if len(dado) >= 4:
-
-            if staff == 'Juninho':
-                total_diaria += 1
-            # Inicializa a lista para a data se ainda não existir
-            if data_form not in agrupado_por_data:
-                agrupado_por_data[data_form] = []
-
-            if dado[2] == 0:
-                texto = f'{int(dado[1])} Cilindros Acqua'
-                agrupado_por_data[data_form].append(texto)
-            else:
-                texto = f'{int(dado[1])} Cilindros Acqua + {int(dado[2])} Cilindro Pl'
-                agrupado_por_data[data_form].append(texto)
-
-    # Agora você pode iterar sobre o dicionário para criar a string final
-    dados_str = ''
-    for data, textos in agrupado_por_data.items():
-        dados_str += f"{data} - {' + '.join(textos)}\n"
-
-    # Adiciona uma linha em branco
-    dados_str += '\n'
-
-    # Calcula os totais e adiciona ao resultado final
-    total_equipagens = sum(int(dado[2]) for dado in dados if dado[1] == 'AS')
-    total_curso = sum(int(dado[2]) for dado in dados if dado[1] == 'CURSO')
-    total_bat = sum(float(dado[2]) for dado in dados if dado[1] not in ['AS', 'CURSO', 'CAPITAO'])
-
-    total_cilindro_acqua = sum(int(dado[1]) for dado in dados2)
-    total_cilindro_pl = sum(int(dado[2]) for dado in dados2)
-
-    if total_equipagens != 0:
-        equipagens_formatado = format_currency(total_equipagens, 'BRL', locale='pt_BR')
-        dados_str += f"Total Equipagens - {total_equipagens} = {equipagens_formatado}\n"
-
-    if total_curso != 0:
-        curso_formatado = format_currency(total_comissao, 'BRL', locale='pt_BR')
-        dados_str += f"Total Praticas - {total_curso} = {curso_formatado}\n"
-
-    if total_bat != 0:
-        calculo_bat = total_bat * comissao
-        bat_formatado = format_currency(calculo_bat, 'BRL', locale='pt_BR')
-        dados_str += f"Total Batismos - {total_bat:.2f} = {bat_formatado}\n"
-
-    if total_quentinha != 0:
-        calculo_quentinha = total_quentinha * 15
-        quentinha_formatado = format_currency(calculo_quentinha, 'BRL', locale='pt_BR')
-        dados_str += f"Total Quentinhas - {total_quentinha} = {quentinha_formatado}\n"
-
-    if total_embarque != 0:
-        embarque_formatado = format_currency(total_embarque, 'BRL', locale='pt_BR')
-        dados_str += f"Total Embarques - {total_embarque} = {embarque_formatado}\n"
-
-    if total_diaria != 0:
-        diaria_formatada = format_currency(total_diaria * 50, 'BRL', locale='pt_BR')
-        dados_str += f"Total Diarias - {total_diaria} = {diaria_formatada}\n"
-
-    if total_cilindro_acqua != 0 or total_cilindro_pl != 0:
-        total_cilindro = total_cilindro_acqua + total_cilindro_pl
-        cilindro_formatado = format_currency(total_cilindro, 'BRL', locale='pt_BR')
-        dados_str += f"Total Cilindros - {total_cilindro_acqua} Acqua + {total_cilindro_pl} Pl = {cilindro_formatado}\n"
-
-    total_pagar = total_equipagens + total_comissao + calculo_bat + calculo_quentinha + total_cilindro + (total_diaria * 50) + total_embarque
-    total_formatado = format_currency(total_pagar, 'BRL', locale='pt_BR')
-    dados_str += f"Total a pagar - {total_formatado}"
-
-    # Agora, dados_str conterá todos os textos com quebras de linha entre eles
-    st.code(dados_str)
-    mydb.close()
-
-
-
-
-
-
+    # mydb.connect()
+    # cursor.execute(f"SELECT id_staff, comissao FROM staffs where nome ='{staff}'")
+    # result = cursor.fetchone()
+    # id_staff = result[0]
+    # comissao = result[1]
+    # cursor.execute(
+    #     'SELECT data, funcao, quantidade, curso, pratica, quentinha FROM lancamentos_barco WHERE id_staff = %s and data between %s and %s',
+    #     (id_staff, data1_pagamento, data2_pagamento))
+    # dados = cursor.fetchall()
+    #
+    # cursor.execute(
+    #     "SELECT data, cilindros_acqua, cilindros_pl, almoco FROM lancamento_cilindro where id_staff = %s and data between %s and %s",
+    #     (id_staff, data1_pagamento, data2_pagamento))
+    # dados2 = cursor.fetchall()
+    #
+    # dados_str = ''
+    # # Itera sobre cada tupla em 'dados'
+    # total_equipagens = 0
+    # total_bat = 0
+    # total_curso = 0
+    # valor_curso = 0
+    # total_quentinha = 0
+    # total_comissao = 0
+    # agrupado_por_data = {}
+    # total_cilindro = 0
+    # total_diaria = 0
+    # calculo_bat = 0
+    # total_embarque = 0
+    # calculo_quentinha = 0
+    #
+    # # Itera sobre cada tupla em 'dados'
+    # for dado in dados:
+    #     # Converta o objeto datetime para uma string formatada
+    #     data_form = datetime.strftime(dado[0], "%d/%m/%Y")
+    #
+    #     if dado[4] is None:
+    #         pratica = ''
+    #     else:
+    #         pratica = dado[4]
+    #
+    #     if dado[1] == 'AS':
+    #         tipo = 'Equipagens'
+    #         total_equipagens += int(dado[2])
+    #
+    #     if dado[1] == 'CAPITAO':
+    #         tipo = 'Embarques'
+    #         total_embarque += int(dado[2])
+    #
+    #     if dado[1] == 'CURSO':
+    #         tipo = ''
+    #         if dado[3] == 'RESCUE':
+    #             total_comissao += int(dado[2]) * 150
+    #             total_curso += int(dado[2])
+    #         elif dado[3] == 'REVIEW':
+    #             total_comissao += int(dado[2]) * 120
+    #             total_curso += int(dado[2])
+    #         elif dado[3] == 'DIVEMASTER':
+    #             total_comissao += int(dado[2]) * 200
+    #             total_curso += int(dado[2])
+    #         else:
+    #             total_comissao += int(dado[2]) * 75
+    #             total_curso += int(dado[2])
+    #     if dado[1] == 'BAT':
+    #         tipo = dado[1]
+    #         total_bat += float(dado[2])
+    #
+    #     # Certifica-se de que há pelo menos 5 elementos na tupla
+    #     if len(dado) >= 5:
+    #         # Inicializa a lista para a data se ainda não existir
+    #         if data_form not in agrupado_por_data:
+    #             agrupado_por_data[data_form] = []
+    #
+    #         if dado[5] == 'Sim':
+    #             if dado[1] == 'CURSO':
+    #                 texto = f'{int(dado[2])}{tipo} {dado[3]} {pratica} + quentinha'
+    #                 total_quentinha += 1
+    #             else:
+    #                 texto = f'{float(dado[2])} {tipo} + quentinha'
+    #                 total_quentinha += 1
+    #         else:
+    #             if dado[1] == 'CURSO':
+    #                 texto = f'{int(dado[2])}{tipo} {dado[3]} {pratica}'
+    #             else:
+    #                 texto = f'{float(dado[2])} {tipo}'
+    #
+    #         # Adiciona à lista correspondente à data
+    #         agrupado_por_data[data_form].append(texto)
+    #
+    # # Adiciona os dados da tabela lancamento_cilindro ao dicionário agrupado_por_data
+    # for dado in dados2:
+    #     # Converta o objeto datetime para uma string formatada
+    #     data_form = datetime.strftime(dado[0], "%d/%m/%Y")
+    #
+    #     # Certifica-se de que há pelo menos 4 elementos na tupla
+    #     if len(dado) >= 4:
+    #
+    #         if staff == 'Juninho':
+    #             total_diaria += 1
+    #         # Inicializa a lista para a data se ainda não existir
+    #         if data_form not in agrupado_por_data:
+    #             agrupado_por_data[data_form] = []
+    #
+    #         if dado[2] == 0:
+    #             texto = f'{int(dado[1])} Cilindros Acqua'
+    #             agrupado_por_data[data_form].append(texto)
+    #         else:
+    #             texto = f'{int(dado[1])} Cilindros Acqua + {int(dado[2])} Cilindro Pl'
+    #             agrupado_por_data[data_form].append(texto)
+    #
+    # # Agora você pode iterar sobre o dicionário para criar a string final
+    # dados_str = ''
+    # for data, textos in agrupado_por_data.items():
+    #     dados_str += f"{data} - {' + '.join(textos)}\n"
+    #
+    # # Adiciona uma linha em branco
+    # dados_str += '\n'
+    #
+    # # Calcula os totais e adiciona ao resultado final
+    # total_equipagens = sum(int(dado[2]) for dado in dados if dado[1] == 'AS')
+    # total_curso = sum(int(dado[2]) for dado in dados if dado[1] == 'CURSO')
+    # total_bat = sum(float(dado[2]) for dado in dados if dado[1] not in ['AS', 'CURSO', 'CAPITAO'])
+    #
+    # total_cilindro_acqua = sum(int(dado[1]) for dado in dados2)
+    # total_cilindro_pl = sum(int(dado[2]) for dado in dados2)
+    #
+    # if total_equipagens != 0:
+    #     equipagens_formatado = format_currency(total_equipagens, 'BRL', locale='pt_BR')
+    #     dados_str += f"Total Equipagens - {total_equipagens} = {equipagens_formatado}\n"
+    #
+    # if total_curso != 0:
+    #     curso_formatado = format_currency(total_comissao, 'BRL', locale='pt_BR')
+    #     dados_str += f"Total Praticas - {total_curso} = {curso_formatado}\n"
+    #
+    # if total_bat != 0:
+    #     calculo_bat = total_bat * comissao
+    #     bat_formatado = format_currency(calculo_bat, 'BRL', locale='pt_BR')
+    #     dados_str += f"Total Batismos - {total_bat:.2f} = {bat_formatado}\n"
+    #
+    # if total_quentinha != 0:
+    #     calculo_quentinha = total_quentinha * 15
+    #     quentinha_formatado = format_currency(calculo_quentinha, 'BRL', locale='pt_BR')
+    #     dados_str += f"Total Quentinhas - {total_quentinha} = {quentinha_formatado}\n"
+    #
+    # if total_embarque != 0:
+    #     embarque_formatado = format_currency(total_embarque, 'BRL', locale='pt_BR')
+    #     dados_str += f"Total Embarques - {total_embarque} = {embarque_formatado}\n"
+    #
+    # if total_diaria != 0:
+    #     diaria_formatada = format_currency(total_diaria * 50, 'BRL', locale='pt_BR')
+    #     dados_str += f"Total Diarias - {total_diaria} = {diaria_formatada}\n"
+    #
+    # if total_cilindro_acqua != 0 or total_cilindro_pl != 0:
+    #     total_cilindro = total_cilindro_acqua + total_cilindro_pl
+    #     cilindro_formatado = format_currency(total_cilindro, 'BRL', locale='pt_BR')
+    #     dados_str += f"Total Cilindros - {total_cilindro_acqua} Acqua + {total_cilindro_pl} Pl = {cilindro_formatado}\n"
+    #
+    # total_pagar = total_equipagens + total_comissao + calculo_bat + calculo_quentinha + total_cilindro + (
+    #             total_diaria * 50) + total_embarque
+    # total_formatado = format_currency(total_pagar, 'BRL', locale='pt_BR')
+    # dados_str += f"Total a pagar - {total_formatado}"
+    #
+    # # Agora, dados_str conterá todos os textos com quebras de linha entre eles
+    # st.code(dados_str)
+    # mydb.close()
 
 #     for dado in dados:
 #
@@ -500,33 +518,21 @@ if st.button('Pesquisar2'):
 #     # Agora, dados_str conterá todos os textos com quebras de linha entre eles
 #     st.code(dados_str + texto_equipagem + texto_curso + texto_bat)
 
-    # agrupado_por_data = defaultdict(list)
-    #
-    # # Agrupando informações do lancamento_bat
-    # for data, funcao, quantidade, curso, pratica, quentinha in dados:
-    #     agrupado_por_data[data].append((funcao, quantidade))
-    #
-    # # Agrupando informações do lancamento_cilindro
-    # for data, cilindros_acqua, cilindros_pl, almoco in dados2:
-    #     agrupado_por_data[data].append(('Cilindro', cilindros_acqua + cilindros_pl))
-    #
-    # # Exibindo os resultados
-    # for data, informacoes in agrupado_por_data.items():
-    #     st.write(f'Data: {data}')
-    #     for funcao, quantidade in informacoes:
-    #         st.write(f'{funcao}: {quantidade}')
-    #     st.write('-' * 20)
-    #
-    #
-
-
-
-
-
-
-
-
-
-
-
-
+# agrupado_por_data = defaultdict(list)
+#
+# # Agrupando informações do lancamento_bat
+# for data, funcao, quantidade, curso, pratica, quentinha in dados:
+#     agrupado_por_data[data].append((funcao, quantidade))
+#
+# # Agrupando informações do lancamento_cilindro
+# for data, cilindros_acqua, cilindros_pl, almoco in dados2:
+#     agrupado_por_data[data].append(('Cilindro', cilindros_acqua + cilindros_pl))
+#
+# # Exibindo os resultados
+# for data, informacoes in agrupado_por_data.items():
+#     st.write(f'Data: {data}')
+#     for funcao, quantidade in informacoes:
+#         st.write(f'{funcao}: {quantidade}')
+#     st.write('-' * 20)
+#
+#
