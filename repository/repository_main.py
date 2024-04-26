@@ -20,7 +20,7 @@ class MainRepository:
             SUM(CASE WHEN l.funcao = 'CAPITAO' THEN l.quantidade else 0 end) as total_embarques,
             SUM(CASE WHEN l.funcao = 'CURSO' THEN l.quantidade else 0 end) as total_curso,
             SUM(lc.cilindros_acqua + lc.cilindros_pl) as total_cilindro,
-            CASE WHEN MAX(lb.quentinha = 'Sim' OR lc.almoco = 'Sim') THEN 1 ELSE 0 END AS total_quentinhas,
+            CASE WHEN MAX(l.quentinha = 'Sim' OR lc.almoco = 'Sim') THEN 1 ELSE 0 END AS total_quentinhas,
             SUM(
                 CASE 
                     WHEN l.funcao = 'BAT' THEN l.quantidade * staffs.comissao
