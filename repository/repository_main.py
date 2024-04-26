@@ -14,7 +14,7 @@ class MainRepository:
     def select_soma_total_comissoes(self, data_incial, data_final):
         query = """
         SELECT 
-            staffs.nome,
+            staffs.nome, ' - ',
             CONCAT(
                 'BAT: ', SUM(CASE WHEN l.funcao = 'BAT' THEN l.quantidade ELSE 0 END), ' + ',
                 'Equipagens: ', SUM(CASE WHEN l.funcao = 'AS' THEN l.quantidade ELSE 0 END), ' + ',
@@ -22,7 +22,7 @@ class MainRepository:
                 'Curso: ', SUM(CASE WHEN l.funcao = 'CURSO' THEN l.quantidade ELSE 0 END), ' + ',
                 'Cilindros: ', COALESCE(SUM(lc.cilindros_acqua + lc.cilindros_pl), 0), ' + ',
                 'Quentinhas: ', CASE WHEN MAX(l.quentinha = 'Sim' OR lc.almoco = 'Sim') THEN 1 ELSE 0 END, ' = ',
-                'Total a Pagar: ', SUM(
+                'R$ : ', SUM(
                     CASE 
                         WHEN l.id_staff IS NOT NULL THEN
                             CASE 
