@@ -14,8 +14,8 @@ class MainRepository:
     def select_soma_total_comissoes(self, data_incial, data_final):
         query = """
         SELECT 
-            staffs.nome, ' - ',
             CONCAT(
+                 staffs.nome, ' - ',
                 'BAT: ', SUM(CASE WHEN l.funcao = 'BAT' THEN l.quantidade ELSE 0 END), ' + ',
                 'Equipagens: ', SUM(CASE WHEN l.funcao = 'AS' THEN l.quantidade ELSE 0 END), ' + ',
                 'Embarques: ', SUM(CASE WHEN l.funcao = 'CAPITAO' THEN l.quantidade ELSE 0 END), ' + ',
