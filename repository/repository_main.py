@@ -19,7 +19,7 @@ class MainRepository:
             SUM(CASE WHEN l.funcao = 'AS' THEN l.quantidade else 0 end) as total_equipagens,
             SUM(CASE WHEN l.funcao = 'CAPITAO' THEN l.quantidade else 0 end) as total_embarques,
             SUM(CASE WHEN l.funcao = 'CURSO' THEN l.quantidade else 0 end) as total_curso,
-            CASE WHEN MAX(l.quentinha = 'Sim' OR lc.almoco = 'Sim') THEN 1 ELSE 0 END AS total_quentinhas,
+            SUM(CASE WHEN l.quentinha = 'Sim' THEN 1 else 0 end) as total_quentinhas,
             SUM(
                 CASE 
                     WHEN l.funcao = 'BAT' THEN l.quantidade * staffs.comissao
@@ -44,7 +44,6 @@ class MainRepository:
         FROM 
             lancamentos_barco as l
         INNER JOIN staffs on staffs.id_staff = l.id_staff
-        LEFT JOIN lancamento_cilindro as lc ON lc.id_staff = staffs.id_staff
         WHERE l.data between %s and %s
         GROUP BY 
             staffs.nome;
