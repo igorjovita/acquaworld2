@@ -48,7 +48,7 @@ class MainRepository:
                             ELSE
                                 0
                         END
-                    ) + (SELECT COUNT(*) FROM lancamento_cilindro WHERE lancamento_cilindro.data = l.data AND lancamento_cilindro.id_staff = l.id_staff AND lancamento_cilindro.tipo != 'FIXO') * 50, 2)
+                    ) + (SELECT COUNT(*) FROM lancamento_cilindro WHERE lancamento_cilindro.data = l.data AND lancamento_cilindro.id_staff = l.id_staff AND staff.tipo != 'FIXO') * 50, 2)
             ) AS summary
         FROM 
             staffs
