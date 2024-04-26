@@ -17,7 +17,7 @@ class MainRepository:
             CONCAT(
                  staffs.nome, ' - ',
                  SUM(CASE WHEN l.funcao = 'BAT' THEN l.quantidade ELSE 0 END), ' BAT', ' + ',
-                 SUM(CASE WHEN l.funcao = 'AS' THEN l.quantidade ' Equipagens' ELSE '' END), ' + ',
+                 SUM(CASE WHEN l.funcao = 'AS' THEN CONCAT(l.quantidade ' Equipagens') ELSE '' END), ' + ',
                 'Embarques: ', SUM(CASE WHEN l.funcao = 'CAPITAO' THEN l.quantidade ELSE 0 END), ' + ',
                 'Curso: ', SUM(CASE WHEN l.funcao = 'CURSO' THEN l.quantidade ELSE 0 END), ' + ',
                 'Cilindros: ', COALESCE(SUM(lc.cilindros_acqua + lc.cilindros_pl), 0), ' + ',
