@@ -21,7 +21,7 @@ class MainRepository:
                 'Embarques: ', SUM(CASE WHEN l.funcao = 'CAPITAO' THEN l.quantidade ELSE 0 END), ' + ',
                 'Curso: ', SUM(CASE WHEN l.funcao = 'CURSO' THEN l.quantidade ELSE 0 END), ' + ',
                 'Cilindros: ', COALESCE(SUM(lc.cilindros_acqua + lc.cilindros_pl), 0), ' + ',
-                'Quentinhas: ', CASE WHEN MAX(l.quentinha = 'Sim' OR lc.almoco = 'Sim') THEN 1 ELSE 0 END, ' = ',
+                'Quentinhas: ', SUM(CASE WHEN MAX(l.quentinha = 'Sim' OR lc.almoco = 'Sim')) THEN 1 ELSE 0 END, ' = ',
                 'R$ : ', SUM(
                     CASE 
                         WHEN l.id_staff IS NOT NULL THEN
