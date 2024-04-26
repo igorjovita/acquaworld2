@@ -33,7 +33,7 @@ class MainRepository:
                                     WHEN l.funcao = 'AS' THEN l.quantidade * 1
                                     WHEN l.funcao = 'CAPITAO' THEN l.quantidade * 1
                                     WHEN l.funcao = 'CURSO' THEN 
-                                    WHEN lc.cilindros_acqua != 0 OR lc.cilindros_pl != 0 and lc.tipo != 'FIXO' THEN 50 
+                                    WHEN (lc.cilindros_acqua != 0 OR lc.cilindros_pl != 0) and lc.tipo != 'FIXO' THEN 50 
                                         CASE 
                                             WHEN l.curso IN ('OWD', 'ADV') THEN l.quantidade * 75
                                             WHEN l.curso = 'RESCUE' THEN l.quantidade * 150
