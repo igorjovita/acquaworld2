@@ -27,7 +27,6 @@ class MainRepository:
                     SUM(
                         CASE 
                             WHEN l.id_staff IS NOT NULL THEN
-                                (SELECT COUNT(*) FROM lancamento_cilindro as lc INNER JOIN staffs on staffs.id_staff = lc.id_staff WHERE lc.data between %s AND %s  AND staffs.tipo != 'FIXO') * 50, 2)
                                 CASE 
                                     WHEN l.funcao = 'BAT' THEN l.quantidade * staffs.comissao
                                     WHEN l.funcao = 'AS' THEN l.quantidade * 1
@@ -49,7 +48,11 @@ class MainRepository:
                             ELSE
                                 0
                         END
-                    )
+                    ) + (
+                        SELECT COUNT(*) FROM lancamento_cilindro AS lc_inner 
+                        INNER JOIN staffs AS staffs_inner ON staffs_inner.id_staff = lc_inner.id_staff 
+                        WHERE lc_inner.data BETWEEN %s AND %s AND staffs_inner.tipo != 'FIXO'
+                    ) * 50, 2)
             ) AS summary
         FROM 
             staffs
@@ -61,6 +64,7 @@ class MainRepository:
             l.id_staff IS NOT NULL
         GROUP BY 
             staffs.nome;
+
 
 
 
