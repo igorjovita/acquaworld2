@@ -48,7 +48,7 @@ class MainRepository:
                             ELSE
                                 0
                         END
-                    ) + (SELECT COUNT(*) FROM lancamento_cilindro INNER JOIN staffs on staffs.id_staff = lancamento_cilindro.id_staff WHERE lancamento_cilindro.data = l.data AND lancamento_cilindro.id_staff = l.id_staff AND staffs.tipo != 'FIXO') * 50, 2)
+                    ) + (SELECT COUNT(*) FROM lancamento_cilindro as lc INNER JOIN staffs on staffs.id_staff = lc.id_staff WHERE lc.data between %s AND %s   AND staffs.tipo != 'FIXO') * 50, 2)
             ) AS summary
         FROM 
             staffs
@@ -65,7 +65,7 @@ class MainRepository:
 
 
         """
-        params = (data_incial, data_final)
+        params = (data_incial, data_final, data_incial, data_final)
         return self.db.execute_query(query, params)
 
     def select_soma_comissao_individual(self, data_inicial, data_final, id_staff):
