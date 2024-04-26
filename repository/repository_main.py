@@ -16,7 +16,7 @@ class MainRepository:
         SELECT 
             CONCAT(
                  staffs.nome, ' - ',
-                'BAT: ', SUM(CASE WHEN l.funcao = 'BAT' THEN l.quantidade ELSE 0 END), ' + ',
+                 SUM(CASE WHEN l.funcao = 'BAT' THEN l.quantidade ELSE 0 END), ' BAT', ' + ',
                 'Equipagens: ', SUM(CASE WHEN l.funcao = 'AS' THEN l.quantidade ELSE 0 END), ' + ',
                 'Embarques: ', SUM(CASE WHEN l.funcao = 'CAPITAO' THEN l.quantidade ELSE 0 END), ' + ',
                 'Curso: ', SUM(CASE WHEN l.funcao = 'CURSO' THEN l.quantidade ELSE 0 END), ' + ',
