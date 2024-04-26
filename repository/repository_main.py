@@ -15,16 +15,15 @@ class MainRepository:
         query = """
         SELECT 
             CONCAT(
-                 staffs.nome, ' - ',
-                 CASE WHEN SUM(CASE WHEN l.funcao = 'BAT' THEN l.quantidade ELSE 0 END) > 0 THEN CONCAT(FORMAT(SUM(CASE WHEN l.funcao = 'BAT' THEN l.quantidade ELSE 0 END), 2), ' BAT + ') ELSE '' END,
-                 CASE WHEN SUM(CASE WHEN l.funcao = 'AS' THEN l.quantidade ELSE 0 END) > 0 THEN CONCAT(FORMAT(SUM(CASE WHEN l.funcao = 'AS' THEN l.quantidade ELSE 0 END), 2), ' Equipagens + ') ELSE '' END,
-                 CASE WHEN SUM(CASE WHEN l.funcao = 'CAPITAO' THEN l.quantidade ELSE 0 END) > 0 THEN CONCAT(FORMAT(SUM(CASE WHEN l.funcao = 'CAPITAO' THEN l.quantidade ELSE 0 END), 2), ' Embarques + ') ELSE '' END,
-                 CASE WHEN SUM(CASE WHEN l.funcao = 'CURSO' THEN l.quantidade ELSE 0 END) > 0 THEN CONCAT(FORMAT(SUM(CASE WHEN l.funcao = 'CURSO' THEN l.quantidade ELSE 0 END), 2), ' Curso + ') ELSE '' END,
-                 CASE WHEN COALESCE(SUM(lc.cilindros_acqua + lc.cilindros_pl), 0) > 0 THEN CONCAT(FORMAT(COALESCE(SUM(lc.cilindros_acqua + lc.cilindros_pl), 0), 2), ' Cilindros + ') ELSE '' END,
-                 CASE WHEN SUM(CASE WHEN l.quentinha = 'Sim' OR lc.almoco = 'Sim' THEN 1 ELSE 0 END) > 0 THEN CONCAT(FORMAT(SUM(CASE WHEN l.quentinha = 'Sim' OR lc.almoco = 'Sim' THEN 1 ELSE 0 END), 2), ' Quentinhas = ') ELSE '' END,
-                 CASE WHEN SUM(CASE WHEN lc.cilindros_acqua != 0 OR lc.cilindros_pl != 0 THEN 1 ELSE 0 END) > 0 THEN CONCAT(FORMAT(SUM(CASE WHEN lc.cilindros_acqua != 0 OR lc.cilindros_pl != 0 THEN 1 ELSE 0 END), 2), ' Diarias = ') ELSE '' END,
-
-                CONCAT('R$ : ', FORMAT(
+                staffs.nome, ' - ',
+                CASE WHEN SUM(CASE WHEN l.funcao = 'BAT' THEN l.quantidade ELSE 0 END) > 0 THEN CONCAT(FORMAT(SUM(CASE WHEN l.funcao = 'BAT' THEN l.quantidade ELSE 0 END), 2), ' BAT + ') ELSE '' END,
+                CASE WHEN SUM(CASE WHEN l.funcao = 'AS' THEN l.quantidade ELSE 0 END) > 0 THEN CONCAT(FORMAT(SUM(CASE WHEN l.funcao = 'AS' THEN l.quantidade ELSE 0 END), 2), ' Equipagens + ') ELSE '' END,
+                CASE WHEN SUM(CASE WHEN l.funcao = 'CAPITAO' THEN l.quantidade ELSE 0 END) > 0 THEN CONCAT(FORMAT(SUM(CASE WHEN l.funcao = 'CAPITAO' THEN l.quantidade ELSE 0 END), 2), ' Embarques + ') ELSE '' END,
+                CASE WHEN SUM(CASE WHEN l.funcao = 'CURSO' THEN l.quantidade ELSE 0 END) > 0 THEN CONCAT(FORMAT(SUM(CASE WHEN l.funcao = 'CURSO' THEN l.quantidade ELSE 0 END), 2), ' Curso + ') ELSE '' END,
+                CASE WHEN COALESCE(SUM(lc.cilindros_acqua + lc.cilindros_pl), 0) > 0 THEN CONCAT(FORMAT(COALESCE(SUM(lc.cilindros_acqua + lc.cilindros_pl), 0), 2), ' Cilindros + ') ELSE '' END,
+                CASE WHEN SUM(CASE WHEN l.quentinha = 'Sim' OR lc.almoco = 'Sim' THEN 1 ELSE 0 END) > 0 THEN CONCAT(FORMAT(SUM(CASE WHEN l.quentinha = 'Sim' OR lc.almoco = 'Sim' THEN 1 ELSE 0 END), 2), ' Quentinhas + ') ELSE '' END,
+                CASE WHEN SUM(CASE WHEN lc.cilindros_acqua != 0 OR lc.cilindros_pl != 0 THEN 1 ELSE 0 END) > 0 THEN CONCAT(FORMAT(SUM(CASE WHEN lc.cilindros_acqua != 0 OR lc.cilindros_pl != 0 THEN 1 ELSE 0 END), 2), ' Diarias + ') ELSE '' END,
+                'R$ : ', FORMAT(
                     SUM(
                         CASE 
                             WHEN l.id_staff IS NOT NULL THEN
@@ -33,7 +32,6 @@ class MainRepository:
                                     WHEN l.funcao = 'AS' THEN l.quantidade * 1
                                     WHEN l.funcao = 'CAPITAO' THEN l.quantidade * 1
                                     WHEN l.funcao = 'CURSO' THEN 
-                                    WHEN (lc.cilindros_acqua != 0 OR lc.cilindros_pl != 0) and lc.tipo != 'FIXO' THEN 50 
                                         CASE 
                                             WHEN l.curso IN ('OWD', 'ADV') THEN l.quantidade * 75
                                             WHEN l.curso = 'RESCUE' THEN l.quantidade * 150
@@ -50,8 +48,7 @@ class MainRepository:
                             ELSE
                                 0
                         END
-                    ), 2)
-                )
+                    ) + (SELECT COUNT(*) FROM lancamento_cilindro WHERE lancamento_cilindro.data = l.data AND lancamento_cilindro.id_staff = l.id_staff AND lancamento_cilindro.tipo != 'FIXO') * 50, 2)
             ) AS summary
         FROM 
             staffs
