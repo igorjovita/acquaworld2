@@ -16,12 +16,12 @@ class MainRepository:
         SELECT 
             staffs.nome,
             CONCAT(
-                'Total BAT: ', SUM(CASE WHEN l.funcao = 'BAT' THEN l.quantidade ELSE 0 END), ' | ',
-                'Total Equipagens: ', SUM(CASE WHEN l.funcao = 'AS' THEN l.quantidade ELSE 0 END), ' | ',
-                'Total Embarques: ', SUM(CASE WHEN l.funcao = 'CAPITAO' THEN l.quantidade ELSE 0 END), ' | ',
-                'Total Curso: ', SUM(CASE WHEN l.funcao = 'CURSO' THEN l.quantidade ELSE 0 END), ' | ',
-                'Total Cilindros: ', COALESCE(SUM(lc.cilindros_acqua + lc.cilindros_pl), 0), ' | ',
-                'Total Quentinhas/Almoço: ', CASE WHEN MAX(l.quentinha = 'Sim' OR lc.almoco = 'Sim') THEN 1 ELSE 0 END, ' | ',
+                'BAT: ', SUM(CASE WHEN l.funcao = 'BAT' THEN l.quantidade ELSE 0 END), ' + ',
+                'Equipagens: ', SUM(CASE WHEN l.funcao = 'AS' THEN l.quantidade ELSE 0 END), ' + ',
+                'Embarques: ', SUM(CASE WHEN l.funcao = 'CAPITAO' THEN l.quantidade ELSE 0 END), ' + ',
+                'Curso: ', SUM(CASE WHEN l.funcao = 'CURSO' THEN l.quantidade ELSE 0 END), ' + ',
+                'Cilindros: ', COALESCE(SUM(lc.cilindros_acqua + lc.cilindros_pl), 0), ' + ',
+                'Quentinhas: ', CASE WHEN MAX(l.quentinha = 'Sim' OR lc.almoco = 'Sim') THEN 1 ELSE 0 END, ' = ',
                 'Total a Pagar: ', SUM(
                     CASE 
                         WHEN l.id_staff IS NOT NULL THEN
@@ -54,6 +54,7 @@ class MainRepository:
             lancamentos_barco AS l ON staffs.id_staff = l.id_staff AND l.data BETWEEN %s AND %s
         LEFT JOIN 
             lancamento_cilindro AS lc ON staffs.id_staff = lc.id_staff AND l.data = lc.data
+        WHERE l.id_staff IS NOT NULL
         GROUP BY 
             staffs.nome;
 
