@@ -45,7 +45,7 @@ class MainRepository:
         FROM 
             lancamentos_barco as l
         INNER JOIN staffs on staffs.id_staff = l.id_staff
-        INNER JOIN lancamento_cilindro as lc ON lc.id_staff = staffs.id_staff
+        LEFT JOIN lancamento_cilindro as lc ON lc.id_staff = staffs.id_staff
         WHERE l.data between %s and %s
         GROUP BY 
             staffs.nome;
