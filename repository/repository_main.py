@@ -22,6 +22,8 @@ class MainRepository:
                  CASE WHEN SUM(CASE WHEN l.funcao = 'CURSO' THEN l.quantidade ELSE 0 END) > 0 THEN CONCAT(FORMAT(SUM(CASE WHEN l.funcao = 'CURSO' THEN l.quantidade ELSE 0 END), 2), ' Curso + ') ELSE '' END,
                  CASE WHEN COALESCE(SUM(lc.cilindros_acqua + lc.cilindros_pl), 0) > 0 THEN CONCAT(FORMAT(COALESCE(SUM(lc.cilindros_acqua + lc.cilindros_pl), 0), 2), ' Cilindros + ') ELSE '' END,
                  CASE WHEN SUM(CASE WHEN l.quentinha = 'Sim' OR lc.almoco = 'Sim' THEN 1 ELSE 0 END) > 0 THEN CONCAT(FORMAT(SUM(CASE WHEN l.quentinha = 'Sim' OR lc.almoco = 'Sim' THEN 1 ELSE 0 END), 2), ' Quentinhas = ') ELSE '' END,
+                 CASE WHEN SUM(CASE WHEN lc.cilindros_acqua != 0 OR lc.cilindros_pl != 0 THEN 1 ELSE 0 END) > 0 THEN CONCAT(FORMAT(SUM(CASE WHEN lc.cilindros_acqua != 0 OR lc.cilindros_pl != 0 THEN 1 ELSE 0 END), 2), ' Diarias = ') ELSE '' END,
+
                 CONCAT('R$ : ', FORMAT(
                     SUM(
                         CASE 
@@ -31,6 +33,7 @@ class MainRepository:
                                     WHEN l.funcao = 'AS' THEN l.quantidade * 1
                                     WHEN l.funcao = 'CAPITAO' THEN l.quantidade * 1
                                     WHEN l.funcao = 'CURSO' THEN 
+                                    WHEN lc.cilindros_acqua != 0 OR lc.cilindros_pl != 0 and lc.tipo != 'FIXO' THEN 50 
                                         CASE 
                                             WHEN l.curso IN ('OWD', 'ADV') THEN l.quantidade * 75
                                             WHEN l.curso = 'RESCUE' THEN l.quantidade * 150
