@@ -71,58 +71,52 @@ class MainRepository:
         query = """
         SELECT 
             CONCAT(
-                DATE_FORMAT(lb.data, '%d/%m/%Y'),
-                ' - ',
-                GROUP_CONCAT(
-                    CONCAT( 
-                        IF(ROUND(lb.quantidade) = lb.quantidade, FORMAT(lb.quantidade, 0), FORMAT(lb.quantidade, 2)),
-                        ' ',
+                 staffs.nome, ' - ',
+                 CASE WHEN SUM(CASE WHEN l.funcao = 'BAT' THEN l.quantidade ELSE 0 END) > 0 THEN CONCAT(FORMAT(SUM(CASE WHEN l.funcao = 'BAT' THEN l.quantidade ELSE 0 END), 2), ' BAT + ') ELSE '' END,
+                 CASE WHEN SUM(CASE WHEN l.funcao = 'AS' THEN l.quantidade ELSE 0 END) > 0 THEN CONCAT(FORMAT(SUM(CASE WHEN l.funcao = 'AS' THEN l.quantidade ELSE 0 END), 2), ' Equipagens + ') ELSE '' END,
+                 CASE WHEN SUM(CASE WHEN l.funcao = 'CAPITAO' THEN l.quantidade ELSE 0 END) > 0 THEN CONCAT(FORMAT(SUM(CASE WHEN l.funcao = 'CAPITAO' THEN l.quantidade ELSE 0 END), 2), ' Embarques + ') ELSE '' END,
+                 CASE WHEN SUM(CASE WHEN l.funcao = 'CURSO' THEN l.quantidade ELSE 0 END) > 0 THEN CONCAT(FORMAT(SUM(CASE WHEN l.funcao = 'CURSO' THEN l.quantidade ELSE 0 END), 2), ' Curso + ') ELSE '' END,
+                 CASE WHEN COALESCE(SUM(lc.cilindros_acqua + lc.cilindros_pl), 0) > 0 THEN CONCAT(FORMAT(COALESCE(SUM(lc.cilindros_acqua + lc.cilindros_pl), 0), 2), ' Cilindros + ') ELSE '' END,
+                 CASE WHEN SUM(CASE WHEN l.quentinha = 'Sim' OR lc.almoco = 'Sim' THEN 1 ELSE 0 END) > 0 THEN CONCAT(FORMAT(SUM(CASE WHEN l.quentinha = 'Sim' OR lc.almoco = 'Sim' THEN 1 ELSE 0 END), 2), ' Quentinhas = ') ELSE '' END,
+                CONCAT('R$ : ', FORMAT(
+                    SUM(
                         CASE 
-                            WHEN lb.funcao = 'CURSO' THEN CONCAT(lb.curso, ' ', IFNULL(lb.pratica, 'Pratica 1'))
-                            ELSE lb.funcao
+                            WHEN l.id_staff IS NOT NULL THEN
+                                CASE 
+                                    WHEN l.funcao = 'BAT' THEN l.quantidade * staffs.comissao
+                                    WHEN l.funcao = 'AS' THEN l.quantidade * 1
+                                    WHEN l.funcao = 'CAPITAO' THEN l.quantidade * 1
+                                    WHEN l.funcao = 'CURSO' THEN 
+                                        CASE 
+                                            WHEN l.curso IN ('OWD', 'ADV') THEN l.quantidade * 75
+                                            WHEN l.curso = 'RESCUE' THEN l.quantidade * 150
+                                            WHEN l.curso = 'REVIEW' THEN l.quantidade * 120
+                                            WHEN l.curso = 'DIVEMASTER' THEN l.quantidade * 200
+                                            ELSE 0
+                                        END
+                                    ELSE 0
+                                END +
+                                CASE 
+                                    WHEN l.quentinha = 'Sim' THEN 15
+                                    ELSE 0
+                                END
+                            ELSE
+                                0
                         END
-                    ) ORDER BY lb.data SEPARATOR ' + '
-                ),
-                CASE 
-                    WHEN SUM(CASE WHEN lb.quentinha = 'Sim' THEN 1 ELSE 0 END) > 0 AND SUM(CASE WHEN lc.almoco = 'Sim' THEN 1 ELSE 0 END) > 0 THEN ' + quentinha'
-                    WHEN SUM(CASE WHEN lb.quentinha = 'Sim' THEN 1 ELSE 0 END) > 0 THEN ' + quentinha'
-                    WHEN SUM(CASE WHEN lc.almoco = 'Sim' THEN 1 ELSE 0 END) > 0 THEN ' + quentinha'
-                    ELSE ''
-                END,
-                 CASE 
-                    WHEN COUNT(lc.data) > 0 THEN
-                        CASE
-                            WHEN lc.cilindros_acqua <> 0 AND lc.cilindros_pl <> 0 THEN 
-                                CONCAT(' + ', lc.cilindros_acqua, ' Cilindros Acqua + ', lc.cilindros_pl, ' Cilindros Pl')
-                            WHEN lc.cilindros_acqua <> 0 THEN
-                                CONCAT(' + ', lc.cilindros_acqua, ' Cilindros Acqua')
-                            WHEN lc.cilindros_pl <> 0 THEN
-                                CONCAT(' + ', lc.cilindros_pl, ' Cilindros Pl')
-                            ELSE ''
-                        END
-                    ELSE ''
-                END
-            ) AS formatted_output,
-            SUM(CASE WHEN lb.funcao = 'BAT' THEN lb.quantidade * staffs.comissao ELSE 0 END) AS total_bat,
-            SUM(CASE WHEN lb.funcao = 'BAT' THEN lb.quantidade ELSE 0 END) AS quantidade_bat,
-            SUM(CASE WHEN lb.funcao = 'AS' THEN lb.quantidade ELSE 0 END) AS total_as,
-            SUM(CASE WHEN lb.funcao = 'CAPITAO' THEN lb.quantidade ELSE 0 END) AS total_capitao,
-            SUM(CASE WHEN lb.funcao = 'CURSO' and lb.curso IN ('OWD', 'ADV') THEN lb.quantidade else 0 end) as quantidade_owd_adv,
-            SUM(CASE WHEN lb.curso = 'RESCUE' THEN lb.quantidade else 0 end) as quantidade_rescue,
-            SUM(CASE WHEN lb.curso = 'REVIEW' THEN lb.quantidade else 0 end) as quantidade_review,
-            SUM(CASE WHEN lb.curso = 'DIVEMASTER' THEN lb.quantidade else 0 end) as quantidade_divemaster,
-            CASE WHEN MAX(lb.quentinha = 'Sim' OR lc.almoco = 'Sim') THEN 15 ELSE 0 END AS total_quentinha_almoco
+                    ), 2)
+                )
+            ) AS summary
         FROM 
-            lancamentos_barco lb
-        LEFT JOIN
-            lancamento_cilindro lc ON lb.id_staff = lc.id_staff AND lb.data = lc.data
-        INNER JOIN staffs ON staffs.id_staff = lb.id_staff
+            staffs
+        LEFT JOIN 
+            lancamentos_barco AS l ON staffs.id_staff = l.id_staff AND l.data BETWEEN %s AND %s
+        LEFT JOIN 
+            lancamento_cilindro AS lc ON staffs.id_staff = lc.id_staff AND l.data = lc.data
         WHERE 
-            lb.data BETWEEN %s AND %s AND lb.id_staff = %s
-        GROUP BY
-            lb.data
-        ORDER BY
-            lb.data;
+            l.id_staff IS NOT NULL
+        GROUP BY 
+            staffs.nome;
+
 
         """
 
