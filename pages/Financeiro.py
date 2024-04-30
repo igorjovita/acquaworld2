@@ -305,7 +305,7 @@ if st.button('Pesquisar2'):
             data, comissao_bat, bat, equipagem, embarque, quantidade_curso, curso, pratica, quentinha, cilindro_acqua, cilindro_pl = select
 
             valores_diferentes_de_zero = []
-            lista_datas = {}
+            lista_datas = []
 
 
 
@@ -333,6 +333,7 @@ if st.button('Pesquisar2'):
             if data in lista_datas:
                 mensagem += ' +' + ' + '.join(valores_diferentes_de_zero)
             else:
+                lista_datas.append(data)
                 if quentinha != 0:
                     contagem_quentinha += int(quentinha)
                     valores_diferentes_de_zero.append('quentinha')
