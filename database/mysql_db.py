@@ -29,7 +29,7 @@ class DataBaseMysql:
             cursor = self.connect()
             cursor.execute(query, params)
 
-            if query.strip().startswith('SELECT'):
+            if query.strip().startswith('SELECT') or query.strip().startswith('WITH'):
                 result = cursor.fetchall()
                 return result
 
