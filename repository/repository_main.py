@@ -15,7 +15,7 @@ class MainRepository:
         query = """
     WITH SomaCilindros AS (
         SELECT
-            id_staff,
+            lc.id_staff,
             COALESCE(SUM(cilindros_acqua + cilindros_pl), 0) AS quantidade_cilindro,
             COUNT(DISTINCT CASE WHEN s.tipo = 'FREELANCER' THEN 1 ELSE 0 END) AS diarias
         FROM lancamento_cilindro
