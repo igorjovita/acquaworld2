@@ -312,36 +312,36 @@ if st.button('Pesquisar2'):
                 contagem_bat += float(bat)
             if equipagem != '0':
                 valores_diferentes_de_zero.append(f'{equipagem} Equipagens')
-                contagem_equipagem = int(equipagem)
+                contagem_equipagem += int(equipagem)
             if embarque != '0':
                 valores_diferentes_de_zero.append(f'{embarque} Embarques')
-                contagem_embarque = int(embarque)
+                contagem_embarque += int(embarque)
             if curso != '0':
-                contagem_pratica = int(curso)
+                contagem_pratica += int(curso)
                 if int(curso) > 1:
                     pratica = 'Praticas'
                 else:
                     pratica = 'Pratica'
                 valores_diferentes_de_zero.append(f'{curso} {pratica}')
             if rescue != '0':
-                contagem_rescue = int(rescue)
+                contagem_rescue += int(rescue)
                 valores_diferentes_de_zero.append(f'{rescue} Rescue')
             if review != '0':
-                contagem_review = int(review)
+                contagem_review += int(review)
                 valores_diferentes_de_zero.append(f'{review} Review')
             if divemaster != '0':
                 valores_diferentes_de_zero.append(f'{divemaster} Divemaster')
                 contagem_divemaster += int(divemaster)
 
             if cilindro_acqua is not None and cilindro_acqua != 0:
-                contagem_cilindro_acqua = int(cilindro_acqua)
+                contagem_cilindro_acqua += int(cilindro_acqua)
                 valores_diferentes_de_zero.append(f'{cilindro_acqua} Cilindros Acqua')
             if cilindro_pl is not None and cilindro_pl != 0:
-                contagem_cilindro_pl = int(cilindro_pl)
+                contagem_cilindro_pl += int(cilindro_pl)
                 valores_diferentes_de_zero.append(f'{cilindro_pl} Cilindros Pl')
 
             if quentinha != 0:
-                contagem_quentinha = int(quentinha)
+                contagem_quentinha += int(quentinha)
                 valores_diferentes_de_zero.append('quentinha')
 
             # Verifica se existem valores diferentes de zero na lista e adiciona à mensagem
