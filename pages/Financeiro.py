@@ -296,21 +296,21 @@ if st.button('Pesquisar2'):
             valores_diferentes_de_zero = []
 
             # Verifica se cada variável é diferente de zero e adiciona à lista
-            if bat != 0:
+            if bat != '':
                 valores_diferentes_de_zero.append(f'{bat} BAT')
-            if equipagem != 0:
+            if equipagem != '':
                 valores_diferentes_de_zero.append(f'{equipagem} equipagens')
-            if embarque != 0:
+            if embarque != '':
                 valores_diferentes_de_zero.append(f'{embarque} embarques')
-            if curso != 0:
+            if curso != '':
                 valores_diferentes_de_zero.append(f'{curso} curso')
-            if rescue != 0:
+            if rescue != '':
                 valores_diferentes_de_zero.append(f'{rescue} rescue')
-            if review != 0:
+            if review != '':
                 valores_diferentes_de_zero.append(f'{review} review')
-            if divemaster != 0:
+            if divemaster != '':
                 valores_diferentes_de_zero.append(f'{divemaster} divemaster')
-            if quentinha != 0:
+            if quentinha != '':
                 valores_diferentes_de_zero.append(f'{quentinha} quentinha')
             if cilindro_acqua is not None:
                 valores_diferentes_de_zero.append(f'{cilindro_acqua} cilindros acqua')
