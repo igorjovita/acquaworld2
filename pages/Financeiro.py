@@ -340,7 +340,7 @@ if st.button('Pesquisar2'):
                 valores_diferentes_de_zero.append(f'{cilindro_pl} Cilindros Pl')
 
             if data in lista_datas:
-                mensagem += ' +' + ' +  '.join(valores_diferentes_de_zero)
+                mensagem += ' + ' + ' + '.join(valores_diferentes_de_zero)
             else:
                 lista_datas.append(data)
                 if quentinha != 0:
