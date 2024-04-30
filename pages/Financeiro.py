@@ -312,9 +312,9 @@ if st.button('Pesquisar2'):
                 valores_diferentes_de_zero.append(f'{divemaster} divemaster')
             if quentinha != 0:
                 valores_diferentes_de_zero.append(f'{quentinha} quentinha')
-            if cilindro_acqua != 0:
+            if cilindro_acqua is not None:
                 valores_diferentes_de_zero.append(f'{cilindro_acqua} cilindros acqua')
-            if cilindro_pl != 0:
+            if cilindro_pl is not None:
                 valores_diferentes_de_zero.append(f'{cilindro_pl} cilindros pl')
 
             # Verifica se existem valores diferentes de zero na lista e adiciona à mensagem
