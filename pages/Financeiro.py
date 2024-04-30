@@ -372,9 +372,10 @@ if st.button('Pesquisar2'):
             mensagem += '\n' + f'Total Pratica OWD e ADV - {contagem_pratica} * 75 = {valor_pagar_pratica}'
 
         if contagem_review != 0:
-            valor_pagar_review = contagem_review * 80
+            comissao_review = select_comissao_individual[0][11]
+            valor_pagar_review = contagem_review * comissao_review
             valor_pagar_review = format_currency(float(valor_pagar_review), 'BRL', locale='pt_BR')
-            mensagem += '\n' + f'Total Review - {contagem_review} * 80 = {valor_pagar_review}'
+            mensagem += '\n' + f'Total Review - {contagem_review} * {comissao_review} = {valor_pagar_review}'
 
         if contagem_rescue != 0:
             valor_pagar_rescue = contagem_rescue * 150
