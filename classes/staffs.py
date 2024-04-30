@@ -29,11 +29,12 @@ class Staffs:
                     except IntegrityError:
                         st.error(f'Já possui um lançamento igual do staff {nome_staff} na data informada')
 
-
             elif staff is not None:
                 try:
                     index_lista_staffs = lista_staffs_total.index(staff)
                     id_staff = select_nome_id_staff[index_lista_staffs][0]
+                    if quentinha == 'Sim':
+                        pass
                     self.repo.insert_lancamento_barco(data, id_staff, funcao, quantidade, curso, pratica, 'PENDENTE',
                                                       quentinha)
                 except ValueError:

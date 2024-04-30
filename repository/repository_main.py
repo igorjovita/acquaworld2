@@ -122,12 +122,12 @@ class MainRepository:
     LEFT JOIN
         lancamento_cilindro AS lc ON lc.id_staff = lb.id_staff AND lc.data = lb.data
     WHERE 
-        lb.data BETWEEN %s AND %s AND lb.id_staff = %s
+        COALESCE(lc.data, lb.data) BETWEEN %s' AND %s AND COALESCE(lb.id_staff = %s, lc.id_staff = %s)
     ORDER BY 
-        lb.data ASC;
+        COALESCE(lc.data, lb.data) ASC;
         """
 
-        params = (data_inicial, data_final, id_staff, data_inicial, data_final, id_staff)
+        params = (data_inicial, data_final, id_staff, data_inicial, data_final, id_staff, id_staff)
 
         return self.db.execute_query(query, params)
 
@@ -140,3 +140,10 @@ class MainRepository:
         params = (data, id_staff, funcao, quantidade, curso, pratica, situacao, quentinha)
 
         return self.db.execute_query(query, params)
+
+    def insert_controle_quentinhas(self, data, id_staff):
+
+        query = """
+        SELECT INTO 
+        """
+
