@@ -339,7 +339,7 @@ if st.button('Pesquisar2'):
                 mensagem += '\n' + f'{data}: ' + ' + '.join(valores_diferentes_de_zero)
 
         if contagem_bat != 0:
-            comissao_bat = select_comissao_individual[0][2]
+            comissao_bat = select_comissao_individual[0][1]
             valor_pagar_bat = contagem_bat * int(comissao_bat)
             valor_pagar_bat = format_currency(float(valor_pagar_bat), 'BRL', locale='pt_BR')
             mensagem += '\n' + f'Total Batismo - {contagem_bat:.2f} = {valor_pagar_bat}'
@@ -358,8 +358,7 @@ if st.button('Pesquisar2'):
             mensagem += '\n' + f'Total Pratica - {contagem_pratica} = {valor_pagar_pratica}'
 
         st.code(mensagem)
-        st.write(select_comissao_individual)
-        st.write(select_comissao_individual[0][1])
+
 
     # mydb.connect()
     # cursor.execute(f"SELECT id_staff, comissao FROM staffs where nome ='{staff}'")
