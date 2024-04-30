@@ -356,7 +356,7 @@ if st.button('Pesquisar2'):
                 if quentinha != 0:
                     contagem_quentinha += int(quentinha)
                     valores_diferentes_de_zero.append('quentinha')
-                mensagem += '\n' + f'{data}: ' + ' + '.join(valores_diferentes_de_zero)
+                mensagem += '\n' + f'{data} - ' + ' + '.join(valores_diferentes_de_zero)
                 contagem_diaria += 1
 
         mensagem += '\n'
