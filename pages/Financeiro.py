@@ -350,7 +350,7 @@ if st.button('Pesquisar2'):
                 mensagem += f'{data}: ' + ' + '.join(valores_diferentes_de_zero) + '\n'
 
         if contagem_bat != 0:
-            mensagem += f'Total Batismo - {contagem_bat} = R$ {total_valor_bat}'
+            mensagem += f'Total Batismo - {contagem_bat:.2f} = R$ {total_valor_bat}'
         st.code(mensagem)
 
     # mydb.connect()
