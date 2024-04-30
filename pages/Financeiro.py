@@ -303,7 +303,7 @@ if st.button('Pesquisar2'):
             if embarque != '0':
                 valores_diferentes_de_zero.append(f'{embarque} Embarques')
             if curso != '0':
-                if curso > 1:
+                if int(curso) > 1:
                     pratica = 'Praticas'
                 else:
                     pratica = 'Pratica'
