@@ -86,9 +86,20 @@ class MainRepository:
             quentinha AS quentinha
         FROM controle_quentinhas
         WHERE data BETWEEN %s AND %s AND id_staff = %s
+    ),
+    LancamentosBarco AS (
+        SELECT 
+            id_staff,
+            data,
+            funcao,
+            quantidade,
+            curso,
+            pratica
+        FROM lancamentos_barco
+        WHERE data BETWEEN %s AND %s AND id_staff = %s
     )
     SELECT 
-        DATE_FORMAT(COALESCE(lc.data, lb.data), '%d/%m/%Y') AS data, 
+        DATE_FORMAT( COALESCE(lc.data, lb.data), '%d/%m/%Y') AS data, 
         staffs.comissao,
         CASE WHEN lb.funcao = 'BAT' THEN 
             CASE WHEN ROUND(lb.quantidade, 0) = lb.quantidade THEN FORMAT(lb.quantidade, 0) 
@@ -107,25 +118,26 @@ class MainRepository:
                  ELSE FORMAT(lb.quantidade, 1) END
         ELSE 0 END AS quantidade_curso,
         lb.curso,
-        CASE WHEN lb.pratica IS NOT NULL THEN lb.pratica ELSE '' END,
+        CASE WHEN lb.pratica IS NOT NULL THEN lb.pratica ELSE '' END AS quantidade_pratica,
         CASE WHEN cq.quentinha = 'Sim' THEN 1 ELSE 0 END AS quantidade_quentinha,
         lc.cilindros_acqua AS cilindros_acqua,
         lc.cilindros_pl AS cilindros_pl,
         staffs.comissao_review,
-        CASE WHEN staffs.tipo = 'FREELANCER' THEN 1 ELSE 0 END
+        CASE WHEN staffs.tipo = 'FREELANCER' THEN 1 ELSE 0 END AS diarias
     FROM 
-        lancamentos_barco AS lb
+        lancamento_cilindro AS lc
     LEFT JOIN 
-        staffs ON staffs.id_staff = lb.id_staff 
+        staffs ON staffs.id_staff = lc.id_staff 
     LEFT JOIN 
-        SomaQuentinha AS cq ON cq.id_staff = lb.id_staff AND cq.data = lb.data
+        SomaQuentinha AS cq ON cq.id_staff = lc.id_staff AND cq.data = lc.data
     LEFT JOIN
-        lancamento_cilindro AS lc ON lc.id_staff = lb.id_staff AND lc.data = lb.data
-    WHERE 
-        lb.data BETWEEN %s AND %s AND lb.id_staff = %s
+        LancamentosBarco AS lb ON lb.id_staff = lc.id_staff AND lb.data = lc.data
+        
+    WHERE COALESCE(lc.data, lb.data) BETWEEN %s AND %s AND COALESCE(lb.id_staff = %s, lc.id_staff = %s)
     ORDER BY 
         COALESCE(lc.data, lb.data) ASC;
         """
+
 
         params = (data_inicial, data_final, id_staff, data_inicial, data_final, id_staff)
 
