@@ -390,7 +390,7 @@ if st.button('Pesquisar2'):
         if contagem_divemaster != 0:
             valor_pagar_divemaster = contagem_divemaster * 200
             valor_pagar_divemaster = format_currency(float(valor_pagar_divemaster), 'BRL', locale='pt_BR')
-            mensagem += '\n' + f'Total Curso Divemaster - {contagem_divemaster}  * 200 = {valor_pagar_divemaster}'
+            mensagem += '\n' + f'Total Curso DM - {contagem_divemaster}  * 200 = {valor_pagar_divemaster}'
 
         if contagem_quentinha != 0:
             valor_pagar_quentinha = contagem_quentinha * 15
