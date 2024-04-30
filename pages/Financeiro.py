@@ -300,6 +300,7 @@ if st.button('Pesquisar2'):
         contagem_quentinha = 0
         contagem_cilindro_acqua = 0
         contagem_cilindro_pl = 0
+        contagem_efr = 0
         mensagem = ''
         lista_datas = []
 
@@ -319,7 +320,16 @@ if st.button('Pesquisar2'):
                 valores_diferentes_de_zero.append(f'{embarque} Embarques')
                 contagem_embarque += int(embarque)
             if quantidade_curso != '0':
-                contagem_pratica += int(quantidade_curso)
+                if curso == 'REVIEW':
+                    contagem_review += int(quantidade_curso)
+                elif curso == 'RESCUE':
+                    contagem_rescue += int(quantidade_curso)
+                elif curso == 'DIVEMASTER':
+                    contagem_divemaster += int(quantidade_curso)
+                elif curso == 'PRIMEIROS SOCORROS':
+                    contagem_efr += int(quantidade_curso)
+                else:
+                    contagem_pratica += int(quantidade_curso)
                 valores_diferentes_de_zero.append(f'{quantidade_curso} {curso} {pratica}')
 
             if cilindro_acqua is not None and cilindro_acqua != 0:
@@ -355,8 +365,27 @@ if st.button('Pesquisar2'):
         if contagem_pratica != 0:
             valor_pagar_pratica = contagem_pratica * 75
             valor_pagar_pratica = format_currency(float(valor_pagar_pratica), 'BRL', locale='pt_BR')
-            mensagem += '\n' + f'Total Pratica - {contagem_pratica} = {valor_pagar_pratica}'
+            mensagem += '\n' + f'Total Pratica Open e Avançado- {contagem_pratica} * 75 = {valor_pagar_pratica}'
 
+        if contagem_review != 0:
+            valor_pagar_review = contagem_review * 80
+            valor_pagar_review = format_currency(float(valor_pagar_review), 'BRL', locale='pt_BR')
+            mensagem += '\n' + f'Total Review- {contagem_review} * 80 = {valor_pagar_review}'
+
+        if contagem_rescue != 0:
+            valor_pagar_rescue = contagem_rescue * 150
+            valor_pagar_rescue = format_currency(float(valor_pagar_rescue), 'BRL', locale='pt_BR')
+            mensagem += '\n' + f'Total Curso Rescue - {contagem_rescue} * 150 = {valor_pagar_rescue}'
+
+        if contagem_efr != 0:
+            valor_pagar_efr = contagem_efr * 200
+            valor_pagar_efr = format_currency(float(valor_pagar_efr), 'BRL', locale='pt_BR')
+            mensagem += '\n' + f'Total Curso Primeiro Socorros - {contagem_efr} * 200 = {valor_pagar_efr}'
+
+        if contagem_divemaster != 0:
+            valor_pagar_divemaster = contagem_divemaster * 200
+            valor_pagar_divemaster = format_currency(float(valor_pagar_divemaster), 'BRL', locale='pt_BR')
+            mensagem += '\n' + f'Total Curso Divemaster- {contagem_divemaster}  * 200 = {valor_pagar_divemaster}'
         st.code(mensagem)
 
 
