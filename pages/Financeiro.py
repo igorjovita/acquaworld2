@@ -304,6 +304,14 @@ if st.button('Pesquisar2'):
         contagem_diaria = 0
         mensagem = ''
         lista_datas = []
+        valor_bat = 0
+        valor_diaria = 0
+        valor_pratica = 0
+        valor_review = 0
+        valor_rescue = 0
+        valor_efr = 0
+        valor_divemaster = 0
+        valor_quentinha = 0
 
         for select in select_comissao_individual:
 
@@ -354,8 +362,8 @@ if st.button('Pesquisar2'):
 
         if contagem_bat != 0:
             comissao_bat = select_comissao_individual[0][1]
-            valor_pagar_bat = contagem_bat * int(comissao_bat)
-            valor_pagar_bat = format_currency(float(valor_pagar_bat), 'BRL', locale='pt_BR')
+            valor_bat = contagem_bat * int(comissao_bat)
+            valor_pagar_bat = format_currency(float(valor_bat), 'BRL', locale='pt_BR')
             mensagem += '\n' + f'Total Batismo - {contagem_bat:.2f} * {comissao_bat} = {valor_pagar_bat}'
 
         if contagem_equipagem != 0:
@@ -367,34 +375,34 @@ if st.button('Pesquisar2'):
             mensagem += '\n' + f'Total Embarques - {contagem_embarque} * 1 = {valor_pagar_embarque}'
 
         if contagem_pratica != 0:
-            valor_pagar_pratica = contagem_pratica * 75
-            valor_pagar_pratica = format_currency(float(valor_pagar_pratica), 'BRL', locale='pt_BR')
+            valor_pratica = contagem_pratica * 75
+            valor_pagar_pratica = format_currency(float(valor_pratica), 'BRL', locale='pt_BR')
             mensagem += '\n' + f'Total Pratica OWD e ADV - {contagem_pratica} * 75 = {valor_pagar_pratica}'
 
         if contagem_review != 0:
             comissao_review = select_comissao_individual[0][11]
-            valor_pagar_review = contagem_review * comissao_review
-            valor_pagar_review = format_currency(float(valor_pagar_review), 'BRL', locale='pt_BR')
+            valor_review = contagem_review * comissao_review
+            valor_pagar_review = format_currency(float(valor_review), 'BRL', locale='pt_BR')
             mensagem += '\n' + f'Total Review - {contagem_review} * {comissao_review} = {valor_pagar_review}'
 
         if contagem_rescue != 0:
-            valor_pagar_rescue = contagem_rescue * 150
-            valor_pagar_rescue = format_currency(float(valor_pagar_rescue), 'BRL', locale='pt_BR')
+            valor_rescue = contagem_rescue * 150
+            valor_pagar_rescue = format_currency(float(valor_rescue), 'BRL', locale='pt_BR')
             mensagem += '\n' + f'Total Curso Rescue - {contagem_rescue} * 150 = {valor_pagar_rescue}'
 
         if contagem_efr != 0:
-            valor_pagar_efr = contagem_efr * 200
-            valor_pagar_efr = format_currency(float(valor_pagar_efr), 'BRL', locale='pt_BR')
+            valor_efr = contagem_efr * 200
+            valor_pagar_efr = format_currency(float(valor_efr), 'BRL', locale='pt_BR')
             mensagem += '\n' + f'Total Curso Primeiro Socorros - {contagem_efr} * 200 = {valor_pagar_efr}'
 
         if contagem_divemaster != 0:
-            valor_pagar_divemaster = contagem_divemaster * 200
-            valor_pagar_divemaster = format_currency(float(valor_pagar_divemaster), 'BRL', locale='pt_BR')
+            valor_divemaster = contagem_divemaster * 200
+            valor_pagar_divemaster = format_currency(float(valor_divemaster), 'BRL', locale='pt_BR')
             mensagem += '\n' + f'Total Curso DM - {contagem_divemaster}  * 200 = {valor_pagar_divemaster}'
 
         if contagem_quentinha != 0:
-            valor_pagar_quentinha = contagem_quentinha * 15
-            valor_pagar_quentinha = format_currency(float(valor_pagar_quentinha), 'BRL', locale='pt_BR')
+            valor_quentinha = contagem_quentinha * 15
+            valor_pagar_quentinha = format_currency(float(valor_quentinha), 'BRL', locale='pt_BR')
             mensagem += '\n' + f'Total Quentinhas - {contagem_quentinha}  * 15 = {valor_pagar_quentinha}'
 
         if contagem_cilindro_acqua != 0 or contagem_cilindro_pl != 0:
@@ -402,9 +410,13 @@ if st.button('Pesquisar2'):
             valor_pagar_cilindro = format_currency(float(valor_pagar_cilindro), 'BRL', locale='pt_BR')
             mensagem += '\n' + f'Total Cilindros - {contagem_cilindro_acqua} Acqua + {contagem_cilindro_pl} PL  = {valor_pagar_cilindro}'
             if select_comissao_individual[0][12] != 0:
-                valor_pagar_diaria = contagem_diaria * 50
-                valor_pagar_diaria = format_currency(float(valor_pagar_diaria), 'BRL', locale='pt_BR')
+                valor_diaria = contagem_diaria * 50
+                valor_pagar_diaria = format_currency(float(valor_diaria), 'BRL', locale='pt_BR')
                 mensagem += '\n' + f'Total Diarias - {contagem_diaria} diarias * 50  = {valor_pagar_diaria}'
+
+        total_pagar = valor_bat + contagem_equipagem + contagem_embarque + valor_pratica + valor_review + valor_rescue + valor_efr + valor_divemaster + valor_quentinha + contagem_cilindro_acqua + contagem_cilindro_pl + valor_diaria
+
+        mensagem += f'Total a Pagar = {format_currency(float(total_pagar), 'BRL', locale='pt_BR')}'
         st.code(mensagem)
 
 
