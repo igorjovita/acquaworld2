@@ -351,7 +351,7 @@ if st.button('Pesquisar2'):
         if contagem_bat != 0:
             valor_pagar_bat = contagem_bat * int(comissao_bat)
             valor_pagar_bat = format_currency(float(valor_pagar_bat), 'BRL', locale='pt_BR')
-            mensagem += '\n' + f'Total Batismo - {contagem_bat:.2f} = R$ {valor_pagar_bat}'
+            mensagem += '\n' + f'Total Batismo - {contagem_bat:.2f} = {valor_pagar_bat}'
 
         if contagem_equipagem != 0:
             valor_pagar_equipagem = format_currency(float(contagem_equipagem), 'BRL', locale='pt_BR')
@@ -363,7 +363,7 @@ if st.button('Pesquisar2'):
 
         if contagem_pratica != 0:
             valor_pagar_pratica = contagem_pratica * 75
-            valor_pagar_equipagem = format_currency(float(valor_pagar_pratica), 'BRL', locale='pt_BR')
+            valor_pagar_pratica = format_currency(float(valor_pagar_pratica), 'BRL', locale='pt_BR')
             mensagem += '\n' + f'Total Pratica - {contagem_pratica} = {valor_pagar_pratica}'
 
 
