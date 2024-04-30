@@ -302,7 +302,7 @@ if st.button('Pesquisar2'):
         contagem_cilindro_pl = 0
         contagem_efr = 0
         contagem_diaria = 0
-        mensagem = ''
+        mensagem = f'Comissão {staff} do dia {data1_pagamento} ao dia {data2_pagamento}'
         lista_datas = []
         valor_bat = 0
         valor_diaria = 0
