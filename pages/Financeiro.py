@@ -402,7 +402,8 @@ if st.button('Pesquisar2'):
             mensagem += '\n' + f'Total Cilindros - {contagem_cilindro_acqua} Acqua + {contagem_cilindro_pl} PL  = {valor_pagar_cilindro}'
             if select_comissao_individual[0][12] != 0:
                 valor_pagar_diaria = contagem_diaria * 50
-                mensagem += '\n' + f'Total Diarias - {contagem_diaria} diarias *50  = {valor_pagar_diaria}'
+                valor_pagar_diaria = format_currency(float(valor_pagar_diaria), 'BRL', locale='pt_BR')
+                mensagem += '\n' + f'Total Diarias - {contagem_diaria} diarias * 50  = {valor_pagar_diaria}'
         st.code(mensagem)
 
 
