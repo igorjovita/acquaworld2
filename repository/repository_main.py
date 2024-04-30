@@ -17,8 +17,9 @@ class MainRepository:
         SELECT
             id_staff,
             COALESCE(SUM(cilindros_acqua + cilindros_pl), 0) AS quantidade_cilindro,
-            COUNT(DISTINCT data) AS diarias
+            COUNT(DISTINCT CASE WHEN s.tipo = 'FREELANCER' THEN 1 ELSE 0 END) AS diarias
         FROM lancamento_cilindro
+        LEFT JOIN staffs s ON lc.id_staff = s.id_staff
         WHERE data BETWEEN %s AND %s
         GROUP BY id_staff
     ),
@@ -33,19 +34,9 @@ class MainRepository:
     SELECT
         staffs.nome,
         SUM(CASE WHEN l.funcao = 'BAT' THEN l.quantidade ELSE 0 END) AS quantidade_bat,
-        SUM(CASE WHEN l.funcao = 'BAT' THEN l.quantidade * staffs.comissao ELSE 0 END) AS total_bat,
         SUM(CASE WHEN l.funcao = 'AS' THEN l.quantidade ELSE 0 END) AS quantidade_as,
         SUM(CASE WHEN l.funcao = 'CAPITAO' THEN l.quantidade ELSE 0 END) AS quantidade_capitao,
         SUM(CASE WHEN l.funcao = 'CURSO' THEN l.quantidade ELSE 0 END) AS quantidade_curso,
-        SUM(CASE WHEN l.funcao = 'CURSO' THEN
-            CASE
-                WHEN l.curso IN ('OWD', 'ADV') THEN l.quantidade * 75
-                WHEN l.curso = 'RESCUE' THEN l.quantidade * 150
-                WHEN l.curso = 'REVIEW' THEN l.quantidade * 120
-                WHEN l.curso = 'DIVEMASTER' THEN l.quantidade * 200
-                ELSE 0
-            END
-        ELSE 0 END) AS total_curso,
         COALESCE(sc.quantidade_cilindro, 0) AS quantidade_cilindro,
         COALESCE(cq.quantidade_quentinha, 0) as quantidade_quentinha,
         COALESCE(sc.diarias, 0) AS diarias,
