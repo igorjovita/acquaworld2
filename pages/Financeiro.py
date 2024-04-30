@@ -302,11 +302,12 @@ if st.button('Pesquisar2'):
         contagem_cilindro_pl = 0
         mensagem = ''
         lista_datas = []
+
         for select in select_comissao_individual:
 
             data, comissao_bat, bat, equipagem, embarque, quantidade_curso, curso, pratica, quentinha, cilindro_acqua, cilindro_pl = select
             valores_diferentes_de_zero = []
-            
+
             # Verifica se cada variável é diferente de zero e adiciona à lista
             if bat != '0':
                 valores_diferentes_de_zero.append(f'{bat} BAT')
@@ -339,9 +340,7 @@ if st.button('Pesquisar2'):
 
 
 
-            # Verifica se existem valores diferentes de zero na lista e adiciona à mensagem
-            if valores_diferentes_de_zero:
-                mensagem += f'{data}: ' + ' + '.join(valores_diferentes_de_zero) + '\n'
+        
 
         if contagem_bat != 0:
             valor_pagar_bat = contagem_bat * int(comissao_bat)
