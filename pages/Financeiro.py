@@ -419,6 +419,7 @@ if st.button('Pesquisar2'):
 
         mensagem += '\n' + '\n' + f"Total a Pagar = {format_currency(float(total_pagar), 'BRL', locale='pt_BR')}"
         st.code(mensagem)
+        st.write(select_comissao_individual)
 
 
     # mydb.connect()
