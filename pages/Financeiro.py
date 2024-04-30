@@ -37,218 +37,218 @@ st.title('Sistema AcquaWorld')
 
 st.header('Financeiro')
 
-escolha_data = st.radio('Selecione o intervalo da pesquisa', ['Data Especifica', 'Intervalo entre Datas'])
-
-if escolha_data == 'Intervalo entre Datas':
-    data1 = st.date_input('Data Inicial', format='DD/MM/YYYY', value=None)
-    data2 = st.date_input('Data Final', format='DD/MM/YYYY', value=None)
-if escolha_data == 'Data Especifica':
-    data1 = st.date_input('Data', format='DD/MM/YYYY')
-    data2 = data1
-
-filtro_staffs = st.radio('Selecione o filtro da pesquisa', ['Todos', 'Staff especifico'])
-
-escolha = st.selectbox('Escolha o tipo',
-                       ['Comissão Staff', 'Comissão AS', 'Comissão Capitao', 'Comissão Curso', 'Comissão Cilindro'])
-if escolha == 'Comissão Curso':
-    instrutor = st.selectbox('Instrutor', ['Glauber', 'Martin'])
-
-if escolha == 'Comissão Cilindro':
-    nome_staff_cilindro = st.selectbox('Staff Cilindro', options=['Juninho', 'Glauber', 'Roberta'])
-botao = st.button('Pesquisar')
-
-if botao:
-    total_divisao = 0
-    total_valor_pagar = 0
-    if escolha == 'Comissão Staff':
-        cursor.execute(
-            f" select id_staff, sum(quantidade) as quantidade from lancamentos_barco where data between '{data1}' and '{data2}' and funcao = 'BAT' group by id_staff order by quantidade desc")
-        lista = cursor.fetchall()
-
-        for item in lista:
-            id_staff = item[0]
-            divisao = item[1]
-
-            total_divisao += divisao
-
-            cursor.execute(f"SELECT nome, comissao from staffs where id_staff = {id_staff}")
-            info_staff = cursor.fetchone()
-            nome_staff = info_staff[0]
-            comissao_staff = info_staff[1]
-            valor_pagar = float(divisao) * int(comissao_staff)
-            total_valor_pagar += valor_pagar
-            valor_formatado = str(f'R$ {float(valor_pagar):.2f}').replace('.', ',')
-            data1_split = str(data1).split('-')
-            data1_formatada = f'{data1_split[2]}/{data1_split[1]}/{data1_split[0]}'
-            data2_split = str(data2).split('-')
-            data2_formatada = f'{data2_split[2]}/{data2_split[1]}/{data2_split[0]}'
-
-            st.markdown(
-                f"<span style='font-size:20px;'>{nome_staff} - {divisao} Bat do dia {data1_formatada} a {data2_formatada} - {valor_formatado}</span>",
-                unsafe_allow_html=True)
-
-        st.subheader("Total Divisão: {}".format(total_divisao))
-        st.subheader("Total Valor a Pagar: R$ {:.2f}".format(total_valor_pagar))
-    if escolha == 'Comissão AS':
-        cursor.execute(
-            f" select id_staff, sum(quantidade) as quantidade from lancamentos_barco where data between '{data1}' and '{data2}' and funcao = 'AS' group by id_staff order by quantidade desc")
-        lista = cursor.fetchall()
-
-        for item in lista:
-            id_staff = item[0]
-            equipagens = item[1]
-            col1, col2 = st.columns(2)
-
-            with col1:
-                mydb.connect()
-                cursor.execute(f"SELECT nome from staffs where id_staff = {id_staff}")
-                nome_as = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
-                mydb.close()
-                st.subheader(nome_as)
-
-            with col2:
-                st.subheader(equipagens)
-
-    if escolha == 'Comissão Capitao':
-        cursor.execute(
-            f" select id_staff, sum(quantidade) as embarques from lancamentos_barco where data between '{data1}' and '{data2}' and funcao = 'CAPITAO'group by id_staff order by embarques desc")
-        lista = cursor.fetchall()
-
-        for item in lista:
-            id_staff = item[0]
-            embarques = item[1]
-            col1, col2 = st.columns(2)
-
-            with col1:
-                mydb.connect()
-                cursor.execute(f"SELECT nome from staffs where id_staff = {id_staff}")
-                nome_as = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
-                mydb.close()
-                st.subheader(nome_as)
-
-            with col2:
-                st.subheader(embarques)
-
-    if escolha == 'Comissão Cilindro':
-        mydb.connect()
-        cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{nome_staff_cilindro}'")
-        id_staff_cilindro = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-        cursor.execute(
-            f"SELECT count(id_staff), id_staff, sum(cilindros_acqua), sum(cilindros_pl) from lancamento_cilindro where data between '{data1}' and '{data2}' and id_staff = {id_staff_cilindro}")
-        lista = cursor.fetchall()
-        mydb.close()
-
-        for item in lista:
-            diarias = item[0]
-            id_staff = item[1]
-            cilindros_acqua = item[2]
-            cilindros_pl = item[3]
-            mydb.connect()
-            if id_staff is None:
-                st.error(f"Nenhum lançamento de {nome_staff_cilindro} na data informada")
-            else:
-                cursor.execute(f"SELECT nome from staffs where id_staff = {id_staff}")
-                staff_cilindro = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
-
-                cursor.execute(
-                    f"select count(almoco) from lancamento_cilindro where data between '{data1}' and '{data2}' and id_staff = {id_staff_cilindro} and almoco = 'Sim'")
-                quentinhas = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
-                if nome_staff_cilindro == 'Juninho':
-                    valor_total = (int(diarias) * 50) + int(cilindros_acqua) + int(cilindros_pl) + (
-                            int(quentinhas) * 17)
-                else:
-                    valor_total = int(cilindros_acqua) + int(cilindros_pl) + (int(quentinhas) * 17)
-                cursor.execute(
-                    f"select horario_inicio from lancamento_cilindro where data between '{data1}' and '{data2}'")
-                horario_inicial = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-                cursor.execute(
-                    f"SELECT horario_final from lancamento_cilindro where data between '{data1}' and '{data2}'")
-                horario_final = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-                cursor.execute(
-                    f"select sum(horas_trabalhadas) from lancamento_cilindro where data between '{data1}' and '{data2}'")
-                minutos = float((str(cursor.fetchone()).translate(str.maketrans('', '', chars))))
-                mydb.close()
-                horario_total = str(timedelta(minutes=minutos) / 60).split(':')
-                media_cilindro = (int(minutos) / (cilindros_acqua + cilindros_pl))
-                min = str(f'{float(media_cilindro):.2f}').split('.')
-
-                seg = str(int(min[1]) * 60)
-
-                col1, col2 = st.columns(2)
-                if escolha_data == 'Data Especifica':
-                    with col1:
-                        st.subheader('Staff :')
-                        st.subheader('Cilindros Acqua :')
-                        st.subheader('Cilindros PL :')
-                        st.subheader('Quentinhas :')
-                        st.subheader(f'Horario Inicial :')
-                        st.subheader(f'Horario Final :')
-                        st.subheader(f'Total de Horas :')
-                        st.subheader(f'Tempo Médio :')
-                        st.header(f'Valor a pagar :')
-
-                    with col2:
-                        st.subheader(staff_cilindro)
-                        st.subheader(cilindros_acqua)
-                        st.subheader(cilindros_pl)
-                        st.subheader(quentinhas)
-                        st.subheader(horario_inicial)
-                        st.subheader(horario_final)
-                        st.subheader(f'{horario_total[1]} horas e {horario_total[2]} min')
-                        if seg != '0':
-                            st.subheader(f'{min[0]} min e {seg[0]}{seg[1]} s')
-                        else:
-                            st.subheader(f'{min[0]} min e {seg[0]} s')
-                        st.header(f'R$ {valor_total}')
-
-                if escolha_data == 'Intervalo entre Datas':
-                    with col1:
-                        st.subheader('Staff :')
-                        st.subheader('Diárias :')
-                        st.subheader('Cilindros Acqua :')
-                        st.subheader('Cilindros PL :')
-                        st.subheader('Quentinhas :')
-                        st.subheader(f'Total de Horas :')
-                        st.subheader(f'Tempo Médio :')
-                        st.header(f'Valor a pagar :')
-
-                    with col2:
-                        st.subheader(staff_cilindro)
-                        st.subheader(diarias)
-                        st.subheader(cilindros_acqua)
-                        st.subheader(cilindros_pl)
-                        st.subheader(quentinhas)
-                        st.subheader(f'{horario_total[1]} horas e {horario_total[2]} min')
-                        st.subheader(f'{min[0]} min e {seg[0]}{seg[1]} s')
-                        st.header(f'R$ {valor_total}')
-
-    if escolha == 'Comissão Curso':
-        mydb.connect()
-        cursor.execute(f"Select id_staff from staffs where nome = '{instrutor}'")
-        id_instrutor = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
-        cursor.execute(
-            f"SELECT data, curso, quantidade, pratica from lancamentos_barco where data between '{data1}' and '{data2}' and id_staff = {id_instrutor} and funcao = 'CURSO'")
-        cursos = cursor.fetchall()
-        mydb.close()
-        df = pd.DataFrame(cursos, columns=['Data', 'Curso', 'Quantidade', 'Pratica'])
-        df['Data'] = pd.to_datetime(df['Data'])
-
-        # Formatando a coluna 'Data' para o formato brasileiro
-        df['Data'] = df['Data'].dt.strftime('%d/%m/%Y')
-        total_praticas = df['Quantidade'].sum()
-        df['Comissao'] = df['Curso'].apply(obter_comissao)
-        df['Comissao'] = df['Comissao'].apply(int)
-        df['Quantidade'] = df['Quantidade'].apply(int)
-        df['Comissao'] *= df['Quantidade']
-        df = df.fillna('')
-        # Configuração de estilo para ocultar o índice
-        html_table = df.to_html(index=False)
-
-        # Exibir HTML no Streamlit
-        st.markdown(html_table, unsafe_allow_html=True)
-        total_comissao = df['Comissao'].sum()
-        comissao_total = format_currency(total_comissao, 'BRL', locale='pt_BR')
-        st.subheader(f'{int(total_praticas)} praticas - Total {comissao_total}')
+# escolha_data = st.radio('Selecione o intervalo da pesquisa', ['Data Especifica', 'Intervalo entre Datas'])
+#
+# if escolha_data == 'Intervalo entre Datas':
+#     data1 = st.date_input('Data Inicial', format='DD/MM/YYYY', value=None)
+#     data2 = st.date_input('Data Final', format='DD/MM/YYYY', value=None)
+# if escolha_data == 'Data Especifica':
+#     data1 = st.date_input('Data', format='DD/MM/YYYY')
+#     data2 = data1
+#
+# filtro_staffs = st.radio('Selecione o filtro da pesquisa', ['Todos', 'Staff especifico'])
+#
+# escolha = st.selectbox('Escolha o tipo',
+#                        ['Comissão Staff', 'Comissão AS', 'Comissão Capitao', 'Comissão Curso', 'Comissão Cilindro'])
+# if escolha == 'Comissão Curso':
+#     instrutor = st.selectbox('Instrutor', ['Glauber', 'Martin'])
+#
+# if escolha == 'Comissão Cilindro':
+#     nome_staff_cilindro = st.selectbox('Staff Cilindro', options=['Juninho', 'Glauber', 'Roberta'])
+# botao = st.button('Pesquisar')
+#
+# if botao:
+#     total_divisao = 0
+#     total_valor_pagar = 0
+#     if escolha == 'Comissão Staff':
+#         cursor.execute(
+#             f" select id_staff, sum(quantidade) as quantidade from lancamentos_barco where data between '{data1}' and '{data2}' and funcao = 'BAT' group by id_staff order by quantidade desc")
+#         lista = cursor.fetchall()
+#
+#         for item in lista:
+#             id_staff = item[0]
+#             divisao = item[1]
+#
+#             total_divisao += divisao
+#
+#             cursor.execute(f"SELECT nome, comissao from staffs where id_staff = {id_staff}")
+#             info_staff = cursor.fetchone()
+#             nome_staff = info_staff[0]
+#             comissao_staff = info_staff[1]
+#             valor_pagar = float(divisao) * int(comissao_staff)
+#             total_valor_pagar += valor_pagar
+#             valor_formatado = str(f'R$ {float(valor_pagar):.2f}').replace('.', ',')
+#             data1_split = str(data1).split('-')
+#             data1_formatada = f'{data1_split[2]}/{data1_split[1]}/{data1_split[0]}'
+#             data2_split = str(data2).split('-')
+#             data2_formatada = f'{data2_split[2]}/{data2_split[1]}/{data2_split[0]}'
+#
+#             st.markdown(
+#                 f"<span style='font-size:20px;'>{nome_staff} - {divisao} Bat do dia {data1_formatada} a {data2_formatada} - {valor_formatado}</span>",
+#                 unsafe_allow_html=True)
+#
+#         st.subheader("Total Divisão: {}".format(total_divisao))
+#         st.subheader("Total Valor a Pagar: R$ {:.2f}".format(total_valor_pagar))
+#     if escolha == 'Comissão AS':
+#         cursor.execute(
+#             f" select id_staff, sum(quantidade) as quantidade from lancamentos_barco where data between '{data1}' and '{data2}' and funcao = 'AS' group by id_staff order by quantidade desc")
+#         lista = cursor.fetchall()
+#
+#         for item in lista:
+#             id_staff = item[0]
+#             equipagens = item[1]
+#             col1, col2 = st.columns(2)
+#
+#             with col1:
+#                 mydb.connect()
+#                 cursor.execute(f"SELECT nome from staffs where id_staff = {id_staff}")
+#                 nome_as = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
+#                 mydb.close()
+#                 st.subheader(nome_as)
+#
+#             with col2:
+#                 st.subheader(equipagens)
+#
+#     if escolha == 'Comissão Capitao':
+#         cursor.execute(
+#             f" select id_staff, sum(quantidade) as embarques from lancamentos_barco where data between '{data1}' and '{data2}' and funcao = 'CAPITAO'group by id_staff order by embarques desc")
+#         lista = cursor.fetchall()
+#
+#         for item in lista:
+#             id_staff = item[0]
+#             embarques = item[1]
+#             col1, col2 = st.columns(2)
+#
+#             with col1:
+#                 mydb.connect()
+#                 cursor.execute(f"SELECT nome from staffs where id_staff = {id_staff}")
+#                 nome_as = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
+#                 mydb.close()
+#                 st.subheader(nome_as)
+#
+#             with col2:
+#                 st.subheader(embarques)
+#
+#     if escolha == 'Comissão Cilindro':
+#         mydb.connect()
+#         cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{nome_staff_cilindro}'")
+#         id_staff_cilindro = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
+#         cursor.execute(
+#             f"SELECT count(id_staff), id_staff, sum(cilindros_acqua), sum(cilindros_pl) from lancamento_cilindro where data between '{data1}' and '{data2}' and id_staff = {id_staff_cilindro}")
+#         lista = cursor.fetchall()
+#         mydb.close()
+#
+#         for item in lista:
+#             diarias = item[0]
+#             id_staff = item[1]
+#             cilindros_acqua = item[2]
+#             cilindros_pl = item[3]
+#             mydb.connect()
+#             if id_staff is None:
+#                 st.error(f"Nenhum lançamento de {nome_staff_cilindro} na data informada")
+#             else:
+#                 cursor.execute(f"SELECT nome from staffs where id_staff = {id_staff}")
+#                 staff_cilindro = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
+#
+#                 cursor.execute(
+#                     f"select count(almoco) from lancamento_cilindro where data between '{data1}' and '{data2}' and id_staff = {id_staff_cilindro} and almoco = 'Sim'")
+#                 quentinhas = (str(cursor.fetchall()).translate(str.maketrans('', '', chars)))
+#                 if nome_staff_cilindro == 'Juninho':
+#                     valor_total = (int(diarias) * 50) + int(cilindros_acqua) + int(cilindros_pl) + (
+#                             int(quentinhas) * 17)
+#                 else:
+#                     valor_total = int(cilindros_acqua) + int(cilindros_pl) + (int(quentinhas) * 17)
+#                 cursor.execute(
+#                     f"select horario_inicio from lancamento_cilindro where data between '{data1}' and '{data2}'")
+#                 horario_inicial = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
+#                 cursor.execute(
+#                     f"SELECT horario_final from lancamento_cilindro where data between '{data1}' and '{data2}'")
+#                 horario_final = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
+#                 cursor.execute(
+#                     f"select sum(horas_trabalhadas) from lancamento_cilindro where data between '{data1}' and '{data2}'")
+#                 minutos = float((str(cursor.fetchone()).translate(str.maketrans('', '', chars))))
+#                 mydb.close()
+#                 horario_total = str(timedelta(minutes=minutos) / 60).split(':')
+#                 media_cilindro = (int(minutos) / (cilindros_acqua + cilindros_pl))
+#                 min = str(f'{float(media_cilindro):.2f}').split('.')
+#
+#                 seg = str(int(min[1]) * 60)
+#
+#                 col1, col2 = st.columns(2)
+#                 if escolha_data == 'Data Especifica':
+#                     with col1:
+#                         st.subheader('Staff :')
+#                         st.subheader('Cilindros Acqua :')
+#                         st.subheader('Cilindros PL :')
+#                         st.subheader('Quentinhas :')
+#                         st.subheader(f'Horario Inicial :')
+#                         st.subheader(f'Horario Final :')
+#                         st.subheader(f'Total de Horas :')
+#                         st.subheader(f'Tempo Médio :')
+#                         st.header(f'Valor a pagar :')
+#
+#                     with col2:
+#                         st.subheader(staff_cilindro)
+#                         st.subheader(cilindros_acqua)
+#                         st.subheader(cilindros_pl)
+#                         st.subheader(quentinhas)
+#                         st.subheader(horario_inicial)
+#                         st.subheader(horario_final)
+#                         st.subheader(f'{horario_total[1]} horas e {horario_total[2]} min')
+#                         if seg != '0':
+#                             st.subheader(f'{min[0]} min e {seg[0]}{seg[1]} s')
+#                         else:
+#                             st.subheader(f'{min[0]} min e {seg[0]} s')
+#                         st.header(f'R$ {valor_total}')
+#
+#                 if escolha_data == 'Intervalo entre Datas':
+#                     with col1:
+#                         st.subheader('Staff :')
+#                         st.subheader('Diárias :')
+#                         st.subheader('Cilindros Acqua :')
+#                         st.subheader('Cilindros PL :')
+#                         st.subheader('Quentinhas :')
+#                         st.subheader(f'Total de Horas :')
+#                         st.subheader(f'Tempo Médio :')
+#                         st.header(f'Valor a pagar :')
+#
+#                     with col2:
+#                         st.subheader(staff_cilindro)
+#                         st.subheader(diarias)
+#                         st.subheader(cilindros_acqua)
+#                         st.subheader(cilindros_pl)
+#                         st.subheader(quentinhas)
+#                         st.subheader(f'{horario_total[1]} horas e {horario_total[2]} min')
+#                         st.subheader(f'{min[0]} min e {seg[0]}{seg[1]} s')
+#                         st.header(f'R$ {valor_total}')
+#
+#     if escolha == 'Comissão Curso':
+#         mydb.connect()
+#         cursor.execute(f"Select id_staff from staffs where nome = '{instrutor}'")
+#         id_instrutor = (str(cursor.fetchone()).translate(str.maketrans('', '', chars)))
+#         cursor.execute(
+#             f"SELECT data, curso, quantidade, pratica from lancamentos_barco where data between '{data1}' and '{data2}' and id_staff = {id_instrutor} and funcao = 'CURSO'")
+#         cursos = cursor.fetchall()
+#         mydb.close()
+#         df = pd.DataFrame(cursos, columns=['Data', 'Curso', 'Quantidade', 'Pratica'])
+#         df['Data'] = pd.to_datetime(df['Data'])
+#
+#         # Formatando a coluna 'Data' para o formato brasileiro
+#         df['Data'] = df['Data'].dt.strftime('%d/%m/%Y')
+#         total_praticas = df['Quantidade'].sum()
+#         df['Comissao'] = df['Curso'].apply(obter_comissao)
+#         df['Comissao'] = df['Comissao'].apply(int)
+#         df['Quantidade'] = df['Quantidade'].apply(int)
+#         df['Comissao'] *= df['Quantidade']
+#         df = df.fillna('')
+#         # Configuração de estilo para ocultar o índice
+#         html_table = df.to_html(index=False)
+#
+#         # Exibir HTML no Streamlit
+#         st.markdown(html_table, unsafe_allow_html=True)
+#         total_comissao = df['Comissao'].sum()
+#         comissao_total = format_currency(total_comissao, 'BRL', locale='pt_BR')
+#         st.subheader(f'{int(total_praticas)} praticas - Total {comissao_total}')
 
 st.write('---')
 
