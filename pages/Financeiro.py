@@ -309,7 +309,7 @@ if st.button('Pesquisar2'):
             # Verifica se cada variável é diferente de zero e adiciona à lista
             if bat != '0':
                 valores_diferentes_de_zero.append(f'{bat} BAT')
-                total_valor_bat += total_bat
+                total_valor_bat += float(total_bat)
                 contagem_bat += float(bat)
             if equipagem != '0':
                 valores_diferentes_de_zero.append(f'{equipagem} Equipagens')
