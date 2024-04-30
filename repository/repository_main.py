@@ -122,7 +122,7 @@ class MainRepository:
     LEFT JOIN
         lancamentos_barco AS lb ON lc.id_staff = lb.id_staff AND lc.data = lb.data
     WHERE 
-        COALESCE(lb.data, lc.data) BETWEEN %s AND %s AND lc.id_staff = %s
+        (lb.data BETWEEN %s AND %s OR lc.data BETWEEN %s AND %s) AND lc.id_staff = %s
     ORDER BY 
         COALESCE(lb.data, lc.data) ASC;
 
