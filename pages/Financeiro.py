@@ -315,7 +315,7 @@ if st.button('Pesquisar2'):
 
             # Verifica se existem valores diferentes de zero na lista e adiciona à mensagem
             if valores_diferentes_de_zero:
-                mensagem += f'{data}: ' + ', '.join(valores_diferentes_de_zero) + '\n'
+                mensagem += f'{data}: ' + ' + '.join(valores_diferentes_de_zero) + '\n'
 
         st.write(mensagem)
 
