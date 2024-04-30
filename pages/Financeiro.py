@@ -296,6 +296,7 @@ if st.button('Pesquisar2'):
             valores_diferentes_de_zero = []
 
             # Verifica se cada variável é diferente de zero e adiciona à lista
+            st.write(f'BAT {bat}')
             if bat != '':
                 valores_diferentes_de_zero.append(f'{bat} BAT')
             if equipagem != '':
