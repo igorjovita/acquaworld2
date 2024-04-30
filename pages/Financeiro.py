@@ -358,6 +358,8 @@ if st.button('Pesquisar2'):
             mensagem += '\n' + f'Total Pratica - {contagem_pratica} = {valor_pagar_pratica}'
 
         st.code(mensagem)
+        st.write(select_comissao_individual)
+        st.write(select_comissao_individual[0][1])
 
     # mydb.connect()
     # cursor.execute(f"SELECT id_staff, comissao FROM staffs where nome ='{staff}'")
