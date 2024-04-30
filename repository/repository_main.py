@@ -19,7 +19,7 @@ class MainRepository:
             COALESCE(SUM(cilindros_acqua + cilindros_pl), 0) AS quantidade_cilindro,
             COUNT(DISTINCT data) AS diarias
         FROM lancamento_cilindro
-        WHERE data BETWEEN '2024-04-01' AND '2024-04-30'
+        WHERE data BETWEEN %s AND %s
         GROUP BY id_staff
     ),
     SomaQuentinhas AS (
@@ -27,7 +27,7 @@ class MainRepository:
             id_staff,
             SUM(CASE WHEN quentinha = 'Sim' THEN 1 ELSE 0 END) AS quantidade_quentinha
         FROM controle_quentinhas
-        WHERE data BETWEEN '2024-04-01' AND '2024-04-30'
+        WHERE data BETWEEN %s AND %s
         GROUP BY id_staff
     )
     SELECT
@@ -75,7 +75,7 @@ class MainRepository:
     LEFT JOIN staffs ON staffs.id_staff = l.id_staff
     LEFT JOIN SomaCilindros AS sc ON sc.id_staff = l.id_staff
     LEFT JOIN SomaQuentinhas as cq ON cq.id_staff = staffs.id_staff
-    WHERE l.data BETWEEN '2024-04-01' AND '2024-04-30'
+    WHERE l.data BETWEEN %s AND %s
     GROUP BY staffs.nome;
 
 
@@ -83,7 +83,7 @@ class MainRepository:
 
 
         """
-        params = (data_incial, data_final, data_incial, data_final)
+        params = (data_incial, data_final, data_incial, data_final, data_incial, data_final)
         return self.db.execute_query(query, params)
 
     def select_soma_comissao_individual(self, data_inicial, data_final, id_staff):
