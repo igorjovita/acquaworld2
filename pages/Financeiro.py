@@ -288,8 +288,36 @@ if st.button('Pesquisar2'):
         id_staff = info_staff[index_lista][0]
         select_comissao_individual = repository_staffs.select_soma_comissao_individual(data1_pagamento, data2_pagamento,
                                                                                        id_staff)
-        st.write(id_staff)
-        st.write(select_comissao_individual)
+
+        mensagem = ''
+        for select in select_comissao_individual:
+            data, total_bat, bat, equipagem, embarque, curso, rescue, review, divemaster, quentinha = select
+
+            valores_diferentes_de_zero = []
+
+            # Verifica se cada variável é diferente de zero e adiciona à lista
+            if bat != 0:
+                valores_diferentes_de_zero.append(f'Bat: {bat}')
+            if equipagem != 0:
+                valores_diferentes_de_zero.append(f'Equipagem: {equipagem}')
+            if embarque != 0:
+                valores_diferentes_de_zero.append(f'Embarque: {embarque}')
+            if curso != 0:
+                valores_diferentes_de_zero.append(f'Curso: {curso}')
+            if rescue != 0:
+                valores_diferentes_de_zero.append(f'Rescue: {rescue}')
+            if review != 0:
+                valores_diferentes_de_zero.append(f'Review: {review}')
+            if divemaster != 0:
+                valores_diferentes_de_zero.append(f'Divemaster: {divemaster}')
+            if quentinha != 0:
+                valores_diferentes_de_zero.append(f'Quentinha: {quentinha}')
+
+            # Verifica se existem valores diferentes de zero na lista e adiciona à mensagem
+            if valores_diferentes_de_zero:
+                mensagem += f'{data}: ' + ', '.join(valores_diferentes_de_zero) + '\n'
+
+        st.write(mensagem)
 
     # mydb.connect()
     # cursor.execute(f"SELECT id_staff, comissao FROM staffs where nome ='{staff}'")
