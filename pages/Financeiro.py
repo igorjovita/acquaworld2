@@ -338,11 +338,8 @@ if st.button('Pesquisar2'):
                     valores_diferentes_de_zero.append('quentinha')
                 mensagem += '\n' + f'{data}: ' + ' + '.join(valores_diferentes_de_zero)
 
-
-
-        
-
         if contagem_bat != 0:
+            comissao_bat = select_comissao_individual[0][2]
             valor_pagar_bat = contagem_bat * int(comissao_bat)
             valor_pagar_bat = format_currency(float(valor_pagar_bat), 'BRL', locale='pt_BR')
             mensagem += '\n' + f'Total Batismo - {contagem_bat:.2f} = {valor_pagar_bat}'
@@ -359,9 +356,6 @@ if st.button('Pesquisar2'):
             valor_pagar_pratica = contagem_pratica * 75
             valor_pagar_pratica = format_currency(float(valor_pagar_pratica), 'BRL', locale='pt_BR')
             mensagem += '\n' + f'Total Pratica - {contagem_pratica} = {valor_pagar_pratica}'
-
-
-
 
         st.code(mensagem)
 
