@@ -121,7 +121,7 @@ class MainRepository:
         lc.cilindros_acqua AS cilindros_acqua,
         lc.cilindros_pl AS cilindros_pl,
         staffs.comissao_review,
-        staffs.tipo
+        CASE WHEN staffs.tipo = 'FREELANCER' THEN 1 ELSE 0 END
     FROM 
         lancamentos_barco AS lb
     LEFT JOIN 

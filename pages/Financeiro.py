@@ -301,12 +301,13 @@ if st.button('Pesquisar2'):
         contagem_cilindro_acqua = 0
         contagem_cilindro_pl = 0
         contagem_efr = 0
+        contagem_diaria = 0
         mensagem = ''
         lista_datas = []
 
         for select in select_comissao_individual:
 
-            data, _, bat, equipagem, embarque, quantidade_curso, curso, pratica, quentinha, cilindro_acqua, cilindro_pl, _, _ = select
+            data, _, bat, equipagem, embarque, quantidade_curso, curso, pratica, quentinha, cilindro_acqua, cilindro_pl, _, diaria = select
             valores_diferentes_de_zero = []
 
             # Verifica se cada variável é diferente de zero e adiciona à lista
@@ -347,6 +348,7 @@ if st.button('Pesquisar2'):
                     contagem_quentinha += int(quentinha)
                     valores_diferentes_de_zero.append('quentinha')
                 mensagem += '\n' + f'{data}: ' + ' + '.join(valores_diferentes_de_zero)
+                contagem_diaria += 1
 
         mensagem += '\n'
 
@@ -393,6 +395,14 @@ if st.button('Pesquisar2'):
             valor_pagar_quentinha = contagem_quentinha * 15
             valor_pagar_quentinha = format_currency(float(valor_pagar_quentinha), 'BRL', locale='pt_BR')
             mensagem += '\n' + f'Total Quentinhas - {contagem_quentinha}  * 15 = {valor_pagar_quentinha}'
+
+        if contagem_cilindro_acqua != 0 or contagem_cilindro_pl != 0:
+            valor_pagar_cilindro = contagem_cilindro_acqua + contagem_cilindro_pl
+            valor_pagar_cilindro = format_currency(float(valor_pagar_cilindro), 'BRL', locale='pt_BR')
+            mensagem += '\n' + f'Total Cilindros - {contagem_cilindro_acqua} Acqua + {contagem_cilindro_pl} PL  = {valor_pagar_cilindro}'
+            if select_comissao_individual[0][12] != 0:
+                valor_pagar_diaria = contagem_diaria * 50
+                mensagem += '\n' + f'Total Diarias - {contagem_diaria} diarias *50  = {valor_pagar_diaria}'
         st.code(mensagem)
 
 
