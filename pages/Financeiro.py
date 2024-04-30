@@ -310,7 +310,7 @@ if st.button('Pesquisar2'):
                 valores_diferentes_de_zero.append(f'{review} review')
             if divemaster != '0':
                 valores_diferentes_de_zero.append(f'{divemaster} divemaster')
-            if quentinha != '0':
+            if quentinha != 0:
                 valores_diferentes_de_zero.append(f'{quentinha} quentinha')
             if cilindro_acqua is not None:
                 valores_diferentes_de_zero.append(f'{cilindro_acqua} cilindros acqua')
