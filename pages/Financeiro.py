@@ -299,23 +299,23 @@ if st.button('Pesquisar2'):
             if bat != '0':
                 valores_diferentes_de_zero.append(f'{bat} BAT')
             if equipagem != '0':
-                valores_diferentes_de_zero.append(f'{equipagem} equipagens')
+                valores_diferentes_de_zero.append(f'{equipagem} Equipagens')
             if embarque != '0':
-                valores_diferentes_de_zero.append(f'{embarque} embarques')
+                valores_diferentes_de_zero.append(f'{embarque} Embarques')
             if curso != '0':
-                valores_diferentes_de_zero.append(f'{curso} curso')
+                valores_diferentes_de_zero.append(f'{curso} Curso')
             if rescue != '0':
-                valores_diferentes_de_zero.append(f'{rescue} rescue')
+                valores_diferentes_de_zero.append(f'{rescue} Rescue')
             if review != '0':
-                valores_diferentes_de_zero.append(f'{review} review')
+                valores_diferentes_de_zero.append(f'{review} Review')
             if divemaster != '0':
-                valores_diferentes_de_zero.append(f'{divemaster} divemaster')
+                valores_diferentes_de_zero.append(f'{divemaster} Divemaster')
             if quentinha != 0:
-                valores_diferentes_de_zero.append(f'{quentinha} quentinha')
+                valores_diferentes_de_zero.append(f'{quentinha} Quentinha')
             if cilindro_acqua is not None:
-                valores_diferentes_de_zero.append(f'{cilindro_acqua} cilindros acqua')
+                valores_diferentes_de_zero.append(f'{cilindro_acqua} Cilindros Acqua')
             if cilindro_pl is not None:
-                valores_diferentes_de_zero.append(f'{cilindro_pl} cilindros pl')
+                valores_diferentes_de_zero.append(f'{cilindro_pl} Cilindros Pl')
 
             # Verifica se existem valores diferentes de zero na lista e adiciona à mensagem
             if valores_diferentes_de_zero:
