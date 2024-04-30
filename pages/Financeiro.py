@@ -289,6 +289,17 @@ if st.button('Pesquisar2'):
         select_comissao_individual = repository_staffs.select_soma_comissao_individual(data1_pagamento, data2_pagamento,
                                                                                        id_staff)
 
+        total_valor_bat = 0
+        contagem_bat = 0
+        contagem_equipagem = 0
+        contagem_embarque = 0
+        contagem_pratica = 0
+        contagem_rescue = 0
+        contagem_review = 0
+        contagem_divemaster = 0
+        contagem_quentinha = 0
+        contagem_cilindro_acqua = 0
+        contagem_cilindro_pl = 0
         mensagem = ''
         for select in select_comissao_individual:
             data, total_bat, bat, equipagem, embarque, curso, rescue, review, divemaster, quentinha, cilindro_acqua, cilindro_pl = select
@@ -298,36 +309,50 @@ if st.button('Pesquisar2'):
             # Verifica se cada variável é diferente de zero e adiciona à lista
             if bat != '0':
                 valores_diferentes_de_zero.append(f'{bat} BAT')
+                total_valor_bat += total_bat
+                contagem_bat += float(bat)
             if equipagem != '0':
                 valores_diferentes_de_zero.append(f'{equipagem} Equipagens')
+                contagem_equipagem = int(equipagem)
             if embarque != '0':
                 valores_diferentes_de_zero.append(f'{embarque} Embarques')
+                contagem_embarque = int(embarque)
             if curso != '0':
+                contagem_pratica = int(curso)
                 if int(curso) > 1:
                     pratica = 'Praticas'
                 else:
                     pratica = 'Pratica'
                 valores_diferentes_de_zero.append(f'{curso} {pratica}')
             if rescue != '0':
+                contagem_rescue = int(rescue)
                 valores_diferentes_de_zero.append(f'{rescue} Rescue')
             if review != '0':
+                contagem_review = int(review)
                 valores_diferentes_de_zero.append(f'{review} Review')
             if divemaster != '0':
                 valores_diferentes_de_zero.append(f'{divemaster} Divemaster')
+                contagem_divemaster += int(divemaster)
 
             if cilindro_acqua is not None and cilindro_acqua != 0:
+                contagem_cilindro_acqua = int(cilindro_acqua)
                 valores_diferentes_de_zero.append(f'{cilindro_acqua} Cilindros Acqua')
             if cilindro_pl is not None and cilindro_pl != 0:
+                contagem_cilindro_pl = int(cilindro_pl)
                 valores_diferentes_de_zero.append(f'{cilindro_pl} Cilindros Pl')
 
             if quentinha != 0:
+                contagem_quentinha = int(quentinha)
                 valores_diferentes_de_zero.append('quentinha')
 
             # Verifica se existem valores diferentes de zero na lista e adiciona à mensagem
             if valores_diferentes_de_zero:
                 mensagem += f'{data}: ' + ' + '.join(valores_diferentes_de_zero) + '\n'
 
+        if contagem_bat != 0:
+            mensagem += f'Total Batismo - {contagem_bat} = R$ {total_valor_bat}'
         st.code(mensagem)
+
     # mydb.connect()
     # cursor.execute(f"SELECT id_staff, comissao FROM staffs where nome ='{staff}'")
     # result = cursor.fetchone()
