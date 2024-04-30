@@ -98,12 +98,11 @@ class MainRepository:
         )
         SELECT 
             DATE_FORMAT(lb.data, '%d/%m/%Y') AS data, 
-            MAX(
                 CASE 
                     WHEN lb.funcao = 'BAT' THEN lb.quantidade * staffs.comissao 
                     ELSE 0 
                 END
-            ) AS total_bat,
+             AS total_bat,
             MAX(
                 CASE 
                     WHEN lb.funcao = 'BAT' THEN 
