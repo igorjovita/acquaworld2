@@ -291,7 +291,7 @@ if st.button('Pesquisar2'):
 
         mensagem = ''
         for select in select_comissao_individual:
-            data, total_bat, bat, equipagem, embarque, curso, rescue, review, divemaster, quentinha = select
+            data, total_bat, bat, equipagem, embarque, curso, rescue, review, divemaster, quentinha, cilindro_acqua, cilindro_pl = select
 
             valores_diferentes_de_zero = []
 
@@ -312,6 +312,10 @@ if st.button('Pesquisar2'):
                 valores_diferentes_de_zero.append(f'{divemaster} divemaster')
             if quentinha != 0:
                 valores_diferentes_de_zero.append(f'{quentinha} quentinha')
+            if cilindro_acqua != 0:
+                valores_diferentes_de_zero.append(f'{cilindro_acqua} cilindros acqua')
+            if cilindro_pl != 0:
+                valores_diferentes_de_zero.append(f'{cilindro_pl} cilindros pl')
 
             # Verifica se existem valores diferentes de zero na lista e adiciona à mensagem
             if valores_diferentes_de_zero:
