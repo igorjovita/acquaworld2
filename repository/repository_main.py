@@ -98,7 +98,7 @@ class MainRepository:
     )
     SELECT 
         DATE_FORMAT(lb.data, '%d/%m/%Y') AS data, 
-        CASE WHEN lb.funcao = 'BAT' THEN lb.quantidade * staffs.comissao ELSE 0 END AS total_bat,
+        staffs.comissao,
         CASE WHEN lb.funcao = 'BAT' THEN 
             CASE WHEN ROUND(lb.quantidade, 0) = lb.quantidade THEN FORMAT(lb.quantidade, 0) 
                  ELSE FORMAT(lb.quantidade, 1) END
