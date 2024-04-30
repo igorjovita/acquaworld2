@@ -13,57 +13,70 @@ class MainRepository:
 
     def select_soma_total_comissoes(self, data_incial, data_final):
         query = """
-        SELECT 
-            CONCAT(
-                staffs.nome, ' - ',
-                CASE WHEN SUM(CASE WHEN l.funcao = 'BAT' THEN l.quantidade ELSE 0 END) > 0 THEN CONCAT(FORMAT(SUM(CASE WHEN l.funcao = 'BAT' THEN l.quantidade ELSE 0 END), 2), ' BAT + ') ELSE '' END,
-                CASE WHEN SUM(CASE WHEN l.funcao = 'AS' THEN l.quantidade ELSE 0 END) > 0 THEN CONCAT(FORMAT(SUM(CASE WHEN l.funcao = 'AS' THEN l.quantidade ELSE 0 END), 2), ' Equipagens + ') ELSE '' END,
-                CASE WHEN SUM(CASE WHEN l.funcao = 'CAPITAO' THEN l.quantidade ELSE 0 END) > 0 THEN CONCAT(FORMAT(SUM(CASE WHEN l.funcao = 'CAPITAO' THEN l.quantidade ELSE 0 END), 2), ' Embarques + ') ELSE '' END,
-                CASE WHEN SUM(CASE WHEN l.funcao = 'CURSO' THEN l.quantidade ELSE 0 END) > 0 THEN CONCAT(FORMAT(SUM(CASE WHEN l.funcao = 'CURSO' THEN l.quantidade ELSE 0 END), 2), ' Curso + ') ELSE '' END,
-                CASE WHEN COALESCE(SUM(lc.cilindros_acqua + lc.cilindros_pl), 0) > 0 THEN CONCAT(FORMAT(COALESCE(SUM(lc.cilindros_acqua + lc.cilindros_pl), 0), 2), ' Cilindros + ') ELSE '' END,
-                CASE WHEN SUM(CASE WHEN l.quentinha = 'Sim' OR lc.almoco = 'Sim' THEN 1 ELSE 0 END) > 0 THEN CONCAT(FORMAT(SUM(CASE WHEN l.quentinha = 'Sim' OR lc.almoco = 'Sim' THEN 1 ELSE 0 END), 2), ' Quentinhas + ') ELSE '' END,
-                CASE WHEN SUM(CASE WHEN lc.cilindros_acqua != 0 OR lc.cilindros_pl != 0 THEN 1 ELSE 0 END) > 0 THEN CONCAT(FORMAT(SUM(CASE WHEN lc.cilindros_acqua != 0 OR lc.cilindros_pl != 0 THEN 1 ELSE 0 END), 2), ' Diarias + ') ELSE '' END,
-                'R$ : ', FORMAT(
-                    SUM(
-                        CASE 
-                            WHEN l.id_staff IS NOT NULL THEN
-                                CASE 
-                                    WHEN l.funcao = 'BAT' THEN l.quantidade * staffs.comissao
-                                    WHEN l.funcao = 'AS' THEN l.quantidade * 1
-                                    WHEN l.funcao = 'CAPITAO' THEN l.quantidade * 1
-                                    WHEN l.funcao = 'CURSO' THEN 
-                                        CASE 
-                                            WHEN l.curso IN ('OWD', 'ADV') THEN l.quantidade * 75
-                                            WHEN l.curso = 'RESCUE' THEN l.quantidade * 150
-                                            WHEN l.curso = 'REVIEW' THEN l.quantidade * 120
-                                            WHEN l.curso = 'DIVEMASTER' THEN l.quantidade * 200
-                                            ELSE 0
-                                        END
-                                    ELSE 0
-                                END +
-                                CASE 
-                                    WHEN l.quentinha = 'Sim' THEN 15
-                                    ELSE 0
-                                END
-                            ELSE
-                                0
+    WITH SomaCilindros AS (
+        SELECT
+            id_staff,
+            COALESCE(SUM(cilindros_acqua + cilindros_pl), 0) AS quantidade_cilindro,
+            COUNT(DISTINCT data) AS diarias
+        FROM lancamento_cilindro
+        WHERE data BETWEEN '2024-04-01' AND '2024-04-30'
+        GROUP BY id_staff
+    ),
+    SomaQuentinhas AS (
+        SELECT
+            id_staff,
+            SUM(CASE WHEN quentinha = 'Sim' THEN 1 ELSE 0 END) AS quantidade_quentinha
+        FROM controle_quentinhas
+        WHERE data BETWEEN '2024-04-01' AND '2024-04-30'
+        GROUP BY id_staff
+    )
+    SELECT
+        staffs.nome,
+        SUM(CASE WHEN l.funcao = 'BAT' THEN l.quantidade ELSE 0 END) AS quantidade_bat,
+        SUM(CASE WHEN l.funcao = 'BAT' THEN l.quantidade * staffs.comissao ELSE 0 END) AS total_bat,
+        SUM(CASE WHEN l.funcao = 'AS' THEN l.quantidade ELSE 0 END) AS quantidade_as,
+        SUM(CASE WHEN l.funcao = 'CAPITAO' THEN l.quantidade ELSE 0 END) AS quantidade_capitao,
+        SUM(CASE WHEN l.funcao = 'CURSO' THEN l.quantidade ELSE 0 END) AS quantidade_curso,
+        SUM(CASE WHEN l.funcao = 'CURSO' THEN
+            CASE
+                WHEN l.curso IN ('OWD', 'ADV') THEN l.quantidade * 75
+                WHEN l.curso = 'RESCUE' THEN l.quantidade * 150
+                WHEN l.curso = 'REVIEW' THEN l.quantidade * 120
+                WHEN l.curso = 'DIVEMASTER' THEN l.quantidade * 200
+                ELSE 0
+            END
+        ELSE 0 END) AS total_curso,
+        COALESCE(sc.quantidade_cilindro, 0) AS quantidade_cilindro,
+        COALESCE(cq.quantidade_quentinha, 0) as quantidade_quentinha,
+        COALESCE(sc.diarias, 0) AS diarias,
+        FORMAT(
+            SUM(
+                CASE WHEN l.funcao = 'BAT' THEN l.quantidade * staffs.comissao
+                     WHEN l.funcao = 'AS' THEN l.quantidade * 1
+                     WHEN l.funcao = 'CAPITAO' THEN l.quantidade * 1
+                     ELSE 0
+                END +
+                CASE WHEN cq.quantidade_quentinha != 0 THEN 15 ELSE 0 END +
+                CASE WHEN sc.diarias != 0 AND staffs.tipo != 'FIXO' THEN 50 ELSE 0 END +
+                CASE 
+                    WHEN l.funcao = 'CURSO' THEN
+                        CASE
+                            WHEN l.curso IN ('OWD', 'ADV') THEN l.quantidade * 75
+                            WHEN l.curso = 'RESCUE' THEN l.quantidade * 150
+                            WHEN l.curso = 'REVIEW' THEN l.quantidade * 120
+                            WHEN l.curso = 'DIVEMASTER' THEN l.quantidade * 200
+                            ELSE 0
                         END
-                    ) + (
-                        SELECT COUNT(*) FROM lancamento_cilindro AS lc_inner 
-                        LEFT JOIN staffs AS staffs_inner ON staffs_inner.id_staff = lc_inner.id_staff 
-                        WHERE lc_inner.data BETWEEN %s AND %s AND staffs_inner.tipo != 'FIXO'
-                    ) * 50, 2)
-            ) AS summary
-        FROM 
-            staffs
-        LEFT JOIN 
-            lancamentos_barco AS l ON staffs.id_staff = l.id_staff AND l.data BETWEEN %s AND %s
-        LEFT JOIN 
-            lancamento_cilindro AS lc ON staffs.id_staff = lc.id_staff AND l.data = lc.data
-        WHERE 
-            l.id_staff IS NOT NULL
-        GROUP BY 
-            staffs.nome;
+                    ELSE 0
+                END
+            ), 2, 'de_DE'
+        ) AS total_formatado
+    FROM lancamentos_barco AS l
+    LEFT JOIN staffs ON staffs.id_staff = l.id_staff
+    LEFT JOIN SomaCilindros AS sc ON sc.id_staff = l.id_staff
+    LEFT JOIN SomaQuentinhas as cq ON cq.id_staff = staffs.id_staff
+    WHERE l.data BETWEEN '2024-04-01' AND '2024-04-30'
+    GROUP BY staffs.nome;
 
 
 
@@ -75,64 +88,34 @@ class MainRepository:
 
     def select_soma_comissao_individual(self, data_inicial, data_final, id_staff):
         query = """
+        WITH SomaQuentinha as  (
+            SELECT 
+            data as data,
+            id_staff as id_staff,
+            quentinha as quentinha
+            from controle_quentinhas
+            where data between %s and %s and id_staff = %s)
+            
         SELECT 
-            CONCAT(
-                DATE_FORMAT(lb.data, '%d/%m/%Y'),
-                ' - ',
-                GROUP_CONCAT(
-                    CONCAT( 
-                        IF(ROUND(lb.quantidade) = lb.quantidade, FORMAT(lb.quantidade, 0), FORMAT(lb.quantidade, 2)),
-                        ' ',
-                        CASE 
-                            WHEN lb.funcao = 'CURSO' THEN CONCAT(lb.curso, ' ', IFNULL(lb.pratica, 'Pratica 1'))
-                            ELSE lb.funcao
-                        END
-                    ) ORDER BY lb.data SEPARATOR ' + '
-                ),
-                CASE 
-                    WHEN SUM(CASE WHEN lb.quentinha = 'Sim' THEN 1 ELSE 0 END) > 0 AND SUM(CASE WHEN lc.almoco = 'Sim' THEN 1 ELSE 0 END) > 0 THEN ' + quentinha'
-                    WHEN SUM(CASE WHEN lb.quentinha = 'Sim' THEN 1 ELSE 0 END) > 0 THEN ' + quentinha'
-                    WHEN SUM(CASE WHEN lc.almoco = 'Sim' THEN 1 ELSE 0 END) > 0 THEN ' + quentinha'
-                    ELSE ''
-                END,
-                 CASE 
-                    WHEN COUNT(lc.data) > 0 THEN
-                        CASE
-                            WHEN lc.cilindros_acqua <> 0 AND lc.cilindros_pl <> 0 THEN 
-                                CONCAT(' + ', lc.cilindros_acqua, ' Cilindros Acqua + ', lc.cilindros_pl, ' Cilindros Pl')
-                            WHEN lc.cilindros_acqua <> 0 THEN
-                                CONCAT(' + ', lc.cilindros_acqua, ' Cilindros Acqua')
-                            WHEN lc.cilindros_pl <> 0 THEN
-                                CONCAT(' + ', lc.cilindros_pl, ' Cilindros Pl')
-                            ELSE ''
-                        END
-                    ELSE ''
-                END
-            ) AS formatted_output,
-            SUM(CASE WHEN lb.funcao = 'BAT' THEN lb.quantidade * staffs.comissao ELSE 0 END) AS total_bat,
-            SUM(CASE WHEN lb.funcao = 'BAT' THEN lb.quantidade ELSE 0 END) AS quantidade_bat,
-            SUM(CASE WHEN lb.funcao = 'AS' THEN lb.quantidade ELSE 0 END) AS total_as,
-            SUM(CASE WHEN lb.funcao = 'CAPITAO' THEN lb.quantidade ELSE 0 END) AS total_capitao,
-            SUM(CASE WHEN lb.funcao = 'CURSO' and lb.curso IN ('OWD', 'ADV') THEN lb.quantidade else 0 end) as quantidade_owd_adv,
-            SUM(CASE WHEN lb.curso = 'RESCUE' THEN lb.quantidade else 0 end) as quantidade_rescue,
-            SUM(CASE WHEN lb.curso = 'REVIEW' THEN lb.quantidade else 0 end) as quantidade_review,
-            SUM(CASE WHEN lb.curso = 'DIVEMASTER' THEN lb.quantidade else 0 end) as quantidade_divemaster,
-            CASE WHEN MAX(lb.quentinha = 'Sim' OR lc.almoco = 'Sim') THEN 15 ELSE 0 END AS total_quentinha_almoco
-        FROM 
-            lancamentos_barco lb
-        LEFT JOIN
-            lancamento_cilindro lc ON lb.id_staff = lc.id_staff AND lb.data = lc.data
-        INNER JOIN staffs ON staffs.id_staff = lb.id_staff
-        WHERE 
-            lb.data BETWEEN %s AND %s AND lb.id_staff = %s
-        GROUP BY
-            lb.data
-        ORDER BY
-            lb.data;
+            DATE_FORMAT(lb.data, '%d/%m/%Y') AS data, 
+            MAX(CASE WHEN lb.funcao = 'BAT' THEN lb.quantidade * staffs.comissao ELSE 0 END) AS total_bat,
+            MAX(CASE WHEN lb.funcao = 'BAT' THEN lb.quantidade ELSE 0 END) AS quantidade_bat,
+            MAX(CASE WHEN lb.funcao = 'AS' THEN lb.quantidade ELSE 0 END) AS total_as,
+            MAX(CASE WHEN lb.funcao = 'CAPITAO' THEN lb.quantidade ELSE 0 END) AS total_capitao,
+            MAX(CASE WHEN lb.funcao = 'CURSO' and lb.curso IN ('OWD', 'ADV') THEN lb.quantidade else 0 end) as quantidade_owd_adv,
+            MAX(CASE WHEN lb.curso = 'RESCUE' THEN lb.quantidade else 0 end) as quantidade_rescue,
+            MAX(CASE WHEN lb.curso = 'REVIEW' THEN lb.quantidade else 0 end) as quantidade_review,
+            MAX(CASE WHEN lb.curso = 'DIVEMASTER' THEN lb.quantidade else 0 end) as quantidade_divemaster,
+            CASE WHEN cq.quentinha = 'Sim' Then 1 else 0 end as quantidade_quentinha
+        FROM lancamentos_barco AS lb
+        LEFT JOIN staffs ON staffs.id_staff = lb.id_staff 
+        LEFT JOIN SomaQuentinha as cq ON cq.id_staff = lb.id_staff and cq.data = lb.data
+        WHERE lb.data BETWEEN %s AND %s and lb.id_staff = %s
+        GROUP BY lb.data
 
         """
 
-        params = (data_inicial, data_final, id_staff)
+        params = (data_inicial, data_final, id_staff, data_inicial, data_final, id_staff)
 
         return self.db.execute_query(query, params)
 
