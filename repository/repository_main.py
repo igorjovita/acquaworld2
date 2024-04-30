@@ -120,9 +120,9 @@ class MainRepository:
     LEFT JOIN 
         SomaQuentinha AS cq ON cq.id_staff = lb.id_staff AND cq.data = lb.data
     LEFT JOIN
-        lancamento_cilindro AS lc ON lc.id_staff = lb.id_staff 
+        lancamento_cilindro AS lc ON lc.id_staff = lb.id_staff AND lc.data = lb.data
     WHERE 
-        lb.data BETWEEN %s AND %s AND lb.id_staff = %s
+        COALESCE(lb.data, lc.data) BETWEEN %s AND %s AND lc.id_staff = %s
     ORDER BY 
         COALESCE(lb.data, lc.data) ASC;
         """
