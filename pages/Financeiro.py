@@ -302,9 +302,12 @@ if st.button('Pesquisar2'):
         contagem_cilindro_pl = 0
         mensagem = ''
         for select in select_comissao_individual:
-            data, comissao_bat, bat, equipagem, embarque, curso, rescue, review, divemaster, quentinha, cilindro_acqua, cilindro_pl = select
+            data, comissao_bat, bat, equipagem, embarque, quantidade_curso, curso, pratica, quentinha, cilindro_acqua, cilindro_pl = select
 
             valores_diferentes_de_zero = []
+            lista_datas = {}
+
+
 
             # Verifica se cada variável é diferente de zero e adiciona à lista
             if bat != '0':
@@ -316,22 +319,9 @@ if st.button('Pesquisar2'):
             if embarque != '0':
                 valores_diferentes_de_zero.append(f'{embarque} Embarques')
                 contagem_embarque += int(embarque)
-            if curso != '0':
-                contagem_pratica += int(curso)
-                if int(curso) > 1:
-                    pratica = 'Praticas'
-                else:
-                    pratica = 'Pratica'
-                valores_diferentes_de_zero.append(f'{curso} {pratica}')
-            if rescue != '0':
-                contagem_rescue += int(rescue)
-                valores_diferentes_de_zero.append(f'{rescue} Rescue')
-            if review != '0':
-                contagem_review += int(review)
-                valores_diferentes_de_zero.append(f'{review} Review')
-            if divemaster != '0':
-                valores_diferentes_de_zero.append(f'{divemaster} Divemaster')
-                contagem_divemaster += int(divemaster)
+            if quantidade_curso != '0':
+                contagem_pratica += int(quantidade_curso)
+                valores_diferentes_de_zero.append(f'{quantidade_curso} {curso} {pratica}')
 
             if cilindro_acqua is not None and cilindro_acqua != 0:
                 contagem_cilindro_acqua += int(cilindro_acqua)
@@ -340,9 +330,15 @@ if st.button('Pesquisar2'):
                 contagem_cilindro_pl += int(cilindro_pl)
                 valores_diferentes_de_zero.append(f'{cilindro_pl} Cilindros Pl')
 
-            if quentinha != 0:
-                contagem_quentinha += int(quentinha)
-                valores_diferentes_de_zero.append('quentinha')
+            if data in lista_datas:
+                mensagem += ' +' + ' + '.join(valores_diferentes_de_zero)
+            else:
+                if quentinha != 0:
+                    contagem_quentinha += int(quentinha)
+                    valores_diferentes_de_zero.append('quentinha')
+                mensagem += '\n' + f'{data}: ' + ' + '.join(valores_diferentes_de_zero)
+
+
 
             # Verifica se existem valores diferentes de zero na lista e adiciona à mensagem
             if valores_diferentes_de_zero:
