@@ -114,18 +114,17 @@ class MainRepository:
         staffs.comissao_review,
         CASE WHEN staffs.tipo = 'FREELANCER' THEN 1 ELSE 0 END
     FROM 
-        lancamento_cilindro AS lc
+        lancamentos_barco AS lb
     LEFT JOIN 
-        staffs ON staffs.id_staff = lc.id_staff 
+        staffs ON staffs.id_staff = lb.id_staff 
     LEFT JOIN 
-        SomaQuentinha AS cq ON cq.id_staff = lc.id_staff AND cq.data = lc.data
+        SomaQuentinha AS cq ON cq.id_staff = lb.id_staff AND cq.data = lb.data
     LEFT JOIN
-        lancamentos_barco AS lb ON lc.id_staff = lb.id_staff AND lc.data = lb.data
+        lancamento_cilindro AS lc ON lc.id_staff = lb.id_staff AND lc.data = lb.data
     WHERE 
-        (lb.data BETWEEN %s AND %s OR lc.data BETWEEN %s AND %s) AND lc.id_staff = %s
+        lb.data BETWEEN %s AND %s AND lb.id_staff = %s
     ORDER BY 
         COALESCE(lb.data, lc.data) ASC;
-;
         """
 
         params = (data_inicial, data_final, id_staff, data_inicial, data_final, id_staff)
