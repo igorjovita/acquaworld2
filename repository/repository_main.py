@@ -80,54 +80,66 @@ class MainRepository:
     def select_soma_comissao_individual(self, data_inicial, data_final, id_staff):
         query = """
         WITH SomaQuentinha AS (
+            SELECT 
+                data AS data,
+                id_staff AS id_staff,
+                quentinha AS quentinha
+            FROM controle_quentinhas
+            WHERE data BETWEEN %s AND %s AND id_staff = %s
+        )
         SELECT 
-            data AS data,
-            id_staff AS id_staff,
-            quentinha AS quentinha
-        FROM controle_quentinhas
-        WHERE data BETWEEN %s AND %s AND id_staff = %s
-    )
-    SELECT 
-        DATE_FORMAT(COALESCE(lb.data, lc.data), '%d/%m/%Y') AS data, 
-        staffs.comissao,
-        CASE WHEN lb.funcao = 'BAT' THEN 
-            CASE WHEN ROUND(lb.quantidade, 0) = lb.quantidade THEN FORMAT(lb.quantidade, 0) 
-                 ELSE FORMAT(lb.quantidade, 2) END
-        ELSE 0 END AS quantidade_bat,
-        CASE WHEN lb.funcao = 'AS' THEN 
-            CASE WHEN ROUND(lb.quantidade, 0) = lb.quantidade THEN FORMAT(lb.quantidade, 0) 
-                 ELSE FORMAT(lb.quantidade, 2) END
-        ELSE 0 END AS total_as,
-        CASE WHEN lb.funcao = 'CAPITAO' THEN 
-            CASE WHEN ROUND(lb.quantidade, 0) = lb.quantidade THEN FORMAT(lb.quantidade, 0) 
-                 ELSE FORMAT(lb.quantidade, 2) END
-        ELSE 0 END AS total_capitao,
-        CASE WHEN lb.funcao = 'CURSO' THEN 
-            CASE WHEN ROUND(lb.quantidade, 0) = lb.quantidade THEN FORMAT(lb.quantidade, 0) 
-                 ELSE FORMAT(lb.quantidade, 2) END
-        ELSE 0 END AS quantidade_curso,
-        lb.curso,
-        CASE WHEN lb.pratica IS NOT NULL THEN lb.pratica ELSE '' END,
-        CASE WHEN cq.quentinha = 'Sim' THEN 1 ELSE 0 END AS quantidade_quentinha,
-        lc.cilindros_acqua AS cilindros_acqua,
-        lc.cilindros_pl AS cilindros_pl,
-        staffs.comissao_review,
-        CASE WHEN staffs.tipo = 'FREELANCER' THEN 1 ELSE 0 END
-    FROM 
-        lancamentos_barco AS lb
-    LEFT JOIN 
-        staffs ON staffs.id_staff = lb.id_staff 
-    LEFT JOIN 
-        SomaQuentinha AS cq ON cq.id_staff = lb.id_staff AND cq.data = lb.data
-    FULL OUTER JOIN
-        lancamento_cilindro AS lc ON lc.id_staff = lb.id_staff AND lc.data = lb.data
-    WHERE 
-       COALESCE(lb.data, lc.data) BETWEEN %s AND %s AND lb.id_staff = %s or lc.id_staff = %s
-    ORDER BY 
-        COALESCE(lb.data, lc.data) ASC;
+            DATE_FORMAT(lb.data, '%d/%m/%Y') AS data, 
+            staffs.comissao,
+            CASE WHEN lb.funcao = 'BAT' THEN FORMAT(lb.quantidade, 2) ELSE 0 END AS quantidade_bat,
+            CASE WHEN lb.funcao = 'AS' THEN FORMAT(lb.quantidade, 2) ELSE 0 END AS total_as,
+            CASE WHEN lb.funcao = 'CAPITAO' THEN FORMAT(lb.quantidade, 2) ELSE 0 END AS total_capitao,
+            CASE WHEN lb.funcao = 'CURSO' THEN FORMAT(lb.quantidade, 2) ELSE 0 END AS quantidade_curso,
+            lb.curso,
+            CASE WHEN lb.pratica IS NOT NULL THEN lb.pratica ELSE '' END AS pratica,
+            CASE WHEN cq.quentinha = 'Sim' THEN 1 ELSE 0 END AS quantidade_quentinha,
+            lc.cilindros_acqua AS cilindros_acqua,
+            lc.cilindros_pl AS cilindros_pl,
+            staffs.comissao_review,
+            CASE WHEN staffs.tipo = 'FREELANCER' THEN 1 ELSE 0 END AS tipo_freelancer
+        FROM 
+            lancamentos_barco AS lb
+        LEFT JOIN 
+            staffs ON staffs.id_staff = lb.id_staff 
+        LEFT JOIN 
+            SomaQuentinha AS cq ON cq.id_staff = lb.id_staff AND cq.data = lb.data
+        LEFT JOIN 
+            lancamento_cilindro AS lc ON lc.id_staff = lb.id_staff AND lc.data = lb.data
+        WHERE 
+            lb.data BETWEEN %s AND %s AND lb.id_staff = %s
+        
+        UNION ALL
+        
+        SELECT 
+            DATE_FORMAT(lc.data, '%d/%m/%Y') AS data, 
+            0 AS comissao,
+            0 AS quantidade_bat,
+            0 AS total_as,
+            0 AS total_capitao,
+            0 AS quantidade_curso,
+            0 AS curso,
+            0 AS pratica,
+            0 AS quantidade_quentinha,
+            lc.cilindros_acqua AS cilindros_acqua,
+            lc.cilindros_pl AS cilindros_pl,
+            0 AS comissao_review,
+            0 AS tipo_freelancer
+        FROM 
+            lancamento_cilindro AS lc
+        LEFT JOIN 
+            staffs ON staffs.id_staff = lc.id_staff 
+        WHERE 
+            lc.data BETWEEN %s AND %s AND lc.id_staff = %s 
+        ORDER BY 
+            COALESCE(lb.data, lc.data) ASC;
+
         """
 
-        params = (data_inicial, data_final, id_staff, data_inicial, data_final, id_staff, id_staff)
+        params = (data_inicial, data_final, id_staff, data_inicial, data_final, id_staff, id_staff, data_inicial, data_final,)
 
         return self.db.execute_query(query, params)
 
