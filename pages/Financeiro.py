@@ -320,7 +320,7 @@ if st.button('Pesquisar2'):
 
         mensagem = mensagem.rstrip('\n')
 
-        st.write(mensagem)
+        st.code(mensagem)
     # mydb.connect()
     # cursor.execute(f"SELECT id_staff, comissao FROM staffs where nome ='{staff}'")
     # result = cursor.fetchone()
