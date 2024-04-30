@@ -416,7 +416,7 @@ if st.button('Pesquisar2'):
 
         total_pagar = valor_bat + contagem_equipagem + contagem_embarque + valor_pratica + valor_review + valor_rescue + valor_efr + valor_divemaster + valor_quentinha + contagem_cilindro_acqua + contagem_cilindro_pl + valor_diaria
 
-        mensagem += f"Total a Pagar = {format_currency(float(total_pagar), 'BRL', locale='pt_BR')}"
+        mensagem += '\n' + f"Total a Pagar = {format_currency(float(total_pagar), 'BRL', locale='pt_BR')}"
         st.code(mensagem)
 
 
