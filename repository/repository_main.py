@@ -119,15 +119,15 @@ class MainRepository:
         staffs ON staffs.id_staff = lb.id_staff 
     LEFT JOIN 
         SomaQuentinha AS cq ON cq.id_staff = lb.id_staff AND cq.data = lb.data
-    LEFT JOIN
+    FULL OUTER JOIN
         lancamento_cilindro AS lc ON lc.id_staff = lb.id_staff AND lc.data = lb.data
     WHERE 
-        lb.data BETWEEN %s AND %s AND lb.id_staff = %s
+       COALESCE(lb.data, lc.data) BETWEEN %s AND %s AND lb.id_staff = %s or lc.id_staff = %s
     ORDER BY 
         COALESCE(lb.data, lc.data) ASC;
         """
 
-        params = (data_inicial, data_final, id_staff, data_inicial, data_final, id_staff)
+        params = (data_inicial, data_final, id_staff, data_inicial, data_final, id_staff, id_staff)
 
         return self.db.execute_query(query, params)
 
