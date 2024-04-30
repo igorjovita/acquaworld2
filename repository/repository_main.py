@@ -21,7 +21,7 @@ class MainRepository:
         FROM lancamento_cilindro
         LEFT JOIN staffs s ON lc.id_staff = s.id_staff
         WHERE data BETWEEN %s AND %s
-        GROUP BY id_staff
+        GROUP BY lc.id_staff
     ),
     SomaQuentinhas AS (
         SELECT
