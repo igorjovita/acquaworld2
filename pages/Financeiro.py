@@ -283,13 +283,13 @@ if st.button('Pesquisar2'):
         select_total_comissoes = repository_staffs.select_soma_total_comissoes(data1_pagamento, data2_pagamento)
         st.write(select_total_comissoes)
 
-
     elif filtro2 == 'Staff especifico':
         index_lista = lista_staff.index(staff)
         id_staff = info_staff[index_lista][0]
-        select_comissao_individual = repository_staffs.select_soma_comissao_individual(data1_pagamento, data2_pagamento, id_staff)
+        select_comissao_individual = repository_staffs.select_soma_comissao_individual(data1_pagamento, data2_pagamento,
+                                                                                       id_staff)
+        st.write(id_staff)
         st.write(select_comissao_individual)
-
 
     # mydb.connect()
     # cursor.execute(f"SELECT id_staff, comissao FROM staffs where nome ='{staff}'")
