@@ -296,22 +296,21 @@ if st.button('Pesquisar2'):
             valores_diferentes_de_zero = []
 
             # Verifica se cada variável é diferente de zero e adiciona à lista
-            st.write(f'BAT {bat}')
             if bat != '0':
                 valores_diferentes_de_zero.append(f'{bat} BAT')
-            if equipagem != '':
+            if equipagem != '0':
                 valores_diferentes_de_zero.append(f'{equipagem} equipagens')
-            if embarque != '':
+            if embarque != '0':
                 valores_diferentes_de_zero.append(f'{embarque} embarques')
-            if curso != '':
+            if curso != '0':
                 valores_diferentes_de_zero.append(f'{curso} curso')
-            if rescue != '':
+            if rescue != '0':
                 valores_diferentes_de_zero.append(f'{rescue} rescue')
-            if review != '':
+            if review != '0':
                 valores_diferentes_de_zero.append(f'{review} review')
-            if divemaster != '':
+            if divemaster != '0':
                 valores_diferentes_de_zero.append(f'{divemaster} divemaster')
-            if quentinha != '':
+            if quentinha != '0':
                 valores_diferentes_de_zero.append(f'{quentinha} quentinha')
             if cilindro_acqua is not None:
                 valores_diferentes_de_zero.append(f'{cilindro_acqua} cilindros acqua')
