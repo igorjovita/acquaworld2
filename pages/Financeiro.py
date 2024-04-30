@@ -349,7 +349,8 @@ if st.button('Pesquisar2'):
                 mensagem += f'{data}: ' + ' + '.join(valores_diferentes_de_zero) + '\n'
 
         if contagem_bat != 0:
-            mensagem += f'Total Batismo - {contagem_bat:.2f} = R$ {contagem_bat * int(comissao_bat)}'
+            valor_pagar_bat = contagem_bat * int(comissao_bat)
+            mensagem += f'Total Batismo - {contagem_bat:.2f} = R$ {format_currency(float(valor_pagar_bat), 'BRL', locale='pt_BR')}'
         st.code(mensagem)
 
     # mydb.connect()
