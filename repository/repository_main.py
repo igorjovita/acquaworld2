@@ -119,7 +119,9 @@ class MainRepository:
         CASE WHEN lb.pratica IS NOT NULL THEN lb.pratica ELSE '' END,
         CASE WHEN cq.quentinha = 'Sim' THEN 1 ELSE 0 END AS quantidade_quentinha,
         lc.cilindros_acqua AS cilindros_acqua,
-        lc.cilindros_pl AS cilindros_pl
+        lc.cilindros_pl AS cilindros_pl,
+        staffs.comissao_review,
+        staffs.tipo
     FROM 
         lancamentos_barco AS lb
     LEFT JOIN 

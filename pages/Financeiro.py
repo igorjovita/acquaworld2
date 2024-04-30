@@ -306,7 +306,7 @@ if st.button('Pesquisar2'):
 
         for select in select_comissao_individual:
 
-            data, comissao_bat, bat, equipagem, embarque, quantidade_curso, curso, pratica, quentinha, cilindro_acqua, cilindro_pl = select
+            data, _, bat, equipagem, embarque, quantidade_curso, curso, pratica, quentinha, cilindro_acqua, cilindro_pl, _, _ = select
             valores_diferentes_de_zero = []
 
             # Verifica se cada variável é diferente de zero e adiciona à lista
@@ -354,15 +354,15 @@ if st.button('Pesquisar2'):
             comissao_bat = select_comissao_individual[0][1]
             valor_pagar_bat = contagem_bat * int(comissao_bat)
             valor_pagar_bat = format_currency(float(valor_pagar_bat), 'BRL', locale='pt_BR')
-            mensagem += '\n' + f'Total Batismo - {contagem_bat:.2f} = {valor_pagar_bat}'
+            mensagem += '\n' + f'Total Batismo - {contagem_bat:.2f} * {comissao_bat} = {valor_pagar_bat}'
 
         if contagem_equipagem != 0:
             valor_pagar_equipagem = format_currency(float(contagem_equipagem), 'BRL', locale='pt_BR')
-            mensagem += '\n' + f'Total Equipagens - {contagem_equipagem} = {valor_pagar_equipagem}'
+            mensagem += '\n' + f'Total Equipagens - {contagem_equipagem} * 1 = {valor_pagar_equipagem}'
 
         if contagem_embarque != 0:
             valor_pagar_embarque = format_currency(float(contagem_embarque), 'BRL', locale='pt_BR')
-            mensagem += '\n' + f'Total Embarques - {contagem_embarque} = {valor_pagar_embarque}'
+            mensagem += '\n' + f'Total Embarques - {contagem_embarque} * 1 = {valor_pagar_embarque}'
 
         if contagem_pratica != 0:
             valor_pagar_pratica = contagem_pratica * 75
@@ -388,6 +388,11 @@ if st.button('Pesquisar2'):
             valor_pagar_divemaster = contagem_divemaster * 200
             valor_pagar_divemaster = format_currency(float(valor_pagar_divemaster), 'BRL', locale='pt_BR')
             mensagem += '\n' + f'Total Curso Divemaster - {contagem_divemaster}  * 200 = {valor_pagar_divemaster}'
+
+        if contagem_quentinha != 0:
+            valor_pagar_quentinha = contagem_quentinha * 15
+            valor_pagar_quentinha = format_currency(float(valor_pagar_quentinha), 'BRL', locale='pt_BR')
+            mensagem += '\n' + f'Total Quentinhas - {contagem_quentinha}  * 15 = {valor_pagar_quentinha}'
         st.code(mensagem)
 
 
