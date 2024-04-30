@@ -92,19 +92,19 @@ class MainRepository:
         staffs.comissao,
         CASE WHEN lb.funcao = 'BAT' THEN 
             CASE WHEN ROUND(lb.quantidade, 0) = lb.quantidade THEN FORMAT(lb.quantidade, 0) 
-                 ELSE FORMAT(lb.quantidade, 1) END
+                 ELSE FORMAT(lb.quantidade, 2) END
         ELSE 0 END AS quantidade_bat,
         CASE WHEN lb.funcao = 'AS' THEN 
             CASE WHEN ROUND(lb.quantidade, 0) = lb.quantidade THEN FORMAT(lb.quantidade, 0) 
-                 ELSE FORMAT(lb.quantidade, 1) END
+                 ELSE FORMAT(lb.quantidade, 2) END
         ELSE 0 END AS total_as,
         CASE WHEN lb.funcao = 'CAPITAO' THEN 
             CASE WHEN ROUND(lb.quantidade, 0) = lb.quantidade THEN FORMAT(lb.quantidade, 0) 
-                 ELSE FORMAT(lb.quantidade, 1) END
+                 ELSE FORMAT(lb.quantidade, 2) END
         ELSE 0 END AS total_capitao,
         CASE WHEN lb.funcao = 'CURSO' THEN 
             CASE WHEN ROUND(lb.quantidade, 0) = lb.quantidade THEN FORMAT(lb.quantidade, 0) 
-                 ELSE FORMAT(lb.quantidade, 1) END
+                 ELSE FORMAT(lb.quantidade, 2) END
         ELSE 0 END AS quantidade_curso,
         lb.curso,
         CASE WHEN lb.pratica IS NOT NULL THEN lb.pratica ELSE '' END,
