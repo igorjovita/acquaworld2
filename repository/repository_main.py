@@ -88,74 +88,47 @@ class MainRepository:
         WHERE data BETWEEN %s AND %s AND id_staff = %s
     )
     SELECT 
-        DATE_FORMAT(data, '%d/%m/%Y') AS data, 
-        comissao,
-        quantidade_bat,
-        total_as,
-        total_capitao,
-        quantidade_curso,
-        curso,
-        CASE WHEN pratica IS NOT NULL THEN pratica ELSE '' END AS quantidade_pratica,
-        quantidade_quentinha,
-        cilindros_acqua,
-        cilindros_pl,
-        comissao_review,
-        CASE WHEN tipo = 'FREELANCER' THEN 1 ELSE 0 END AS diarias
-    FROM (
-        SELECT 
-            lb.data AS data,
-            staffs.comissao,
-            CASE WHEN lb.funcao = 'BAT' THEN lb.quantidade ELSE 0 END AS quantidade_bat,
-            CASE WHEN lb.funcao = 'AS' THEN lb.quantidade ELSE 0 END AS total_as,
-            CASE WHEN lb.funcao = 'CAPITAO' THEN lb.quantidade ELSE 0 END AS total_capitao,
-            CASE WHEN lb.funcao = 'CURSO' THEN lb.quantidade ELSE 0 END AS quantidade_curso,
-            lb.curso,
-            lb.pratica,
-            CASE WHEN cq.quentinha = 'Sim' THEN 1 ELSE 0 END AS quantidade_quentinha,
-            lc.cilindros_acqua,
-            lc.cilindros_pl,
-            staffs.comissao_review,
-            staffs.tipo
-        FROM 
-            lancamentos_barco AS lb
-        LEFT JOIN 
-            staffs ON staffs.id_staff = lb.id_staff 
-        LEFT JOIN 
-            SomaQuentinha AS cq ON cq.id_staff = lb.id_staff AND cq.data = lb.data
-        WHERE 
-            lb.data BETWEEN %s AND %s AND lb.id_staff = %s
-    
-        UNION ALL
-    
-        SELECT 
-            lc.data AS data,
-            staffs.comissao,
-            0 AS quantidade_bat,
-            0 AS total_as,
-            0 AS total_capitao,
-            0 AS quantidade_curso,
-            '' AS curso,
-            '' AS pratica,
-            0 AS quantidade_quentinha,
-            lc.cilindros_acqua,
-            lc.cilindros_pl,
-            staffs.comissao_review,
-            staffs.tipo
-        FROM 
-            lancamento_cilindro AS lc
-        LEFT JOIN 
-            staffs ON staffs.id_staff = lc.id_staff 
-        LEFT JOIN 
-            SomaQuentinha AS cq ON cq.id_staff = lc.id_staff AND cq.data = lc.data
-        WHERE 
-            lc.data BETWEEN %s AND %s AND lc.id_staff = %s
-    ) AS combined_results
+        DATE_FORMAT(COALESCE(lb.data, lc.data), '%d/%m/%Y') AS data, 
+        staffs.comissao,
+        CASE WHEN lb.funcao = 'BAT' THEN 
+            CASE WHEN ROUND(lb.quantidade, 0) = lb.quantidade THEN FORMAT(lb.quantidade, 0) 
+                 ELSE FORMAT(lb.quantidade, 1) END
+        ELSE 0 END AS quantidade_bat,
+        CASE WHEN lb.funcao = 'AS' THEN 
+            CASE WHEN ROUND(lb.quantidade, 0) = lb.quantidade THEN FORMAT(lb.quantidade, 0) 
+                 ELSE FORMAT(lb.quantidade, 1) END
+        ELSE 0 END AS total_as,
+        CASE WHEN lb.funcao = 'CAPITAO' THEN 
+            CASE WHEN ROUND(lb.quantidade, 0) = lb.quantidade THEN FORMAT(lb.quantidade, 0) 
+                 ELSE FORMAT(lb.quantidade, 1) END
+        ELSE 0 END AS total_capitao,
+        CASE WHEN lb.funcao = 'CURSO' THEN 
+            CASE WHEN ROUND(lb.quantidade, 0) = lb.quantidade THEN FORMAT(lb.quantidade, 0) 
+                 ELSE FORMAT(lb.quantidade, 1) END
+        ELSE 0 END AS quantidade_curso,
+        lb.curso,
+        CASE WHEN lb.pratica IS NOT NULL THEN lb.pratica ELSE '' END,
+        CASE WHEN cq.quentinha = 'Sim' THEN 1 ELSE 0 END AS quantidade_quentinha,
+        lc.cilindros_acqua AS cilindros_acqua,
+        lc.cilindros_pl AS cilindros_pl,
+        staffs.comissao_review,
+        CASE WHEN staffs.tipo = 'FREELANCER' THEN 1 ELSE 0 END
+    FROM 
+        lancamento_cilindro AS lc
+    LEFT JOIN 
+        staffs ON staffs.id_staff = lc.id_staff 
+    LEFT JOIN 
+        SomaQuentinha AS cq ON cq.id_staff = lc.id_staff AND cq.data = lc.data
+    LEFT JOIN
+        lancamentos_barco AS lb ON lc.id_staff = lb.id_staff AND lc.data = lb.data
+    WHERE 
+        (lb.data BETWEEN %s AND %s OR lc.data BETWEEN %s AND %s) AND lc.id_staff = %s
     ORDER BY 
-        data ASC;
-
+        COALESCE(lb.data, lc.data) ASC;
+;
         """
 
-        params = (data_inicial, data_final, id_staff, data_inicial, data_final, id_staff, data_inicial, data_final, id_staff)
+        params = (data_inicial, data_final, id_staff, data_inicial, data_final, id_staff)
 
         return self.db.execute_query(query, params)
 
