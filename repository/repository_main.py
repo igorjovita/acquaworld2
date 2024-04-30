@@ -116,7 +116,7 @@ class MainRepository:
                  ELSE FORMAT(lb.quantidade, 1) END
         ELSE 0 END AS quantidade_curso,
         lb.curso,
-        lb.pratica,
+        CASE WHEN lb.pratica THEN lb.pratica ELSE '' END,
         CASE WHEN cq.quentinha = 'Sim' THEN 1 ELSE 0 END AS quantidade_quentinha,
         lc.cilindros_acqua AS cilindros_acqua,
         lc.cilindros_pl AS cilindros_pl

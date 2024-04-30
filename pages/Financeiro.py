@@ -367,12 +367,12 @@ if st.button('Pesquisar2'):
         if contagem_pratica != 0:
             valor_pagar_pratica = contagem_pratica * 75
             valor_pagar_pratica = format_currency(float(valor_pagar_pratica), 'BRL', locale='pt_BR')
-            mensagem += '\n' + f'Total Pratica Open e Avançado- {contagem_pratica} * 75 = {valor_pagar_pratica}'
+            mensagem += '\n' + f'Total Pratica OWD e ADV - {contagem_pratica} * 75 = {valor_pagar_pratica}'
 
         if contagem_review != 0:
             valor_pagar_review = contagem_review * 80
             valor_pagar_review = format_currency(float(valor_pagar_review), 'BRL', locale='pt_BR')
-            mensagem += '\n' + f'Total Review- {contagem_review} * 80 = {valor_pagar_review}'
+            mensagem += '\n' + f'Total Review - {contagem_review} * 80 = {valor_pagar_review}'
 
         if contagem_rescue != 0:
             valor_pagar_rescue = contagem_rescue * 150
@@ -387,7 +387,7 @@ if st.button('Pesquisar2'):
         if contagem_divemaster != 0:
             valor_pagar_divemaster = contagem_divemaster * 200
             valor_pagar_divemaster = format_currency(float(valor_pagar_divemaster), 'BRL', locale='pt_BR')
-            mensagem += '\n' + f'Total Curso Divemaster- {contagem_divemaster}  * 200 = {valor_pagar_divemaster}'
+            mensagem += '\n' + f'Total Curso Divemaster - {contagem_divemaster}  * 200 = {valor_pagar_divemaster}'
         st.code(mensagem)
 
 
