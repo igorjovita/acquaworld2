@@ -302,14 +302,13 @@ if st.button('Pesquisar2'):
         contagem_cilindro_pl = 0
         mensagem = ''
         for select in select_comissao_individual:
-            data, total_bat, bat, equipagem, embarque, curso, rescue, review, divemaster, quentinha, cilindro_acqua, cilindro_pl = select
+            data, comissao_bat, bat, equipagem, embarque, curso, rescue, review, divemaster, quentinha, cilindro_acqua, cilindro_pl = select
 
             valores_diferentes_de_zero = []
 
             # Verifica se cada variável é diferente de zero e adiciona à lista
             if bat != '0':
                 valores_diferentes_de_zero.append(f'{bat} BAT')
-                total_valor_bat += float(total_bat)
                 contagem_bat += float(bat)
             if equipagem != '0':
                 valores_diferentes_de_zero.append(f'{equipagem} Equipagens')
@@ -350,7 +349,7 @@ if st.button('Pesquisar2'):
                 mensagem += f'{data}: ' + ' + '.join(valores_diferentes_de_zero) + '\n'
 
         if contagem_bat != 0:
-            mensagem += f'Total Batismo - {contagem_bat:.2f} = R$ {total_valor_bat}'
+            mensagem += f'Total Batismo - {contagem_bat:.2f} = R$ {contagem_bat * int(comissao_bat)}'
         st.code(mensagem)
 
     # mydb.connect()
