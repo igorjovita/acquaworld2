@@ -112,6 +112,7 @@ class MainRepository:
         LEFT JOIN SomaQuentinha as cq ON cq.id_staff = lb.id_staff and cq.data = lb.data
         WHERE lb.data BETWEEN %s AND %s and lb.id_staff = %s
         GROUP BY lb.data
+        order by lb.data asc
 
         """
 
