@@ -94,7 +94,7 @@ class MainRepository:
                 id_staff AS id_staff,
                 quentinha AS quentinha
             FROM controle_quentinhas
-            WHERE data BETWEEN '2024-04-01' AND '2024-04-30' AND id_staff = 8
+            WHERE data BETWEEN %s AND %s AND id_staff = %s
         )
         SELECT 
             DATE_FORMAT(lb.data, '%d/%m/%Y') AS data, 
@@ -189,7 +189,7 @@ class MainRepository:
         LEFT JOIN
             lancamento_cilindro AS lc ON lc.id_staff = lb.id_staff AND lc.data = lb.data
         WHERE 
-            lb.data BETWEEN '2024-04-01' AND '2024-04-30' AND lb.id_staff = 8
+            lb.data BETWEEN %s AND %s AND lb.id_staff = %s
         GROUP BY 
             lb.data
         ORDER BY 
