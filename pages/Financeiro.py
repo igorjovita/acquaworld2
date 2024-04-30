@@ -282,7 +282,7 @@ if st.button('Pesquisar2'):
     if filtro2 == 'Todos':
         select_total_comissoes = repository_staffs.select_soma_total_comissoes(data1_pagamento, data2_pagamento)
         df = pd.DataFrame(select_total_comissoes, columns=['Nome', 'Bat', 'Equipagem', 'Embarque', 'Curso', 'Cilindro', 'Quentinha', 'Diaria', 'Total'])
-        st.write(select_total_comissoes)
+        st.write(df)
 
     elif filtro2 == 'Staff especifico':
         index_lista = lista_staff.index(staff)
