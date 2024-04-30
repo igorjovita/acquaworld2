@@ -297,25 +297,26 @@ if st.button('Pesquisar2'):
 
             # Verifica se cada variável é diferente de zero e adiciona à lista
             if bat != 0:
-                valores_diferentes_de_zero.append(f'Bat: {bat}')
+                valores_diferentes_de_zero.append(f'{bat} BAT')
             if equipagem != 0:
-                valores_diferentes_de_zero.append(f'Equipagem: {equipagem}')
+                valores_diferentes_de_zero.append(f'{equipagem} equipagens')
             if embarque != 0:
-                valores_diferentes_de_zero.append(f'Embarque: {embarque}')
+                valores_diferentes_de_zero.append(f'{embarque} embarques')
             if curso != 0:
-                valores_diferentes_de_zero.append(f'Curso: {curso}')
+                valores_diferentes_de_zero.append(f'{curso} curso')
             if rescue != 0:
-                valores_diferentes_de_zero.append(f'Rescue: {rescue}')
+                valores_diferentes_de_zero.append(f'{rescue} rescue')
             if review != 0:
-                valores_diferentes_de_zero.append(f'Review: {review}')
+                valores_diferentes_de_zero.append(f'{review} review')
             if divemaster != 0:
-                valores_diferentes_de_zero.append(f'Divemaster: {divemaster}')
+                valores_diferentes_de_zero.append(f'{divemaster} divemaster')
             if quentinha != 0:
-                valores_diferentes_de_zero.append(f'Quentinha: {quentinha}')
+                valores_diferentes_de_zero.append(f'{quentinha} quentinha')
 
             # Verifica se existem valores diferentes de zero na lista e adiciona à mensagem
             if valores_diferentes_de_zero:
-                mensagem += f'{data}: ' + ' + '.join(valores_diferentes_de_zero) + '\n'
+                mensagem += f'{data}: ' + ' + '.join(valores_diferentes_de_zero)
+                mensagem += '\n'
 
         st.write(mensagem)
 
