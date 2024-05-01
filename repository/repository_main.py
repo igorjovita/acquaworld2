@@ -148,7 +148,7 @@ class MainRepository:
             lancamento_cilindro
         
         WHERE 
-            data BETWEEN %s AND %s AND lc.id_staff = %s
+            data BETWEEN %s AND %s AND id_staff = %s
         ORDER BY data
         """
 
