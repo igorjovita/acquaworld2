@@ -146,14 +146,16 @@ class MainRepository:
         LEFT JOIN 
             staffs ON staffs.id_staff = lc.id_staff 
         WHERE 
-            lc.data BETWEEN %s AND %s AND lc.id_staff = %s 
+            lc.data BETWEEN %s AND %s AND lc.id_staff = %s AND lc.id_staff NOT IN (
+                SELECT id_staff FROM lancamentos_barco WHERE data BETWEEN %s AND %s
+            )
         ORDER BY 
             COALESCE(lb.data, lc.data) ASC;
 
 
         """
 
-        params = (data_inicial, data_final, id_staff, data_inicial, data_final, id_staff, id_staff, data_inicial, data_final,)
+        params = (data_inicial, data_final, id_staff, data_inicial, data_final, id_staff, id_staff, data_inicial, data_final, data_inicial, data_final)
 
         return self.db.execute_query(query, params)
 
