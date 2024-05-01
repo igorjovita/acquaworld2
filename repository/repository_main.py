@@ -39,7 +39,7 @@ class MainRepository:
         SUM(CASE WHEN l.funcao = 'CURSO' THEN l.quantidade ELSE 0 END) AS quantidade_curso,
         COALESCE(sc.quantidade_cilindro, 0) AS quantidade_cilindro,
         COALESCE(cq.quantidade_quentinha, 0) as quantidade_quentinha,
-        SUM(CASE WHEN sc.diarias != 0 AND staffs.tipo != 'FIXO' THEN sc.diarias ELSE 0 END) AS diarias,
+        CASE WHEN sc.diarias != 0 AND staffs.tipo != 'FIXO' THEN sc.diarias ELSE 0 END AS diarias,
         FORMAT(
             SUM(
                 CASE WHEN l.funcao = 'BAT' THEN l.quantidade * staffs.comissao
