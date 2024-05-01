@@ -16,7 +16,8 @@ class MainRepository:
     WITH SomaCilindros AS (
         SELECT
             lc.id_staff,
-            COALESCE(SUM(cilindros_acqua + cilindros_pl), 0) AS quantidade_cilindro
+            COALESCE(SUM(cilindros_acqua + cilindros_pl), 0) AS quantidade_cilindro,
+            COUNT(DISTINCT data)  AS diarias
         FROM lancamento_cilindro as lc
         LEFT JOIN staffs s ON lc.id_staff = s.id_staff
         WHERE data BETWEEN %s AND %s
@@ -38,7 +39,7 @@ class MainRepository:
         SUM(CASE WHEN l.funcao = 'CURSO' THEN l.quantidade ELSE 0 END) AS quantidade_curso,
         COALESCE(sc.quantidade_cilindro, 0) AS quantidade_cilindro,
         COALESCE(cq.quantidade_quentinha, 0) as quantidade_quentinha,
-        COALESCE(sc.diarias, 0) AS diarias,
+        SUM(CASE WHEN sc.diarias != 0 AND staffs.tipo != 'FIXO' THEN sc.diarias ELSE 0 END) AS diarias,
         FORMAT(
             SUM(
                 CASE WHEN l.funcao = 'BAT' THEN l.quantidade * staffs.comissao
@@ -47,7 +48,7 @@ class MainRepository:
                      ELSE 0
                 END +
                 CASE WHEN cq.quantidade_quentinha != 0 THEN 15 ELSE 0 END +
-                CASE WHEN sc.diarias != 0  THEN 50 ELSE 0 END +
+                CASE WHEN sc.diarias != 0 AND staffs.tipo != 'FIXO' THEN 50 ELSE 0 END +
                 CASE 
                     WHEN l.funcao = 'CURSO' THEN
                         CASE
