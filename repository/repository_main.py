@@ -113,7 +113,7 @@ class MainRepository:
             0 AS cilindros_acqua,
             0 AS cilindros_pl,
             staffs.comissao_review,
-            0 as diaria
+            0 AS diaria
         FROM 
             lancamentos_barco AS lb
         LEFT JOIN 
