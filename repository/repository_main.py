@@ -139,7 +139,7 @@ class MainRepository:
             WHERE data BETWEEN %s AND %s AND id_staff = %s
         )
         SELECT 
-            DATE_FORMAT(data, '%d/%m/%Y') AS data, 
+            DATE_FORMAT(lb.data, '%d/%m/%Y') AS data, 
             '0' AS comissao,
             '0' AS quantidade_bat,
             '0' AS total_as,
