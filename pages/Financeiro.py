@@ -295,11 +295,19 @@ if st.button('Pesquisar2'):
         select_contagem_cilindros = repository_staffs.select_contagem_cilindros(data1_pagamento, data2_pagamento,
                                                                                 id_staff)
 
+        st.write(select_comissao_individual)
+        st.write(select_contagem_cilindros)
+
+
+
+
         resultado_combinado = select_comissao_individual + select_contagem_cilindros
 
+        st.write(resultado_combinado)
+        
         # Ordene os resultados pela data
         resultado_final = sorted(resultado_combinado, key=lambda x: x[0])
-
+        st.write(resultado_final)
 
 
         total_valor_bat = 0
