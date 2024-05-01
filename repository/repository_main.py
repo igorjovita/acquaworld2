@@ -151,7 +151,7 @@ class MainRepository:
             lb.cilindros_acqua AS cilindros_acqua,
             lb.cilindros_pl AS cilindros_pl,
             0 AS comissao_review,
-            CASE WHEN staffs.tipo = 'FREELANCER' THEN 1 ELSE 0 AS diaria
+            CASE WHEN staffs.tipo = 'FREELANCER' THEN 1 ELSE 0 END AS diaria
         FROM 
             lancamento_cilindro as lb
         LEFT JOIN 
