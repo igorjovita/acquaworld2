@@ -17,7 +17,7 @@ class MainRepository:
         SELECT
             lc.id_staff,
             COALESCE(SUM(cilindros_acqua + cilindros_pl), 0) AS quantidade_cilindro,
-            COUNT(DISTINCT CASE WHEN s.tipo = 'FREELANCER' THEN 1 ELSE 0 END) AS diarias
+            COUNT(DISTINCT data CASE WHEN s.tipo = 'FREELANCER' THEN 1 ELSE 0 END) AS diarias
         FROM lancamento_cilindro as lc
         LEFT JOIN staffs s ON lc.id_staff = s.id_staff
         WHERE data BETWEEN %s AND %s
@@ -86,9 +86,7 @@ class MainRepository:
                 quentinha AS quentinha
             FROM controle_quentinhas
             WHERE data BETWEEN %s AND %s AND id_staff = %s
-        ),
-        
-        ContagemDiaria as (SELECT COUNT(DISTINCT data) as total_diarias, id_staff from lancamento_cilindro where data between %s and %s)
+        )
         
         SELECT 
             DATE_FORMAT(lb.data, '%d/%m/%Y') AS data, 
@@ -115,15 +113,13 @@ class MainRepository:
             0 AS cilindros_acqua,
             0 AS cilindros_pl,
             staffs.comissao_review,
-            CASE WHEN staffs.tipo = 'FREELANCER' THEN cd.total_diarias ELSE 0 END AS diaria
+            CASE WHEN staffs.tipo = 'FREELANCER' THEN 1 ELSE 0 END AS diaria
         FROM 
             lancamentos_barco AS lb
         LEFT JOIN 
             staffs ON staffs.id_staff = lb.id_staff 
         LEFT JOIN 
             SomaQuentinha AS cq ON cq.id_staff = lb.id_staff AND cq.data = lb.data
-        LEFT JOIN 
-            ContagemDiaria as cd ON cd.id_staff = lb.id_staff
         WHERE 
             lb.data BETWEEN %s AND %s AND lb.id_staff = %s
 
