@@ -113,7 +113,7 @@ class MainRepository:
             0 AS cilindros_acqua,
             0 AS cilindros_pl,
             staffs.comissao_review,
-            SUM(CASE WHEN staffs.tipo = 'FREELANCER' THEN SUM(DISTINCT(cq.data)) ELSE 0 END) AS diaria
+            CASE WHEN staffs.tipo = 'FREELANCER' THEN COUNT(DISTINCT(cq.data)) ELSE 0 END AS diaria
         FROM 
             lancamentos_barco AS lb
         LEFT JOIN 
