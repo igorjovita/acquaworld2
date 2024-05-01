@@ -145,7 +145,7 @@ class MainRepository:
             0 AS comissao_review,
             0 AS tipo_freelancer
         FROM 
-            lancamento_cilindro AS
+            lancamento_cilindro
         
         WHERE 
             data BETWEEN %s AND %s AND lc.id_staff = %s
