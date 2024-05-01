@@ -36,31 +36,14 @@ class MainRepository:
         SUM(CASE WHEN l.funcao = 'BAT' THEN l.quantidade ELSE 0 END) AS quantidade_bat,
         SUM(CASE WHEN l.funcao = 'AS' THEN l.quantidade ELSE 0 END) AS quantidade_as,
         SUM(CASE WHEN l.funcao = 'CAPITAO' THEN l.quantidade ELSE 0 END) AS quantidade_capitao,
-        SUM(CASE WHEN l.funcao = 'CURSO' THEN l.quantidade ELSE 0 END) AS quantidade_curso,
+        SUM(CASE WHEN l.funcao = 'CURSO' and l.curso IN ('OWD', 'ADV')THEN l.quantidade ELSE 0 END) AS quantidade_praticas,
+        SUM(CASE WHEN l.funcao = 'CURSO' and l.curso = 'REVIEW' THEN l.quantidade ELSE 0 END) AS quantidade_review,
+        SUM(CASE WHEN l.funcao = 'CURSO' and l.curso = 'RESCUE' THEN l.quantidade ELSE 0 END) AS quantidade_rescue,
+        SUM(CASE WHEN l.funcao = 'CURSO' and l.curso = EFR THEN l.quantidade ELSE 0 END) AS quantidade_efr,
+        SUM(CASE WHEN l.funcao = 'CURSO' and l.curso = DIVEMASTER THEN l.quantidade ELSE 0 END) AS quantidade_dm,
         COALESCE(sc.quantidade_cilindro, 0) AS quantidade_cilindro,
         COALESCE(cq.quantidade_quentinha, 0) as quantidade_quentinha,
-        CASE WHEN sc.diarias != 0 AND staffs.tipo != 'FIXO' THEN sc.diarias ELSE 0 END AS diarias,
-        FORMAT(
-            SUM(
-                CASE WHEN l.funcao = 'BAT' THEN l.quantidade * staffs.comissao
-                     WHEN l.funcao = 'AS' THEN l.quantidade * 1
-                     WHEN l.funcao = 'CAPITAO' THEN l.quantidade * 1
-                     ELSE 0
-                END +
-                CASE WHEN cq.quantidade_quentinha != 0 THEN + 15 ELSE 0 END +
-                CASE WHEN sc.diarias != 0 AND staffs.tipo != 'FIXO' THEN  + 50 ELSE 0 END +
-                CASE 
-                    WHEN l.funcao = 'CURSO' THEN
-                        CASE
-                            WHEN l.curso IN ('OWD', 'ADV') THEN l.quantidade * 75
-                            WHEN l.curso = 'RESCUE' THEN l.quantidade * 150
-                            WHEN l.curso = 'REVIEW' THEN l.quantidade * 120
-                            WHEN l.curso = 'DIVEMASTER' THEN l.quantidade * 200
-                            ELSE 0
-                        END
-                    ELSE 0
-                END
-            ), 2, 'de_DE') AS total_formatado
+        CASE WHEN sc.diarias != 0 AND staffs.tipo != 'FIXO' THEN sc.diarias ELSE 0 END AS diarias
     FROM lancamentos_barco AS l
     LEFT JOIN staffs ON staffs.id_staff = l.id_staff
     LEFT JOIN SomaCilindros AS sc ON sc.id_staff = l.id_staff
