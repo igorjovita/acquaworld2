@@ -295,20 +295,10 @@ if st.button('Pesquisar2'):
         select_contagem_cilindros = repository_staffs.select_contagem_cilindros(data1_pagamento, data2_pagamento,
                                                                                 id_staff)
 
-        st.write(select_comissao_individual)
-        st.write(select_contagem_cilindros)
-
-
-
-
         resultado_combinado = select_comissao_individual + select_contagem_cilindros
 
-        st.write(resultado_combinado)
-        
         # Ordene os resultados pela data
         resultado_final = sorted(resultado_combinado, key=lambda x: x[0])
-        st.write(resultado_final)
-
 
         total_valor_bat = 0
         contagem_bat = 0
@@ -369,6 +359,8 @@ if st.button('Pesquisar2'):
                 contagem_cilindro_pl += int(cilindro_pl)
                 valores_diferentes_de_zero.append(f'{cilindro_pl} Cilindros Pl')
 
+            contagem_diaria += int(diaria)
+
             if data in lista_datas:
                 mensagem += ' + ' + ' + '.join(valores_diferentes_de_zero)
             else:
@@ -377,7 +369,6 @@ if st.button('Pesquisar2'):
                     contagem_quentinha += int(quentinha)
                     valores_diferentes_de_zero.append('quentinha')
                 mensagem += '\n' + f'{data} - ' + ' + '.join(valores_diferentes_de_zero)
-                contagem_diaria += 1
 
         mensagem += '\n'
 
@@ -430,7 +421,7 @@ if st.button('Pesquisar2'):
             valor_pagar_cilindro = contagem_cilindro_acqua + contagem_cilindro_pl
             valor_pagar_cilindro = format_currency(float(valor_pagar_cilindro), 'BRL', locale='pt_BR')
             mensagem += '\n' + f'Total Cilindros - {contagem_cilindro_acqua} Acqua + {contagem_cilindro_pl} PL  = {valor_pagar_cilindro}'
-            if resultado_final[0][12] != 0:
+            if contagem_diaria != 0:
                 valor_diaria = contagem_diaria * 50
                 valor_pagar_diaria = format_currency(float(valor_diaria), 'BRL', locale='pt_BR')
                 mensagem += '\n' + f'Total Diarias - {contagem_diaria} diarias * 50  = {valor_pagar_diaria}'
@@ -439,7 +430,6 @@ if st.button('Pesquisar2'):
 
         mensagem += '\n' + '\n' + f"Total a Pagar = {format_currency(float(total_pagar), 'BRL', locale='pt_BR')}"
         st.code(mensagem)
-
 
     # mydb.connect()
     # cursor.execute(f"SELECT id_staff, comissao FROM staffs where nome ='{staff}'")
