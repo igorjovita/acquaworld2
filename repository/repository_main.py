@@ -130,6 +130,14 @@ class MainRepository:
 
     def select_contagem_cilindros(self, data_inicial, data_final, id_staff):
         query = """
+        WITH SomaQuentinha AS (
+            SELECT 
+                data AS data,
+                id_staff AS id_staff,
+                quentinha AS quentinha
+            FROM controle_quentinhas
+            WHERE data BETWEEN %s AND %s AND id_staff = %s
+        )
         SELECT 
             DATE_FORMAT(data, '%d/%m/%Y') AS data, 
             '0' AS comissao,
@@ -139,17 +147,19 @@ class MainRepository:
             '0' AS quantidade_curso,
             '0' AS curso,
             '0' AS pratica,
-            '0' AS quantidade_quentinha,
-            cilindros_acqua AS cilindros_acqua,
-            cilindros_pl AS cilindros_pl,
+            CASE WHEN cq.quentinha = 'Sim' THEN 1 ELSE 0 END AS quantidade_quentinha,
+            lb.cilindros_acqua AS cilindros_acqua,
+            lb.cilindros_pl AS cilindros_pl,
             0 AS comissao_review,
             0 AS diaria
         FROM 
-            lancamento_cilindro
+            lancamento_cilindro as lb
+        LEFT JOIN 
+            SomaQuentinha AS cq ON cq.id_staff = lb.id_staff AND cq.data = lb.data
         
         WHERE 
-            data BETWEEN %s AND %s AND id_staff = %s
-        ORDER BY data
+            lb.data BETWEEN %s AND %s AND lb.id_staff = %s
+        ORDER BY lb.data
         """
 
         params = (data_inicial, data_final, id_staff)
