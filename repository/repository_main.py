@@ -162,7 +162,7 @@ class MainRepository:
         ORDER BY lb.data
         """
 
-        params = (data_inicial, data_final, id_staff)
+        params = (data_inicial, data_final, id_staff, data_inicial, data_final, id_staff)
 
         return self.db.execute_query(query, params)
 
