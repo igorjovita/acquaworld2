@@ -47,7 +47,7 @@ class MainRepository:
                      WHEN l.funcao = 'CAPITAO' THEN l.quantidade * 1
                      ELSE 0
                 END +
-                CASE WHEN cq.quantidade_quentinha != 0 THEN 15 ELSE 0 END) +
+                CASE WHEN cq.quantidade_quentinha != 0 THEN 15 ELSE 0 END +
                 CASE WHEN sc.diarias != 0 AND staffs.tipo != 'FIXO' THEN 50 ELSE 0 END +
                 CASE 
                     WHEN l.funcao = 'CURSO' THEN
@@ -60,8 +60,7 @@ class MainRepository:
                         END
                     ELSE 0
                 END
-            ), 2, 'de_DE'
-        ) AS total_formatado
+            ), 2, 'de_DE') AS total_formatado
     FROM lancamentos_barco AS l
     LEFT JOIN staffs ON staffs.id_staff = l.id_staff
     LEFT JOIN SomaCilindros AS sc ON sc.id_staff = l.id_staff
