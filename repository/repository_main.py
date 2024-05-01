@@ -39,28 +39,7 @@ class MainRepository:
         SUM(CASE WHEN l.funcao = 'CURSO' THEN l.quantidade ELSE 0 END) AS quantidade_curso,
         COALESCE(sc.quantidade_cilindro, 0) AS quantidade_cilindro,
         COALESCE(cq.quantidade_quentinha, 0) as quantidade_quentinha,
-        CASE WHEN sc.diarias != 0 AND staffs.tipo != 'FIXO' THEN sc.diarias ELSE 0 END AS diarias,
-        FORMAT(
-            SUM(
-                CASE WHEN l.funcao = 'BAT' THEN l.quantidade * staffs.comissao
-                     WHEN l.funcao = 'AS' THEN l.quantidade * 1
-                     WHEN l.funcao = 'CAPITAO' THEN l.quantidade * 1
-                     ELSE 0
-                END +
-                CASE WHEN cq.quantidade_quentinha != 0 THEN + 15 ELSE 0 END +
-                CASE WHEN sc.diarias != 0 AND staffs.tipo != 'FIXO' THEN  + 50 ELSE 0 END +
-                CASE 
-                    WHEN l.funcao = 'CURSO' THEN
-                        CASE
-                            WHEN l.curso IN ('OWD', 'ADV') THEN l.quantidade * 75
-                            WHEN l.curso = 'RESCUE' THEN l.quantidade * 150
-                            WHEN l.curso = 'REVIEW' THEN l.quantidade * 120
-                            WHEN l.curso = 'DIVEMASTER' THEN l.quantidade * 200
-                            ELSE 0
-                        END
-                    ELSE 0
-                END
-            ), 2, 'de_DE') AS total_formatado
+        CASE WHEN sc.diarias != 0 AND staffs.tipo != 'FIXO' THEN sc.diarias ELSE 0 END AS diarias
     FROM lancamentos_barco AS l
     LEFT JOIN staffs ON staffs.id_staff = l.id_staff
     LEFT JOIN SomaCilindros AS sc ON sc.id_staff = l.id_staff
