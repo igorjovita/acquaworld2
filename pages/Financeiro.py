@@ -311,7 +311,7 @@ if st.button('Pesquisar2'):
         # Converter o resultado de volta para uma lista de lista
         resultado_final = [[data] + valores for data, valores in resultados_ordenados]
 
-        print(resultado_final)
+        st.write(resultado_final)
 
         total_valor_bat = 0
         contagem_bat = 0

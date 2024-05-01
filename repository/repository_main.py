@@ -113,7 +113,7 @@ class MainRepository:
             0 AS cilindros_acqua,
             0 AS cilindros_pl,
             staffs.comissao_review,
-            CASE WHEN staffs.tipo = 'FREELANCER' THEN 1 ELSE 0 END AS tipo_freelancer
+            CASE WHEN staffs.tipo = 'FREELANCER' THEN 1 ELSE 0 END AS diaria
         FROM 
             lancamentos_barco AS lb
         LEFT JOIN 
@@ -143,7 +143,7 @@ class MainRepository:
             cilindros_acqua AS cilindros_acqua,
             cilindros_pl AS cilindros_pl,
             0 AS comissao_review,
-            0 AS tipo_freelancer
+            0 AS diaria
         FROM 
             lancamento_cilindro
         
