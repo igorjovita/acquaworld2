@@ -17,7 +17,7 @@ class MainRepository:
         SELECT
             lc.id_staff,
             COALESCE(SUM(cilindros_acqua + cilindros_pl), 0) AS quantidade_cilindro,
-            COUNT(DISTINCT data CASE WHEN s.tipo = 'FREELANCER' THEN 1 ELSE 0 END) AS diarias
+            COUNT(DISTINCT data) CASE WHEN s.tipo = 'FREELANCER' THEN 1 ELSE 0 END AS diarias
         FROM lancamento_cilindro as lc
         LEFT JOIN staffs s ON lc.id_staff = s.id_staff
         WHERE data BETWEEN %s AND %s
