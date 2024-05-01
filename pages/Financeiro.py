@@ -281,7 +281,9 @@ if st.button('Pesquisar2'):
 
     if filtro2 == 'Todos':
         select_total_comissoes = repository_staffs.select_soma_total_comissoes(data1_pagamento, data2_pagamento)
-        df = pd.DataFrame(select_total_comissoes, columns=['Nome', 'Bat', 'Equipagem', 'Embarque', 'Curso', 'Cilindro', 'Quentinha', 'Diaria', 'Total'])
+        df = pd.DataFrame(select_total_comissoes,
+                          columns=['Nome', 'Bat', 'Equipagem', 'Embarque', 'Curso', 'Cilindro', 'Quentinha', 'Diaria',
+                                   'Total'])
         st.write(df)
 
     elif filtro2 == 'Staff especifico':
@@ -289,6 +291,27 @@ if st.button('Pesquisar2'):
         id_staff = info_staff[index_lista][0]
         select_comissao_individual = repository_staffs.select_soma_comissao_individual(data1_pagamento, data2_pagamento,
                                                                                        id_staff)
+
+        select_contagem_cilindros = repository_staffs.select_contagem_cilindros(data1_pagamento, data2_pagamento,
+                                                                                id_staff)
+
+        resultados_por_data = defaultdict(list)
+
+        # Adicionar resultados do primeiro select
+        for data, *valores in select_contagem_cilindros:
+            resultados_por_data[data].extend(valores)
+
+        # Adicionar resultados do segundo select
+        for data, *valores in select_contagem_cilindros:
+            resultados_por_data[data].extend(valores)
+
+        # Ordenar os resultados pela data
+        resultados_ordenados = sorted(resultados_por_data.items())
+
+        # Converter o resultado de volta para uma lista de lista
+        resultado_final = [[data] + valores for data, valores in resultados_ordenados]
+
+        print(resultado_final)
 
         total_valor_bat = 0
         contagem_bat = 0
@@ -314,7 +337,7 @@ if st.button('Pesquisar2'):
         valor_divemaster = 0
         valor_quentinha = 0
 
-        for select in select_comissao_individual:
+        for select in resultado_final:
 
             data, _, bat, equipagem, embarque, quantidade_curso, curso, pratica, quentinha, cilindro_acqua, cilindro_pl, _, diaria = select
             valores_diferentes_de_zero = []
@@ -362,7 +385,7 @@ if st.button('Pesquisar2'):
         mensagem += '\n'
 
         if contagem_bat != 0:
-            comissao_bat = select_comissao_individual[0][1]
+            comissao_bat = resultado_final[0][1]
             valor_bat = contagem_bat * int(comissao_bat)
             valor_pagar_bat = format_currency(float(valor_bat), 'BRL', locale='pt_BR')
             mensagem += '\n' + f'Total Batismo - {contagem_bat:.2f} * {comissao_bat} = {valor_pagar_bat}'
@@ -381,7 +404,7 @@ if st.button('Pesquisar2'):
             mensagem += '\n' + f'Total Pratica OWD e ADV - {contagem_pratica} * 75 = {valor_pagar_pratica}'
 
         if contagem_review != 0:
-            comissao_review = select_comissao_individual[0][11]
+            comissao_review = resultado_final[0][11]
             valor_review = contagem_review * comissao_review
             valor_pagar_review = format_currency(float(valor_review), 'BRL', locale='pt_BR')
             mensagem += '\n' + f'Total Review - {contagem_review} * {comissao_review} = {valor_pagar_review}'
@@ -410,7 +433,7 @@ if st.button('Pesquisar2'):
             valor_pagar_cilindro = contagem_cilindro_acqua + contagem_cilindro_pl
             valor_pagar_cilindro = format_currency(float(valor_pagar_cilindro), 'BRL', locale='pt_BR')
             mensagem += '\n' + f'Total Cilindros - {contagem_cilindro_acqua} Acqua + {contagem_cilindro_pl} PL  = {valor_pagar_cilindro}'
-            if select_comissao_individual[0][12] != 0:
+            if resultado_final[0][12] != 0:
                 valor_diaria = contagem_diaria * 50
                 valor_pagar_diaria = format_currency(float(valor_diaria), 'BRL', locale='pt_BR')
                 mensagem += '\n' + f'Total Diarias - {contagem_diaria} diarias * 50  = {valor_pagar_diaria}'
@@ -419,8 +442,7 @@ if st.button('Pesquisar2'):
 
         mensagem += '\n' + '\n' + f"Total a Pagar = {format_currency(float(total_pagar), 'BRL', locale='pt_BR')}"
         st.code(mensagem)
-        st.write(select_comissao_individual)
-
+        st.write(resultado_final)
 
     # mydb.connect()
     # cursor.execute(f"SELECT id_staff, comissao FROM staffs where nome ='{staff}'")
