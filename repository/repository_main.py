@@ -113,7 +113,7 @@ class MainRepository:
             0 AS cilindros_acqua,
             0 AS cilindros_pl,
             staffs.comissao_review,
-            CASE WHEN staffs.tipo = 'FREELANCER' THEN 1 ELSE 0 END AS diaria
+            0 as diaria
         FROM 
             lancamentos_barco AS lb
         LEFT JOIN 
@@ -151,11 +151,13 @@ class MainRepository:
             lb.cilindros_acqua AS cilindros_acqua,
             lb.cilindros_pl AS cilindros_pl,
             0 AS comissao_review,
-            0 AS diaria
+            CASE WHEN staffs.tipo = 'FREELANCER' THEN 1 ELSE 0 AS diaria
         FROM 
             lancamento_cilindro as lb
         LEFT JOIN 
             SomaQuentinha AS cq ON cq.id_staff = lb.id_staff AND cq.data = lb.data
+        LEFT JOIN
+            staffs ON staffs.id_staff = lb.id_staff
         
         WHERE 
             lb.data BETWEEN %s AND %s AND lb.id_staff = %s
