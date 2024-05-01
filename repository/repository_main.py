@@ -113,7 +113,7 @@ class MainRepository:
             0 AS cilindros_acqua,
             0 AS cilindros_pl,
             staffs.comissao_review,
-            CASE WHEN staffs.tipo = 'FREELANCER' THEN 1 ELSE 0 END AS diaria
+            SUM(CASE WHEN staffs.tipo = 'FREELANCER' THEN 1 ELSE 0 END) AS diaria
         FROM 
             lancamentos_barco AS lb
         LEFT JOIN 
@@ -166,19 +166,27 @@ class MainRepository:
 
         return self.db.execute_query(query, params)
 
-    def insert_lancamento_barco(self, data, id_staff, funcao, quantidade, curso, pratica, situacao, quentinha):
+    def insert_lancamento_barco(self, data, id_staff, funcao, quantidade, curso, pratica, situacao):
         query = """
         INSERT INTO lancamentos_barco 
-        (data, id_staff, funcao, quantidade, curso, pratica, situacao, quentinha)
-         VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        (data, id_staff, funcao, quantidade, curso, pratica, situacao)
+         VALUES (%s, %s, %s, %s, %s, %s, %s)
         """
-        params = (data, id_staff, funcao, quantidade, curso, pratica, situacao, quentinha)
+        params = (data, id_staff, funcao, quantidade, curso, pratica, situacao)
 
         return self.db.execute_query(query, params)
 
     def insert_controle_quentinhas(self, data, id_staff):
 
         query = """
-        SELECT INTO 
+        INSERT INTO controle_quentinhas ( data, id_staff, quentinha) VALUES (%s, %s, %s)
         """
+        params = (data, id_staff, 'Sim')
 
+        return self.db.execute_query(query, params)
+
+    def delete_lancamentos_barco(self, data):
+
+        query = "DELETE FROM lancamentos_barco WHERE data = %s"
+        params = (data, )
+        return self.db.execute_query(query, params)

@@ -6,6 +6,7 @@ import mysql.connector
 from database import DataBaseMysql
 from repository import MainRepository
 from classes import Staffs
+
 mysql_db = DataBaseMysql()
 
 repo = MainRepository(mysql_db)
@@ -114,17 +115,15 @@ if escolha == 'Lançar':
 
         staffs.formatar_mensagem(data)
 
+if escolha == 'Deletar':
 
-#
-# if escolha == 'Deletar':
-#     st.title('Deletar Lançamentos')
-#     st.subheader('Selecione o lançamento para deletar')
-#     data1 = st.date_input('Selecione a Data', format='DD/MM/YYYY')
-#     if st.button('Apagar do Sistema'):
-#         cursor.execute(f"Delete from lancamentos_barco where data = '{data1}'")
-#         mydb.commit()
-#         st.success('Lançamento Deletado com Sucesso')
-#
+    st.title('Deletar Lançamentos')
+    st.subheader('Selecione o lançamento para deletar')
+    data_delete = st.date_input('Selecione a Data', format='DD/MM/YYYY')
+    if st.button('Apagar do Sistema'):
+        repo.delete_lancamentos_barco(data_delete)
+
+
 # if escolha == 'Editar':
 #     st.title('Editar Lançamentos')
 #     data2 = st.date_input('Selecione a data para editar', format='DD/MM/YYYY')

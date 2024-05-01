@@ -38,8 +38,12 @@ class DataBaseMysql:
 
                 return id_lastrow
 
-            else:
-                return None
+            elif query.strip().startswith('DELETE'):
+                st.success('Dados excluidos com Sucesso!')
+
+            elif query.strip().startswith('UPDATE'):
+                st.success('Dados alterados com Sucesso!')
+
         except mysql.connector.Error as e:
             st.error(f"Error executing query: {e}")
             raise
