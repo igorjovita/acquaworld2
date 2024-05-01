@@ -300,7 +300,7 @@ if st.button('Pesquisar2'):
         # Ordene os resultados pela data
         resultado_final = sorted(resultado_combinado, key=lambda x: x[0])
 
-        st.write(resultado_final)
+
 
         total_valor_bat = 0
         contagem_bat = 0
@@ -431,7 +431,7 @@ if st.button('Pesquisar2'):
 
         mensagem += '\n' + '\n' + f"Total a Pagar = {format_currency(float(total_pagar), 'BRL', locale='pt_BR')}"
         st.code(mensagem)
-        st.write(resultado_final)
+    
 
     # mydb.connect()
     # cursor.execute(f"SELECT id_staff, comissao FROM staffs where nome ='{staff}'")
