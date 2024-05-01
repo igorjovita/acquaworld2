@@ -47,8 +47,8 @@ class MainRepository:
                      WHEN l.funcao = 'CAPITAO' THEN l.quantidade * 1
                      ELSE 0
                 END +
-                SUM(CASE WHEN cq.quantidade_quentinha != 0 THEN 15 ELSE 0 END) +
-                SUM(CASE WHEN sc.diarias != 0 AND staffs.tipo != 'FIXO' THEN 50 ELSE 0 END) +
+                CASE WHEN cq.quantidade_quentinha != 0 THEN 15 ELSE 0 END) +
+                CASE WHEN sc.diarias != 0 AND staffs.tipo != 'FIXO' THEN 50 ELSE 0 END +
                 CASE 
                     WHEN l.funcao = 'CURSO' THEN
                         CASE
