@@ -147,7 +147,6 @@ class MainRepository:
             staffs ON staffs.id_staff = lc.id_staff 
         WHERE 
             lc.data BETWEEN %s AND %s AND lc.id_staff = %s 
-            )
         ORDER BY 
             COALESCE(lb.data, lc.data) ASC;
 
