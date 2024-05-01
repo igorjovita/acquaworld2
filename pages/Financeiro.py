@@ -295,21 +295,10 @@ if st.button('Pesquisar2'):
         select_contagem_cilindros = repository_staffs.select_contagem_cilindros(data1_pagamento, data2_pagamento,
                                                                                 id_staff)
 
-        resultados_por_data = defaultdict(list)
+        resultado_combinado = select_comissao_individual + select_contagem_cilindros
 
-        # Adicionar resultados do primeiro select
-        for data, *valores in select_contagem_cilindros:
-            resultados_por_data[data].extend(valores)
-
-        # Adicionar resultados do segundo select
-        for data, *valores in select_contagem_cilindros:
-            resultados_por_data[data].extend(valores)
-
-        # Ordenar os resultados pela data
-        resultados_ordenados = sorted(resultados_por_data.items())
-
-        # Converter o resultado de volta para uma lista de lista
-        resultado_final = [[data] + valores for data, valores in resultados_ordenados]
+        # Ordene os resultados pela data
+        resultado_final = sorted(resultado_combinado, key=lambda x: x[0])
 
         st.write(resultado_final)
 
