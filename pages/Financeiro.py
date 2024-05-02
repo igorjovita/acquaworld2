@@ -282,7 +282,7 @@ if st.button('Pesquisar2'):
     if filtro2 == 'Todos':
         select_total_comissoes = repository_staffs.select_soma_total_comissoes(data1_pagamento, data2_pagamento)
         df = pd.DataFrame(select_total_comissoes,
-                          columns=['Nome', 'Bat', 'Equipagem', 'Embarque', 'Praticas', 'Review', 'Rescue', 'EFR', 'DM', 'Cilindro', 'Quentinha', 'Diaria', 'Valor Total'])
+                          columns=['Nome', 'Bat', 'Comissao_bat', 'Comissao Efr', 'Equipagem', 'Embarque', 'Praticas', 'Review', 'Rescue', 'EFR', 'DM', 'Cilindro', 'Quentinha', 'Diaria'])
 
 
 

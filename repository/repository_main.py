@@ -14,74 +14,46 @@ class MainRepository:
     def select_soma_total_comissoes(self, data_incial, data_final):
         query = """
   WITH SomaCilindros AS (
-    SELECT
-        lc.id_staff,
-        COALESCE(SUM(cilindros_acqua + cilindros_pl), 0) AS quantidade_cilindro,
-        COUNT(DISTINCT data) AS diarias
-    FROM lancamento_cilindro AS lc
-    LEFT JOIN staffs s ON lc.id_staff = s.id_staff
-    WHERE data BETWEEN %s AND %s
-    GROUP BY lc.id_staff
-),
-SomaQuentinhas AS (
-    SELECT
-        id_staff,
-        SUM(CASE WHEN quentinha = 'Sim' THEN 1 ELSE 0 END) AS quantidade_quentinha
-    FROM controle_quentinhas
-    WHERE data BETWEEN %s AND %s
-    GROUP BY id_staff
-),
-Quantidades AS (
+        SELECT
+            lc.id_staff,
+            COALESCE(SUM(cilindros_acqua + cilindros_pl), 0) AS quantidade_cilindro,
+            COUNT(DISTINCT data)  AS diarias
+        FROM lancamento_cilindro as lc
+        LEFT JOIN staffs s ON lc.id_staff = s.id_staff
+        WHERE data BETWEEN %s AND %s
+        GROUP BY lc.id_staff
+    ),
+    SomaQuentinhas AS (
+        SELECT
+            id_staff,
+            SUM(CASE WHEN quentinha = 'Sim' THEN 1 ELSE 0 END) AS quantidade_quentinha
+        FROM controle_quentinhas
+        WHERE data BETWEEN %s AND %s
+        GROUP BY id_staff
+    )
     SELECT
         staffs.nome,
+        staffs.comissao,
+        staffs.comissao_review
         SUM(CASE WHEN l.funcao = 'BAT' THEN l.quantidade ELSE 0 END) AS quantidade_bat,
         SUM(CASE WHEN l.funcao = 'AS' THEN l.quantidade ELSE 0 END) AS quantidade_as,
         SUM(CASE WHEN l.funcao = 'CAPITAO' THEN l.quantidade ELSE 0 END) AS quantidade_capitao,
-        SUM(CASE WHEN l.funcao = 'CURSO' AND l.curso IN ('OWD', 'ADV') THEN l.quantidade ELSE 0 END) AS quantidade_praticas,
-        SUM(CASE WHEN l.funcao = 'CURSO' AND l.curso = 'REVIEW' THEN l.quantidade ELSE 0 END) AS quantidade_review,
-        SUM(CASE WHEN l.funcao = 'CURSO' AND l.curso = 'RESCUE' THEN l.quantidade ELSE 0 END) AS quantidade_rescue,
-        SUM(CASE WHEN l.funcao = 'CURSO' AND l.curso = 'EFR' THEN l.quantidade ELSE 0 END) AS quantidade_efr,
-        SUM(CASE WHEN l.funcao = 'CURSO' AND l.curso = 'DIVEMASTER' THEN l.quantidade ELSE 0 END) AS quantidade_dm,
+        SUM(CASE WHEN l.funcao = 'CURSO' and l.curso IN ('OWD', 'ADV')THEN l.quantidade ELSE 0 END) AS quantidade_praticas,
+        SUM(CASE WHEN l.funcao = 'CURSO' and l.curso = 'REVIEW' THEN l.quantidade ELSE 0 END) AS quantidade_review,
+        SUM(CASE WHEN l.funcao = 'CURSO' and l.curso = 'RESCUE' THEN l.quantidade ELSE 0 END) AS quantidade_rescue,
+        SUM(CASE WHEN l.funcao = 'CURSO' and l.curso = 'EFR' THEN l.quantidade ELSE 0 END) AS quantidade_efr,
+        SUM(CASE WHEN l.funcao = 'CURSO' and l.curso = 'DIVEMASTER' THEN l.quantidade ELSE 0 END) AS quantidade_dm,
         COALESCE(sc.quantidade_cilindro, 0) AS quantidade_cilindro,
-        COALESCE(cq.quantidade_quentinha, 0) AS quantidade_quentinha,
-        CASE WHEN sc.diarias != 0 AND staffs.tipo != 'FIXO' THEN sc.diarias ELSE 0 END AS quantidade_diaria
+        COALESCE(cq.quantidade_quentinha, 0) as quantidade_quentinha,
+        CASE WHEN sc.diarias != 0 AND staffs.tipo != 'FIXO' THEN sc.diarias ELSE 0 END AS diarias,
+                
+        
     FROM lancamentos_barco AS l
     LEFT JOIN staffs ON staffs.id_staff = l.id_staff
     LEFT JOIN SomaCilindros AS sc ON sc.id_staff = l.id_staff
-    LEFT JOIN SomaQuentinhas AS cq ON cq.id_staff = staffs.id_staff
+    LEFT JOIN SomaQuentinhas as cq ON cq.id_staff = staffs.id_staff
     WHERE l.data BETWEEN %s AND %s
-    GROUP BY staffs.nome, sc.quantidade_cilindro, cq.quantidade_quentinha, sc.diarias
-)
-SELECT
-    staffs.nome,
-    Quantidades.quantidade_bat,
-    Quantidades.quantidade_as,
-    Quantidades.quantidade_capitao,
-    Quantidades.quantidade_praticas,
-    Quantidades.quantidade_review,
-    Quantidades.quantidade_rescue,
-    Quantidades.quantidade_efr,
-    Quantidades.quantidade_dm,
-    Quantidades.quantidade_cilindro,
-    Quantidades.quantidade_quentinha,
-    Quantidades.quantidade_diaria,
-    SUM(
-        Quantidades.quantidade_bat * staffs.comissao,
-        Quantidades.quantidade_as * 1,
-        Quantidades.quantidade_capitao * 1,
-        Quantidades.quantidade_praticas * 75,
-        Quantidades.quantidade_review * staffs.comissao_review,
-        Quantidades.quantidade_rescue * 150,
-        Quantidades.quantidade_efr * 200,
-        Quantidades.quantidade_dm * 200,
-        Quantidades.quantidade_cilindro * 1,
-        Quantidades.quantidade_quentinha * 15,
-        Quantidades.quantidade_diaria * 50
-    ) AS valor_total
-FROM staffs
-LEFT JOIN Quantidades ON Quantidades.nome = staffs.nome
-GROUP BY staffs.nome, Quantidades.quantidade_bat, Quantidades.quantidade_as, Quantidades.quantidade_cilindro, Quantidades.quantidade_quentinha, Quantidades.quantidade_diaria;
-
+    GROUP BY staffs.nome;
 
         """
         params = (data_incial, data_final, data_incial, data_final, data_incial, data_final)
