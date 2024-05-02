@@ -55,7 +55,7 @@ class MainRepository:
                 WHEN l.funcao = 'CURSO' AND l.curso = 'EFR' THEN l.quantidade * 200
                 WHEN l.funcao = 'CURSO' AND l.curso = 'DIVEMASTER' THEN l.quantidade * 200
                 WHEN sc.quantidade_cilindro != 0 THEN sc.quantidade_cilindro
-                WHEN cq.quantidade_quentinhas != 0 THEN cq.quantidade_quentinhas * 15
+                WHEN cq.quantidade_quentinha != 0 THEN cq.quantidade_quentinhas * 15
                 WHEN sc.diarias != 0 AND staffs.tipo != 'FIXO' THEN sc.diarias * 50
                 ELSE 0
             END) as valor_total
