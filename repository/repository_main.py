@@ -58,7 +58,7 @@ class MainRepository:
                 WHEN cq.quantidade_quentinhas != 0 THEN cq.quantidade_quentinhas * 15
                 WHEN sc.diarias != 0 AND staffs.tipo != 'FIXO' THEN sc.diarias * 50
                 ELSE 0
-            END,
+            END
                 
         
     FROM lancamentos_barco AS l
