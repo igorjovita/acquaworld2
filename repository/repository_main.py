@@ -33,8 +33,7 @@ class MainRepository:
     )
     SELECT
         staffs.nome,
-        staffs.comissao,
-        staffs.comissao_review,
+
         SUM(CASE WHEN l.funcao = 'BAT' THEN l.quantidade ELSE 0 END) AS quantidade_bat,
         SUM(CASE WHEN l.funcao = 'AS' THEN l.quantidade ELSE 0 END) AS quantidade_as,
         SUM(CASE WHEN l.funcao = 'CAPITAO' THEN l.quantidade ELSE 0 END) AS quantidade_capitao,
@@ -45,7 +44,23 @@ class MainRepository:
         SUM(CASE WHEN l.funcao = 'CURSO' and l.curso = 'DIVEMASTER' THEN l.quantidade ELSE 0 END) AS quantidade_dm,
         COALESCE(sc.quantidade_cilindro, 0) AS quantidade_cilindro,
         COALESCE(cq.quantidade_quentinha, 0) as quantidade_quentinha,
-        CASE WHEN sc.diarias != 0 AND staffs.tipo != 'FIXO' THEN sc.diarias ELSE 0 END AS diarias
+        CASE WHEN sc.diarias != 0 AND staffs.tipo != 'FIXO' THEN sc.diarias ELSE 0 END AS diarias,
+        SUM(CASE 
+                WHEN l.funcao = 'BAT' THEN l.quantidade * staffs.comissao
+                WHEN l.funcao = 'AS' THEN l.quantidade * 1
+                WHEN l.funcao = 'CAPITAO' THEN l.quantidade * 1
+                WHEN l.funcao = 'CURSO' AND l.curso IN ('OWD', 'ADV') THEN l.quantidade * 75
+                WHEN l.funcao = 'CURSO' AND l.curso = 'REVIEW' THEN l.quantidade * staffs.comissao_review
+                WHEN l.funcao = 'CURSO' AND l.curso = 'RESCUE' THEN l.quantidade * 150
+                WHEN l.funcao = 'CURSO' AND l.curso = 'EFR' THEN l.quantidade * 200
+                WHEN l.funcao = 'CURSO' AND l.curso = 'DIVEMASTER' THEN l.quantidade * 200
+                WHEN sc.quantidade_cilindro != 0 THEN sc.quantidade_cilindro
+                WHEN cq.quantidade_quentinhas != 0 THEN cq.quantidade_quentinhas * 15
+                WHEN sc.diarias != 0 AND staffs.tipo != 'FIXO' THEN sc.diarias * 50
+                ELSE 0
+            END,
+                
+        
     FROM lancamentos_barco AS l
     LEFT JOIN staffs ON staffs.id_staff = l.id_staff
     LEFT JOIN SomaCilindros AS sc ON sc.id_staff = l.id_staff
