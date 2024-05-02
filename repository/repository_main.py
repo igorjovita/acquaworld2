@@ -34,7 +34,7 @@ class MainRepository:
     SELECT
         staffs.nome,
         staffs.comissao,
-        staffs.comissao_review
+        staffs.comissao_review,
         SUM(CASE WHEN l.funcao = 'BAT' THEN l.quantidade ELSE 0 END) AS quantidade_bat,
         SUM(CASE WHEN l.funcao = 'AS' THEN l.quantidade ELSE 0 END) AS quantidade_as,
         SUM(CASE WHEN l.funcao = 'CAPITAO' THEN l.quantidade ELSE 0 END) AS quantidade_capitao,
