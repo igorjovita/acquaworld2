@@ -46,16 +46,16 @@ class MainRepository:
         COALESCE(cq.quantidade_quentinha, 0) as quantidade_quentinha,
         CASE WHEN sc.diarias != 0 AND staffs.tipo != 'FIXO' THEN sc.diarias ELSE 0 END AS diarias,
         SUM(CASE 
-                WHEN l.funcao = 'BAT' THEN l.quantidade * staffs.comissao
-                WHEN l.funcao = 'AS' THEN l.quantidade * 1
-                WHEN l.funcao = 'CAPITAO' THEN l.quantidade * 1
-                WHEN l.funcao = 'CURSO' AND l.curso IN ('OWD', 'ADV') THEN l.quantidade * 75
-                WHEN l.funcao = 'CURSO' AND l.curso = 'REVIEW' THEN l.quantidade * staffs.comissao_review
-                WHEN l.funcao = 'CURSO' AND l.curso = 'RESCUE' THEN l.quantidade * 150
-                WHEN l.funcao = 'CURSO' AND l.curso = 'EFR' THEN l.quantidade * 200
-                WHEN l.funcao = 'CURSO' AND l.curso = 'DIVEMASTER' THEN l.quantidade * 200
-                WHEN sc.quantidade_cilindro != 0 THEN sc.quantidade_cilindro
-                WHEN cq.quantidade_quentinha != 0 THEN cq.quantidade_quentinha * 15
+                WHEN l.funcao = 'BAT' THEN l.quantidade * staffs.comissao +
+                WHEN l.funcao = 'AS' THEN l.quantidade * 1 +
+                WHEN l.funcao = 'CAPITAO' THEN l.quantidade * 1 +
+                WHEN l.funcao = 'CURSO' AND l.curso IN ('OWD', 'ADV') THEN l.quantidade * 75 +
+                WHEN l.funcao = 'CURSO' AND l.curso = 'REVIEW' THEN l.quantidade * staffs.comissao_review +
+                WHEN l.funcao = 'CURSO' AND l.curso = 'RESCUE' THEN l.quantidade * 150 +
+                WHEN l.funcao = 'CURSO' AND l.curso = 'EFR' THEN l.quantidade * 200 +
+                WHEN l.funcao = 'CURSO' AND l.curso = 'DIVEMASTER' THEN l.quantidade * 200 +
+                WHEN sc.quantidade_cilindro != 0 THEN sc.quantidade_cilindro +
+                WHEN cq.quantidade_quentinha != 0 THEN cq.quantidade_quentinha * 15 +
                 WHEN sc.diarias != 0 AND staffs.tipo != 'FIXO' THEN sc.diarias * 50
                 ELSE 0
             END) as valor_total
