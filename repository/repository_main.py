@@ -45,7 +45,7 @@ class MainRepository:
         SUM(CASE WHEN l.funcao = 'CURSO' and l.curso = 'DIVEMASTER' THEN l.quantidade ELSE 0 END) AS quantidade_dm,
         COALESCE(sc.quantidade_cilindro, 0) AS quantidade_cilindro,
         COALESCE(cq.quantidade_quentinha, 0) as quantidade_quentinha,
-        CASE WHEN sc.diarias != 0 AND staffs.tipo != 'FIXO' THEN sc.diarias ELSE 0 END AS diarias,
+        CASE WHEN sc.diarias != 0 AND staffs.tipo != 'FIXO' THEN sc.diarias ELSE 0 END AS diarias
                 
         
     FROM lancamentos_barco AS l
