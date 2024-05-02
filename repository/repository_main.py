@@ -13,7 +13,7 @@ class MainRepository:
 
     def select_soma_total_comissoes(self, data_incial, data_final):
         query = """
-    WITH SomaCilindros AS (
+  WITH SomaCilindros AS (
     SELECT
         lc.id_staff,
         COALESCE(SUM(cilindros_acqua + cilindros_pl), 0) AS quantidade_cilindro,
@@ -81,7 +81,6 @@ SELECT
 FROM staffs
 LEFT JOIN Quantidades ON Quantidades.nome = staffs.nome
 GROUP BY staffs.nome, Quantidades.quantidade_bat, Quantidades.quantidade_as, Quantidades.quantidade_cilindro, Quantidades.quantidade_quentinha, Quantidades.quantidade_diaria;
-
 
 
         """
