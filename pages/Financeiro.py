@@ -107,9 +107,9 @@ if st.button('Pesquisar2'):
             mensagem = ' + '.join(mensagem)
             valor_total = format_currency(float(valor_total), 'BRL', locale='pt_BR')
             total_pagamento.append((nome, mensagem, valor_total))
-            st.text(f"{nome} - {mensagem}  {valor_total}")
+            
         df = pd.DataFrame(total_pagamento, columns=['Nome', 'Descrição', 'Total'])
-        st.dataframe(df, hide_index=True)
+        st.dataframe(df, hide_index=True, use_container_width=True)
     elif filtro2 == 'Staff especifico':
         index_lista = lista_staff.index(staff)
         id_staff = info_staff[index_lista][0]
