@@ -65,7 +65,7 @@ if st.button('Pesquisar2'):
     if filtro2 == 'Todos':
         select_total_comissoes = repository_staffs.select_soma_total_comissoes(data1_pagamento, data2_pagamento)
         for item in select_total_comissoes:
-            nome, comissao_bat, comissao_review, qntd_bat, qntd_equipagem, qntd_embarque, qntd_pratica, qntd_review, qntd_rescue, qntd_efr, qndt_dm, cilindros, quentinhas, diarias = item
+            nome, comissao_bat, comissao_review, qntd_bat, qntd_equipagem, qntd_embarque, qntd_pratica, qntd_review, qntd_rescue, qntd_efr, qntd_dm, cilindros, quentinhas, diarias = item
 
             mensagem = []
             bat = int(comissao_bat) * float(qntd_bat)
@@ -73,7 +73,7 @@ if st.button('Pesquisar2'):
             curso = int(qntd_pratica) * 75
             rescue = int(qntd_rescue) * 150
             efr = int(qntd_efr) * 120
-            dm = int(qndt_dm) * 200
+            dm = int(qntd_dm) * 200
             quentinha = int(quentinhas) * 15
             diaria = int(diarias) * 50
 
@@ -84,6 +84,33 @@ if st.button('Pesquisar2'):
 
             if int(qntd_equipagem) != 0:
                 mensagem.append(f'{int(qntd_equipagem)} Equipagens')
+
+            if int(qntd_embarque) != 0:
+                mensagem.append(f'{int(qntd_embarque)} Embarques')
+
+            if int(qntd_review) != 0:
+                mensagem.append(f'{int(qntd_review)} Review')
+
+            if int(qntd_pratica) != 0:
+                mensagem.append(f'{int(qntd_pratica)} Praticas')
+
+            if int(qntd_efr) != 0:
+                mensagem.append(f'{int(qntd_efr)} EFR')
+
+            if int(qntd_rescue) != 0:
+                mensagem.append(f'{int(qntd_rescue)} Rescue')
+
+            if int(qntd_dm) != 0:
+                mensagem.append(f'{int(qntd_dm)} DM')
+
+            if int(cilindros) != 0:
+                mensagem.append(f'{int(cilindros)} Cilindros')
+
+            if int(diarias) != 0:
+                mensagem.append(f'{int(diarias)} Diarias')
+
+            if int(quentinhas) != 0:
+                mensagem.append(f'{int(quentinhas)} Quentinhas')
 
             mensagem = ' + '.join(mensagem)
             st.text(f'{nome} - {mensagem}  {valor_total}')
