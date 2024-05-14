@@ -67,6 +67,7 @@ if st.button('Pesquisar2'):
         for item in select_total_comissoes:
             nome, comissao_bat, comissao_review, qntd_bat, qntd_equipagem, qntd_embarque, qntd_pratica, qntd_review, qntd_rescue, qntd_efr, qndt_dm, cilindros, quentinhas, diarias = item
 
+            mensagem = ''
             bat = int(comissao_bat) * float(qntd_bat)
             review = int(comissao_review) * int(qntd_review)
             curso = int(qntd_pratica) * 75
@@ -78,15 +79,11 @@ if st.button('Pesquisar2'):
 
             valor_total = bat + int(qntd_equipagem) + int(qntd_embarque) + review + curso + rescue + efr + dm + quentinha + diaria + int(cilindros)
 
-            st.text(f'{nome} - {valor_total}')
-            st.write(item)
-        df = pd.DataFrame(select_total_comissoes,
-                          columns=['Nome', 'Bat', 'Comissao_bat', 'Comissao Efr', 'Equipagem', 'Embarque', 'Praticas', 'Review', 'Rescue', 'EFR', 'DM', 'Cilindro', 'Quentinha', 'Diaria'])
+            if bat != 0:
+                mensagem += f'{float(qntd_bat)} BAT'
 
+            st.text(f'{nome} - {mensagem}  {valor_total}')
 
-
-
-        st.write(df)
 
     elif filtro2 == 'Staff especifico':
         index_lista = lista_staff.index(staff)
