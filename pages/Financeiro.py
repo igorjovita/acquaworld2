@@ -67,7 +67,7 @@ if st.button('Pesquisar2'):
         for item in select_total_comissoes:
             nome, comissao_bat, comissao_review, qntd_bat, qntd_equipagem, qntd_embarque, qntd_pratica, qntd_review, qntd_rescue, qntd_efr, qndt_dm, cilindros, quentinhas, diarias = item
 
-            mensagem = ''
+            mensagem = []
             bat = int(comissao_bat) * float(qntd_bat)
             review = int(comissao_review) * int(qntd_review)
             curso = int(qntd_pratica) * 75
@@ -80,8 +80,12 @@ if st.button('Pesquisar2'):
             valor_total = bat + int(qntd_equipagem) + int(qntd_embarque) + review + curso + rescue + efr + dm + quentinha + diaria + int(cilindros)
 
             if bat != 0:
-                mensagem += f'{float(qntd_bat)} BAT'
+                mensagem.append(f'{float(qntd_bat)} BAT')
 
+            if int(qntd_equipagem) != 0:
+                mensagem.append(f'{int(qntd_equipagem)} Equipagens')
+
+            mensagem = ' + '.join(mensagem)
             st.text(f'{nome} - {mensagem}  {valor_total}')
 
 
