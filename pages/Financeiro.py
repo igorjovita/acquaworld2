@@ -70,11 +70,11 @@ if st.button('Pesquisar2'):
             valores = {
                 'bat': float(qntd_bat),
                 'valor_bat': float(qntd_bat) * int(comissao_bat),
-                'equipagem': int(qntd_equipagem),
+                'equipagens': int(qntd_equipagem),
                 'valor_equipagem': int(qntd_equipagem),
-                'embarque': int(qntd_embarque),
+                'embarques': int(qntd_embarque),
                 'valor_embarque': int(qntd_embarque),
-                'pratica': int(qntd_pratica),
+                'praticas': int(qntd_pratica),
                 'valor_pratica': int(qntd_pratica) * 75,
                 'review': int(qntd_review),
                 'valor_review': int(qntd_review) * int(comissao_review),
@@ -86,9 +86,9 @@ if st.button('Pesquisar2'):
                 'valor_dm': int(qntd_dm) * 200,
                 'cilindros': int(cilindros),
                 'valor_cilindros': int(cilindros),
-                'diaria': int(diarias),
+                'diarias': int(diarias),
                 'valor_diaria': int(diarias) * 50,
-                'quentinha': int(quentinhas),
+                'quentinhas': int(quentinhas),
                 'valor_quentinha': int(quentinhas) * 15
 
             }
@@ -102,6 +102,7 @@ if st.button('Pesquisar2'):
                     if str(chave).startswith('valor'):
                         valor_total += valor
                     else:
+
                         mensagem.append(f'{valor} {chave}')
 
             mensagem = ' + '.join(mensagem)
