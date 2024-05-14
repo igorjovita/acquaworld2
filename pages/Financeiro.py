@@ -95,10 +95,11 @@ if st.button('Pesquisar2'):
 
             for chave, valor in valores.items():
                 if valor != 0:
-                    mensagem.append(f'{valor} {chave}')
-
+                    
                     if str(chave).startswith('valor'):
                         valor_total += valor
+                    else:
+                        mensagem.append(f'{valor} {chave}')
 
             mensagem = ' + '.join(mensagem)
             st.text(f'{nome} - {mensagem}  {valor_total}')
