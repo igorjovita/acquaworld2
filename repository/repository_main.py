@@ -122,7 +122,7 @@ class MainRepository:
         )
         SELECT 
             DATE_FORMAT(lb.data, '%d/%m/%Y') AS data, 
-            '0' AS comissao,
+            staffs.comissao AS comissao,
             '0' AS quantidade_bat,
             '0' AS total_as,
             '0' AS total_capitao,
