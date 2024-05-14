@@ -104,7 +104,7 @@ if st.button('Pesquisar2'):
                         mensagem.append(f'{valor} {chave}')
 
             mensagem = ' + '.join(mensagem)
-            st.text(f'{nome} - {mensagem}  {format_currency(float(valor_total), 'BRL', locale='pt_BR')}')
+            st.text(f"{nome} - {mensagem}  {format_currency(float(valor_total), 'BRL', locale='pt_BR')}")
 
     elif filtro2 == 'Staff especifico':
         index_lista = lista_staff.index(staff)
