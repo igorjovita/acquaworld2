@@ -104,6 +104,7 @@ class MainRepository:
             SomaQuentinha AS cq ON cq.id_staff = lb.id_staff AND cq.data = lb.data
         WHERE 
             lb.data BETWEEN %s AND %s AND lb.id_staff = %s
+        ORDER BY lb.data asc
 
         """
         params = (data_inicial, data_final, id_staff, data_inicial, data_final, id_staff)
@@ -143,7 +144,7 @@ class MainRepository:
         
         WHERE 
             lb.data BETWEEN %s AND %s AND lb.id_staff = %s
-        ORDER BY lb.data
+        ORDER BY lb.data asc
         """
 
         params = (data_inicial, data_final, id_staff, data_inicial, data_final, id_staff)
