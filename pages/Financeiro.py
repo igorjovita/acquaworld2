@@ -109,8 +109,8 @@ if st.button('Pesquisar2'):
             total_pagamento.append((nome, mensagem, valor_total))
 
         df = pd.DataFrame(total_pagamento, columns=['Nome', 'Descrição', 'Total'])
-        st.table(df, use_container_width=True)
-        
+        st.table(df)
+
     elif filtro2 == 'Staff especifico':
         index_lista = lista_staff.index(staff)
         id_staff = info_staff[index_lista][0]
