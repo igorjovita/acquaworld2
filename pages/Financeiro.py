@@ -34,7 +34,6 @@ chars2 = "')([]"
 
 st.title('Sistema AcquaWorld')
 
-
 st.subheader('Pagamento')
 
 lista_staff = []
@@ -105,10 +104,7 @@ if st.button('Pesquisar2'):
                         mensagem.append(f'{valor} {chave}')
 
             mensagem = ' + '.join(mensagem)
-            st.text(f'{nome} - {mensagem}  {valor_total}')
-
-
-
+            st.text(f'{nome} - {mensagem}  {format_currency(float(valor_total), 'BRL', locale='pt_BR')}')
 
     elif filtro2 == 'Staff especifico':
         index_lista = lista_staff.index(staff)
