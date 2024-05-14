@@ -65,6 +65,20 @@ if st.button('Pesquisar2'):
     if filtro2 == 'Todos':
         select_total_comissoes = repository_staffs.select_soma_total_comissoes(data1_pagamento, data2_pagamento)
         for item in select_total_comissoes:
+            nome, comissao_bat, comissao_review, qntd_bat, qntd_equipagem, qntd_embarque, qntd_pratica, qntd_review, qntd_rescue, qntd_efr, qndt_dm, cilindros, quentinhas, diarias = item
+
+            bat = int(comissao_bat) * float(qntd_bat)
+            review = int(comissao_review) * int(qntd_review)
+            curso = int(qntd_pratica) * 75
+            rescue = int(qntd_rescue) * 150
+            efr = int(qntd_efr) * 120
+            dm = int(qndt_dm) * 200
+            quentinha = int(quentinhas) * 15
+            diaria = int(diarias) * 50
+
+            valor_total = bat + qntd_equipagem + qntd_embarque + review + curso + rescue + efr + dm + quentinha + diaria + int(cilindros)
+
+            st.text(f'{nome} - {valor_total}')
             st.write(item)
         df = pd.DataFrame(select_total_comissoes,
                           columns=['Nome', 'Bat', 'Comissao_bat', 'Comissao Efr', 'Equipagem', 'Embarque', 'Praticas', 'Review', 'Rescue', 'EFR', 'DM', 'Cilindro', 'Quentinha', 'Diaria'])
