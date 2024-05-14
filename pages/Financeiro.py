@@ -67,53 +67,43 @@ if st.button('Pesquisar2'):
         for item in select_total_comissoes:
             nome, comissao_bat, comissao_review, qntd_bat, qntd_equipagem, qntd_embarque, qntd_pratica, qntd_review, qntd_rescue, qntd_efr, qntd_dm, cilindros, quentinhas, diarias = item
 
+            valores = {
+                'bat': float(qntd_bat),
+                'valor_bat': float(qntd_bat) * int(comissao_bat),
+                'equipagem': int(qntd_equipagem),
+                'embarque': int(qntd_embarque),
+                'pratica': int(qntd_pratica),
+                'valor_pratica': int(qntd_pratica) * 75,
+                'review': int(qntd_review),
+                'valor_review': int(qntd_review) * int(comissao_review),
+                'rescue': int(qntd_rescue),
+                'valor_rescue': int(qntd_rescue) * 150,
+                'efr': int(qntd_efr),
+                'valor_efr': int(qntd_efr) * 200,
+                'dm': int(qntd_dm),
+                'valor_dm': int(qntd_dm) * 200,
+                'cilindros': int(cilindros),
+                'diaria': int(diarias),
+                'valor_diaria': int(diarias) * 50,
+                'quentinha': int(quentinhas),
+                'valor_quentinha': int(quentinhas) * 15
+
+            }
+
             mensagem = []
-            bat = int(comissao_bat) * float(qntd_bat)
-            review = int(comissao_review) * int(qntd_review)
-            curso = int(qntd_pratica) * 75
-            rescue = int(qntd_rescue) * 150
-            efr = int(qntd_efr) * 120
-            dm = int(qntd_dm) * 200
-            quentinha = int(quentinhas) * 15
-            diaria = int(diarias) * 50
+            valor_total = 0
 
-            valor_total = bat + int(qntd_equipagem) + int(qntd_embarque) + review + curso + rescue + efr + dm + quentinha + diaria + int(cilindros)
+            for chave, valor in valores.items():
+                if valor != 0:
+                    mensagem.append(f'{valor} {chave}')
 
-            if bat != 0:
-                mensagem.append(f'{float(qntd_bat)} BAT')
-
-            if int(qntd_equipagem) != 0:
-                mensagem.append(f'{int(qntd_equipagem)} Equipagens')
-
-            if int(qntd_embarque) != 0:
-                mensagem.append(f'{int(qntd_embarque)} Embarques')
-
-            if int(qntd_review) != 0:
-                mensagem.append(f'{int(qntd_review)} Review')
-
-            if int(qntd_pratica) != 0:
-                mensagem.append(f'{int(qntd_pratica)} Praticas')
-
-            if int(qntd_efr) != 0:
-                mensagem.append(f'{int(qntd_efr)} EFR')
-
-            if int(qntd_rescue) != 0:
-                mensagem.append(f'{int(qntd_rescue)} Rescue')
-
-            if int(qntd_dm) != 0:
-                mensagem.append(f'{int(qntd_dm)} DM')
-
-            if int(cilindros) != 0:
-                mensagem.append(f'{int(cilindros)} Cilindros')
-
-            if int(diarias) != 0:
-                mensagem.append(f'{int(diarias)} Diarias')
-
-            if int(quentinhas) != 0:
-                mensagem.append(f'{int(quentinhas)} Quentinhas')
+                    if str(chave).startswith('valor'):
+                        valor_total += valor
 
             mensagem = ' + '.join(mensagem)
             st.text(f'{nome} - {mensagem}  {valor_total}')
+
+
 
 
     elif filtro2 == 'Staff especifico':
