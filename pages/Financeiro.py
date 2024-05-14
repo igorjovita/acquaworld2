@@ -76,7 +76,7 @@ if st.button('Pesquisar2'):
             quentinha = int(quentinhas) * 15
             diaria = int(diarias) * 50
 
-            valor_total = bat + qntd_equipagem + qntd_embarque + review + curso + rescue + efr + dm + quentinha + diaria + int(cilindros)
+            valor_total = bat + int(qntd_equipagem) + int(qntd_embarque) + review + curso + rescue + efr + dm + quentinha + diaria + int(cilindros)
 
             st.text(f'{nome} - {valor_total}')
             st.write(item)
