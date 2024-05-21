@@ -64,6 +64,7 @@ if st.button('Pesquisar2'):
     if filtro2 == 'Todos':
         select_total_comissoes = repository_staffs.select_soma_total_comissoes(data1_pagamento, data2_pagamento)
         total_pagamento = []
+        soma_valores = 0
         for item in select_total_comissoes:
             nome, comissao_bat, comissao_review, qntd_bat, qntd_equipagem, qntd_embarque, qntd_pratica, qntd_review, qntd_rescue, qntd_efr, qntd_dm, cilindros, quentinhas, diarias = item
 
@@ -105,12 +106,16 @@ if st.button('Pesquisar2'):
 
                         mensagem.append(f'{valor} {chave}')
 
+            soma_valores += valor_total
+
             mensagem = ' + '.join(mensagem)
             valor_total = format_currency(float(valor_total), 'BRL', locale='pt_BR')
             total_pagamento.append((nome, mensagem, valor_total))
 
         df = pd.DataFrame(total_pagamento, columns=['Nome', 'Descrição', 'Total'])
+
         st.table(df)
+        st.write(soma_valores)
 
     elif filtro2 == 'Staff especifico':
         index_lista = lista_staff.index(staff)
