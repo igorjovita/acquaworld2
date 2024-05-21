@@ -34,7 +34,7 @@ chars2 = "')([]"
 
 st.title('Sistema AcquaWorld')
 
-st.subheader('Pagamento')
+st.subheader('Pagamentos')
 
 lista_staff = []
 repo = DataBaseMysql()
