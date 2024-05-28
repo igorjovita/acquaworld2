@@ -170,6 +170,20 @@ class MainRepository:
 
         return self.db.execute_query(query, params)
 
+    def insert_lancamento_cilindro(self, data, id_staff, inicio, final, quantidade_acqua, quantidade_pl, situacao, h3, m1):
+
+        query = """
+        INSERT INTO lancamento_cilindro 
+        (data, id_staff, horario_inicio, horario_final, cilindros_acqua, cilindros_pl, situacao, 
+        horas_trabalhadas, media_tempo)
+         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+        """
+
+        params = (data, id_staff, inicio, final, quantidade_acqua, quantidade_pl, situacao, h3, m1)
+
+        return self.db.execute_query(query, params)
+
+
     def delete_lancamentos_barco(self, data):
 
         query = "DELETE FROM lancamentos_barco WHERE data = %s"

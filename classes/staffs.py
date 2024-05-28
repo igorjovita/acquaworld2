@@ -18,11 +18,12 @@ class Staffs:
                     try:
                         index_lista_staffs = lista_staffs_total.index(nome_staff)
                         id_staff = select_nome_id_staff[index_lista_staffs][0]
-                        if quentinha == 'Sim':
-                            self.repo.insert_controle_quentinhas(data, id_staff)
 
                         self.repo.insert_lancamento_barco(data, id_staff, funcao, quantidade, curso, pratica,
                                                           'PENDENTE')
+                        if quentinha == 'Sim':
+                            self.repo.insert_controle_quentinhas(data, id_staff)
+
                     except ValueError:
                         # Lida com o caso em que o nome do staff não está na lista
                         st.error(
