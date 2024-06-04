@@ -6,7 +6,6 @@ from datetime import timedelta
 from database import DataBaseMysql
 from repository import MainRepository
 
-
 st.write('''<style>
 
 [data-testid="column"] {
@@ -18,7 +17,6 @@ st.write('''<style>
 </style>''', unsafe_allow_html=True)
 
 chars = "'),([]"
-
 
 st.header('Controle Cilindros')
 
@@ -34,14 +32,10 @@ with col2:
     final = str(st.text_input('Horario do Termino'))
     quantidade_pl = st.number_input('Cilindros PL', step=1)
 
-
-
 situacao = 'Pendente'
 
 if st.button('Lançar no Sistema'):
-    mydb.connect()
-    cursor.execute(f"SELECT id_staff FROM staffs WHERE nome = '{nome}'")
-    id_staff = cursor.fetchone()[0]
+
     h1 = inicio.split(':')
     h2 = final.split(':')
     hora_inicio = timedelta(hours=float(h1[0]), minutes=float(h1[1]))
@@ -54,11 +48,10 @@ if st.button('Lançar no Sistema'):
     m1 = f'{m[0], m[1]}'
     db = DataBaseMysql()
     repo = MainRepository(db)
-
+    id_staff = repo.select_id_staff_por_nome(nome)
     repo.insert_lancamento_cilindro(data, id_staff, inicio, final, quantidade_acqua, quantidade_pl, situacao, h3, m1)
 
     if quentinha == 'Sim':
-
         repo.insert_controle_quentinhas(data, id_staff)
 
     st.success('Lançado no Sistema com Sucesso!')

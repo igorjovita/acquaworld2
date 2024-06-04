@@ -3,6 +3,12 @@ class MainRepository:
     def __init__(self, db):
         self.db = db
 
+    def select_id_staff_por_nome(self, nome):
+        query = "SELECT id_staff FROM staffs WHERE nome = %s"
+        params = (nome, )
+
+        return self.db.execute_query(query, params)
+
     def select_staffs(self):
         query = """
         SELECT id_staff, nome, ocupacao , comissao
