@@ -49,10 +49,10 @@ if st.button('Lançar no Sistema'):
     db = DataBaseMysql()
     repo = MainRepository(db)
     id_staff = repo.select_id_staff_por_nome(nome)
-    repo.insert_lancamento_cilindro(data, id_staff, inicio, final, quantidade_acqua, quantidade_pl, situacao, h3, m1)
+    repo.insert_lancamento_cilindro(data, id_staff[0], inicio, final, quantidade_acqua, quantidade_pl, situacao, h3, m1)
 
     if quentinha == 'Sim':
-        repo.insert_controle_quentinhas(data, id_staff)
+        repo.insert_controle_quentinhas(data, id_staff[0])
 
     st.success('Lançado no Sistema com Sucesso!')
     st.subheader(f'Tempo Médio : {m[0]} min e {m[1]} s')
