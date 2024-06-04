@@ -49,15 +49,7 @@ if st.button('Lançar no Sistema'):
     db = DataBaseMysql()
     repo = MainRepository(db)
     id_staff = repo.select_id_staff_por_nome(nome)
-    st.write(data)
-    st.write(id_staff[0][0])
-    st.write(inicio)
-    st.write(final)
-    st.write(quantidade_acqua)
-    st.write(quantidade_pl)
-    st.write(situacao)
-    st.write(h3)
-    st.write(m1)
+
 
     repo.insert_lancamento_cilindro(data, id_staff[0][0], inicio, final, quantidade_acqua, quantidade_pl, situacao, h3, m1)
 
