@@ -58,7 +58,7 @@ class MainRepository:
     LEFT JOIN staffs ON staffs.id_staff = l.id_staff
     LEFT JOIN SomaCilindros AS sc ON sc.id_staff = l.id_staff
     LEFT JOIN SomaQuentinhas as cq ON cq.id_staff = staffs.id_staff
-    WHERE l.data BETWEEN %s AND %s AND staffs.ocupacao = 'Divemaster' OR staffs.ocupacao = 'Instrutor'
+    WHERE l.data BETWEEN %s AND %s AND (staffs.ocupacao = 'Divemaster' OR staffs.ocupacao = 'Instrutor')
     GROUP BY staffs.nome;
 
         """
