@@ -8,8 +8,11 @@ repository = MainRepository(db)
 
 st.subheader('Cilindros')
 
+st.write('')
+st.write('')
+
 select_cilindros = repository.select_cilindros_cadastrados()
-df = pd.DataFrame(select_cilindros, columns=['Marca', 'Numero de Serie', 'Teste', 'Situação'])
+df = pd.DataFrame(select_cilindros, columns=['Marca', 'Serie', 'Teste', 'Situação'])
 
 df['Teste'] = pd.to_datetime(df['Teste']).dt.strftime('%d/%m/%Y')
 
@@ -23,6 +26,6 @@ for cilindro in select_cilindros:
 
 st.text(f'Cilindros em uso : {cilindro_em_uso}')
 st.text(f'Cilindros parados : {cilindro_parado}')
-
+st.write('')
 st.table(df)
 
