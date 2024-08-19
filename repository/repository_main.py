@@ -157,6 +157,12 @@ class MainRepository:
 
         return self.db.execute_query(query, params)
 
+    def select_cilindros_cadastrados(self):
+
+        query = """SELECT marca, num_serie, data_teste, situacao FROM cadastro_cilindro"""
+
+        return self.db.execute_query(query)
+
     def insert_lancamento_barco(self, data, id_staff, funcao, quantidade, curso, pratica, situacao):
         query = """
         INSERT INTO lancamentos_barco 
