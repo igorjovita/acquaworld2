@@ -20,7 +20,7 @@ st.title('Sistema Acquaworld')
 
 st.header('Staffs')
 
-cursor.execute("Select nome, status FROM staffs order by status = 'Ativo'")
+cursor.execute("Select nome, status FROM staffs order by status")
 nome_staffs = cursor.fetchall()
 
 cursor.execute("SELECT nome FROM staffs")
