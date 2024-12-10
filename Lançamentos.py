@@ -29,11 +29,14 @@ escolha = option_menu(menu_title=None, options=['Lançar', 'Editar', 'Deletar'],
 if escolha == 'Lançar':
 
     lista_staffs = []
+    lista_nome_instrutores = []
     lista_staffs_total = []
     select_nome_id_staff = repo.select_staffs()
 
     for select in select_nome_id_staff:
         if select[2] == 'Divemaster' or select[2] == 'Instrutor':
+            if select[2] == 'Instrutor':
+                lista_nome_instrutores.append(select[1])
             lista_staffs.append(select[1])
         lista_staffs_total.append(select[1])
 
@@ -72,7 +75,7 @@ if escolha == 'Lançar':
     with colu1:
         apoio_superficie = st.multiselect('Apoio de Superficie', ['Manu', 'Catatau', 'Juninho', 'Glauber', 'Roberta'])
         mestre = st.selectbox('Mestre', ['Risadinha', 'Marquinhos'], index=None)
-        instrutor = st.selectbox('Instrutor', ['Glauber', 'Martina'], index=None)
+        instrutor = st.selectbox('Instrutor', lista_nome_instrutores, index=None)
         quantidade = st.text_input('Quantidade')
 
     with colu2:
@@ -85,7 +88,7 @@ if escolha == 'Lançar':
     with st.expander('Segundo Curso'):
         colun1, colun2 = st.columns(2)
         with colun1:
-            instrutor2 = st.selectbox('Instrutor2', ['Glauber', 'Martina'], index=None)
+            instrutor2 = st.selectbox('Instrutor2', lista_nome_instrutores, index=None)
             quantidade2 = st.text_input('Quantidade2')
 
         with colun2:
