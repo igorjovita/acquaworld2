@@ -83,7 +83,7 @@ if escolha == 'Lançar':
         embarques = st.text_input('Embarques')
         curso = st.selectbox('Curso', ['OWD', 'ADV', 'REVIEW', 'RESCUE', 'PRIMEIROS SOCORROS', 'DIVEMASTER'],
                              index=None)
-        pratica = st.selectbox('Pratica', ['Pratica 1', 'Pratica 2'], index=None)
+        pratica = st.selectbox('Pratica', ['Pratica 1', 'Pratica 2', 'Pratica 3'], index=None)
 
     with st.expander('Segundo Curso'):
         colun1, colun2 = st.columns(2)
@@ -94,7 +94,7 @@ if escolha == 'Lançar':
         with colun2:
             curso2 = st.selectbox('Curso2', ['OWD', 'ADV', 'REVIEW', 'RESCUE', 'PRIMEIROS SOCORROS', 'DIVEMASTER'],
                                   index=None)
-            pratica2 = st.selectbox('Pratica2', ['Pratica 1', 'Pratica 2'], index=None)
+            pratica2 = st.selectbox('Pratica2', ['Pratica 1', 'Pratica 2', 'Pratica 3'], index=None)
 
     quentinha = st.selectbox('Pagar quentinhas nessa data?', ['Sim', 'Não'], index=None)
 

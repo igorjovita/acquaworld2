@@ -84,7 +84,7 @@ if st.button('Pesquisar2'):
                 'efr': int(qntd_efr),
                 'valor_efr': int(qntd_efr) * 200,
                 'dm': int(qntd_dm),
-                'valor_dm': int(qntd_dm) * 200,
+                'valor_dm': int(qntd_dm) * 75,
                 'cilindros': int(cilindros),
                 'valor_cilindros': int(cilindros),
                 'diarias': int(diarias),
@@ -239,9 +239,9 @@ if st.button('Pesquisar2'):
             mensagem += '\n' + f'Total Curso Primeiro Socorros - {contagem_efr} * 200 = {valor_pagar_efr}'
 
         if contagem_divemaster != 0:
-            valor_divemaster = contagem_divemaster * 200
+            valor_divemaster = contagem_divemaster * 75
             valor_pagar_divemaster = format_currency(float(valor_divemaster), 'BRL', locale='pt_BR')
-            mensagem += '\n' + f'Total Curso DM - {contagem_divemaster}  * 200 = {valor_pagar_divemaster}'
+            mensagem += '\n' + f'Total Curso DM - {contagem_divemaster}  * 75 = {valor_pagar_divemaster}'
 
         if contagem_quentinha != 0:
             valor_quentinha = contagem_quentinha * 15
