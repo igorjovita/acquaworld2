@@ -19,47 +19,47 @@ class MainRepository:
 
     def select_soma_total_comissoes(self, data_incial, data_final):
         query = """
-  WITH SomaCilindros AS (
-        SELECT
-            lc.id_staff,
-            COALESCE(SUM(cilindros_acqua + cilindros_pl), 0) AS quantidade_cilindro,
-            COUNT(DISTINCT data)  AS diarias
-        FROM lancamento_cilindro as lc
-        LEFT JOIN staffs s ON lc.id_staff = s.id_staff
-        WHERE data BETWEEN %s AND %s
-        GROUP BY lc.id_staff
-    ),
-    SomaQuentinhas AS (
-        SELECT
-            id_staff,
-            SUM(CASE WHEN quentinha = 'Sim' THEN 1 ELSE 0 END) AS quantidade_quentinha
-        FROM controle_quentinhas
-        WHERE data BETWEEN %s AND %s
-        GROUP BY id_staff
-    )
-    SELECT
-        staffs.nome,
-        staffs.comissao,
-        staffs.comissao_review,
-        SUM(CASE WHEN l.funcao = 'BAT' THEN l.quantidade ELSE 0 END) AS quantidade_bat,
-        SUM(CASE WHEN l.funcao = 'AS' THEN l.quantidade ELSE 0 END) AS quantidade_as,
-        SUM(CASE WHEN l.funcao = 'CAPITAO' THEN l.quantidade ELSE 0 END) AS quantidade_capitao,
-        SUM(CASE WHEN l.funcao = 'CURSO' and l.curso IN ('OWD', 'ADV')THEN l.quantidade ELSE 0 END) AS quantidade_praticas,
-        SUM(CASE WHEN l.funcao = 'CURSO' and l.curso = 'REVIEW' THEN l.quantidade ELSE 0 END) AS quantidade_review,
-        SUM(CASE WHEN l.funcao = 'CURSO' and l.curso = 'RESCUE' THEN l.quantidade ELSE 0 END) AS quantidade_rescue,
-        SUM(CASE WHEN l.funcao = 'CURSO' and l.curso = 'EFR' THEN l.quantidade ELSE 0 END) AS quantidade_efr,
-        SUM(CASE WHEN l.funcao = 'CURSO' and l.curso = 'DIVEMASTER' THEN l.quantidade ELSE 0 END) AS quantidade_dm,
-        COALESCE(sc.quantidade_cilindro, 0) AS quantidade_cilindro,
-        COALESCE(cq.quantidade_quentinha, 0) as quantidade_quentinha,
-        CASE WHEN sc.diarias != 0 AND staffs.tipo != 'FIXO' THEN sc.diarias ELSE 0 END AS diarias
+        WITH SomaCilindros AS (
+                SELECT
+                    lc.id_staff,
+                    COALESCE(SUM(cilindros_acqua + cilindros_pl), 0) AS quantidade_cilindro,
+                    COUNT(DISTINCT data)  AS diarias
+                FROM lancamento_cilindro as lc
+                LEFT JOIN staffs s ON lc.id_staff = s.id_staff
+                WHERE data BETWEEN %s AND %s
+                GROUP BY lc.id_staff
+            ),
+            SomaQuentinhas AS (
+                SELECT
+                    id_staff,
+                    SUM(CASE WHEN quentinha = 'Sim' THEN 1 ELSE 0 END) AS quantidade_quentinha
+                FROM controle_quentinhas
+                WHERE data BETWEEN %s AND %s
+                GROUP BY id_staff
+            )
+            SELECT
+                staffs.nome,
+                staffs.comissao,
+                staffs.comissao_review,
+                SUM(CASE WHEN l.funcao = 'BAT' THEN l.quantidade ELSE 0 END) AS quantidade_bat,
+                SUM(CASE WHEN l.funcao = 'AS' THEN l.quantidade ELSE 0 END) AS quantidade_as,
+                SUM(CASE WHEN l.funcao = 'CAPITAO' THEN l.quantidade ELSE 0 END) AS quantidade_capitao,
+                SUM(CASE WHEN l.funcao = 'CURSO' and l.curso IN ('OWD', 'ADV')THEN l.quantidade ELSE 0 END) AS quantidade_praticas,
+                SUM(CASE WHEN l.funcao = 'CURSO' and l.curso = 'REVIEW' THEN l.quantidade ELSE 0 END) AS quantidade_review,
+                SUM(CASE WHEN l.funcao = 'CURSO' and l.curso = 'RESCUE' THEN l.quantidade ELSE 0 END) AS quantidade_rescue,
+                SUM(CASE WHEN l.funcao = 'CURSO' and l.curso = 'EFR' THEN l.quantidade ELSE 0 END) AS quantidade_efr,
+                SUM(CASE WHEN l.funcao = 'CURSO' and l.curso = 'DIVEMASTER' THEN l.quantidade ELSE 0 END) AS quantidade_dm,
+                COALESCE(sc.quantidade_cilindro, 0) AS quantidade_cilindro,
+                COALESCE(cq.quantidade_quentinha, 0) as quantidade_quentinha,
+                CASE WHEN sc.diarias != 0 AND staffs.tipo != 'FIXO' THEN sc.diarias ELSE 0 END AS diarias
+                        
                 
-        
-    FROM lancamentos_barco AS l
-    LEFT JOIN staffs ON staffs.id_staff = l.id_staff
-    LEFT JOIN SomaCilindros AS sc ON sc.id_staff = l.id_staff
-    LEFT JOIN SomaQuentinhas as cq ON cq.id_staff = staffs.id_staff
-    WHERE l.data BETWEEN %s AND %s AND (staffs.ocupacao = 'Divemaster' OR staffs.ocupacao = 'Instrutor')
-    GROUP BY staffs.nome;
+            FROM lancamentos_barco AS l
+            LEFT JOIN staffs ON staffs.id_staff = l.id_staff
+            LEFT JOIN SomaCilindros AS sc ON sc.id_staff = l.id_staff
+            LEFT JOIN SomaQuentinhas as cq ON cq.id_staff = staffs.id_staff
+            WHERE l.data BETWEEN %s AND %s AND (staffs.ocupacao = 'Divemaster' OR staffs.ocupacao = 'Instrutor')
+            GROUP BY staffs.nome;
 
         """
         params = (data_incial, data_final, data_incial, data_final, data_incial, data_final)
@@ -192,6 +192,19 @@ class MainRepository:
         """
 
         params = (data, id_staff, inicio, final, quantidade_acqua, quantidade_pl, situacao, h3, m1)
+
+        return self.db.execute_query(query, params)
+    
+
+    def insert_staff(self, nome, telefone, ocupação, tipo, salario, comissão, status):
+
+        query = """
+
+        INSERT INTO staffs 
+        (nome, telefone, ocupacao, tipo, salario, comissao, status) 
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
+        """
+        params = (self, nome, telefone, ocupação, tipo, salario, comissão, status)
 
         return self.db.execute_query(query, params)
 
