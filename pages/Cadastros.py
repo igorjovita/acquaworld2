@@ -4,7 +4,7 @@ from classes import LogicaCadastro
 from repository import MainRepository
 
 
-logica = LogicaCadastro
+logica = LogicaCadastro()
 db = DataBaseMysql()
 repo = MainRepository(db)
 
