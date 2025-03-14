@@ -8,7 +8,7 @@ db = DataBaseMysql()
 repo = MainRepository(db)
 
 
-class LogicaCadastro():
+class LogicaCadastro:
     
     
     def __init__(self):
