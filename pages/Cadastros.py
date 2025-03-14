@@ -1,9 +1,6 @@
 import streamlit as st
-import mysql.connector
-import os
 from database import DataBaseMysql
 from classes import LogicaCadastro
-
 from repository import MainRepository
 
 

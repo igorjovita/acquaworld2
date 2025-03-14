@@ -1,4 +1,3 @@
-
 import streamlit as st
 from database import DataBaseMysql
 from repository import MainRepository
@@ -6,7 +5,6 @@ from repository import MainRepository
 
 db = DataBaseMysql()
 repo = MainRepository(db)
-
 
 class LogicaCadastro:
     
@@ -39,6 +37,11 @@ class LogicaCadastro:
             
             try:
                 repo.insert_staff(nome, telefone, ocupação, tipo, salario, comissão, 'Ativo')
+
+            except:
+                st.error('Erro no cadastro')
             
             finally:
                 st.success('Staff Cadastrado com Sucesso!')
+
+    
