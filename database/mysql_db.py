@@ -13,7 +13,8 @@ class DataBaseMysql:
             user=os.getenv("DB_USERNAME"),
             passwd=os.getenv("DB_PASSWORD"),
             db=os.getenv("DB_NAME"),
-            autocommit=True)
+            autocommit=True,
+            ssl_disabled=True)
         self.__connection = mydb
         self.__cursor = self.__connection.cursor(buffered=True)
         return self.__cursor
