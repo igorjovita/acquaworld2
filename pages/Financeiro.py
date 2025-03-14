@@ -10,14 +10,6 @@ from collections import defaultdict
 from database import DataBaseMysql
 from repository import MainRepository
 
-mydb = mysql.connector.connect(
-    host=os.getenv("DB_HOST"),
-    user=os.getenv("DB_USERNAME"),
-    passwd=os.getenv("DB_PASSWORD"),
-    db=os.getenv("DB_NAME"),
-    autocommit=True)
-
-cursor = mydb.cursor(buffered=True)
 
 st.write('''<style>
 
