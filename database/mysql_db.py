@@ -14,7 +14,8 @@ class DataBaseMysql:
             passwd=os.getenv("DB_PASSWORD"),
             db=os.getenv("DB_NAME"),
             autocommit=True,
-            ssl_disabled=True)
+            ssl_disabled=False,
+            )
         self.__connection = mydb
         self.__cursor = self.__connection.cursor(buffered=True)
         return self.__cursor
