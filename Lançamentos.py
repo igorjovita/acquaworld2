@@ -26,6 +26,8 @@ st.write('''<style>
 escolha = option_menu(menu_title=None, options=['Lançar', 'Editar', 'Deletar'],
                       icons=['book', 'pencil-square', 'trash'],
                       orientation='horizontal')
+
+
 if escolha == 'Lançar':
 
     lista_staffs = []
@@ -70,16 +72,28 @@ if escolha == 'Lançar':
             quantidade_diferente1 = st.text_input('Divisão1')
             quantidade_diferente2 = st.text_input('Divisão2')
 
+
+    column1, column2, column3 = st.columns(3)
+    
+    with column1:
+        apoio_superficie = st.multiselect('Apoio de Superficie', ['Catatau', 'Andres', 'Manu', 'Roberta'])
+
+
+    with column2:
+        diaria_as = st.text_input('Quantidade de diarias', value=1)
+
+    with column3:
+        equipagens = st.text_input('Equipagens')
+
     colu1, colu2 = st.columns(2)
 
     with colu1:
-        apoio_superficie = st.multiselect('Apoio de Superficie', ['Manu', 'Catatau', 'Juninho', 'Glauber', 'Roberta'])
         mestre = st.selectbox('Mestre', ['Risadinha', 'Marquinhos'], index=None)
         instrutor = st.selectbox('Instrutor', lista_nome_instrutores, index=None)
         quantidade = st.text_input('Quantidade')
 
     with colu2:
-        equipagens = st.text_input('Equipagens')
+        
         embarques = st.text_input('Embarques')
         curso = st.selectbox('Curso', ['OWD', 'ADV', 'REVIEW', 'RESCUE', 'PRIMEIROS SOCORROS', 'DIVEMASTER'],
                              index=None)
@@ -101,13 +115,13 @@ if escolha == 'Lançar':
     if st.button('Lançar no Sistema'):
         # Lista de tuplas representando cada caso de inserção de lançamento de barco
         casos_insercao = [
-            (staff_diferente1, quantidade_diferente1, '', '', 'BAT'),
-            (staff_diferente2, quantidade_diferente2, '', '', 'BAT'),
-            (apoio_superficie, equipagens, '', '', 'AS'),
-            (mestre, embarques, '', '', 'CAPITAO'),
-            (instrutor, quantidade, curso, pratica, 'CURSO'),
-            (instrutor2, quantidade2, curso2, pratica2, 'CURSO'),
-            (staffs_selecionados, divisao, '', '', 'BAT')
+            (staff_diferente1, quantidade_diferente1, '', '', 'BAT', ''),
+            (staff_diferente2, quantidade_diferente2, '', '', 'BAT', ''),
+            (apoio_superficie, equipagens, '', '', 'AS', diaria_as),
+            (mestre, embarques, '', '', 'CAPITAO', ''),
+            (instrutor, quantidade, curso, pratica, 'CURSO', ''),
+            (instrutor2, quantidade2, curso2, pratica2, 'CURSO', ''),
+            (staffs_selecionados, divisao, '', '', 'BAT', '')
         ]
 
         staffs = Staffs(repo, casos_insercao)

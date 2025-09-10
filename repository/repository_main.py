@@ -50,8 +50,9 @@ class MainRepository:
                 SUM(CASE WHEN l.funcao = 'CURSO' and l.curso = 'EFR' THEN l.quantidade ELSE 0 END) AS quantidade_efr,
                 SUM(CASE WHEN l.funcao = 'CURSO' and l.curso = 'DIVEMASTER' THEN l.quantidade ELSE 0 END) AS quantidade_dm,
                 COALESCE(sc.quantidade_cilindro, 0) AS quantidade_cilindro,
-                COALESCE(cq.quantidade_quentinha, 0) as quantidade_quentinha,
-                CASE WHEN sc.diarias != 0 AND staffs.tipo != 'FIXO' THEN sc.diarias ELSE 0 END AS diarias
+                COALESCE(cq.quantidade_quentinha, 0) AS quantidade_quentinha,
+                CASE WHEN sc.diarias != 0 AND staffs.tipo != 'FIXO' THEN sc.diarias ELSE 0 END AS diarias,
+                SUM(l.diaria) AS diarias_as
                         
                 
             FROM lancamentos_barco AS l
@@ -101,7 +102,8 @@ class MainRepository:
             0 AS cilindros_acqua,
             0 AS cilindros_pl,
             staffs.comissao_review,
-            0 AS diaria
+            0 AS diaria,
+            lb.diaria AS diaria_as
         FROM 
             lancamentos_barco AS lb
         LEFT JOIN 
@@ -163,13 +165,13 @@ class MainRepository:
 
         return self.db.execute_query(query)
 
-    def insert_lancamento_barco(self, data, id_staff, funcao, quantidade, curso, pratica, situacao):
+    def insert_lancamento_barco(self, data, id_staff, funcao, quantidade, curso, pratica, situacao, diaria):
         query = """
         INSERT INTO lancamentos_barco 
-        (data, id_staff, funcao, quantidade, curso, pratica, situacao)
-         VALUES (%s, %s, %s, %s, %s, %s, %s)
+        (data, id_staff, funcao, quantidade, curso, pratica, situacao, diaria)
+         VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
         """
-        params = (data, id_staff, funcao, quantidade, curso, pratica, situacao)
+        params = (data, id_staff, funcao, quantidade, curso, pratica, situacao, diaria)
 
         return self.db.execute_query(query, params)
 
@@ -199,10 +201,9 @@ class MainRepository:
     def insert_staff(self, nome, telefone, ocupação, tipo, salario, comissão, status):
 
         query = """
-
-        INSERT INTO staffs 
-        (nome, telefone, ocupacao, tipo, salario, comissao, status) 
-        VALUES (%s, %s, %s, %s, %s, %s, %s)
+            INSERT INTO staffs 
+            (nome, telefone, ocupacao, tipo, salario, comissao, status) 
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
         """
         params = (self, nome, telefone, ocupação, tipo, salario, comissão, status)
 

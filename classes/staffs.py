@@ -10,7 +10,7 @@ class Staffs:
 
     def logica_inserir(self, lista_staffs_total, select_nome_id_staff, quentinha, data):
 
-        for staff, quantidade, curso, pratica, funcao in self.casos_insercao:
+        for staff, quantidade, curso, pratica, funcao, diaria in self.casos_insercao:
             # Verifica se staff é uma lista
             if isinstance(staff, list):
                 # Itera sobre cada nome na lista
@@ -20,7 +20,7 @@ class Staffs:
                         id_staff = select_nome_id_staff[index_lista_staffs][0]
 
                         self.repo.insert_lancamento_barco(data, id_staff, funcao, quantidade, curso, pratica,
-                                                          'PENDENTE')
+                                                          'PENDENTE', diaria)
                         if quentinha == 'Sim':
                             self.repo.insert_controle_quentinhas(data, id_staff)
 
@@ -39,7 +39,7 @@ class Staffs:
                     id_staff = select_nome_id_staff[index_lista_staffs][0]
                     if quentinha == 'Sim':
                         self.repo.insert_controle_quentinhas(data, id_staff)
-                    self.repo.insert_lancamento_barco(data, id_staff, funcao, quantidade, curso, pratica, 'PENDENTE')
+                    self.repo.insert_lancamento_barco(data, id_staff, funcao, quantidade, curso, pratica, 'PENDENTE', diaria)
                 except ValueError:
                     # Lida com o caso em que o nome do staff não está na lista
                     st.error(

@@ -1,0 +1,61 @@
+import streamlit as st
+import pandas as pd
+from streamlit_option_menu import option_menu
+import os
+import mysql.connector
+from database import DataBaseMysql
+from repository import MainRepository
+from classes import Staffs
+
+db = DataBaseMysql()
+
+repo = MainRepository(db)
+
+
+
+class Lancamentos:
+
+    def __init__(self):
+        pass
+
+    def lancamento_diario(self):
+
+        lista_staffs = self.buscar_grupo_staffs()
+
+        st.subheader('Divisão Diaria')
+        
+        data = st.date_input('Data:', format='DD/MM/YYYY')
+        
+        st.text('STAFFS:')
+
+        col1, col2 = st.columns(2)
+
+
+        for i, (nome, item) in enumerate(lista_staffs.items()):
+            if i < len(lista_staffs) / 2:
+                done = col1.checkbox(str(nome), key=str(i))
+            else:
+                done = col2.checkbox(str(nome), key=str(i))
+
+            lista_staffs[nome]['selecionado'] = done
+            
+
+
+
+
+    
+    def buscar_grupo_staffs(self):
+
+        lista_staffs = {}
+        
+        select_staff = repo.select_staffs()
+
+        for staff in select_staff:
+            lista_staffs[staff[1]] = {
+                'id': staff[0],
+                'ocupacao': staff[2],
+                'comissao': staff[3],
+                'selecionado': 'False'
+            }
+
+        return lista_staffs

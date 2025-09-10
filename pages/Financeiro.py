@@ -58,7 +58,7 @@ if st.button('Pesquisar2'):
         total_pagamento = []
         soma_valores = 0
         for item in select_total_comissoes:
-            nome, comissao_bat, comissao_review, qntd_bat, qntd_equipagem, qntd_embarque, qntd_pratica, qntd_review, qntd_rescue, qntd_efr, qntd_dm, cilindros, quentinhas, diarias = item
+            nome, comissao_bat, comissao_review, qntd_bat, qntd_equipagem, qntd_embarque, qntd_pratica, qntd_review, qntd_rescue, qntd_efr, qntd_dm, cilindros, quentinhas, diarias, diarias_as = item
 
             valores = {
                 'bat': float(qntd_bat),
@@ -82,7 +82,8 @@ if st.button('Pesquisar2'):
                 'diarias': int(diarias),
                 'valor_diaria': int(diarias) * 50,
                 'quentinhas': int(quentinhas),
-                'valor_quentinha': int(quentinhas) * 15
+                'valor_quentinha': int(quentinhas) * 15,
+                'diaria_as': int(diarias_as) * 50
 
             }
 
@@ -149,7 +150,8 @@ if st.button('Pesquisar2'):
 
         for select in resultado_final:
 
-            data, _, bat, equipagem, embarque, quantidade_curso, curso, pratica, quentinha, cilindro_acqua, cilindro_pl, _, diaria = select
+            data, _, bat, equipagem, embarque, quantidade_curso, curso, pratica, quentinha, cilindro_acqua, cilindro_pl, _, diaria, diarias_as = select
+            
             valores_diferentes_de_zero = []
 
             # Verifica se cada variável é diferente de zero e adiciona à lista
@@ -157,7 +159,10 @@ if st.button('Pesquisar2'):
                 valores_diferentes_de_zero.append(f'{bat} BAT')
                 contagem_bat += float(bat)
             if equipagem != '0':
-                valores_diferentes_de_zero.append(f'{equipagem} Equipagens')
+                if diarias_as != '0':
+                    valores_diferentes_de_zero.append(f'{diarias_as} Diarias AS + {equipagem} Equipagens')
+                else:
+                    valores_diferentes_de_zero.append(f'{equipagem} Equipagens')
                 contagem_equipagem += int(equipagem)
             if embarque != '0':
                 valores_diferentes_de_zero.append(f'{embarque} Embarques')
