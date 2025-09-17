@@ -3,7 +3,7 @@ import pandas as pd
 from streamlit_option_menu import option_menu
 import os
 
-from supabase_db import SupabaseDB
+from database import SupabaseDB
 
 from repository import MainRepository
 from classes import Staffs
