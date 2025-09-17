@@ -1,12 +1,21 @@
+# Banco de dados
 mysql-connector-python
-pkgconfig==1.5.5
-SQLAlchemy
-pykg-config
 mysqlclient~=2.2.0
 pymysql==1.1.0
-python-dotenv==1.0.0
-streamlit~=1.28.0
-pandas
-streamlit_option_menu
-babel
+SQLAlchemy
+
+# Supabase
 supabase-py>=2.19.0
+
+# Streamlit e UI
+streamlit~=1.28.0
+streamlit_option_menu
+
+# Utilitários
+python-dotenv==1.0.0
+pandas
+babel
+
+# Ferramentas de build (para MySQL client)
+pkgconfig==1.5.5
+pykg-config
