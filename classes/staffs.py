@@ -11,7 +11,8 @@ class Staffs:
 
         for staff, quantidade, curso, pratica, funcao, diaria in self.casos_insercao:
             # Verifica se staff é uma lista
-            if isinstance(staff, list):
+            if hasattr(staff, "isoformat"):
+                staff = staff.isoformat()
                 # Itera sobre cada nome na lista
                 for nome_staff in staff:
                     try:
