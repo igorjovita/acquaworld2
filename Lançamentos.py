@@ -116,13 +116,13 @@ if escolha == 'Lançar':
     if st.button('Lançar no Sistema'):
         # Lista de tuplas representando cada caso de inserção de lançamento de barco
         casos_insercao = [
-            (staff_diferente1, quantidade_diferente1, '', '', 'BAT', ''),
-            (staff_diferente2, quantidade_diferente2, '', '', 'BAT', ''),
-            (apoio_superficie, equipagens, '', '', 'AS', diaria_as),
-            (mestre, embarques, '', '', 'CAPITAO', ''),
-            (instrutor, quantidade, curso, pratica, 'CURSO', ''),
-            (instrutor2, quantidade2, curso2, pratica2, 'CURSO', ''),
-            (staffs_selecionados, divisao, '', '', 'BAT', '')
+            (staff_diferente1, int(quantidade_diferente1 or 0), '', '', 'BAT', 0),
+            (staff_diferente2, int(quantidade_diferente2 or 0), '', '', 'BAT', 0),
+            (apoio_superficie, int(equipagens or 0), '', '', 'AS', float(diaria_as or 0)),
+            (mestre, int(embarques or 0), '', '', 'CAPITAO', 0),
+            (instrutor, int(quantidade or 0), curso, pratica, 'CURSO', 0),
+            (instrutor2, int(quantidade2 or 0), curso2, pratica2, 'CURSO', 0),
+            (staffs_selecionados, int(divisao or 0), '', '', 'BAT', 0)
         ]
 
         staffs = Staffs(repo, casos_insercao)
