@@ -1,4 +1,4 @@
-from supabase_db import SupabaseDB
+from database import SupabaseDB
 from repository import MainRepository
 import pandas as pd
 import streamlit as st

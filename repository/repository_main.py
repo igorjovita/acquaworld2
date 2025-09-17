@@ -1,4 +1,4 @@
-from supabase_db import SupabaseDB
+from database import SupabaseDB
 
 class MainRepository:
     def __init__(self, db: SupabaseDB):

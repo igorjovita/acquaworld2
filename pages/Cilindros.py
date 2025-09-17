@@ -3,7 +3,7 @@ import mysql.connector
 import os
 from datetime import timedelta
 
-from supabase_db import SupabaseDB
+from database import SupabaseDB
 from repository import MainRepository
 
 st.write('''<style>

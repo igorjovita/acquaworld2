@@ -7,7 +7,7 @@ from datetime import date, timedelta
 from babel.numbers import format_currency
 from datetime import datetime
 from collections import defaultdict
-from supabase_db import SupabaseDB
+from database import SupabaseDB
 from repository import MainRepository
 
 

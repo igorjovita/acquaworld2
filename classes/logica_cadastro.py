@@ -1,6 +1,6 @@
 import streamlit as st
 from database import DataBaseMysql
-from supabase_db import SupabaseDB
+from database import SupabaseDB
 from repository import MainRepository
 
 

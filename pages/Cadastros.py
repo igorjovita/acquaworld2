@@ -1,5 +1,5 @@
 import streamlit as st
-from supabase_db import SupabaseDB
+from database import SupabaseDB
 from classes import LogicaCadastro
 from repository import MainRepository
 
