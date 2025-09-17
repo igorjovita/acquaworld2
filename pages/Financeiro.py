@@ -46,6 +46,10 @@ if filtro1 == 'Data Especifica':
     data1_pagamento = st.date_input('Data2', format='DD/MM/YYYY')
     data2_pagamento = data1_pagamento
 
+data1_pagamento = data1_pagamento.isoformat()
+data2_pagamento = data2_pagamento.isoformat()
+
+
 filtro2 = st.radio('Opções de filtragem dos dados', ['Todos', 'Staff especifico'], index=None)
 
 if filtro2 == 'Staff especifico':
@@ -113,6 +117,8 @@ if st.button('Pesquisar2'):
     elif filtro2 == 'Staff especifico':
         index_lista = lista_staff.index(staff)
         id_staff = info_staff[index_lista][0]
+
+
         select_comissao_individual = repository_staffs.select_soma_comissao_individual(data1_pagamento, data2_pagamento,
                                                                                        id_staff)
 
