@@ -2,14 +2,15 @@ import streamlit as st
 import pandas as pd
 from streamlit_option_menu import option_menu
 import os
-import mysql.connector
-from database import DataBaseMysql
+
+from supabase_db import SupabaseDB
+
 from repository import MainRepository
 from classes import Staffs
 
-mysql_db = DataBaseMysql()
+supabase_db = SupabaseDB()
 
-repo = MainRepository(mysql_db)
+repo = MainRepository(supabase_db)
 
 chars = "'),([]"
 chars2 = "')([]"

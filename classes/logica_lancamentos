@@ -3,11 +3,11 @@ import pandas as pd
 from streamlit_option_menu import option_menu
 import os
 import mysql.connector
-from database import DataBaseMysql
+from supabase_db import SupabaseDB
 from repository import MainRepository
 from classes import Staffs
 
-db = DataBaseMysql()
+db = SupabaseDB()
 
 repo = MainRepository(db)
 

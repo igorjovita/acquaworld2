@@ -1,11 +1,11 @@
 import streamlit as st
-from database import DataBaseMysql
+from supabase_db import SupabaseDB
 from classes import LogicaCadastro
 from repository import MainRepository
 
 
 logica = LogicaCadastro()
-db = DataBaseMysql()
+db = SupabaseDB()
 repo = MainRepository(db)
 
 logica.inputs_cadastro()

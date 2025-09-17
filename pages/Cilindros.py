@@ -3,7 +3,7 @@ import mysql.connector
 import os
 from datetime import timedelta
 
-from database import DataBaseMysql
+from supabase_db import SupabaseDB
 from repository import MainRepository
 
 st.write('''<style>
@@ -46,7 +46,7 @@ if st.button('Lançar no Sistema'):
     media_cilindro = (int(h3) / (quantidade_acqua + quantidade_pl))
     m = str(f'{float(media_cilindro):.2f}').split('.')
     m1 = f'{m[0], m[1]}'
-    db = DataBaseMysql()
+    db = SupabaseDB()
     repo = MainRepository(db)
     id_staff = repo.select_id_staff_por_nome(nome)
 

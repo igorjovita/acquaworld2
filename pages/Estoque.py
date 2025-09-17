@@ -1,9 +1,9 @@
-from database import DataBaseMysql
+from supabase_db import SupabaseDB
 from repository import MainRepository
 import pandas as pd
 import streamlit as st
 
-db = DataBaseMysql()
+db = SupabaseDB()
 repository = MainRepository(db)
 
 st.subheader('Cilindros')

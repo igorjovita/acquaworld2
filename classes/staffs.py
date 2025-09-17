@@ -1,5 +1,4 @@
 import streamlit as st
-from mysql.connector import IntegrityError
 
 
 class Staffs:
@@ -30,8 +29,8 @@ class Staffs:
                             f"Nome '{nome_staff}' não encontrado na lista de staffs ativos, o lançamento desse staff "
                             f"não foi feito")
 
-                    except IntegrityError:
-                        st.error(f'Já possui um lançamento igual do staff {nome_staff} na data informada')
+                    except Exception as e:
+                        st.error(f'Erro ao inserir lançamento do staff {nome_staff}: {e}')
 
             elif staff is not None:
                 try:
@@ -46,9 +45,10 @@ class Staffs:
                         f"Nome '{staff}' não encontrado na lista de staffs ativos, o lançamento desse staff não foi "
                         f"feito")
 
-                except IntegrityError:
-                    st.error(f'Já possui um lançamento igual do staff {staff} na data informada')
+                except Exception as e:
+                    st.error(f'Erro ao inserir lançamento do staff {nome_staff}: {e}')
 
+                    
     def formatar_mensagem(self, data):
 
         staff_diferente1, quantidade_diferente1, _, _, _ = self.casos_insercao[0]
